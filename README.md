@@ -7,3 +7,7 @@
 บน iPad: เปิดใน Safari → Share → Add to Home Screen (เปิดครั้งแรกแล้วใช้แบบออฟไลน์ได้)
 
 อัปเดตไฟล์เมื่อไร ให้เปลี่ยน `VERSION` ใน `sw.js` ทุกครั้ง
+
+## แอปอื่นใน repo นี้
+
+- **DRUG MATCH** (จับคู่เอกลักษณ์ยา 299 ตัว): https://phisanuwatspy.github.io/bio-slides-/drug-match/
