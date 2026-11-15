@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Bio 07–12">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<title>เอกสารประกอบการสอน · Slide 07–12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@600&display=swap">
+<style>
+:root{
+  --bg:#F2F1F6; --surface:#FFFFFF; --ink:#1C1A2B; --muted:#5D5972; --line:#DBD7E5;
+  --c07:#3F8C3A; --c08:#C27A12; --c09:#B5651D; --c10:#C2364B; --c11:#2F6DB0; --c12:#C2408A;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink)}
+body{
+  display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden;
+  font:14px/1.4 "IBM Plex Sans Thai",-apple-system,BlinkMacSystemFont,sans-serif;
+}
+header{
+  flex:none;display:flex;align-items:center;gap:12px;
+  background:var(--surface);border-bottom:1px solid var(--line);
+  padding:calc(env(safe-area-inset-top,0px) + 6px) calc(env(safe-area-inset-right,0px) + 12px) 6px calc(env(safe-area-inset-left,0px) + 12px);
+}
+.brand{flex:none;margin:0;font:700 14px/1.3 Anuphan,sans-serif;white-space:nowrap;color:var(--muted)}
+nav{
+  flex:1;min-width:0;display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;
+  padding:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+nav::-webkit-scrollbar{display:none}
+nav button{
+  --c:var(--muted);
+  flex:none;display:flex;align-items:center;gap:6px;
+  height:32px;padding:0 10px 0 4px;border:1px solid var(--line);border-radius:999px;
+  background:var(--surface);color:var(--ink);cursor:pointer;font:inherit;white-space:nowrap;
+  transition:border-color .15s,background .15s;
+}
+nav button:hover{border-color:var(--c)}
+nav button:focus-visible{outline:2px solid var(--c);outline-offset:1px}
+nav button .no{
+  display:grid;place-items:center;width:24px;height:24px;border-radius:999px;
+  background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);
+  font:600 11.5px/1 "IBM Plex Mono",monospace;
+}
+nav button .en{font:600 13px/1 Anuphan,sans-serif}
+nav button[aria-selected="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 9%,#fff)}
+nav button[aria-selected="true"] .no{background:var(--c);color:#fff}
+main{flex:1;min-height:0;position:relative}
+main iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff;display:block}
+main iframe[hidden]{display:none}
+.loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;pointer-events:none}
+.modes{flex:none;display:flex;gap:3px;padding:3px;border-radius:999px;background:#ECEAF2;border:1px solid var(--line)}
+.modes button{height:36px;padding:0 16px;border:0;border-radius:999px;background:transparent;color:var(--muted);font:600 17px/1 Anuphan,sans-serif;cursor:pointer}
+.modes button:hover:not(:disabled):not([aria-pressed="true"]){color:#46378C}
+.modes button[aria-pressed="true"]{background:#46378C;color:#fff}
+.modes button:focus-visible{outline:2px solid #46378C;outline-offset:1px}
+.modes button:disabled{cursor:not-allowed;opacity:.45}
+.modes button:disabled[aria-pressed="true"]{opacity:.7}
+@media (max-width:1240px){.brand{display:none}}
+@media (max-width:480px){header{gap:8px}.modes button{height:34px;padding:0 11px;font-size:15.5px}}
+</style>
+</head>
+<body>
+<header>
+  <h1 class="brand">Slide 07–12</h1>
+  <nav role="tablist" aria-label="หัวข้อ" id="tabs"></nav>
+  <div class="modes" id="modes" role="group" aria-label="โหมด">
+    <button type="button" data-m="lab" aria-pressed="false">Lab</button>
+    <button type="button" data-m="tutor" aria-pressed="false">Tutor</button>
+    <button type="button" data-m="exam" aria-pressed="false">Exam</button>
+  </div>
+</header>
+<main id="stage"><div class="loading" id="loading">กำลังโหลด…</div></main>
+
+<script>
+(function(){
+"use strict";
+const TOPICS=[
+  {id:"s07",no:"07",c:"--c07",en:"Cell Respiration",sh:"Cell Respiration",th:"การสลายสารอาหารไปใช้พลังงาน (Metabolism of nutrients)"},
+  {id:"s08",no:"08",c:"--c08",en:"Nucleic Acid Structure & Function",sh:"Nucleic Acid",th:"สารพันธุกรรม: โครงสร้าง หน้าที่ และการทำงาน"},
+  {id:"s09",no:"09",c:"--c09",en:"Gene Expression & Chromosome Disorders",sh:"Gene Expression",th:"การควบคุมการแสดงออกของยีน และความผิดปกติระดับโครโมโซม"},
+  {id:"s10",no:"10",c:"--c10",en:"Gene Disorders & Mendelian Genetics",sh:"Gene Disorders",th:"ความผิดปกติระดับยีน พันธุศาสตร์และกฎของ Mendel"},
+  {id:"s11",no:"11",c:"--c11",en:"Cell Cycle & Mitosis",sh:"Cell Cycle & Mitosis",th:"การแบ่งเซลล์แบบไมโทซิส และการเสื่อมของเซลล์ (Mitosis & Cell Aging)"},
+  {id:"s12",no:"12",c:"--c12",en:"Meiosis & Cell Reproduction",sh:"Meiosis",th:"ไมโอซิสและการสืบพันธุ์ (Meiosis and Reproduction)"}
+];
+const tabs=document.getElementById("tabs"),stage=document.getElementById("stage"),loading=document.getElementById("loading");
+const frames={};
+const FILE={s07:"s07-x2.html",s08:"s08-x2.html",s09:"s09-x2.html",s10:"s10-x2.html",s11:"s11-x2.html",s12:"s12-x2.html"}; // new name each update so devices never show a cached copy
+TOPICS.forEach(t=>{
+  const b=document.createElement("button");
+  b.type="button";b.role="tab";b.id="tab-"+t.id;b.dataset.id=t.id;
+  b.setAttribute("aria-selected","false");b.setAttribute("aria-controls","f-"+t.id);
+  b.style.setProperty("--c","var("+t.c+")");
+  b.title="Slide "+t.no+" · "+t.en+"\n"+t.th;
+  b.innerHTML='<span class="no">'+t.no+'</span><span class="en">'+t.sh+'</span>';
+  b.addEventListener("click",()=>{if(location.hash!=="#"+t.id)location.hash=t.id;else show(t.id);});
+  tabs.appendChild(b);
+});
+tabs.addEventListener("keydown",e=>{
+  if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;
+  const ids=TOPICS.map(t=>t.id),i=ids.indexOf(cur);
+  const n=ids[(i+(e.key==="ArrowRight"?1:-1)+ids.length)%ids.length];
+  location.hash=n;document.getElementById("tab-"+n).focus();e.preventDefault();
+});
+let cur=null;
+function show(id){
+  if(!TOPICS.some(t=>t.id===id))id=TOPICS[0].id;
+  cur=id;
+  try{localStorage.setItem("slide-hub-tab",id)}catch(e){}
+  let f=frames[id];
+  if(!f){
+    f=document.createElement("iframe");
+    f.id="f-"+id;f.title=TOPICS.find(t=>t.id===id).en;
+    f.setAttribute("allow","fullscreen; clipboard-write; autoplay");
+    loading.hidden=false;
+    f.addEventListener("load",()=>{if(cur===id)loading.hidden=true;},{once:true});
+    f.src=(FILE[id]||id+".html");
+    frames[id]=f;watch(id);stage.appendChild(f);
+  }else loading.hidden=true;
+  Object.entries(frames).forEach(([k,el])=>el.hidden=k!==id);
+  tabs.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.id===id)));
+  syncModes();
+  const tb=document.getElementById("tab-"+id);
+  if(tb&&tb.scrollIntoView)tb.scrollIntoView({block:"nearest",inline:"nearest"});
+  document.title="Slide "+TOPICS.find(t=>t.id===id).no+" · "+TOPICS.find(t=>t.id===id).en;
+}
+
+/* ---- mode switch (drives each topic's own hidden switcher) ---- */
+const MODE={
+  s07:{sel:"#hubbar .hubtab[data-t]",m:e=>e.dataset.t,lock:d=>!!d.body&&d.body.classList.contains("xk-lock")},
+  s08:{sel:".shell .tabs button[data-tab]",m:e=>e.dataset.tab,lock:d=>!!d.body&&d.body.classList.contains("xk-lock")},
+  s09:{sel:".tabbar .tabs a[role=tab]",m:e=>e.id.replace("tab-",""),lock:d=>!!d.body&&d.body.classList.contains("xk-lock")},
+  s10:{sel:"#gdModes a[data-m]",m:e=>e.dataset.m,lock:d=>!!d.body&&d.body.classList.contains("xk-lock")},
+  s11:{sel:".modebar button[data-mode-go]",m:e=>e.dataset.modeGo,lock:d=>!!d.body&&d.body.classList.contains("xk-lock")},
+  s12:{sel:".modebar button[data-mode-go]",m:e=>e.dataset.modeGo,lock:d=>!!d.body&&d.body.classList.contains("xk-lock")}
+};
+const modeBtns=[...document.querySelectorAll("#modes button")];
+function childDoc(id){try{const f=frames[id];return f&&f.contentDocument&&f.contentDocument.readyState!=="loading"?f.contentDocument:null}catch(e){return null}}
+function syncModes(){
+  const d=childDoc(cur),cfg=MODE[cur];
+  let active=null,locked=false;
+  if(d&&cfg){
+    const els=[...d.querySelectorAll(cfg.sel)];
+    const a=els.find(e=>e.getAttribute("aria-selected")==="true");
+    if(a)active=cfg.m(a);
+    locked=cfg.lock(d);
+  }
+  modeBtns.forEach(b=>{
+    b.setAttribute("aria-pressed",String(b.dataset.m===active));
+    b.disabled=!d||(locked&&b.dataset.m!==active);
+    b.title=locked?"กำลังสอบอยู่ ส่งคำตอบก่อนจึงเปลี่ยนโหมดได้":"";
+  });
+}
+modeBtns.forEach(b=>b.addEventListener("click",()=>{
+  const d=childDoc(cur),cfg=MODE[cur];if(!d||!cfg)return;
+  const el=[...d.querySelectorAll(cfg.sel)].find(e=>cfg.m(e)===b.dataset.m);
+  if(el)el.click();
+  setTimeout(syncModes,60);
+}));
+function watch(id){
+  const f=frames[id];
+  const hook=()=>{
+    let d;try{d=f.contentDocument}catch(e){return}
+    if(!d)return;
+    new MutationObserver(()=>{if(cur===id)syncModes()}).observe(d.documentElement,{subtree:true,attributes:true,attributeFilter:["aria-selected","class"]});
+    if(cur===id)syncModes();
+  };
+  f.addEventListener("load",hook);
+}
+function route(){
+  let id=location.hash.slice(1);
+  if(!id){try{id=localStorage.getItem("slide-hub-tab")||""}catch(e){}}
+  show(id);
+}
+window.addEventListener("hashchange",route);
+route();
+})();
+</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}</script>
+</body>
+</html>

@@ -1,0 +1,1420 @@
+<!doctype html><html><head><script>try{if(window.parent!==window){document.documentElement.classList.add("embedded");if(!window.claude&&window.parent.claude)window.claude=window.parent.claude;}}catch(e){}</script><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Mitosis &amp; Cell Aging</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one "microscope stage" per chapter — tabbed chapters, canvas on a reticle slide, controls + notes under it. Light = H&E stained slide, dark = fluorescence microscope. */
+:root{
+  --bg:#f7f4f8; --surface:#ffffff; --sunk:#f0ebf4; --ink:#241c37; --muted:#625a78; --line:#e0d8e8;
+  --hema:#4a3591; --eosin:#d13f7c; --mat:#d6407f; --pat:#1c8f61; --spindle:#cf850f;
+  --cyto:#fcedf4; --nuc:#e9e2f6; --membrane:#bf4d84;
+  --g1:#cdbdf0; --s:#93c4e4; --g2:#cfd7e6; --m:#f3abc5;
+  --ok:#1c8f61; --bad:#d23a3a; --warn:#c27400; --on:#ffffff;
+  --grid:rgba(74,53,145,.06);
+  --font-display:"Bai Jamjuree","IBM Plex Sans Thai",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans Thai",system-ui,-apple-system,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#080a13; --surface:#11152a; --sunk:#0c1022; --ink:#e9eaf6; --muted:#a2a7c6; --line:#262b48;
+  --hema:#7f97ff; --eosin:#ff6aa9; --mat:#ff6aa9; --pat:#45df8d; --spindle:#ffc24d;
+  --cyto:#171b38; --nuc:#1d2755; --membrane:#ff8dc0;
+  --g1:#4b3d7c; --s:#235479; --g2:#2f3a57; --m:#7b2f54;
+  --ok:#45df8d; --bad:#ff5d5d; --warn:#ffb340; --on:#0a0d1a;
+  --grid:rgba(127,151,255,.07); color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#080a13; --surface:#11152a; --sunk:#0c1022; --ink:#e9eaf6; --muted:#a2a7c6; --line:#262b48;
+  --hema:#7f97ff; --eosin:#ff6aa9; --mat:#ff6aa9; --pat:#45df8d; --spindle:#ffc24d;
+  --cyto:#171b38; --nuc:#1d2755; --membrane:#ff8dc0;
+  --g1:#4b3d7c; --s:#235479; --g2:#2f3a57; --m:#7b2f54;
+  --ok:#45df8d; --bad:#ff5d5d; --warn:#ffb340; --on:#0a0d1a;
+  --grid:rgba(127,151,255,.07); color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.65 var(--font-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;line-height:1.2}
+p{margin:0}
+.hero{padding-block:28px 14px;display:grid;gap:8px}
+.eyebrow{font:600 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.hero h1{font-size:clamp(30px,7vw,46px);font-weight:700;letter-spacing:-.01em}
+.hero h1 span{color:var(--eosin)}
+.hero .sub{color:var(--muted);max-width:60ch}
+
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.tabs-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.tabs-row::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font:600 15px/1 var(--font-body);color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:10px 14px;cursor:pointer;white-space:nowrap}
+.tab b{font-family:var(--font-mono);font-weight:600;margin-right:6px;color:var(--eosin)}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tab[aria-selected="true"] b{color:var(--bg);opacity:.7}
+
+.view{display:grid;gap:16px}
+.vh{display:grid;gap:6px}
+.vh h2{font-size:clamp(24px,5.4vw,32px);font-weight:700}
+.vh .lede{color:var(--muted);max-width:62ch}
+
+.scope{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:
+  linear-gradient(var(--grid) 1px,transparent 1px) 0 0/24px 24px,
+  linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/24px 24px,var(--sunk)}
+.scope canvas{display:block;width:100%;height:auto;max-width:100%;touch-action:manipulation}
+.scope-foot{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid var(--line);background:var(--surface);font-size:14px;color:var(--muted)}
+.scale{display:flex;align-items:center;gap:8px;font:500 13px var(--font-mono)}
+.scale i{display:block;width:44px;height:4px;background:var(--ink);border-radius:2px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:4px;display:inline-block;flex:0 0 auto}
+
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{font:600 15px/1 var(--font-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:11px 16px;min-height:42px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--hema);border-color:var(--hema);color:var(--on)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn svg{width:16px;height:16px;flex:0 0 auto}
+.seg{display:inline-flex;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px;gap:4px}
+.seg button{font:600 14px/1.2 var(--font-body);color:var(--muted);background:transparent;border:0;border-radius:10px;padding:9px 12px;cursor:pointer;min-height:38px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;font:600 13px/1 var(--font-mono);color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:8px;padding:9px 10px;cursor:pointer}
+.chip[aria-pressed="true"]{color:var(--on);background:var(--eosin);border-color:var(--eosin)}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:grid;gap:10px;min-width:0}
+.card h3{font-size:21px;font-weight:700}
+.card .th{color:var(--eosin);font-weight:600}
+.card ul,.card ol{margin:0;padding-left:1.2em;display:grid;gap:6px}
+.kv{font:500 14px var(--font-mono);color:var(--muted)}
+.pill{display:inline-block;font:600 13px/1.3 var(--font-mono);padding:6px 10px;border-radius:8px;background:var(--sunk);border:1px solid var(--line);color:var(--ink)}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:10px}
+.mini{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:4px;align-content:start;min-width:0}
+.mini h4{margin:0;font:700 16px/1.3 var(--font-display)}
+.mini p{color:var(--muted);font-size:15px}
+.mini .drug{font:500 13px var(--font-mono);color:var(--hema)}
+.note{border-left:4px solid var(--spindle);background:var(--surface);border-radius:4px 14px 14px 4px;padding:12px 14px;font-size:15px}
+.note b{color:var(--ink)}
+.steps{list-style:none;padding:0!important;counter-reset:st}
+.steps li{counter-increment:st;display:flex;gap:10px;align-items:flex-start;color:var(--muted);transition:color .2s}
+.steps li::before{content:counter(st);font:600 13px/26px var(--font-mono);width:26px;height:26px;flex:0 0 26px;text-align:center;border-radius:50%;border:1px solid var(--line);background:var(--sunk)}
+.steps li.on{color:var(--ink);font-weight:600}
+.steps li.on::before{background:var(--eosin);border-color:var(--eosin);color:var(--on)}
+.steps li.done::before{background:var(--sunk);color:var(--ink)}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cols2 .card{padding:14px}
+.cols2 h3{font-size:18px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font:600 14px var(--font-display);background:var(--sunk)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+.range{width:100%;accent-color:var(--eosin)}
+.ticks{display:grid;grid-template-columns:repeat(4,1fr);font:500 12px/1.3 var(--font-mono);color:var(--muted)}
+.ticks span:nth-child(2),.ticks span:nth-child(3){text-align:center}
+.ticks span:last-child{text-align:right}
+.status{font-weight:600}
+.bar{height:10px;border-radius:5px;background:var(--sunk);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--spindle);transition:width .4s}
+.next{justify-self:start}
+.q{display:grid;gap:10px}
+.q .qn{font:600 13px var(--font-mono);color:var(--muted)}
+.q h3{font:600 18px/1.45 var(--font-body)}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;font:500 16px/1.45 var(--font-body);color:var(--ink);background:var(--sunk);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;display:flex;gap:10px}
+.opt .l{font:600 14px/1.6 var(--font-mono);color:var(--muted)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--surface))}
+.opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--surface))}
+.opt:disabled{cursor:default}
+.explain{font-size:15px;color:var(--muted)}
+.score{font:700 28px var(--font-display)}
+.foot{margin-top:28px;color:var(--muted);font-size:13px}
+.src{font:400 11px/1.45 var(--font-mono);color:var(--muted);opacity:.62;display:flex;flex-wrap:wrap;gap:2px 8px;align-items:baseline}
+.src b{font-weight:500;color:inherit}
+.src .x{font-style:italic}
+.src .x::before{content:"· ";font-style:normal}
+.keyline{display:flex;flex-wrap:wrap;gap:2px 12px;font:400 11px/1.45 var(--font-mono);color:var(--muted);opacity:.62}
+.keyline b{font-weight:500;color:inherit}
+.keyline .x{font-style:italic}
+.tabs{display:grid;gap:10px}
+.modebar{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;background:var(--sunk);border:1.5px solid var(--line);border-radius:18px}
+.modebar button{font:600 17px/1 var(--font-display);color:var(--muted);background:transparent;border:0;border-radius:14px;padding:13px 6px;cursor:pointer;min-height:46px}
+.modebar button[aria-selected="true"]{background:var(--hema);color:var(--on);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.subnav{display:none;min-width:0}
+body[data-mode="lab"] .subnav[data-for="lab"],body[data-mode="tutor"] .subnav[data-for="tutor"]{display:grid;gap:6px}
+.tprog{font:500 12px var(--font-mono);color:var(--muted)}
+.lchip{flex:0 0 auto;font:600 14px/1 var(--font-body);color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 13px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.lchip b{font:600 12px/20px var(--font-mono);min-width:20px;height:20px;border-radius:50%;text-align:center;background:var(--sunk);color:var(--muted)}
+.lchip.done b{background:var(--ok);color:var(--on)}
+.lchip.cur{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.lchip.cur b{background:var(--bg);color:var(--ink)}
+/* mode visibility */
+body:not([data-mode="tutor"]) .tutor,body:not([data-mode="tutor"]) .tlesson{display:none!important}
+body[data-mode="tutor"] .view>:not(.scope):not(.tutor):not(.tlesson){display:none!important}
+.view.tquiet>.scope{display:none!important}
+.tlesson{display:grid;gap:6px}
+.tlesson h2{font-size:clamp(24px,5.4vw,32px);font-weight:700}
+.obj{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.obj summary{cursor:pointer;font-weight:600;font-size:15px}
+.obj ul{margin:8px 0 2px;padding-left:1.2em;display:grid;gap:4px;font-size:15px}
+.tdots{display:flex;gap:4px}
+.tdots i{flex:1;height:5px;border-radius:3px;background:var(--line)}
+.tdots i.on{background:var(--hema)}
+.tstep{font:700 19px/1.3 var(--font-display)}
+.tq{display:grid;gap:8px;padding-top:10px;border-top:1px solid var(--line)}
+.tq h4{margin:0;font:600 16px/1.5 var(--font-body)}
+.sumlist{margin:0;padding-left:1.2em;display:grid;gap:6px;font-size:15.5px}
+/* exam */
+.exbar{display:none!important}
+body.examlock .exbar{display:flex!important;flex-wrap:wrap;gap:8px 12px;align-items:center}
+body.examlock .modebar,body.examlock .subnav:not(.exbar),body.examlock .hero,body.examlock .foot,body.examlock [data-view="exam"] .vh{display:none!important}
+.exttl{font:700 16px var(--font-display);flex:1 1 auto;min-width:0}
+.paper{background:var(--surface)}
+.paper h3{font-size:19px}
+.rules{margin:0;padding-left:1.3em;display:grid;gap:6px;font-size:15.5px}
+.presets{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:8px}
+.preset{text-align:left;display:grid;gap:4px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font:inherit}
+.preset b{font:700 16px var(--font-display)}
+.preset span{font:500 12.5px var(--font-mono);color:var(--muted)}
+.preset[aria-pressed="true"]{border-color:var(--hema);background:color-mix(in srgb,var(--hema) 10%,var(--surface))}
+.inp{font:500 16px var(--font-body);color:var(--ink);background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;max-width:420px}
+.qnum{font:700 22px var(--font-display)}
+.qtext{font:600 18px/1.55 var(--font-body)}
+.report{gap:14px}
+.report h3{font-size:22px}
+.stamp{font:700 18px var(--font-display);padding:8px 16px;border-radius:10px;border:2.5px solid;transform:rotate(-4deg)}
+.stamp.pass{color:var(--ok);border-color:var(--ok)}
+.stamp.fail{color:var(--bad);border-color:var(--bad)}
+.rep{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0;font-size:15px}
+.rep dt{color:var(--muted)}
+.rep dd{margin:0;font-weight:500;min-width:0}
+.scorebox{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:12px 0;border-block:1px solid var(--line)}
+.big small{font-size:.45em;color:var(--muted)}
+.ttog{flex:0 0 auto;font:600 14px/1 var(--font-body);color:var(--hema);background:var(--surface);border:1.5px solid var(--hema);border-radius:999px;padding:9px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;min-height:40px}
+.ttog[aria-pressed="true"]{background:var(--hema);color:var(--on)}
+.ttog svg{width:16px;height:16px}
+.tutor{border:1.5px solid var(--hema);background:color-mix(in srgb,var(--hema) 7%,var(--surface));border-radius:16px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.tutor-head{display:flex;align-items:center;gap:10px}
+.tav{width:32px;height:32px;border-radius:50%;background:var(--hema);color:var(--on);display:grid;place-items:center;flex:0 0 auto}
+.tav svg{width:18px;height:18px}
+.tutor-head b{font:700 16px var(--font-display)}
+.tutor-head .kv{margin-left:auto;font-size:12px}
+.tutor .say{font-size:16.5px;line-height:1.7}
+.trow{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:baseline;font-size:15px}
+.tlab{font:600 11.5px/1.6 var(--font-mono);letter-spacing:.03em;padding:2px 8px;border-radius:6px;white-space:nowrap}
+.tlab.tip{background:color-mix(in srgb,var(--pat) 16%,var(--surface));color:var(--pat)}
+.tlab.trap{background:color-mix(in srgb,var(--bad) 13%,var(--surface));color:var(--bad)}
+.tutor details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.tutor summary{cursor:pointer;font-weight:600;font-size:15px;list-style:none;display:flex;gap:8px}
+.tutor summary::-webkit-details-marker{display:none}
+.tutor summary::before{content:"?";font:700 12px/20px var(--font-mono);width:20px;height:20px;flex:0 0 20px;text-align:center;border-radius:50%;background:var(--eosin);color:var(--on);margin-top:2px}
+.tutor details[open] summary{margin-bottom:6px}
+.tutor details p{font-size:15px;color:var(--ink);padding-left:28px}
+.tutor .tnext{justify-self:start}
+@media (max-width:420px){.trow{grid-template-columns:1fr}.tlab{justify-self:start}}
+.exrow{display:grid;gap:8px}
+.exrow>.kv{font-size:13px}
+.exhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.timer{font:600 17px var(--font-mono);font-variant-numeric:tabular-nums;padding:6px 12px;border-radius:10px;background:var(--sunk);border:1px solid var(--line)}
+.timer.low{color:var(--bad);border-color:var(--bad)}
+.opt[aria-pressed="true"]{border-color:var(--hema);background:color-mix(in srgb,var(--hema) 12%,var(--surface))}
+.opt[aria-pressed="true"] .l{color:var(--hema)}
+.qmap{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:6px}
+.qm{position:relative;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font:600 14px var(--font-mono);cursor:pointer}
+.qm.ans{background:color-mix(in srgb,var(--hema) 14%,var(--surface));color:var(--ink);border-color:var(--hema)}
+.qm.cur{outline:2.5px solid var(--eosin);outline-offset:1px}
+.qm.flag::after{content:"";position:absolute;top:4px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--warn)}
+.qm.ok{background:color-mix(in srgb,var(--ok) 18%,var(--surface));border-color:var(--ok);color:var(--ink)}
+.qm.ng{background:color-mix(in srgb,var(--bad) 15%,var(--surface));border-color:var(--bad);color:var(--ink)}
+.warnline{color:var(--bad);font-weight:600;font-size:15px}
+.big{font:700 clamp(40px,10vw,56px)/1 var(--font-display);font-variant-numeric:tabular-nums}
+.chrow{display:grid;grid-template-columns:minmax(110px,30%) 1fr 54px;gap:10px;align-items:center;font-size:14px}
+.chrow .bar i{background:var(--hema)}
+.chrow span:last-child{font:600 13px var(--font-mono);text-align:right;font-variant-numeric:tabular-nums}
+.rv{display:grid;gap:8px}
+.rv .opt{cursor:default}
+.tagok{color:var(--ok);font-weight:700}.tagng{color:var(--bad);font-weight:700}.tagna{color:var(--warn);font-weight:700}
+@media (max-width:420px){.cols2{grid-template-columns:1fr}.card{padding:15px}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Cell Biology · Interactive lab</p>
+    <h1>Mitosis &amp; <span>Cell Aging</span></h1>
+    <p class="sub">สื่อการสอนแบบ animation จากเอกสาร “การแบ่งเซลล์แบบไมโทซิส และการเสื่อมของเซลล์” เลือกโหมดด้านล่าง: <b>Lab</b> ทดลองเองอิสระ · <b>Tutor</b> เรียนทีละขั้นพร้อมแบบทดสอบท้ายบท · <b>Exam</b> สอบเสมือนจริงจับเวลา</p>
+    <p class="keyline"><span><b>สไลด์ X</b> = หน้าในเอกสาร PDF (36 หน้า)</span><span class="x">ข้อมูลเสริม = ไม่อยู่ในเอกสาร เพิ่มเพื่อให้เข้าใจง่ายขึ้น</span></p>
+  </header>
+
+  <nav class="tabs" aria-label="เมนู">
+    <div class="modebar" role="tablist" aria-label="โหมด">
+      <button type="button" role="tab" data-mode-go="lab" aria-selected="true">Lab</button>
+      <button type="button" role="tab" data-mode-go="tutor" aria-selected="false">Tutor</button>
+      <button type="button" role="tab" data-mode-go="exam" aria-selected="false">Exam</button>
+    </div>
+    <div class="subnav" data-for="lab">
+      <div class="tabs-row" role="tablist" aria-label="บท">
+        <button class="tab" role="tab" data-go="dna"><b>1</b>DNA → Chromosome</button>
+        <button class="tab" role="tab" data-go="cycle"><b>2</b>Cell cycle</button>
+        <button class="tab" role="tab" data-go="mitosis"><b>3</b>Mitosis</button>
+        <button class="tab" role="tab" data-go="death"><b>4</b>Cell death</button>
+        <button class="tab" role="tab" data-go="cancer"><b>5</b>Cancer</button>
+        <button class="tab" role="tab" data-go="therapy"><b>6</b>การรักษามะเร็ง</button>
+        <button class="tab" role="tab" data-go="aging"><b>7</b>Aging</button>
+        <button class="tab" role="tab" data-go="quiz"><b>Q</b>Quiz</button>
+      </div>
+    </div>
+    <div class="subnav" data-for="tutor">
+      <div class="tabs-row" id="tLessons" aria-label="บทเรียน"></div>
+      <p class="tprog" id="tProg"></p>
+    </div>
+    <div class="subnav exbar" id="exBar"></div>
+  </nav>
+
+  <!-- 1 DNA -->
+  <section class="view" data-view="dna" hidden>
+    <div class="vh"><p class="eyebrow">บทที่ 1 · Genetic substance arrangement</p>
+      <h2>DNA ขดตัวจนเป็น Chromosome</h2>
+      <p class="lede">เลื่อนแถบเพื่อซูมจากเกลียว DNA ไปจนถึงแท่ง chromosome ในช่วงแบ่งเซลล์</p></div>
+    <div class="scope">
+      <canvas id="cDna" width="400" height="260" style="aspect-ratio:400/260" aria-label="Animation การขดตัวของ DNA"></canvas>
+      <div class="scope-foot"><span class="scale">ขนาด <b id="dnaSize">2 nm</b></span><span id="dnaName" class="status">DNA double helix</span></div>
+    </div>
+    <div class="card" style="gap:8px">
+      <label for="dnaRange" class="kv">ระดับการขดตัว</label>
+      <input id="dnaRange" class="range" type="range" min="0" max="3" step="1" value="0">
+      <div class="ticks"><span>DNA</span><span>Nucleosome</span><span>Chromatin</span><span>Chromosome</span></div>
+      <div class="controls" style="margin-top:6px"><button class="btn" id="dnaAuto" type="button"></button></div>
+    </div>
+    <div class="card"><h3 id="dnaT">DNA double helix</h3><p id="dnaD"></p><p class="src" id="dnaSrc"></p></div>
+    <div class="grid2">
+      <div class="mini"><h4>Somatic cell · เซลล์ร่างกาย</h4><p>ผิวหนัง ประสาท กล้ามเนื้อ ไขมัน กระดูก เลือด มีโครโมโซม 2 ชุด</p><span class="drug">diploid · 2n (คน 2n = 46)</span><p class="src"><span>ที่มา: <b>สไลด์ 5</b></span><span class="x">ข้อมูลเสริม: คน 2n = 46</span></p></div>
+      <div class="mini"><h4>Gamete · เซลล์สืบพันธุ์</h4><p>เซลล์ไข่ และเซลล์อสุจิ มีโครโมโซมชุดเดียว</p><span class="drug">haploid · n (คน n = 23)</span><p class="src"><span>ที่มา: <b>สไลด์ 5</b></span><span class="x">ข้อมูลเสริม: คน n = 23</span></p></div>
+    </div>
+    <div class="note"><b>Prokaryote vs Eukaryote</b> — prokaryote ไม่มี nucleus DNA เป็นวงแหวน (circular) ส่วน eukaryote เก็บ DNA ใน nucleus รวมกับ histone เป็น chromosome แบบเส้นตรง สิ่งมีชีวิตชนิดเดียวกันมีจำนวน chromosome เท่ากัน<p class="src" style="margin-top:6px"><span>ที่มา: <b>สไลด์ 3–4</b></span></p></div>
+    <button class="btn next" data-go="cycle" type="button">ถัดไป: Cell cycle →</button>
+  </section>
+
+  <!-- 2 CYCLE -->
+  <section class="view" data-view="cycle" hidden>
+    <div class="vh"><p class="eyebrow">บทที่ 2 · Interphase &amp; checkpoints</p>
+      <h2>Cell cycle และตัวควบคุม CDK–Cyclin</h2>
+      <p class="lede">จุดวงกลมคือเซลล์ที่วิ่งรอบ cycle แตะช่องใดบนวงล้อเพื่อดูรายละเอียด แล้วลองเปลี่ยนสถานการณ์ด้านล่าง</p></div>
+    <div class="scope">
+      <canvas id="cCycle" width="400" height="336" style="aspect-ratio:400/336" aria-label="Animation วงจรเซลล์"></canvas>
+      <div class="scope-foot"><span class="legend"><span><i class="sw" style="background:var(--ok)"></i>checkpoint ผ่าน</span><span><i class="sw" style="background:var(--bad)"></i>ถูกข้าม / ถูกหยุด</span></span><span class="kv" id="cyCount">เซลล์ 1 · แบ่ง 0 รอบ</span></div>
+    </div>
+    <div class="controls">
+      <button class="btn primary" id="cyPlay" type="button"></button>
+      <div class="seg" role="group" aria-label="สถานการณ์">
+        <button type="button" data-mode="normal" aria-pressed="true">ปกติ</button>
+        <button type="button" data-mode="over" aria-pressed="false">CDK ทำงานเกิน</button>
+        <button type="button" data-mode="palbo" aria-pressed="false">+ Palbociclib</button>
+      </div>
+    </div>
+    <div class="note" id="cyMode"></div>
+    <div class="card">
+      <p class="kv" id="cyTag">ระยะที่เซลล์อยู่ตอนนี้</p>
+      <h3 id="cyName">G1 phase</h3>
+      <p class="th" id="cyTh"></p>
+      <p id="cyD"></p>
+      <div class="pills" id="cyCdk"></div>
+      <p class="src" id="cySrc"></p>
+    </div>
+    <div class="grid2">
+      <div class="mini"><h4>CDK (Cyclin-dependent kinase)</h4><p>เอนไซม์ที่ทำหน้าที่เป็น “ตัวกระตุ้น” ให้เซลล์ผ่านแต่ละระยะ</p><p class="src"><span>ที่มา: <b>สไลด์ 11</b></span></p></div>
+      <div class="mini"><h4>Cyclin</h4><p>โปรตีนควบคุมที่จับคู่กับ CDK เพื่อเปิดการทำงาน ระดับขึ้นลงตามระยะของ cycle</p><p class="src"><span>ที่มา: <b>สไลด์ 11</b></span><span class="x">ข้อมูลเสริม: ระดับขึ้นลงตามระยะ</span></p></div>
+      <div class="mini"><h4>Checkpoint</h4><p>กลไกระดับโมเลกุลตรวจความสมบูรณ์ ถูกต้อง และความพร้อมของเซลล์ก่อนไปต่อ</p><p class="src"><span>ที่มา: <b>สไลด์ 11</b></span></p></div>
+      <div class="mini"><h4>G0 phase</h4><p>ระยะพัก เซลล์ไม่เปลี่ยนแปลงจนกว่าจะได้สัญญาณให้แบ่งตัว</p><p class="src"><span>ที่มา: <b>สไลด์ 10</b></span></p></div>
+    </div>
+    <button class="btn next" data-go="mitosis" type="button">ถัดไป: Mitosis →</button>
+  </section>
+
+  <!-- 3 MITOSIS -->
+  <section class="view" data-view="mitosis" hidden>
+    <div class="vh"><p class="eyebrow">บทที่ 3 · Karyokinesis &amp; Cytokinesis</p>
+      <h2>Mitosis ทีละระยะ</h2>
+      <p class="lede">เซลล์ตัวอย่างมี 2n = 4 (ชมพู = maternal, เขียว = paternal) ดูว่า chromosome เคลื่อนที่อย่างไรจนได้ 2 เซลล์ที่เหมือนเดิม</p></div>
+    <div class="scope">
+      <canvas id="cMit" width="400" height="300" style="aspect-ratio:400/300" aria-label="Animation การแบ่งเซลล์แบบ mitosis"></canvas>
+      <div class="scope-foot"><span class="scale"><i></i>10 µm</span>
+        <span class="legend"><span><i class="sw" style="background:var(--mat)"></i>Maternal</span><span><i class="sw" style="background:var(--pat)"></i>Paternal</span><span><i class="sw" style="background:var(--spindle)"></i>Spindle</span></span></div>
+    </div>
+    <div class="chips" id="mitChips" role="group" aria-label="เลือกระยะ"></div>
+    <div class="controls">
+      <button class="btn" id="mitPrev" type="button" aria-label="ระยะก่อนหน้า"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3 5 8l5 5"/></svg>ก่อนหน้า</button>
+      <button class="btn primary" id="mitPlay" type="button"></button>
+      <button class="btn" id="mitNext" type="button" aria-label="ระยะถัดไป">ถัดไป<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 3 5 5-5 5"/></svg></button>
+      <button class="btn" id="mitLab" type="button" aria-pressed="true">ป้ายชื่อ: เปิด</button>
+    </div>
+    <div class="card">
+      <p class="kv" id="mitIdx">ระยะที่ 1 / 7</p>
+      <h3 id="mitName">Interphase</h3>
+      <p class="th" id="mitTh"></p>
+      <ul id="mitList"></ul>
+      <p class="src" id="mitSrc"></p>
+    </div>
+    <div class="note"><b>ใครคุมจังหวะ?</b> การเข้าสู่ M phase ถูกชักนำโดย <b>CDK1 / Cyclin B</b> · Kinetochore คือกลุ่มโปรตีนที่ centromere ใช้จับ microtubule (spindle fiber) เพื่อดึง chromatid แยกจากกัน<p class="src" style="margin-top:6px"><span>ที่มา: <b>สไลด์ 7, 12</b></span></p></div>
+    <div class="grid2">
+      <div class="mini"><h4>Mitosis</h4><p>1 เซลล์ → 2 เซลล์ จำนวน chromosome เท่าเดิม ใช้เพิ่มเซลล์ร่างกาย เพื่อการเจริญเติบโตและซ่อมแซม</p><span class="drug">2n → 2n</span><p class="src"><span>ที่มา: <b>สไลด์ 2, 8–9, 19–21</b></span></p></div>
+      <div class="mini"><h4>Meiosis</h4><p>แบ่ง 2 รอบ (Meiosis I &amp; II) ได้ 4 เซลล์ จำนวน chromosome ลดลงครึ่งหนึ่ง ใช้สร้าง gamete</p><span class="drug">2n → n</span><p class="src"><span>ที่มา: <b>สไลด์ 5, 8</b></span></p></div>
+    </div>
+    <p class="src"><span>เซลล์ตัวอย่าง 2n = 4 และสี maternal/paternal: <b>สไลด์ 12, 19–21</b></span></p>
+    <button class="btn next" data-go="death" type="button">ถัดไป: Cell death →</button>
+  </section>
+
+  <!-- 4 DEATH -->
+  <section class="view" data-view="death" hidden>
+    <div class="vh"><p class="eyebrow">บทที่ 4 · Deterioration &amp; Cell death</p>
+      <h2>Apoptosis vs Necrosis</h2>
+      <p class="lede">เซลล์ตาย 2 แบบที่หน้าตาต่างกันชัดเจน ซ้ายคือแบบมีโปรแกรม ขวาคือแบบไม่คาดคิด</p></div>
+    <div class="scope">
+      <canvas id="cDeath" width="400" height="220" style="aspect-ratio:400/220" aria-label="Animation เปรียบเทียบ apoptosis และ necrosis"></canvas>
+    </div>
+    <div class="controls"><button class="btn primary" id="dePlay" type="button"></button><button class="btn" id="deRe" type="button">เริ่มใหม่</button></div>
+    <div class="cols2">
+      <div class="card"><h3>Apoptosis</h3><ol class="steps" id="deA"><li>เซลล์หดตัว chromatin อัดแน่น</li><li>Membrane โป่งเป็นตุ่ม (blebbing)</li><li>แตกเป็น apoptotic bodies</li><li>Phagocyte กลืนกิน ไม่อักเสบ</li></ol><p class="src"><span>ที่มา: <b>สไลด์ 24–25</b></span></p></div>
+      <div class="card"><h3>Necrosis</h3><ol class="steps" id="deN"><li>เซลล์บวม mitochondria เสียหน้าที่</li><li>Plasma membrane แตก</li><li>สารในเซลล์รั่วออกมา</li><li>อักเสบ ลามถึงเซลล์ข้างเคียง</li></ol><p class="src"><span>ที่มา: <b>สไลด์ 24–25</b></span></p></div>
+    </div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>ลักษณะ</th><th>Necrosis</th><th>Apoptosis</th></tr></thead>
+      <tbody>
+        <tr><td>การเกิด</td><td>ไม่คาดคิด เซลล์ข้างเคียงตายร่วม</td><td>กำจัดเซลล์ที่ไม่ต้องการ ตายทีละเซลล์</td></tr>
+        <tr><td>รูปร่าง</td><td>บวม membrane โป่งพองแล้วแตก</td><td>หดตัว ขนาดเล็กลง</td></tr>
+        <tr><td>พลังงาน</td><td>Mitochondria เสียหน้าที่ ขาด ATP</td><td>ยังสร้าง ATP และโปรตีนได้</td></tr>
+        <tr><td>การอักเสบ</td><td>มี เพราะสารในเซลล์รั่ว</td><td>ไม่มี</td></tr>
+        <tr><td>แผลเป็น</td><td>เกิดแผลเป็นแทนที่</td><td>ไม่เกิดแผลเป็น</td></tr>
+        <tr><td>ตัวอย่าง</td><td>แผลเนื้อตาย จากขาดเลือด ติดเชื้อ</td><td>ต่อมไทมัสฝ่อ การแยกนิ้วมือนิ้วเท้า กำจัดเซลล์เสื่อม/มะเร็ง</td></tr>
+      </tbody></table></div>
+    <p class="src"><span>ตาราง: <b>สไลด์ 25</b></span><span class="x">ข้อมูลเสริม: สาเหตุ “ขาดเลือด ติดเชื้อ” ของ necrosis (สไลด์ 25 มีเพียงภาพแผล)</span></p>
+    <div class="card"><h3>สาเหตุของการเสื่อมของเซลล์</h3>
+      <div class="grid3">
+        <div class="mini"><h4>ฮอร์โมนพร่อง</h4><p>ฮอร์โมนบางชนิดลดลงตามอายุ</p></div>
+        <div class="mini"><h4>DNA เสียหาย</h4><p>สะสมความเสียหาย telomere สั้นลง</p></div>
+        <div class="mini"><h4>ซ่อมแซมผิดพลาด</h4><p>สะสมนานจนเนื้อเยื่อและอวัยวะล้มเหลว</p></div>
+        <div class="mini"><h4>ของเสียสะสม</h4><p>กำจัดออกไม่หมด เซลล์ทำงานผิดปกติ</p></div>
+        <div class="mini"><h4>เซลล์จำศีล</h4><p>เซลล์ผิดปกติสะสม เนื้อเยื่อสูญเสียเซลล์</p></div>
+        <div class="mini"><h4>อนุมูลอิสระ</h4><p>จากปัจจัยในร่างกายและมลภาวะภายนอก</p></div>
+      </div><p class="src"><span>ที่มา: <b>สไลด์ 23</b></span></p></div>
+    <button class="btn next" data-go="cancer" type="button">ถัดไป: Cancer →</button>
+  </section>
+
+  <!-- 5 CANCER -->
+  <section class="view" data-view="cancer" hidden>
+    <div class="vh"><p class="eyebrow">บทที่ 5 · Cancer</p>
+      <h2>p53: ผู้พิทักษ์ DNA</h2>
+      <p class="lede">เลือกสถานะของยีน p53 และความรุนแรงของความเสียหาย แล้วกด “ทำให้ DNA เสียหาย”</p></div>
+    <div class="scope">
+      <canvas id="cCan" width="400" height="260" style="aspect-ratio:400/260" aria-label="Animation บทบาทของ p53"></canvas>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="สถานะ p53"><button type="button" data-p53="ok" aria-pressed="true">p53 ปกติ</button><button type="button" data-p53="mut" aria-pressed="false">p53 กลายพันธุ์</button></div>
+      <div class="seg" role="group" aria-label="ความเสียหาย" id="canDmg"><button type="button" data-dmg="low" aria-pressed="true">เสียหายน้อย</button><button type="button" data-dmg="high" aria-pressed="false">เสียหายมาก</button></div>
+      <button class="btn primary" id="canGo" type="button">ทำให้ DNA เสียหาย</button>
+    </div>
+    <div class="card"><p class="kv">สิ่งที่เกิดขึ้น</p><ol class="steps" id="canSteps"></ol><p class="src"><span>ที่มา: <b>สไลด์ 26–28</b></span><span class="x">ข้อมูลเสริม: คำว่า “cell cycle arrest”</span></p></div>
+    <div class="grid2">
+      <div class="mini"><h4>Oncogene = คันเร่งค้าง</h4><p>ยีนก่อมะเร็งกลายพันธุ์ กระตุ้นให้แบ่งตัวตลอดเวลา</p><span class="drug">c-myc · bcl-2</span><p class="src"><span>ที่มา: <b>สไลด์ 27</b></span><span class="x">ข้อมูลเสริม: การเปรียบเทียบ “คันเร่ง”</span></p></div>
+      <div class="mini"><h4>Anti-oncogene = เบรกแตก</h4><p>ยีนต้านมะเร็งกลายพันธุ์ เซลล์ผิดปกติจึงรอดจาก apoptosis</p><span class="drug">TP53 · BRCA2 · PALB2</span><p class="src"><span>ที่มา: <b>สไลด์ 27</b></span><span class="x">ข้อมูลเสริม: การเปรียบเทียบ “เบรก”</span></p></div>
+    </div>
+    <div class="note"><b>ผลต่อการรักษา</b> — มะเร็งที่มี bcl-2 สูง และ TP53 กลายพันธุ์ มักดื้อต่อเคมีบำบัด เพราะยาเคมีหลายตัวอาศัยการสั่ง apoptosis<p class="src" style="margin-top:6px"><span>ที่มา: <b>สไลด์ 27</b></span><span class="x">ข้อมูลเสริม: เหตุผล “ยาเคมีอาศัย apoptosis”</span></p></div>
+    <div class="card"><h3>ปัจจัยเสี่ยง</h3>
+      <div class="grid3">
+        <div class="mini"><h4>อายุ</h4><p>กลายพันธุ์สะสมมากขึ้น มีการวินิจฉัยมะเร็งมากถึง 50% ในผู้ที่อายุเกิน 75 ปี</p><p class="src"><span>ที่มา: <b>สไลด์ 28</b></span></p></div>
+        <div class="mini"><h4>สูบบุหรี่</h4><p>สัมพันธ์กับมะเร็งปอด ตามปริมาณและระยะเวลา</p><p class="src"><span>ที่มา: <b>สไลด์ 28</b></span></p></div>
+        <div class="mini"><h4>รังสี</h4><p>ทำลาย DNA เช่น UV จากแสงแดด → มะเร็งผิวหนัง</p><p class="src"><span>ที่มา: <b>สไลด์ 28</b></span></p></div>
+        <div class="mini"><h4>ภูมิคุ้มกันบกพร่อง</h4><p>NK cell เฝ้าระวังน้อยลง เช่น ผู้ปลูกถ่ายไต ผู้ติดเชื้อ HIV เสี่ยงมะเร็งปากมดลูก</p><p class="src"><span>ที่มา: <b>สไลด์ 29</b></span></p></div>
+        <div class="mini"><h4>อาหาร</h4><p>ไขมันสูง ของไหม้เกรียม แอลกอฮอล์ ขาด folic acid วิตามิน A, C เพิ่มเสี่ยง · ไฟเบอร์ช่วยลดเสี่ยงมะเร็งลำไส้</p><p class="src"><span>ที่มา: <b>สไลด์ 29</b></span></p></div>
+      </div></div>
+    <button class="btn next" data-go="therapy" type="button">ถัดไป: การรักษามะเร็ง →</button>
+  </section>
+
+  <!-- 6 THERAPY -->
+  <section class="view" data-view="therapy" hidden>
+    <div class="vh"><p class="eyebrow">บทที่ 6 · Therapies</p>
+      <h2>Chemotherapy vs Targeted therapy</h2>
+      <p class="lede">เนื้อเยื่อจำลองนี้มีเซลล์ 3 แบบ ลองให้ยาแต่ละชนิดแล้วดูว่าเซลล์ไหนถูกทำลาย</p></div>
+    <div class="scope">
+      <canvas id="cTx" width="400" height="250" style="aspect-ratio:400/250" aria-label="Animation เปรียบเทียบยาเคมีบำบัดและยามุ่งเป้า"></canvas>
+      <div class="scope-foot"><span class="legend">
+        <span><i class="sw" style="background:var(--bad)"></i>เซลล์มะเร็ง (Y = ตัวรับเป้าหมาย)</span>
+        <span><i class="sw" style="background:var(--spindle)"></i>เซลล์ปกติที่แบ่งตัวเร็ว</span>
+        <span><i class="sw" style="background:var(--muted)"></i>เซลล์ระยะ G0</span></span></div>
+    </div>
+    <div class="controls">
+      <button class="btn primary" id="txChemo" type="button">ให้ Chemotherapy</button>
+      <button class="btn primary" id="txTarget" type="button">ให้ Targeted therapy</button>
+      <button class="btn" id="txReset" type="button">รีเซ็ต</button>
+    </div>
+    <div class="card"><p class="kv">ผลลัพธ์</p><p id="txOut" class="status">เลือกยาเพื่อเริ่มจำลอง</p><p class="src"><span>ที่มา: <b>สไลด์ 31–32</b></span><span class="x">ข้อมูลเสริม: ชื่ออาการข้างเคียง และการตรวจ biomarker (HER2+ สำหรับ Trastuzumab)</span></p></div>
+    <div class="grid2">
+      <div class="mini"><h4>Chemotherapy · คีโม</h4><p>ทำลายเซลล์ที่กำลังแบ่งตัว จึงโดนเซลล์ปกติที่แบ่งเร็วด้วย เช่น รากผม เยื่อบุทางเดินอาหาร เซลล์ต้นกำเนิดเม็ดเลือด ผิวหนัง เล็บ เซลล์สืบพันธุ์ ให้ได้ทั้งฉีด IV ฉีดเฉพาะที่ และรับประทาน</p><p class="src"><span>ที่มา: <b>สไลด์ 31</b></span></p></div>
+      <div class="mini"><h4>Targeted therapy · ยามุ่งเป้า</h4><p>ออกฤทธิ์เฉพาะโปรตีนหรือโมเลกุลที่เกี่ยวกับการเติบโตและแพร่กระจายของมะเร็ง ผลข้างเคียงน้อยกว่า แต่ใช้ได้เมื่อมะเร็งมีเป้าหมายนั้น</p><p class="src"><span>ที่มา: <b>สไลด์ 32</b></span><span class="x">ข้อมูลเสริม: “ใช้ได้เมื่อมีเป้าหมาย”</span></p></div>
+    </div>
+    <div class="card"><h3>อ่านชื่อยาจากท้ายคำ</h3>
+      <div class="grid3">
+        <div class="mini"><h4>-mab</h4><p>Monoclonal antibody จับเป้าหมายบนผิวหรือนอกเซลล์ ส่วนใหญ่เป็นยาฉีด</p><span class="drug">Trastuzumab · Rituximab · Bevacizumab</span></div>
+        <div class="mini"><h4>-tinib</h4><p>Small molecule ผ่าน membrane เข้าเซลล์ได้ มักเป็นยารับประทาน</p><span class="drug">Erlotinib · Gefitinib · Osimertinib</span></div>
+        <div class="mini"><h4>-ciclib</h4><p>CDK4/6 inhibitor หยุดเซลล์ที่ G1</p><span class="drug">Palbociclib</span></div>
+      </div><p class="src"><span>ชนิดยาและตัวอย่าง: <b>สไลด์ 11, 32</b></span><span class="x">ข้อมูลเสริม: หลักจำชื่อจากท้ายคำ -mab / -tinib / -ciclib</span></p></div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>กลไก</th><th>ตัวอย่างยา</th></tr></thead>
+      <tbody>
+        <tr><td>กระตุ้นภูมิคุ้มกันให้ทำลายเซลล์มะเร็ง</td><td>Rituximab</td></tr>
+        <tr><td>ขัดขวางสัญญาณการแบ่งตัว</td><td>Erlotinib, Gefitinib</td></tr>
+        <tr><td>ยับยั้งการสร้างเส้นเลือดใหม่</td><td>Bevacizumab</td></tr>
+        <tr><td>ส่งสารพิษเข้าเซลล์เป้าหมาย</td><td>Trastuzumab emtansine</td></tr>
+        <tr><td>กระตุ้นการตายแบบ apoptosis (ยับยั้ง BCL-2)</td><td>Venetoclax</td></tr>
+      </tbody></table></div>
+    <p class="src"><span>ตาราง: <b>สไลด์ 32</b></span><span class="x">ข้อมูลเสริม: “ยับยั้ง BCL-2” ของ Venetoclax</span></p>
+    <div class="card"><h3>ทางเลือกการรักษาในปัจจุบัน</h3>
+      <div class="pills"><span class="pill">ศัลยกรรม</span><span class="pill">รังสีรักษา</span><span class="pill">เคมีบำบัด</span><span class="pill">ยามุ่งเป้า</span><span class="pill">รักษาเฉพาะจุด</span><span class="pill">ภูมิคุ้มกันบำบัด</span><span class="pill">ปลูกถ่ายเซลล์ต้นกำเนิด</span></div><p class="src"><span>ที่มา: <b>สไลด์ 30</b></span></p></div>
+    <button class="btn next" data-go="aging" type="button">ถัดไป: Aging →</button>
+  </section>
+
+  <!-- 7 AGING -->
+  <section class="view" data-view="aging" hidden>
+    <div class="vh"><p class="eyebrow">บทที่ 7 · Longevity &amp; Anti-aging</p>
+      <h2>Telomere สั้นลงทุกครั้งที่แบ่งเซลล์</h2>
+      <p class="lede">กดแบ่งเซลล์ไปเรื่อย ๆ แล้วดูปลาย chromosome (จำลองให้สั้นลงเร็วกว่าจริงเพื่อให้เห็นภาพ)</p></div>
+    <div class="scope">
+      <canvas id="cAge" width="400" height="200" style="aspect-ratio:400/200" aria-label="Animation telomere สั้นลง"></canvas>
+      <div class="scope-foot"><span class="kv" id="agCount">แบ่งแล้ว 0 ครั้ง</span><span class="status" id="agState">เซลล์ปกติ</span></div>
+    </div>
+    <div class="card" style="gap:8px"><p class="kv">ความยาว telomere</p><div class="bar"><i id="agBar" style="width:100%"></i></div></div>
+    <div class="controls">
+      <button class="btn primary" id="agDiv" type="button">แบ่งเซลล์</button>
+      <button class="btn" id="agSeno" type="button" disabled>ให้ Senolytics</button>
+      <button class="btn" id="agReset" type="button">รีเซ็ต</button>
+    </div>
+    <div class="note" id="agNote"><b>Telomere</b> คือส่วนปลายของแท่ง chromosome คนที่มี telomere สั้นสัมพันธ์กับความเสี่ยงโรคที่เกี่ยวกับความเสื่อมมากกว่า</div>
+    <div class="card"><h3>เทคโนโลยีชะลอวัย</h3>
+      <p class="kv">Cellular &amp; Molecular therapies</p>
+      <div class="grid3">
+        <div class="mini"><h4>Senolytics</h4><p>ยากำจัดเซลล์ชราภาพ (senescent cell)</p><span class="drug">Quercetin · Fisetin</span></div>
+        <div class="mini"><h4>Exosome-based therapy</h4><p>สารส่งสัญญาณระหว่างเซลล์ กระตุ้น fibroblast ฟื้นฟูผิว ลดริ้วรอย</p></div>
+        <div class="mini"><h4>Stem cell therapy</h4><p>สร้างเซลล์ใหม่ทดแทน ฟื้นฟูเนื้อเยื่อ</p></div>
+      </div>
+      <p class="kv" style="margin-top:6px">Longevity cosmeceuticals &amp; nutrition</p>
+      <div class="pills"><span class="pill">Growth factor</span><span class="pill">NAD+ therapy</span><span class="pill">Cell therapy ข้อเข่า</span><span class="pill">Mesotherapy</span><span class="pill">Botox</span><span class="pill">Filler</span><span class="pill">Ionto</span><span class="pill">Pico-Laser</span><span class="pill">Ceramides</span><span class="pill">Microbiome actives</span><span class="pill">Antioxidants</span><span class="pill">NAD+ boosters</span><span class="pill">Autophagy inducers</span></div>
+      <p class="src"><span>ที่มา: <b>สไลด์ 33–35</b></span></p>
+    </div>
+    <p class="src"><span>ภาพจำลอง: จำนวนครั้งที่แบ่งได้ (6 ครั้ง) ตั้งขึ้นเพื่อให้เห็นภาพเท่านั้น</span></p>
+    <button class="btn next" data-go="quiz" type="button">ถัดไป: Quiz →</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="view" data-view="quiz" hidden>
+    <div class="vh"><p class="eyebrow">ทบทวน · 10 ข้อ</p><h2>Quiz</h2><p class="lede">เลือกคำตอบ แล้วอ่านคำอธิบายใต้ข้อ</p></div>
+    <div class="card" style="grid-template-columns:auto 1fr;align-items:center;gap:14px"><span class="score" id="qzScore">0/10</span><div style="display:grid;gap:8px;justify-items:start"><span class="kv" id="qzDone">ตอบแล้ว 0 ข้อ</span><button class="btn" id="qzReset" type="button">เริ่มทำใหม่</button></div></div>
+    <div id="qzList" style="display:grid;gap:12px"></div>
+    <button class="btn next" data-go="exam" type="button">ถัดไป: ข้อสอบ →</button>
+  </section>
+
+  <!-- EXAM -->
+  <section class="view" data-view="exam" hidden>
+    <div class="vh"><p class="eyebrow">Exam · คลังข้อสอบ <span id="exBankN">100</span> ข้อ</p><h2>แบบทดสอบ Mitosis &amp; Cell Aging</h2>
+      <p class="lede">ข้อสอบปรนัย 4 ตัวเลือก ครอบคลุมทั้ง 7 บท ลำดับข้อและตำแหน่งตัวเลือกสุ่มใหม่ทุกครั้ง</p></div>
+    <div id="exSetup" style="display:grid;gap:12px">
+      <div class="card paper">
+        <h3>คำชี้แจง</h3>
+        <ol class="rules">
+          <li>เลือกคำตอบที่ถูกต้องที่สุดเพียงคำตอบเดียว</li>
+          <li>ตอบผิดไม่หักคะแนน ควรตอบให้ครบทุกข้อ</li>
+          <li>เปลี่ยนคำตอบและปักธงข้อที่ไม่แน่ใจได้จนกว่าจะส่ง</li>
+          <li>ระหว่างสอบจะเปิดบทเรียนหรือโหมดอื่นไม่ได้</li>
+          <li>เมื่อหมดเวลา ระบบส่งคำตอบให้อัตโนมัติ</li>
+          <li>เกณฑ์ผ่าน 60% ของคะแนนเต็ม</li>
+        </ol>
+      </div>
+      <div class="card" style="gap:16px">
+        <div class="exrow"><span class="kv">ชุดข้อสอบ</span><div class="presets" id="exP" role="group" aria-label="ชุดข้อสอบ"></div></div>
+        <div id="exCustom" style="display:grid;gap:16px" hidden>
+          <div class="exrow"><span class="kv">จำนวนข้อ</span>
+            <div class="seg" role="group" aria-label="จำนวนข้อ" id="exN"><button type="button" data-n="10" aria-pressed="true">10 ข้อ</button><button type="button" data-n="20" aria-pressed="false">20 ข้อ</button><button type="button" data-n="999" aria-pressed="false">ทั้งหมดที่เลือก</button></div></div>
+          <div class="exrow"><span class="kv">บทที่ออกสอบ</span><div class="pills" id="exCh" role="group" aria-label="บทที่ออกสอบ"></div></div>
+          <div class="exrow"><span class="kv">เวลา</span>
+            <div class="seg" role="group" aria-label="เวลา" id="exT"><button type="button" data-t="0" aria-pressed="false">ไม่จับเวลา</button><button type="button" data-t="60" aria-pressed="true">1 นาที / ข้อ</button><button type="button" data-t="45" aria-pressed="false">45 วินาที / ข้อ</button></div></div>
+        </div>
+        <div class="exrow"><label class="kv" for="exName">ชื่อผู้สอบ (ไม่บังคับ)</label><input id="exName" class="inp" type="text" maxlength="60" placeholder="ชื่อ–นามสกุล" autocomplete="name"></div>
+        <p class="kv" id="exInfo"></p>
+        <div class="controls"><button class="btn primary" id="exStart" type="button">เริ่มทำข้อสอบ</button></div>
+      </div>
+      <div class="card" id="exHistCard" hidden><h3 style="font-size:18px">ประวัติการสอบในเครื่องนี้</h3><div id="exHist" class="tablewrap" style="border:0"></div></div>
+    </div>
+    <div id="exRun" style="display:grid;gap:12px" hidden></div>
+    <div id="exDone" style="display:grid;gap:12px" hidden></div>
+  </section>
+
+  <p class="foot">เนื้อหาอ้างอิงจากเอกสารประกอบการสอน Mitosis &amp; Cell Aging, Asst.Prof. Jiranart Boonkong, Faculty of Science, Siam University · ภาพเคลื่อนไหวเป็นแบบจำลองเพื่อการเรียนรู้ ไม่ได้วาดตามสัดส่วนจริง</p>
+</div>
+
+<script>
+(function(){
+"use strict";
+const TAU=Math.PI*2;
+const clamp=(v,a,b)=>Math.max(a===undefined?0:a,Math.min(b===undefined?1:b,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FONT='"IBM Plex Sans Thai",system-ui,sans-serif';
+const DFONT='"Bai Jamjuree","IBM Plex Sans Thai",system-ui,sans-serif';
+const $=id=>document.getElementById(id);
+
+/* palette */
+const P={};
+const KEYS=['bg','surface','sunk','ink','muted','line','hema','eosin','mat','pat','spindle','cyto','nuc','membrane','g1','s','g2','m','ok','bad','warn','on'];
+function readPal(){const cs=getComputedStyle(document.documentElement);KEYS.forEach(k=>{P[k]=cs.getPropertyValue('--'+k).trim()||'#888888';});}
+function A(k,a){let h=(P[k]||'#888888').replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');const n=parseInt(h,16);return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';}
+readPal();
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',readPal);}catch(e){}
+new MutationObserver(readPal).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','class','style']});
+
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+function stage(id,W,H){
+  const c=$(id),ctx=c.getContext('2d');const S={c,ctx,W,H,s:1};
+  const fit=()=>{const w=c.getBoundingClientRect().width;if(!w)return;const d=Math.min(window.devicePixelRatio||1,2.5);const cw=Math.round(w*d);if(cw!==c.width){c.width=cw;c.height=Math.round(w*H/W*d);}S.s=c.width/W;};
+  if('ResizeObserver' in window)new ResizeObserver(fit).observe(c);
+  S.fit=fit;fit();
+  S.begin=()=>{ctx.setTransform(S.s,0,0,S.s,0,0);ctx.clearRect(0,0,W,H);};
+  S.pt=e=>{const r=c.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*W,y:(e.clientY-r.top)/r.height*H};};
+  return S;
+}
+function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+/* label pill with leader line, placed in fixed corner slots so text never sits on the drawing */
+function tag(S,txt,slot,tx,ty,al){
+  if(al<=.02)return;const ctx=S.ctx;ctx.save();ctx.globalAlpha=al;
+  ctx.font='600 13px '+FONT;const w=ctx.measureText(txt).width+18,h=24;
+  const top=slot[0]==='T';const y=top?6:S.H-30;
+  const x=slot[1]==='L'?6:slot[1]==='R'?S.W-6-w:S.W/2-w/2;
+  const ax=clamp(tx,x+12,x+w-12),ay=top?y+h:y;
+  ctx.strokeStyle=P.ink;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(tx,ty);ctx.stroke();
+  ctx.fillStyle=P.surface;ctx.beginPath();ctx.arc(tx,ty,4.2,0,TAU);ctx.fill();
+  ctx.fillStyle=P.ink;ctx.beginPath();ctx.arc(tx,ty,2.6,0,TAU);ctx.fill();
+  rr(ctx,x,y,w,h,8);ctx.fillStyle=A('surface',.96);ctx.fill();ctx.strokeStyle=P.line;ctx.lineWidth=1;ctx.stroke();
+  ctx.fillStyle=P.ink;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(txt,x+w/2,y+h/2+1);
+  ctx.restore();
+}
+function blob(ctx,cx,cy,R,fn,n){n=n||72;ctx.beginPath();for(let i=0;i<=n;i++){const a=i/n*TAU,r=R*fn(a);const x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;i?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.closePath();}
+const playIcon='<svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5v11l9-5.5z"/></svg>';
+const pauseIcon='<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z"/></svg>';
+const srcHTML=(s,x)=>'<span>ที่มา: <b>'+s+'</b></span>'+(x?'<span class="x">ข้อมูลเสริม: '+x+'</span>':'');
+function setPlay(btn,on){btn.innerHTML=on?pauseIcon+'หยุด':playIcon+'เล่น';btn.setAttribute('aria-pressed',on?'true':'false');}
+
+const scenes={};
+
+/* ============ Tutor mode ============ */
+const TD={
+ dna:{
+  0:{h:'ระดับ 1 / 4',say:'เริ่มจากโมเลกุลที่เล็กที่สุดก่อน DNA หน้าตาเหมือนบันไดเกลียว ราวบันไดคือ backbone ขั้นบันไดคือคู่เบส DNA ในเซลล์เดียวยาวมาก จึงต้องมีวิธีพับเก็บให้พอดีกับ nucleus',tip:'Prokaryote = DNA วงแหวน ไม่มี nucleus · Eukaryote = DNA อยู่ใน nucleus',trap:'Prokaryote มี DNA เหมือนกัน แค่ไม่มี nucleus มาห่อไว้',q:'ถ้าเซลล์ไม่มี nucleus DNA จะอยู่ในรูปแบบไหน',a:'เป็นวงแหวน (circular) อย่างที่พบใน prokaryotic cell',src:'สไลด์ 3–4',x:'การเปรียบเทียบบันไดเกลียว'},
+  1:{h:'ระดับ 2 / 4',say:'ขั้นแรกของการเก็บคือพัน DNA รอบโปรตีน histone เหมือนพันด้ายรอบหลอดด้าย ได้เม็ด nucleosome เรียงต่อกันเป็นสร้อยลูกปัด',tip:'Beads on a string: ลูกปัด = nucleosome (DNA + histone) · เชือก = DNA ที่เชื่อมระหว่างเม็ด',trap:'Histone เป็นโปรตีน ไม่ใช่ DNA',q:'Nucleosome ประกอบด้วยอะไร',a:'DNA ที่พันรอบโปรตีน histone',src:'สไลด์ 4',x:'การเปรียบเทียบหลอดด้าย'},
+  2:{h:'ระดับ 3 / 4',say:'ลูกปัดขดทบกันต่อจนเป็นเส้นใย chromatin ช่วงที่เซลล์ไม่ได้แบ่ง (interphase) DNA อยู่ในสภาพนี้ เห็นเป็นเส้นใยบางยาวพันกันไปมา',tip:'Chromatin = เส้นใยยาวบาง (ช่วงไม่แบ่ง) · Chromosome = แท่งหดสั้น (ช่วงแบ่ง)',trap:'Chromatin กับ chromosome เป็นสารชนิดเดียวกัน ต่างกันแค่ระดับการขด',q:'ในระยะ interphase เราเห็น chromosome เป็นแท่งหรือไม่',a:'ไม่เห็น จะเห็นเป็นเส้นใย chromatin บางยาวพันกันไปมา',src:'สไลด์ 4, 10'},
+  3:{h:'ระดับ 4 / 4',say:'ก่อนแบ่งเซลล์ chromatin หดตัวเต็มที่จนเป็นแท่ง ขนย้ายได้ง่ายเหมือนม้วนสายไฟก่อนย้ายบ้าน แต่ละแท่งมี sister chromatids 2 เส้นที่เหมือนกันทุกประการ ยึดกันที่ centromere',tip:'p arm = แขนสั้น (p มาก่อน q ในตัวอักษร) · q arm = แขนยาว',trap:'Chromosome ที่จำลองแล้วมี 2 chromatids แต่ยังนับเป็น 1 chromosome',q:'ส่วนที่แคบที่สุดของ chromosome ชื่ออะไร และสำคัญอย่างไร',a:'Centromere ทำให้ sister chromatids อยู่ชิดกันมากที่สุด และเป็นที่อยู่ของ kinetochore ซึ่งจับกับ spindle',src:'สไลด์ 4, 6–7',x:'การเปรียบเทียบสายไฟ, วิธีนับ chromosome'}},
+ cycle:{
+  G1:{h:'G1',say:'เซลล์ที่เพิ่งเกิดต้องโตและสร้างโปรตีนก่อน เหมือนพนักงานใหม่ที่ต้องเก็บประสบการณ์ ก่อนจะผ่านด่าน G1 checkpoint ไปทำงานใหญ่คือการถ่ายสำเนา DNA',tip:'Cyclin เรียง D → E → A → B ตามลำดับ cycle ส่วน CDK นับถอยหลัง 4 → 2 → 2 → 1',trap:'G1 ใช้ 2 คู่ คือ CDK4/Cyclin D และ CDK2/Cyclin E',q:'ถ้ายับยั้ง CDK4/6 เซลล์จะติดอยู่ระยะใด',a:'G1 เพราะ CDK4/Cyclin D ทำงานในช่วงนี้ เป็นหลักการของ Palbociclib',src:'สไลด์ 10–11',x:'เทคนิคจำ D-E-A-B / 4-2-2-1'},
+  S:{h:'S',say:'S มาจาก Synthesis เซลล์ถ่ายสำเนา DNA ทั้งหมด พอจบระยะนี้แต่ละ chromosome จะมี sister chromatids 2 เส้น',tip:'S = Synthesis ของ DNA',trap:'DNA จำลองตัวใน S phase ไม่ได้จำลองระหว่าง mitosis',q:'คู่ CDK–Cyclin ใดคุม S phase',a:'CDK2 / Cyclin A',src:'สไลด์ 6, 10'},
+  G2:{h:'G2',say:'ด่านตรวจสุดท้ายก่อนแบ่ง เซลล์เช็กว่า DNA ที่ถ่ายสำเนาไม่มีที่ผิด และเตรียม centrosome 2 ชุดไว้สร้าง spindle',tip:'G2 = Get ready',trap:'Centrosome จำลองตัวตั้งแต่ interphase (G2) ไม่ใช่ใน prophase',q:'คู่ CDK–Cyclin ใดชักนำเซลล์เข้าสู่ mitosis',a:'CDK1 / Cyclin B',src:'สไลด์ 10, 12–13',x:'เทคนิคจำ Get ready'},
+  M:{h:'M',say:'ช่วงสั้นที่สุดแต่มีเหตุการณ์มากที่สุด แบ่ง nucleus (karyokinesis) แล้วแบ่ง cytoplasm (cytokinesis) ดูทีละระยะได้ในบทที่ 3',tip:'Karyo = nucleus · Cyto = cytoplasm',trap:'Interphase กินเวลามากกว่า M phase มาก',q:'Karyokinesis ต่างจาก cytokinesis อย่างไร',a:'Karyokinesis คือการแบ่ง nucleus ส่วน cytokinesis คือการแบ่ง cytoplasm',src:'สไลด์ 8, 10',x:'เทคนิคจำรากศัพท์'},
+  G0:{h:'G0',say:'เซลล์บางส่วนออกจาก cycle ไปนั่งพัก ไม่มีการเปลี่ยนแปลงจนกว่าจะได้รับสัญญาณให้แบ่งตัว',tip:'G0 = นั่งพัก ไม่แบ่ง',trap:'ยาเคมีบำบัดออกฤทธิ์น้อยกับเซลล์ระยะ G0',q:'ทำไมเซลล์มะเร็งที่อยู่ใน G0 จึงรอดจากคีโมได้',a:'เพราะยาเคมีบำบัดออกฤทธิ์กับเซลล์ที่กำลังแบ่งตัว',src:'สไลด์ 10, 31'},
+  over:{h:'CDK ทำงานเกิน',say:'สังเกตว่าเซลล์วิ่งเร็วขึ้น และ checkpoint ขึ้นสีแดงคือถูกข้าม ไม่มีใครตรวจ เซลล์จึงแบ่งตัวไม่หยุดจนเป็นก้อน',tip:'CDK เหมือนคันเร่ง · Checkpoint เหมือนไฟแดง',trap:'ปัญหาไม่ใช่แค่แบ่งเร็ว แต่แบ่งโดยไม่ผ่านการตรวจ',q:'ยากลุ่มใดถูกพัฒนาจากกลไกนี้',a:'CDK4/6 inhibitors เช่น Palbociclib',src:'สไลด์ 11',x:'การเปรียบเทียบคันเร่งและไฟแดง'},
+  palbo:{h:'Palbociclib',say:'ดูจุดแดงที่ G1 checkpoint เซลล์วิ่งมาถึงแล้วผ่านไม่ได้ เพราะ CDK4/6 ถูกยายับยั้ง จึงเข้า S phase ไม่ได้',tip:'ลงท้าย -ciclib = CDK inhibitor',trap:'Palbociclib ใช้กับมะเร็งเต้านม HR+ / HER2- ร่วมกับยาต้านฮอร์โมน',q:'ทำไมยานี้หยุดเซลล์ที่ G1 ไม่ใช่ G2',a:'เพราะ CDK4/Cyclin D ทำงานช่วง G1 ส่วน G2 → M ใช้ CDK1/Cyclin B',src:'สไลด์ 10–11',x:'เทคนิคจำ -ciclib'}},
+ mitosis:{
+  0:{h:'ระยะที่ 1 / 7',say:'ก่อนเริ่ม ดูให้ออกว่าเซลล์นี้จำลอง DNA เสร็จแล้ว แต่ยังเป็นเส้นยุ่ง ๆ ใน nucleus ด้านบนมี centrosome 2 อันรอทำหน้าที่',tip:'ลำดับ IPMAT: Interphase → Prophase → (Prometaphase) → Metaphase → Anaphase → Telophase',trap:'Interphase เป็นระยะเตรียมตัว ไม่ใช่ระยะหนึ่งของ mitosis',q:'เซลล์ 2n = 4 ที่จำลอง DNA แล้ว มี chromatid กี่เส้น',a:'8 เส้น (4 chromosome × 2 sister chromatids)',src:'สไลด์ 9, 13',x:'เทคนิคจำ IPMAT, การคำนวณจำนวน chromatid'},
+  1:{h:'ระยะที่ 2 / 7',say:'Prophase คือช่วงเก็บของ เส้นยุ่ง ๆ ม้วนเก็บจนเห็นเป็นแท่ง nucleolus หายไป centrosome เริ่มแยกไปคนละฝั่งพร้อมสร้างเส้นใย spindle',tip:'Prophase = Pack & Prepare',trap:'Nucleolus หายใน prophase แต่ nuclear envelope แตกใน prometaphase',q:'เริ่มมองเห็น chromosome เป็นแท่งในระยะใด',a:'Prophase',src:'สไลด์ 13',x:'เทคนิคจำ Pack & Prepare'},
+  2:{h:'ระยะที่ 3 / 7',say:'เยื่อหุ้ม nucleus แตกเป็นชิ้น spindle จึงเข้าถึง chromosome ได้ kinetochore ที่ centromere เกาะกับ microtubule แล้วถูกลากเข้ากลางเซลล์',tip:'Pro-metaphase = ก่อน metaphase · ช่วงจับแล้วลากเข้ากลาง',trap:'Kinetochore คือกลุ่มโปรตีนที่อยู่บน centromere ไม่ใช่ตัว centromere เอง',q:'Spindle จับ chromosome ที่ตำแหน่งใด',a:'Kinetochore บริเวณ centromere',src:'สไลด์ 7, 13'},
+  3:{h:'ระยะที่ 4 / 7',say:'ทุกแท่งมาเข้าแถวตรงกลาง (metaphase plate) chromatid แต่ละข้างถูกดึงจากขั้วตรงข้าม เหมือนชักเย่อที่แรงเท่ากันจึงหยุดนิ่งอยู่กลาง',tip:'Metaphase = Middle',trap:'ระยะนี้ chromosome แค่เรียงตัว ยังไม่แยก',q:'ถ้าต้องการนับจำนวน chromosome ควรดูเซลล์ระยะใด',a:'Metaphase เพราะ chromosome หดตัวและเรียงตัวเห็นชัดที่สุด',src:'สไลด์ 16',x:'เทคนิคจำ Middle, การเปรียบเทียบชักเย่อ, เฉลยข้อนี้'},
+  4:{h:'ระยะที่ 5 / 7',say:'Cohesin ที่ยึดคู่แฝดถูกตัด chromatid แยกกันทันทีและถูกลากไปขั้วของตัวเอง สังเกตรูปตัว V เพราะ centromere ถูกดึงนำหน้า แขนจึงลากตามหลัง',tip:'Anaphase = Apart / Away',trap:'Sister chromatids แยกกันใน anaphase ไม่ใช่ metaphase',q:'อะไรทำให้ chromatid เคลื่อนไปที่ขั้ว',a:'Kinetochore microtubule หดสั้นลง',src:'สไลด์ 16–17',x:'เทคนิคจำ Apart, คำอธิบายรูปตัว V'},
+  5:{h:'ระยะที่ 6 / 7',say:'เหมือนกด rewind ของ prophase: nucleus 2 อันก่อตัวขึ้น nucleolus กลับมา chromosome คลายตัว spindle สลาย และเซลล์เริ่มคอดตรงกลาง',tip:'Telophase = Two nuclei · เป็นภาพกลับด้านของ prophase',trap:'จบ telophase คือแบ่ง nucleus เสร็จ แต่ cytoplasm ยังไม่แยกขาดจากกัน',q:'Nuclear envelope ใหม่มาจากไหน',a:'ชิ้นส่วนของ nuclear envelope เดิมของเซลล์แม่',src:'สไลด์ 16–17',x:'เทคนิคจำ Two nuclei และ rewind'},
+  6:{h:'ระยะที่ 7 / 7',say:'วงแหวน microfilament รัดตรงกลางจนเซลล์ขาดเป็น 2 เซลล์ ได้เซลล์ลูก 2 เซลล์ที่มี chromosome เหมือนเซลล์แม่ทุกประการ',tip:'สัตว์ = Furrow (รัดคอด) · พืช = Plate (สร้างผนังจากด้านใน เพราะมี cell wall แข็ง)',trap:'เซลล์พืชไม่เกิด cleavage furrow',q:'เซลล์ 2n = 46 หลัง mitosis ได้กี่เซลล์ เซลล์ละกี่ chromosome',a:'2 เซลล์ เซลล์ละ 46 chromosome',src:'สไลด์ 17–19',x:'เหตุผลเรื่อง cell wall, ตัวเลข 46'}},
+ death:{
+  0:{h:'ขั้นที่ 1',say:'ดูสองฝั่งพร้อมกัน ซ้ายเซลล์ค่อย ๆ หดตัวเงียบ ๆ ส่วนขวาเซลล์บวมน้ำเหมือนลูกโป่ง',tip:'Apoptosis = หด · Necrosis = บวม',trap:'Apoptosis เป็นการตายที่ถูกโปรแกรมไว้ เซลล์ยังสร้าง ATP ได้',q:'ระหว่าง apoptosis เซลล์ยังสร้าง ATP ได้หรือไม่',a:'ได้ ยังสร้าง ATP และสังเคราะห์โปรตีนตามปกติ',src:'สไลด์ 24–25'},
+  1:{h:'ขั้นที่ 2',say:'ซ้าย membrane โป่งเป็นตุ่มเล็ก ๆ (blebbing) แต่ยังไม่แตก ขวา membrane รับแรงดันไม่ไหวจนแตก',tip:'Blebbing = โป่งเป็นตุ่ม แต่ยังห่อเซลล์ไว้',trap:'ทั้งสองแบบ membrane ผิดรูป แต่มีแค่ necrosis ที่แตกจนสารรั่ว',q:'ในภาพ necrosis อะไรทำให้ membrane แตก',a:'เซลล์บวมจนเยื่อหุ้มเซลล์รับไม่ไหว',src:'สไลด์ 24–25'},
+  2:{h:'ขั้นที่ 3',say:'ซ้ายเซลล์แบ่งตัวเองเป็นห่อเล็ก ๆ (apoptotic bodies) ห่อมิดชิด ขวาสารในเซลล์กระจายออกมานอกเซลล์',tip:'Apoptosis = แยกขยะใส่ถุงก่อนทิ้ง · Necrosis = ถุงขยะแตก',trap:'Apoptotic bodies ยังมีเยื่อหุ้ม สารข้างในจึงไม่รั่ว',q:'ทำไม necrosis จึงทำให้เกิดการอักเสบ',a:'เพราะเซลล์แตก สารภายในเซลล์รั่วออกมากระตุ้นการอักเสบ',src:'สไลด์ 24–25',x:'การเปรียบเทียบถุงขยะ'},
+  3:{h:'ขั้นที่ 4',say:'ซ้าย phagocyte มาเก็บกวาด ไม่อักเสบ ไม่เหลือแผลเป็น ขวาอักเสบลามถึงเซลล์ข้างเคียง และซ่อมด้วยแผลเป็น',tip:'Apoptosis = ตายทีละเซลล์ สะอาด · Necrosis = ตายเป็นกลุ่ม เละ',trap:'การแยกนิ้วมือนิ้วเท้าและต่อมไทมัสฝ่อ เป็นตัวอย่างของ apoptosis',q:'การกำจัดเซลล์มะเร็งตามธรรมชาติเป็นการตายแบบใด',a:'Apoptosis',src:'สไลด์ 24–25'}},
+ cancer:{
+  idle:{h:'เริ่มทดลอง',say:'ลองเรียงตามนี้: p53 ปกติ + เสียหายน้อย → เปลี่ยนเป็นเสียหายมาก → แล้วเปลี่ยนเป็น p53 กลายพันธุ์ ดูว่าผลต่างกันอย่างไร',tip:'p53 คือยามเฝ้า DNA มี 2 คำสั่ง: หยุดเพื่อซ่อม หรือสั่งให้ตาย',trap:'p53 เป็น anti-oncogene (ยีนต้านมะเร็ง) ไม่ใช่ oncogene',q:'ชื่อยีนของ p53 เขียนว่าอะไร',a:'TP53',src:'สไลด์ 26–27',x:'การเปรียบเทียบยามเฝ้า'},
+  low:{h:'p53 ปกติ · เสียหายน้อย',say:'DNA เสียหายเล็กน้อย p53 สั่งหยุดการแบ่งเซลล์ ซ่อม DNA เสร็จแล้วจึงปล่อยให้แบ่งต่อ เซลล์ลูกจึงปกติ',tip:'หยุด → ซ่อม → ไปต่อ',trap:'p53 ไม่ได้ซ่อม DNA เอง แต่สั่งหยุดเพื่อให้มีเวลาซ่อม',q:'ถ้าไม่หยุดก่อนซ่อม จะเกิดอะไรกับเซลล์ลูก',a:'DNA ที่เสียหายจะถูกส่งต่อไปยังเซลล์ลูก',src:'สไลด์ 27',x:'เฉลยข้อนี้'},
+  high:{h:'p53 ปกติ · เสียหายมาก',say:'เสียหายมากจนซ่อมไม่สำเร็จ p53 จึงสั่งให้เซลล์นี้ตายแบบ apoptosis เพื่อไม่ให้ความผิดปกติส่งต่อ',tip:'หยุด → ซ่อมไม่ได้ → สั่งตาย',trap:'การตายนี้เป็น apoptosis ไม่ใช่ necrosis จึงไม่อักเสบ',q:'มะเร็งที่มี bcl-2 สูงตอบสนองต่อเคมีบำบัดอย่างไร',a:'มักดื้อต่อการรักษา',src:'สไลด์ 25, 27'},
+  mut:{h:'p53 กลายพันธุ์',say:'ยามหลับ p53 ทำงานไม่ได้ ไม่มีใครสั่งหยุดหรือสั่งตาย เซลล์ผิดปกติจึงแบ่งตัว 1 → 2 → 4 → … จนเป็นก้อนมะเร็ง',tip:'Oncogene = คันเร่งค้าง · Anti-oncogene = เบรกแตก',trap:'BRCA2 และ PALB2 ก็เป็น anti-oncogene เหมือน TP53',q:'ยีนใดในเอกสารที่เป็น oncogene',a:'c-myc และ bcl-2',src:'สไลด์ 26–27',x:'การเปรียบเทียบคันเร่งและเบรก'}},
+ therapy:{
+  idle:{h:'ก่อนให้ยา',say:'ก่อนกด ลองทายก่อนว่ายาแต่ละชนิดจะทำลายเซลล์สีไหนบ้าง แล้วค่อยกดเพื่อดูว่าทายถูกไหม',tip:'คีโมเล็งที่ “การแบ่งตัว” · ยามุ่งเป้าเล็งที่ “โมเลกุลเป้าหมาย”',trap:'เซลล์ปกติที่แบ่งตัวเร็วก็โดนคีโมด้วย',q:'เซลล์ระยะ G0 จะโดนยาเคมีบำบัดหรือไม่',a:'โดนน้อยมาก เพราะไม่ได้อยู่ในช่วงแบ่งตัว',src:'สไลด์ 31–32'},
+  chemo:{h:'Chemotherapy',say:'ยาเคมีกวาดทุกเซลล์ที่กำลังแบ่งตัว ทั้งเซลล์มะเร็งและเซลล์ปกติที่แบ่งเร็ว นี่คือที่มาของผลข้างเคียง ส่วนเซลล์ G0 รอด',tip:'เซลล์ปกติที่โดน: รากผม เยื่อบุทางเดินอาหาร เซลล์ต้นกำเนิดเม็ดเลือด ผิวหนังและเล็บ เซลล์สืบพันธุ์',trap:'คีโมใช้ได้หลายทาง ทั้งฉีด IV ฉีดเฉพาะจุด และรับประทาน',q:'ทำไมผู้ป่วยคีโมจึงติดเชื้อง่าย',a:'เซลล์ต้นกำเนิดเม็ดเลือดถูกทำลาย เม็ดเลือดขาวจึงต่ำ',src:'สไลด์ 31',x:'เฉลยเรื่องเม็ดเลือดขาว'},
+  target:{h:'Targeted therapy',say:'ยามุ่งเป้าวิ่งไปหาเฉพาะเซลล์ที่มีตัวรับเป้าหมาย เซลล์ปกติจึงรอด แต่เซลล์มะเร็งที่ไม่มีเป้าหมายก็รอดไปด้วย',tip:'Monoclonal antibody จับนอกเซลล์ มักเป็นยาฉีด · Small molecule เข้าไปในเซลล์ มักเป็นยากิน',trap:'ผลข้างเคียงน้อยกว่าคีโม ไม่ได้แปลว่าไม่มีผลข้างเคียง',q:'ยามุ่งเป้าชนิด monoclonal antibody ส่วนใหญ่ให้ทางใด',a:'ยาฉีด',src:'สไลด์ 32',x:'ข้อระวังเรื่องผลข้างเคียง'}},
+ aging:{
+  ok:{h:'Telomere',say:'กดแบ่งเซลล์ดู ทุกครั้งที่แบ่ง ปลาย chromosome จะสั้นลง telomere จึงเป็นเหมือนกันชนที่ปกป้องยีนสำคัญด้านใน',tip:'Telomere เหมือนปลอกพลาสติกที่ปลายเชือกรองเท้า',trap:'Telomere อยู่ที่ปลาย chromosome ส่วน centromere อยู่ที่ตำแหน่งคอด',q:'คนที่มี telomere สั้นสัมพันธ์กับอะไร',a:'ความเสี่ยงเป็นโรคต่าง ๆ โดยเฉพาะโรคที่เกี่ยวกับความเสื่อม',src:'สไลด์ 23, 33',x:'การเปรียบเทียบกันชนและปลอกเชือกรองเท้า'},
+  low:{h:'ใกล้หมด',say:'กันชนเหลือน้อยแล้ว อีกไม่กี่รอบเซลล์จะหยุดแบ่งต่อ เพื่อไม่ให้ยีนสำคัญด้านในเสียหาย',tip:'นับจำนวนครั้งที่แบ่งได้ = ความยาว telomere ที่เหลือ',trap:'ภาพนี้จำลองให้สั้นเร็วเพื่อให้เห็นภาพ เซลล์จริงแบ่งได้มากกว่านี้',q:'Telomere สั้นลงเป็นหนึ่งในสาเหตุของอะไรตามเอกสาร',a:'การเสื่อมของเซลล์ (คู่กับการเสียหายของ DNA)',src:'สไลด์ 23',x:'หลักการนับจำนวนครั้งที่แบ่ง'},
+  sen:{h:'Senescent cell',say:'Telomere หมด เซลล์เข้าสู่ภาวะชรา หยุดแบ่งแต่ยังไม่ตาย สะสมในเนื้อเยื่อ เป็นสาเหตุหนึ่งของความเสื่อม',tip:'Senescent = ชรา · Senolytic = สลายเซลล์ชรา',trap:'เซลล์ชราไม่ได้ตายเอง จึงต้องมีวิธีกำจัด',q:'ยากลุ่มใดถูกออกแบบมากำจัดเซลล์แบบนี้',a:'Senolytics เช่น Quercetin และ Fisetin',src:'สไลด์ 23, 34',x:'รากศัพท์ senescent / senolytic'},
+  clr:{h:'Senolytics',say:'Senolytics เก็บกวาดเซลล์ชราออกไป เป็นหนึ่งในแนวคิดของการชะลอวัยระดับเซลล์ ร่วมกับ exosome และ stem cell therapy',tip:'ระดับเซลล์: Senolytics · Exosome · Stem cell',trap:'Quercetin และ Fisetin เป็น senolytic agent ไม่ใช่ growth factor',q:'Exosome ช่วยฟื้นฟูผิวโดยกระตุ้นเซลล์ใด',a:'Fibroblast (เซลล์สร้างเส้นใยผิว)',src:'สไลด์ 34–35'}}
+};
+const TUT={get on(){return document.body.dataset.mode==='tutor';}};
+const capIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg>';
+function tutor(){}
+
+/* ============ 1. DNA packaging ============ */
+(function(){
+  const S=stage('cDna',400,260),ctx=S.ctx;
+  const D={lv:0,target:0,auto:!RM,t:0,hold:0};
+  const INFO=[
+    {n:'DNA double helix',s:'2 nm',d:'สาย DNA 2 สายพันกันเป็นเกลียวคู่ ยึดกันด้วยคู่เบส ใน prokaryote DNA เป็นวงแหวน (circular) ส่วน eukaryote อยู่ใน nucleus',src:'สไลด์ 3–4',x:'ขนาด 2 nm และคำอธิบายคู่เบส'},
+    {n:'Nucleosome',s:'11 nm',d:'DNA พันรอบโปรตีน histone เกิดเป็นเม็ดกลมเรียงต่อกันเหมือนลูกปัด เรียกว่า “beads on a string”',src:'สไลด์ 4',x:'ขนาด 11 nm'},
+    {n:'Chromatin fiber',s:'30 nm',d:'Nucleosome ขดและทบไปมาแน่นขึ้นเป็นเส้นใย chromatin ในระยะ interphase จะเห็นเป็นเส้นใยบางยาวพันกันไปมา',src:'สไลด์ 4, 10',x:''},
+    {n:'Metaphase chromosome',s:'chromatid ~700 nm',d:'ช่วงแบ่งเซลล์ chromatin หดตัว (condense) มากจนเห็นเป็นแท่ง มี 2 sister chromatids ติดกันที่ centromere ซึ่งเป็นส่วนที่แคบที่สุด แขนสั้นคือ p arm แขนยาวคือ q arm',src:'สไลด์ 4, 6, 33',x:''}];
+  const range=$('dnaRange'),autoBtn=$('dnaAuto');
+  function ui(){const i=D.target;range.value=i;$('dnaName').textContent=INFO[i].n;$('dnaSize').textContent=INFO[i].s;$('dnaT').textContent=INFO[i].n;$('dnaD').textContent=INFO[i].d;$('dnaSrc').innerHTML=srcHTML(INFO[i].src,INFO[i].x);autoBtn.innerHTML=(D.auto?pauseIcon+'หยุดซูมอัตโนมัติ':playIcon+'ซูมอัตโนมัติ');}
+  range.addEventListener('input',()=>{D.target=+range.value;D.auto=false;D.hold=0;ui();});
+  autoBtn.addEventListener('click',()=>{D.auto=!D.auto;D.hold=0;ui();});
+  ui();
+  function helix(a,ph){
+    ctx.save();ctx.globalAlpha=a;const cols=['mat','pat','spindle','hema'];
+    for(let x=34,i=0;x<=366;x+=15,i++){const y1=130+38*Math.sin(x*.045+ph),y2=130+38*Math.sin(x*.045+ph+Math.PI);ctx.strokeStyle=A(cols[i%4],.85);ctx.lineWidth=3.2;ctx.beginPath();ctx.moveTo(x,y1);ctx.lineTo(x,y2);ctx.stroke();}
+    [0,Math.PI].forEach(o=>{ctx.strokeStyle=P.hema;ctx.lineWidth=5;ctx.lineCap='round';ctx.beginPath();for(let x=30;x<=370;x+=3){const y=130+38*Math.sin(x*.045+ph+o);x===30?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();});
+    ctx.restore();
+    tag(S,'Base pair','TL',94,130+38*Math.sin(94*.045+ph)*0, a);
+    tag(S,'Backbone','TR',300,130+38*Math.sin(300*.045+ph),a);
+  }
+  function beads(a,ph){
+    ctx.save();ctx.globalAlpha=a;const yAt=x=>130+16*Math.sin(x*.03+ph*.5);
+    ctx.strokeStyle=P.hema;ctx.lineWidth=2.6;ctx.beginPath();for(let x=16;x<=384;x+=3){x===16?ctx.moveTo(x,yAt(x)):ctx.lineTo(x,yAt(x));}ctx.stroke();
+    [70,140,210,280,350].forEach(x=>{const y=yAt(x);ctx.fillStyle=A('eosin',.32);ctx.strokeStyle=P.eosin;ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(x,y,18,0,TAU);ctx.fill();ctx.stroke();
+      ctx.strokeStyle=P.hema;ctx.lineWidth=2.6;[-5,4].forEach(o=>{ctx.beginPath();ctx.ellipse(x,y+o,22,8,-.35,0,TAU);ctx.stroke();});});
+    ctx.restore();
+    tag(S,'DNA','TL',105,yAt(105),a);tag(S,'Histone','TR',280,yAt(280)-12,a);tag(S,'Nucleosome','BC',210,yAt(210)+18,a);
+  }
+  function fiber(a,ph){
+    ctx.save();ctx.globalAlpha=a;const pts=[];
+    for(let i=0;i<46;i++){const g=i*.82+ph;pts.push({x:30+i*7.6,y:130+30*Math.sin(g),z:Math.cos(g)});}
+    ctx.strokeStyle=A('hema',.5);ctx.lineWidth=2;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();
+    pts.slice().sort((p,q)=>p.z-q.z).forEach(p=>{ctx.fillStyle=A('eosin',.25+.4*(p.z+1)/2);ctx.strokeStyle=A('hema',.5+.4*(p.z+1)/2);ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(p.x,p.y,9+3*p.z,0,TAU);ctx.fill();ctx.stroke();});
+    ctx.restore();
+    tag(S,'30-nm chromatin fiber','TL',120,130+30*Math.sin(12*.82+ph),a);
+  }
+  function chromo(a){
+    ctx.save();ctx.globalAlpha=a;ctx.lineCap='round';ctx.lineJoin='round';
+    const arms=[[[176,50],[193,104],[176,212]],[[224,50],[207,104],[224,212]]];
+    arms.forEach(p=>{ctx.strokeStyle=P.mat;ctx.lineWidth=26;ctx.beginPath();ctx.moveTo(p[0][0],p[0][1]);ctx.lineTo(p[1][0],p[1][1]);ctx.lineTo(p[2][0],p[2][1]);ctx.stroke();});
+    arms.forEach(p=>{ctx.strokeStyle=A('surface',.35);ctx.lineWidth=4;[.3,.62,.8].forEach(t=>{const y=lerp(104,212,t),x=lerp(p[1][0],p[2][0],t);ctx.beginPath();ctx.moveTo(x-10,y);ctx.lineTo(x+10,y);ctx.stroke();});
+      const y=lerp(50,104,.45),x=lerp(p[0][0],p[1][0],.45);ctx.beginPath();ctx.moveTo(x-10,y);ctx.lineTo(x+10,y);ctx.stroke();});
+    [[176,50],[224,50],[176,212],[224,212]].forEach(q=>{ctx.fillStyle=P.spindle;ctx.beginPath();ctx.arc(q[0],q[1],8,0,TAU);ctx.fill();});
+    ctx.fillStyle=P.hema;ctx.beginPath();ctx.ellipse(200,104,9,7,0,0,TAU);ctx.fill();
+    ctx.restore();
+    tag(S,'Telomere','TL',172,44,a);tag(S,'p arm','TR',220,76,a);tag(S,'Centromere','BL',200,104,a);tag(S,'q arm','BR',220,170,a);
+  }
+  scenes.dna={tstep(k){D.auto=false;D.target=+k;D.hold=0;ui();},untutor(){},tick(dt){
+    D.t+=dt;if(D.auto){D.hold+=dt;if(D.hold>(TUT.on?8:3.4)){D.hold=0;D.target=(D.target+1)%4;ui();}}
+    tutor('dna',D.target);
+    const d=D.target-D.lv;D.lv+=Math.abs(d)<.002?d:d*Math.min(1,dt*4);
+    S.begin();const ph=RM?0:D.t*1.3;
+    [helix,beads,fiber,chromo].forEach((f,i)=>{const a=clamp(1-Math.abs(D.lv-i)*1.4);if(a>0.01)f(a,ph);});
+  }};
+})();
+
+/* ============ 2. Cell cycle ============ */
+(function(){
+  const S=stage('cCycle',400,336),ctx=S.ctx;const CX=200,CY=170,R1=78,R2=122,RT=142;
+  const PH=[{id:'G1',a:0,b:.4,col:'g1'},{id:'S',a:.4,b:.7,col:'s'},{id:'G2',a:.7,b:.9,col:'g2'},{id:'M',a:.9,b:1,col:'m'}];
+  const CP=[.4,.9,.95];
+  const INFO={
+    G1:{n:'G1 phase',th:'Cell growth',d:'เซลล์เติบโต สังเคราะห์โปรตีนและเอนไซม์ ต้องผ่าน G1 checkpoint (restriction point) ก่อนเข้าสู่ S phase',c:['CDK4 / Cyclin D','CDK2 / Cyclin E'],src:'สไลด์ 10–11',x:''},
+    S:{n:'S phase',th:'DNA synthesis',d:'จำลอง DNA (DNA replication) ทำให้แต่ละ chromosome มี 2 sister chromatids',c:['CDK2 / Cyclin A'],src:'สไลด์ 6, 10',x:''},
+    G2:{n:'G2 phase',th:'เตรียมแบ่งเซลล์',d:'ตรวจสอบความถูกต้องของ DNA ที่ G2 checkpoint และจำลอง centrosome เพิ่มเป็น 2 ชุด',c:['CDK1 / Cyclin B'],src:'สไลด์ 10–11, 13',x:''},
+    M:{n:'M phase',th:'Mitosis + Cytokinesis',d:'แบ่ง nucleus แล้วแบ่ง cytoplasm · M checkpoint ตรวจว่า chromosome ทุกแท่งจับ spindle ครบก่อนเข้า anaphase',c:['CDK1 / Cyclin B'],src:'สไลด์ 8, 11–12',x:'หน้าที่ของ M checkpoint (สไลด์ 11 มีแค่ตำแหน่งในภาพ)'},
+    G0:{n:'G0 phase',th:'ระยะพัก',d:'เซลล์ออกจาก cycle ไม่มีการเปลี่ยนแปลงจนกว่าจะได้รับสัญญาณให้แบ่งตัว ยาเคมีบำบัดจึงออกฤทธิ์ต่อเซลล์ระยะนี้ได้น้อย',c:[],src:'สไลด์ 10, 31',x:''}};
+  const MODE={
+    normal:'<b>ปกติ</b> — เซลล์หยุดตรวจที่ checkpoint ทุกจุด ถ้าทุกอย่างถูกต้องจึงไปต่อ และหยุดแบ่งเมื่อเซลล์เพียงพอ<p class="src" style="margin-top:6px">'+srcHTML('สไลด์ 11','การหยุดแบ่งเมื่อเซลล์เพียงพอ')+'</p>',
+    over:'<b>CDK ถูกกระตุ้นมากเกินไป</b> — เซลล์วิ่งเร็วและข้าม checkpoint ทำให้แบ่งตัวไม่หยุด จนกลายเป็นเซลล์มะเร็ง<p class="src" style="margin-top:6px">'+srcHTML('สไลด์ 11','')+'</p>',
+    palbo:'<b>Palbociclib (CDK4/6 inhibitor)</b> — ยับยั้ง CDK4/Cyclin D เซลล์จึงติดที่ G1 ไม่เข้า S phase ใช้รักษามะเร็งเต้านมชนิด HR+ / HER2- ร่วมกับยาต้านฮอร์โมน<p class="src" style="margin-top:6px">'+srcHTML('สไลด์ 11','“ติดที่ G1” อนุมานจากคู่ CDK4/Cyclin D ที่คุม G1')+'</p>'};
+  const C={pos:.06,play:!RM,mode:'normal',pause:0,cells:1,div:0,flash:[0,0,0],ft:['ok','ok','ok'],blocked:false,sel:null,shown:''};
+  const ang=p=>-Math.PI/2+p*TAU;
+  const phaseAt=p=>PH.find(h=>p>=h.a&&p<h.b)||PH[0];
+  const btn=$('cyPlay');setPlay(btn,C.play);
+  btn.addEventListener('click',()=>{C.play=!C.play;if(C.play)C.sel=null;setPlay(btn,C.play);});
+  function setMode(m){C.mode=m;document.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.mode===m?'true':'false'));
+    C.blocked=false;C.pause=0;C.flash=[0,0,0];if(m!=='palbo'){C.cells=1;C.div=0;}
+    C.play=true;C.sel=null;setPlay(btn,true);$('cyMode').innerHTML=MODE[m];count();}
+  document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
+  $('cyMode').innerHTML=MODE.normal;
+  function count(){$('cyCount').textContent='เซลล์ '+C.cells+(C.cells>=64?'+':'')+' · แบ่ง '+C.div+' รอบ';}
+  S.c.addEventListener('click',e=>{const p=S.pt(e);const dx=p.x-CX,dy=p.y-CY,r=Math.hypot(dx,dy);
+    if(Math.hypot(p.x-362,p.y-42)<28){C.sel='G0';}
+    else if(r>=R1-6&&r<=R2+8){let a=Math.atan2(dy,dx)+Math.PI/2;if(a<0)a+=TAU;C.sel=phaseAt(a/TAU).id;}
+    else return;
+    C.play=false;setPlay(btn,false);});
+  function card(id,live){if(C.shown===id+live)return;C.shown=id+live;const I=INFO[id];
+    $('cyTag').textContent=live?'ระยะที่เซลล์อยู่ตอนนี้':'ระยะที่เลือก';$('cyName').textContent=I.n;$('cyTh').textContent=I.th;$('cyD').textContent=I.d;
+    $('cyCdk').innerHTML=I.c.map(x=>'<span class="pill">'+x+'</span>').join('');$('cySrc').innerHTML=srcHTML(I.src,I.x);}
+  count();
+  scenes.cycle={tstep(k){const ph=PH.find(h=>h.id===k);
+      if(ph||k==='G0'){setMode('normal');C.play=false;setPlay(btn,false);C.sel=k;if(ph)C.pos=(ph.a+ph.b)/2;C.shown='';}
+      else{setMode(k);C.pos=.06;}},
+    untutor(){},tick(dt){
+    if(C.play){
+      if(C.blocked){C.pos=.4;}
+      else if(C.pause>0)C.pause-=dt;
+      else{const dur=C.mode==='over'?(TUT.on?5:3.4):(TUT.on?18:9);let np=C.pos+dt/dur;
+        CP.forEach((c,i)=>{if(C.pos<c&&np>=c){
+          if(C.mode==='normal'){np=c;C.pause=.6;C.flash[i]=.9;C.ft[i]='ok';}
+          else if(C.mode==='over'){C.flash[i]=.9;C.ft[i]='bad';}
+          else if(i===0){np=c;C.blocked=true;C.ft[i]='block';C.flash[i]=1;}
+          else{np=c;C.pause=.6;C.flash[i]=.9;C.ft[i]='ok';}}});
+        if(np>=1){np-=1;C.div++;C.cells=C.mode==='normal'?Math.min(8,C.cells*2):Math.min(64,C.cells*2);count();}
+        C.pos=np;}
+    }
+    C.flash=C.flash.map((f,i)=>C.ft[i]==='block'&&C.blocked?1:Math.max(0,f-dt));
+    const cur=C.sel&&!C.play?C.sel:phaseAt(C.pos).id;card(cur,!(C.sel&&!C.play));
+    tutor('cycle',C.mode==='normal'||(C.sel&&!C.play)?cur:C.mode);
+    const t=performance.now()/1000;
+    S.begin();
+    // G0 link
+    ctx.save();ctx.setLineDash([4,5]);ctx.strokeStyle=P.muted;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(CX+R2*Math.cos(ang(.2)),CY+R2*Math.sin(ang(.2)));ctx.quadraticCurveTo(352,120,356,64);ctx.stroke();ctx.restore();
+    ctx.fillStyle=cur==='G0'?A('muted',.3):P.surface;ctx.strokeStyle=P.muted;ctx.lineWidth=cur==='G0'?2.5:1.5;ctx.beginPath();ctx.arc(362,42,22,0,TAU);ctx.fill();ctx.stroke();
+    ctx.fillStyle=P.ink;ctx.font='700 15px '+DFONT;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('G0',362,43);
+    // track
+    ctx.save();ctx.setLineDash([2,6]);ctx.strokeStyle=P.line;ctx.lineWidth=2;ctx.beginPath();ctx.arc(CX,CY,RT,0,TAU);ctx.stroke();ctx.restore();
+    // ring
+    PH.forEach(h=>{ctx.beginPath();ctx.arc(CX,CY,R2,ang(h.a),ang(h.b));ctx.arc(CX,CY,R1,ang(h.b),ang(h.a),true);ctx.closePath();ctx.fillStyle=P[h.col];ctx.fill();ctx.strokeStyle=P.bg;ctx.lineWidth=3;ctx.stroke();
+      if(h.id===cur){ctx.strokeStyle=P.ink;ctx.lineWidth=2.5;ctx.stroke();}});
+    PH.forEach(h=>{const m=ang((h.a+h.b)/2);ctx.fillStyle=P.ink;ctx.font='700 19px '+DFONT;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(h.id,CX+100*Math.cos(m),CY+100*Math.sin(m));});
+    // checkpoints
+    CP.forEach((c,i)=>{const a=ang(c),x=CX+R2*Math.cos(a),y=CY+R2*Math.sin(a);const f=C.flash[i];
+      let fill=P.surface,mark=null;
+      if(f>0){if(C.ft[i]==='ok'){fill=P.ok;mark='ok';}else if(C.ft[i]==='bad'){fill=P.bad;mark='x';}else{fill=P.bad;mark='stop';}}
+      ctx.save();ctx.translate(x,y);ctx.rotate(a);const sz=mark==='stop'?9+1.5*Math.sin(t*6):7.5;
+      rr(ctx,-sz,-sz,sz*2,sz*2,3);ctx.fillStyle=fill;ctx.fill();ctx.strokeStyle=P.ink;ctx.lineWidth=1.6;ctx.stroke();ctx.restore();
+      ctx.strokeStyle=P.on;ctx.lineWidth=2.2;ctx.lineCap='round';
+      if(mark==='ok'){ctx.beginPath();ctx.moveTo(x-4,y);ctx.lineTo(x-1,y+3.5);ctx.lineTo(x+4.5,y-3.5);ctx.stroke();}
+      if(mark==='x'){ctx.beginPath();ctx.moveTo(x-3.5,y-3.5);ctx.lineTo(x+3.5,y+3.5);ctx.moveTo(x+3.5,y-3.5);ctx.lineTo(x-3.5,y+3.5);ctx.stroke();}
+      if(mark==='stop'){ctx.beginPath();ctx.moveTo(x-4.5,y);ctx.lineTo(x+4.5,y);ctx.stroke();}
+    });
+    // center cluster
+    const n=C.cells,bad=C.mode==='over';
+    if(n===1){ctx.fillStyle=A(bad?'bad':'hema',.85);ctx.beginPath();ctx.arc(CX,CY,11,0,TAU);ctx.fill();}
+    else for(let i=0;i<n;i++){const r=6.2*Math.sqrt(i+.5),a=i*2.39996;const x=CX+r*Math.cos(a),y=CY+r*Math.sin(a);ctx.fillStyle=A(bad?'bad':'hema',.85);
+      blob(ctx,x,y,4.6,th=>bad?1+.18*Math.sin(th*3+i):1,20);ctx.fill();}
+    // marker
+    const ma=ang(C.pos),mx=CX+RT*Math.cos(ma),my=CY+RT*Math.sin(ma);
+    ctx.fillStyle=bad?P.bad:P.eosin;ctx.strokeStyle=P.surface;ctx.lineWidth=3;ctx.beginPath();ctx.arc(mx,my,12,0,TAU);ctx.fill();ctx.stroke();
+    ctx.fillStyle=A('surface',.85);ctx.beginPath();ctx.arc(mx+2,my-1,4.5,0,TAU);ctx.fill();
+  }};
+})();
+
+/* ============ 3. Mitosis ============ */
+(function(){
+  const S=stage('cMit',400,300),ctx=S.ctx;const OX=200,OY=150;
+  const STAGES=[
+    {n:'Interphase (G2)',th:'ระยะพัก · เตรียมแบ่งเซลล์',b:['DNA จำลองตัวเสร็จแล้ว แต่ละ chromosome มี 2 sister chromatids','Centriole จำลองตัว ได้ centrosome 2 ชุด','Chromatin ยังเป็นเส้นใยบางยาว มองไม่เห็นเป็นแท่ง','มี nucleolus และ nuclear envelope ครบ'],src:'สไลด์ 9–10, 13',x:''},
+    {n:'Prophase',th:'Chromosome เริ่มปรากฏ',b:['Chromatin หดตัว (condense) จนเห็นเป็น chromosome','แต่ละแท่งมี 2 sister chromatids ยึดกันที่ centromere','Nucleolus หายไป','Mitotic spindle เริ่มก่อตัว centrosome แยกไปคนละขั้ว'],src:'สไลด์ 6, 13',x:''},
+    {n:'Prometaphase',th:'Nuclear envelope แตก',b:['Nuclear envelope แตกเป็นชิ้นเล็ก ๆ','Chromosome หดตัวมากขึ้นอีก','Kinetochore ที่ centromere จับกับ microtubule ของ spindle','Chromosome ถูกดึงเข้าหากลางเซลล์'],src:'สไลด์ 7, 13',x:''},
+    {n:'Metaphase',th:'เรียงแถวกลางเซลล์',b:['Centrosome อยู่ที่ขั้วตรงข้ามของเซลล์','Chromosome เรียงตัวบน metaphase plate','Kinetochore ของ sister chromatids แต่ละข้างจับ microtubule จากขั้วตรงข้าม','เห็น chromosome ชัดที่สุด จึงใช้นับและศึกษา chromosome'],src:'สไลด์ 14–17, 20',x:'ข้อสุดท้าย (เห็นชัดที่สุด ใช้นับ chromosome)'},
+    {n:'Anaphase',th:'Sister chromatids แยกจากกัน',b:['เริ่มเมื่อ cohesin protein ถูกตัด','Sister chromatids แยกออกเป็น daughter chromosomes','ถูกดึงไปคนละขั้วเพราะ kinetochore microtubule หดสั้นลง (anaphase A)','ขั้ว spindle เคลื่อนห่างกัน เซลล์ยืดยาวขึ้น (anaphase B)'],src:'สไลด์ 6, 16–17, 21',x:''},
+    {n:'Telophase',th:'สร้าง nucleus ใหม่ 2 อัน',b:['เกิด daughter nuclei 2 อันที่สองขั้ว','Nuclear envelope สร้างใหม่จากชิ้นส่วนของ envelope เดิม','Nucleolus กลับมา chromosome คลายตัว','Spindle microtubule ที่เหลือสลายไป'],src:'สไลด์ 16–17, 21',x:''},
+    {n:'Cytokinesis',th:'แบ่ง cytoplasm',b:['เซลล์สัตว์: contractile ring ของ microfilament รัดจนเกิด cleavage furrow','เซลล์พืช: vesicle รวมกันเป็น cell plate แล้วกลายเป็น cell wall ใหม่','ได้ daughter cell 2 เซลล์ จำนวน chromosome เท่าเซลล์แม่ (2n = 4 → 2n = 4)'],src:'สไลด์ 17–19',x:''}];
+  const K={rx:[150,150,150,150,168,176,184],ry:[108,108,106,104,98,96,94],pinch:[0,0,0,0,.12,.55,1],gap:[0,0,0,0,0,0,6],
+    cx:[-14,-96,-138,-138,-150,-150,-98],cy:[-86,-52,0,0,0,-10,-50],
+    env:[1,1,.35,0,0,0,0],nucl:[1,0,0,0,0,0,0],chrom:[1,.2,0,0,0,0,0],dEnv:[0,0,0,0,0,.8,1],dNucl:[0,0,0,0,0,.7,1],dChrom:[0,0,0,0,0,.5,1],
+    sp:[0,.55,1,1,1,.35,0],kin:[0,0,1,1,1,.3,0],ca:[0,.95,1,1,1,.55,0],sep:[3.5,3.5,3.5,3.5,82,88,98],bend:[0,0,0,0,16,6,0],cys:[1,1,1,1,1,.35,.3],lens:[1,1,1,1,1,.6,.45]};
+  const CH=[{col:'mat',L:46,k:[[-24,-16,.5],[-24,-16,.5],[-10,-44,.2],[0,-70,0]]},{col:'pat',L:46,k:[[20,-20,-.7],[20,-20,-.7],[12,-14,-.3],[0,-22,0]]},
+    {col:'mat',L:28,k:[[-16,26,1.2],[-16,26,1.2],[-6,26,.5],[0,20,0]]},{col:'pat',L:28,k:[[26,22,-.3],[26,22,-.3],[14,52,-.2],[0,56,0]]}];
+  const chKey=(c,i)=>i<=3?c.k[i]:[0,c.k[3][1]*K.cys[i],0];
+  // chromatin squiggles
+  const R=rng(11);const SQ=[];for(let j=0;j<11;j++){let a=R()*TAU,r=Math.sqrt(R())*40;let x=Math.cos(a)*r,y=Math.sin(a)*r,h=R()*TAU;const pts=[[x,y]];for(let i=0;i<9;i++){h+=(R()-.5)*1.6;x+=Math.cos(h)*9;y+=Math.sin(h)*9;const d=Math.hypot(x,y);if(d>50){x*=50/d;y*=50/d;h+=Math.PI*.7;}pts.push([x,y]);}SQ.push(pts);}
+  const M={t:0,clock:0,play:!RM,target:null,shown:-1,labels:true};
+  const HOLD=1.5,MOVE=2.1,DUR=HOLD+MOVE,END=2.8;
+  const chips=$('mitChips');
+  chips.innerHTML=['Interphase','Prophase','Prometaphase','Metaphase','Anaphase','Telophase','Cytokinesis'].map((s,i)=>'<button class="chip" type="button" data-st="'+i+'" aria-pressed="false">'+s+'</button>').join('');
+  const pb=$('mitPlay');setPlay(pb,M.play);
+  function go(i){i=clamp(i,0,6);if(M.play){M.clock=i*DUR;}else{M.target=i;M.pausedAt=i;}}
+  chips.addEventListener('click',e=>{const b=e.target.closest('[data-st]');if(b)go(+b.dataset.st);});
+  $('mitPrev').addEventListener('click',()=>go(Math.round(M.target!=null?M.target:M.t)-1));
+  $('mitNext').addEventListener('click',()=>go(Math.round(M.target!=null?M.target:M.t)+1));
+  pb.addEventListener('click',()=>{M.play=!M.play;if(M.play){const k=Math.floor(M.t),f=M.t-k;M.clock=k*DUR+(f>0?HOLD+f*MOVE:0);M.target=null;M.pausedAt=k;}setPlay(pb,M.play);});
+  const lb=$('mitLab');lb.addEventListener('click',()=>{M.labels=!M.labels;lb.textContent='ป้ายชื่อ: '+(M.labels?'เปิด':'ปิด');lb.setAttribute('aria-pressed',M.labels?'true':'false');});
+  function card(i){if(M.shown===i)return;M.shown=i;const s=STAGES[i];$('mitIdx').textContent='ระยะที่ '+(i+1)+' / 7';$('mitName').textContent=s.n;$('mitTh').textContent=s.th;$('mitList').innerHTML=s.b.map(x=>'<li>'+x+'</li>').join('');$('mitSrc').innerHTML=srcHTML(s.src,s.x);
+    chips.querySelectorAll('.chip').forEach((c,j)=>{c.setAttribute('aria-pressed',j===i?'true':'false');if(j===i&&c.scrollIntoView&&chips.scrollWidth>chips.clientWidth){chips.scrollTo({left:c.offsetLeft-chips.clientWidth/2+c.offsetWidth/2,behavior:'smooth'});}});}
+  function squig(alpha,tx,sc){if(alpha<=.01)return;ctx.save();ctx.translate(tx,0);ctx.scale(sc,sc);ctx.strokeStyle=A('hema',.8*alpha);ctx.lineWidth=1.7/sc;ctx.lineCap='round';
+    SQ.forEach(p=>{ctx.beginPath();ctx.moveTo(p[0][0],p[0][1]);for(let i=1;i<p.length-1;i++){const mx=(p[i][0]+p[i+1][0])/2,my=(p[i][1]+p[i+1][1])/2;ctx.quadraticCurveTo(p[i][0],p[i][1],mx,my);}ctx.stroke();});ctx.restore();}
+  function centro(x,y,sp){ctx.save();const g=ctx.createRadialGradient(x,y,0,x,y,16);g.addColorStop(0,A('spindle',.55));g.addColorStop(1,A('spindle',0));ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,16,0,TAU);ctx.fill();
+    ctx.fillStyle=P.spindle;ctx.strokeStyle=P.ink;ctx.lineWidth=.8;rr(ctx,x-6,y-2,12,4,1.5);ctx.fill();ctx.stroke();rr(ctx,x-2,y-7,4,10,1.5);ctx.fill();ctx.stroke();ctx.restore();}
+  M.pausedAt=-1;
+  scenes.mitosis={tstep(k){k=+k;M.play=false;setPlay(pb,false);M.t=k>0?k-1:0;M.target=k;M.pausedAt=k;},untutor(){},next(){const c=Math.round(M.target!=null?M.target:M.t);if(M.play){M.play=false;setPlay(pb,false);}if(c>=6){M.target=null;M.t=0;M.pausedAt=0;}else go(c+1);},tick(dt){
+    if(M.play){M.clock+=dt;const total=6*DUR+END;if(M.clock>=total)M.clock=0;const k=Math.floor(M.clock/DUR);const w=M.clock-k*DUR;if(k>=6)M.t=6;else{M.t=k+(w<HOLD?0:ease((w-HOLD)/MOVE));}
+      const ks=Math.min(k,6);if(TUT.on&&(k>=6||w<HOLD)&&M.pausedAt!==ks){M.play=false;M.t=ks;M.pausedAt=ks;setPlay(pb,false);}}
+    else if(M.target!=null){const d=M.target-M.t;if(Math.abs(d)<.003){M.t=M.target;M.target=null;}else M.t+=Math.sign(d)*Math.min(Math.abs(d),Math.max(dt*.5,Math.abs(d)*dt*3.2));}
+    const t=M.t;card(clamp(Math.round(t),0,6));tutor('mitosis',clamp(Math.round(M.target!=null?M.target:t),0,6));
+    let k=Math.floor(t),f=t-k;if(k>=6){k=5;f=1;}
+    const v=a=>lerp(a[k],a[k+1],f);
+    const rx=v(K.rx),ry=v(K.ry),pinch=v(K.pinch),gap=v(K.gap),lobe=rx/2+gap;
+    const cL={x:v(K.cx),y:v(K.cy)},cR={x:-cL.x,y:cL.y};
+    const sp=v(K.sp),kin=v(K.kin),ca=v(K.ca),sep=v(K.sep),bend=v(K.bend),lens=v(K.lens);
+    // chromatid geometry
+    const G=CH.map(c=>{const a0=chKey(c,k),a1=chKey(c,k+1);const cx=lerp(a0[0],a1[0],f),cy=lerp(a0[1],a1[1],f),a=lerp(a0[2],a1[2],f);const L=c.L*lens;
+      const u=[Math.sin(a),Math.cos(a)],n=[Math.cos(a),-Math.sin(a)];const sides={};
+      [-1,1].forEach(s=>{const cen=[cx+n[0]*s*sep,cy+n[1]*s*sep];const e1=[cen[0]+u[0]*L*.62-n[0]*s*bend,cen[1]+u[1]*L*.62-n[1]*s*bend],e2=[cen[0]-u[0]*L*.38-n[0]*s*bend,cen[1]-u[1]*L*.38-n[1]*s*bend];
+        sides[s]={cen,e1,e2,kin:[cen[0]+n[0]*s*4,cen[1]+n[1]*s*4]};});return{c,sides};});
+    S.begin();ctx.save();ctx.translate(OX,OY);
+    // cell body
+    ctx.beginPath();for(let i=0;i<=140;i++){const th=i/140*TAU;let x=rx*Math.cos(th),y=ry*Math.sin(th);y*=1-pinch*Math.exp(-Math.pow(x/(rx*.28),2));x+=Math.sign(x)*gap;i?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.closePath();
+    ctx.fillStyle=P.cyto;ctx.fill();ctx.strokeStyle=P.membrane;ctx.lineWidth=2.6;ctx.stroke();
+    // daughter nuclei
+    const dE=v(K.dEnv);if(dE>0)[-1,1].forEach(s=>{ctx.fillStyle=A('nuc',.95*dE);ctx.strokeStyle=A('hema',dE);ctx.lineWidth=1.8;ctx.setLineDash(dE<1?[6+30*dE,10*(1-dE)]:[]);ctx.beginPath();ctx.arc(s*lobe,0,38,0,TAU);ctx.fill();ctx.stroke();ctx.setLineDash([]);});
+    // parent nucleus
+    const env=v(K.env);if(env>0){ctx.fillStyle=A('nuc',.95*env);ctx.beginPath();ctx.arc(0,0,60,0,TAU);ctx.fill();ctx.strokeStyle=A('hema',Math.min(1,env*2));ctx.lineWidth=2;ctx.setLineDash(env<1?[8+40*env,6+16*(1-env)]:[]);ctx.stroke();ctx.setLineDash([]);}
+    // metaphase plate
+    const mp=clamp(1-Math.abs(t-3)*1.4);if(mp>0){ctx.save();ctx.globalAlpha=mp*.8;ctx.setLineDash([5,5]);ctx.strokeStyle=P.muted;ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(0,-96);ctx.lineTo(0,92);ctx.stroke();ctx.restore();}
+    // spindle
+    if(sp>0){ctx.save();ctx.strokeStyle=A('spindle',.85*sp);ctx.lineWidth=1.2;
+      [cL,cR].forEach(c=>{for(let i=0;i<12;i++){const a=i/12*TAU,l=13+(i%2)*8;ctx.beginPath();ctx.moveTo(c.x+Math.cos(a)*7,c.y+Math.sin(a)*7);ctx.lineTo(c.x+Math.cos(a)*l,c.y+Math.sin(a)*l);ctx.stroke();}});
+      const mx=(cL.x+cR.x)/2,my=(cL.y+cR.y)/2;[-62,-34,0,34,62].forEach(o=>{ctx.beginPath();ctx.moveTo(cL.x,cL.y);ctx.quadraticCurveTo(mx,my+o*1.25,cR.x,cR.y);ctx.stroke();});
+      if(kin>0){ctx.strokeStyle=A('spindle',sp*kin);ctx.lineWidth=1.6;G.forEach(g=>[-1,1].forEach(s=>{const c=s<0?cL:cR,q=g.sides[s].kin;ctx.beginPath();ctx.moveTo(c.x,c.y);ctx.lineTo(q[0],q[1]);ctx.stroke();}));}
+      ctx.restore();}
+    // chromatin + nucleolus
+    squig(v(K.chrom),0,1);const nu=v(K.nucl);if(nu>0){ctx.fillStyle=A('hema',.55*nu);ctx.beginPath();ctx.arc(16,-14,10,0,TAU);ctx.fill();}
+    const dC=v(K.dChrom),dN=v(K.dNucl);[-1,1].forEach(s=>{squig(dC,s*lobe,.62);if(dN>0){ctx.fillStyle=A('hema',.55*dN);ctx.beginPath();ctx.arc(s*lobe+9,-9,7,0,TAU);ctx.fill();}});
+    // chromosomes
+    if(ca>0){ctx.save();ctx.globalAlpha=ca;ctx.lineCap='round';
+      G.forEach(g=>[-1,1].forEach(s=>{const d=g.sides[s];const ctl=[2*d.cen[0]-(d.e1[0]+d.e2[0])/2,2*d.cen[1]-(d.e1[1]+d.e2[1])/2];
+        ctx.strokeStyle=P[g.c.col];ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(d.e1[0],d.e1[1]);ctx.quadraticCurveTo(ctl[0],ctl[1],d.e2[0],d.e2[1]);ctx.stroke();}));
+      G.forEach(g=>[-1,1].forEach(s=>{const d=g.sides[s];ctx.fillStyle=A('ink',.7);ctx.beginPath();ctx.arc(d.cen[0],d.cen[1],2.4,0,TAU);ctx.fill();
+        if(kin>0){ctx.fillStyle=A('spindle',kin);ctx.beginPath();ctx.arc(d.kin[0],d.kin[1],2.2,0,TAU);ctx.fill();}}));
+      ctx.restore();}
+    centro(cL.x,cL.y);centro(cR.x,cR.y);
+    ctx.restore();
+    // labels
+    if(M.labels){const s=clamp(Math.round(t),0,6),al=clamp(1-Math.abs(t-s)*4);const T=(p)=>[p[0]+OX,p[1]+OY];
+      const mid=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2];const cRp=[cR.x,cR.y],cLp=[cL.x,cL.y];
+      const L={0:[['TL','Nuclear envelope',[-42,-42]],['TR','Centrosome ×2',[14,-86]],['BL','Chromatin',[-24,22]],['BR','Nucleolus',[16,-14]]],
+        1:[['TL','Sister chromatids',G[0].sides[-1].cen],['TR','Mitotic spindle',[cR.x-20,cR.y-10]],['BR','Centromere',G[3].sides[1].cen]],
+        2:[['TL','Nuclear envelope แตก',[-54,25]],['TR','Kinetochore',G[1].sides[1].kin],['BR','Kinetochore MT',mid(cRp,G[3].sides[1].kin)]],
+        3:[['TL','Spindle pole',cLp],['TR','Metaphase plate',[0,-94]],['BR','Kinetochore MT',mid(cRp,G[3].sides[1].kin)]],
+        4:[['TL','Daughter chromosome',G[0].sides[-1].cen],['TR','Kinetochore MT หดสั้น',mid(cRp,G[1].sides[1].kin)]],
+        5:[['TL','Nuclear envelope ใหม่',[-lobe,-38]],['TR','Cleavage furrow',[0,-ry*(1-pinch)]]],
+        6:[['TL','Daughter cell',[-lobe,-62]],['TR','Daughter cell',[lobe,-62]],['BC','2n = 4 เท่าเซลล์แม่',[0,0]]]}[s];
+      if(s===6){L[2]=['BC','2n = 4 เท่าเซลล์แม่',[lobe,40]];}
+      L.forEach(l=>{const p=T(l[2]);tag(S,l[1],l[0],p[0],p[1],al);});}
+  }};
+})();
+
+/* ============ 4. Cell death ============ */
+(function(){
+  const S=stage('cDeath',400,220),ctx=S.ctx;const D={time:0,play:!RM};
+  const pb=$('dePlay');setPlay(pb,D.play);pb.addEventListener('click',()=>{D.play=!D.play;setPlay(pb,D.play);});
+  $('deRe').addEventListener('click',()=>{D.time=0;D.play=true;setPlay(pb,true);});
+  const R=rng(5);const PARTS=[];for(let i=0;i<46;i++)PARTS.push({a:R()*TAU,s:.4+R()*.9,r:1.6+R()*2.6,c:R()<.5?'eosin':'hema'});
+  const MITO=[[-18,-10,.4],[14,-18,-.6],[20,14,.9],[-12,18,.2],[0,-28,1.4]];
+  function cell(x,y,r,dmg){ctx.fillStyle=dmg>0?A('bad',.12+.25*dmg):P.cyto;ctx.strokeStyle=dmg>0?P.bad:P.membrane;ctx.lineWidth=1.8;ctx.beginPath();ctx.arc(x,y,r*(1+.18*dmg),0,TAU);ctx.fill();ctx.stroke();ctx.fillStyle=A('hema',.55-.3*dmg);ctx.beginPath();ctx.arc(x,y,r*.38,0,TAU);ctx.fill();}
+  function steps(id,i){document.querySelectorAll('#'+id+' li').forEach((li,j)=>{li.className=j===i?'on':j<i?'done':'';});}
+  const sh={a:-1,n:-1};
+  scenes.death={tstep(k){const sg=[[0,.32],[.32,.55],[.55,.9],[.9,1]][+k];D.seg=sg;D.time=sg[0]*7.6;D.play=true;setPlay(pb,true);},untutor(){D.seg=null;},tick(dt){
+    if(D.play){D.time+=dt*(TUT.on?.5:1);if(D.seg&&TUT.on){const end=D.seg[1]>=1?1.08:D.seg[1]+.015;if(D.time>end*7.6)D.time=D.seg[0]*7.6;}else if(D.time>9.2)D.time=0;}
+    const p=clamp(D.time/7.6);const t=performance.now()/1000;
+    const ai=p<.32?0:p<.55?1:p<.9?2:3,ni=p<.35?0:p<.52?1:p<.75?2:3;
+    if(sh.a!==ai){sh.a=ai;steps('deA',ai);}if(sh.n!==ni){sh.n=ni;steps('deN',ni);}tutor('death',ai);
+    S.begin();
+    // titles
+    ctx.fillStyle=P.ink;ctx.font='700 16px '+DFONT;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('Apoptosis',100,18);ctx.fillText('Necrosis',300,18);
+    ctx.save();ctx.setLineDash([4,6]);ctx.strokeStyle=P.line;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(200,8);ctx.lineTo(200,212);ctx.stroke();ctx.restore();
+    // ---- Apoptosis ----
+    ctx.save();ctx.beginPath();ctx.rect(0,32,199,188);ctx.clip();
+    const ax=96,ay=122;cell(26,62,18,0);cell(30,190,18,0);cell(170,196,15,0);
+    if(p<.32){const q=ease(p/.32);const Rr=lerp(46,34,q),b=lerp(0,.2,q);
+      blob(ctx,ax,ay,Rr,a=>1+b*Math.pow(Math.max(0,Math.sin(a*7+1)),2));ctx.fillStyle=A('membrane',.12+.15*q);ctx.fill();ctx.strokeStyle=P.membrane;ctx.lineWidth=2;ctx.stroke();
+      ctx.fillStyle=A('hema',.5+.4*q);ctx.beginPath();ctx.arc(ax,ay,lerp(17,10,q),0,TAU);ctx.fill();}
+    else{let mac=null;if(p>=.55){const q=ease(clamp((p-.55)/.33));mac={x:lerp(240,ax+6,q),y:ay,r:46};}
+      const q2=ease(clamp((p-.32)/.23));
+      for(let i=0;i<6;i++){const a=i/6*TAU+.3,d=lerp(8,30,q2);let x=ax+Math.cos(a)*d,y=ay+Math.sin(a)*d,r=lerp(14,11,q2);
+        if(mac){const e=clamp((mac.r-Math.hypot(x-mac.x,y-mac.y))/34);r*=1-.55*e;x=lerp(x,mac.x,e*.35);y=lerp(y,mac.y,e*.35);}
+        if(p>.95)r*=clamp(1-(p-.95)*20);
+        if(r>.5){ctx.fillStyle=A('membrane',.25);ctx.strokeStyle=P.membrane;ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fill();ctx.stroke();if(i%2===0){ctx.fillStyle=A('hema',.75);ctx.beginPath();ctx.arc(x,y,r*.42,0,TAU);ctx.fill();}}}
+      if(p<.55){ctx.globalAlpha=1-q2;blob(ctx,ax,ay,34,a=>1+.2*Math.pow(Math.max(0,Math.sin(a*7+1)),2));ctx.strokeStyle=P.membrane;ctx.lineWidth=2;ctx.stroke();ctx.globalAlpha=1;}
+      if(mac){blob(ctx,mac.x,mac.y,mac.r,a=>1+.07*Math.sin(a*5+t*2)+.05*Math.sin(a*9-t*3));ctx.fillStyle=A('pat',.2);ctx.fill();ctx.strokeStyle=P.pat;ctx.lineWidth=2;ctx.stroke();
+        ctx.fillStyle=A('pat',.55);ctx.beginPath();ctx.ellipse(mac.x+18,mac.y-14,11,8,.5,0,TAU);ctx.fill();}}
+    if(p>.9){const q=clamp((p-.9)*10);ctx.globalAlpha=q;ctx.fillStyle=P.ok;ctx.font='600 13px '+FONT;ctx.textAlign='center';ctx.fillText('ไม่อักเสบ',ax+6,ay+66);ctx.globalAlpha=1;}
+    ctx.restore();
+    // ---- Necrosis ----
+    ctx.save();ctx.beginPath();ctx.rect(201,32,199,188);ctx.clip();
+    const nx=300,ny=122;const qd=p<.52?0:clamp((p-.52)/.48);
+    if(qd>0){const pr=60+qd*55+4*Math.sin(t*4);const g=ctx.createRadialGradient(nx,ny,10,nx,ny,pr);g.addColorStop(0,A('bad',.32*qd));g.addColorStop(1,A('bad',0));ctx.fillStyle=g;ctx.beginPath();ctx.arc(nx,ny,pr,0,TAU);ctx.fill();}
+    [[236,58],[372,58],[234,192],[370,190]].forEach(c=>cell(c[0],c[1],17,clamp((qd-.3)/.7)));
+    const sw=ease(clamp(p/.35)),Rn=lerp(42,62,sw);
+    if(p<.52){ctx.fillStyle=A('cyto',1);ctx.beginPath();ctx.arc(nx,ny,Rn,0,TAU);ctx.fill();ctx.fillStyle=A('bad',.06+.1*sw);ctx.fill();}
+    const rup=clamp((p-.35)/.17);
+    ctx.save();ctx.globalAlpha=1-qd*.85;ctx.strokeStyle=P.membrane;ctx.lineWidth=2.2;ctx.setLineDash(rup>0?[lerp(40,7,rup),lerp(0,16,rup)]:[]);ctx.beginPath();ctx.arc(nx,ny,Rn+qd*12,0,TAU);ctx.stroke();ctx.restore();
+    ctx.save();ctx.globalAlpha=1-qd;MITO.forEach(m=>{const s=lerp(1,1.6,sw);ctx.fillStyle=A('warn',.35);ctx.strokeStyle=P.warn;ctx.lineWidth=1.2;ctx.beginPath();ctx.ellipse(nx+m[0]*s,ny+m[1]*s,7*s,4*s,m[2],0,TAU);ctx.fill();ctx.stroke();});
+      ctx.fillStyle=A('hema',.45-.25*sw);ctx.beginPath();ctx.arc(nx+4,ny+2,15,0,TAU);ctx.fill();ctx.restore();
+    if(qd>0)PARTS.forEach(pt=>{const d=Rn*.6+qd*pt.s*95;ctx.fillStyle=A(pt.c,.9*(1-qd*.7));ctx.beginPath();ctx.arc(nx+Math.cos(pt.a)*d,ny+Math.sin(pt.a)*d,pt.r,0,TAU);ctx.fill();});
+    if(p>.75){const q=clamp((p-.75)*8);ctx.globalAlpha=q;ctx.fillStyle=P.bad;ctx.font='600 13px '+FONT;ctx.textAlign='center';ctx.fillText('อักเสบ',nx,ny+4);ctx.globalAlpha=1;}
+    ctx.restore();
+  }};
+})();
+
+/* ============ 5. Cancer / p53 ============ */
+(function(){
+  const S=stage('cCan',400,260),ctx=S.ctx;
+  const SC={
+    low:{steps:['DNA เสียหายจากรังสีหรือสารก่อมะเร็ง','p53 สั่งหยุด cell cycle (cell cycle arrest)','ซ่อมแซม DNA สำเร็จ','แบ่งเซลล์ต่อได้ตามปกติ'],at:[0,.9,2.0,3.6],end:5.6},
+    high:{steps:['DNA เสียหายรุนแรง','p53 สั่งหยุด cell cycle (cell cycle arrest)','ซ่อมแซมไม่สำเร็จ','p53 สั่ง apoptosis เซลล์ผิดปกติถูกกำจัด'],at:[0,.9,2.0,3.4],end:5.8},
+    mut:{steps:['DNA เสียหาย','p53 กลายพันธุ์ ไม่มีใครสั่งหยุด','เซลล์ผิดปกติรอดจาก apoptosis','แบ่งตัวไม่หยุด กลายเป็นก้อนมะเร็ง (tumor)'],at:[0,.9,1.8,2.6],end:8.4}};
+  const C={p53:'ok',dmg:'low',st:-1,run:false,shown:''};
+  const key=()=>C.p53==='mut'?'mut':C.dmg;
+  function stepsUI(i){const k=key();const sc=SC[k];const id=k+i;if(C.shown===id)return;C.shown=id;$('canSteps').innerHTML=sc.steps.map((s,j)=>'<li class="'+(j===i?'on':j<i?'done':'')+'">'+s+'</li>').join('');}
+  document.querySelectorAll('[data-p53]').forEach(b=>b.addEventListener('click',()=>{C.p53=b.dataset.p53;document.querySelectorAll('[data-p53]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));$('canDmg').style.opacity=C.p53==='mut'?.45:1;C.run=false;C.st=-1;C.shown='';}));
+  document.querySelectorAll('[data-dmg]').forEach(b=>b.addEventListener('click',()=>{C.dmg=b.dataset.dmg;document.querySelectorAll('[data-dmg]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));C.run=false;C.st=-1;C.shown='';}));
+  $('canGo').addEventListener('click',()=>{C.run=true;C.st=0;C.shown='';});
+  const SPOTS=[];for(let i=0;i<32;i++){const r=14.5*Math.sqrt(i)*1.04,a=i*2.39996;SPOTS.push([200+r*Math.cos(a),135+r*Math.sin(a)]);}
+  function dnaStrand(cx,cy,gap,col){ctx.strokeStyle=col;ctx.lineWidth=2.4;ctx.lineCap='round';[-3,3].forEach(o=>{ctx.beginPath();let up=true;for(let x=-22;x<=22;x+=2){if(Math.abs(x)<gap){up=true;continue;}const y=cy+o+3*Math.sin(x*.35);if(up){ctx.moveTo(cx+x,y);up=false;}else ctx.lineTo(cx+x,y);}ctx.stroke();});}
+  function baseCell(x,y,r,col){ctx.fillStyle=P.cyto;ctx.strokeStyle=col||P.membrane;ctx.lineWidth=2.2;ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fill();ctx.stroke();ctx.fillStyle=A('nuc',1);ctx.strokeStyle=A('hema',.7);ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(x,y,r*.5,0,TAU);ctx.fill();ctx.stroke();}
+  function stop(x,y,s,al){ctx.save();ctx.globalAlpha=al;ctx.translate(x,y);ctx.beginPath();for(let i=0;i<8;i++){const a=i/8*TAU+Math.PI/8;ctx.lineTo(Math.cos(a)*s,Math.sin(a)*s);}ctx.closePath();ctx.fillStyle=P.bad;ctx.fill();ctx.fillStyle='#ffffff';ctx.font='700 10px '+DFONT;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('STOP',0,1);ctx.restore();}
+  function p53s(x,y,n,col,al,broken,t){ctx.save();ctx.globalAlpha=al;for(let i=0;i<n;i++){const a=i/n*TAU+t*.6,r=34;const px=x+Math.cos(a)*r,py=y+Math.sin(a)*r*.9;ctx.fillStyle=col;ctx.beginPath();ctx.arc(px,py,6,0,TAU);ctx.fill();
+    if(broken){ctx.strokeStyle=P.surface;ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(px-3,py-3);ctx.lineTo(px+3,py+3);ctx.moveTo(px+3,py-3);ctx.lineTo(px-3,py+3);ctx.stroke();}}ctx.restore();}
+  scenes.cancer={tstep(k){const p=k==='mut'?'mut':'ok',d=k==='high'?'high':'low';C.p53=p;C.dmg=d;
+      document.querySelectorAll('[data-p53]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.p53===p?'true':'false'));
+      document.querySelectorAll('[data-dmg]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.dmg===d?'true':'false'));
+      $('canDmg').style.opacity=p==='mut'?.45:1;C.shown='';if(k==='idle'){C.run=false;C.st=-1;}else{C.run=true;C.st=0;}},
+    untutor(){},tick(dt){
+    const k=key(),sc=SC[k];if(C.run){C.st+=dt;if(C.st>sc.end+1.5){C.run=false;}}
+    const st=C.st<0?-1:C.st;let si=-1;if(st>=0)sc.at.forEach((a,i)=>{if(st>=a)si=i;});stepsUI(si);tutor('cancer',st<0?'idle':k);
+    const t=performance.now()/1000;S.begin();const X=200,Y=135;
+    if(st<0){baseCell(X,Y,52);dnaStrand(X,Y,0,P.hema);tag(S,'DNA ใน nucleus','TR',X+14,Y,1);return;}
+    // radiation bolts
+    if(st<.9){const al=(1-st/.9)*(.6+.4*Math.sin(t*40));ctx.save();ctx.globalAlpha=al;ctx.strokeStyle=P.warn;ctx.lineWidth=2.5;[-40,0,40].forEach((o,i)=>{ctx.beginPath();let x=X+o*1.6,y=8;ctx.moveTo(x,y);for(let s=0;s<6;s++){x+=(i-1)*-6+(s%2?9:-9);y+=19;ctx.lineTo(x,y);}ctx.lineTo(X+o*.1,Y-4);ctx.stroke();});ctx.restore();}
+    const gap0=k==='high'?9:6;
+    if(k==='low'){
+      if(st<3.6){const rep=st<2?0:clamp((st-2)/1.3);baseCell(X,Y,52);dnaStrand(X,Y,lerp(gap0,0,ease(rep)),rep>=1?P.ok:P.hema);
+        if(st<2){ctx.fillStyle=A('bad',.5+.4*Math.sin(t*10));ctx.beginPath();ctx.arc(X,Y,5,0,TAU);ctx.fill();}
+        p53s(X,Y,6,P.spindle,clamp((st-.9)/.4)*(st<3.4?1:clamp((3.6-st)/.2)),false,t);stop(X,48,17,clamp((st-1)/.3)*(st<3.4?1:0));
+        if(st>=.9&&st<3.4)tag(S,'p53','TL',X-34,Y,clamp((st-.9)/.3));
+        if(st>2&&st<3.4){for(let i=0;i<5;i++){const a=t*5+i*1.3;ctx.fillStyle=A('ok',.8);ctx.beginPath();ctx.arc(X+Math.cos(a)*10,Y+Math.sin(a)*8,1.8,0,TAU);ctx.fill();}}
+      }else{const q=ease(clamp((st-3.6)/1.4));[-1,1].forEach(s=>{const x=X+s*q*58,r=lerp(52,40,q);baseCell(x,Y,r,P.ok);dnaStrand(x,Y,0,P.hema);});tag(S,'เซลล์ปกติ 2 เซลล์','BC',X,Y+40,clamp((st-4.4)/.4));}
+    }else if(k==='high'){
+      if(st<3.4){baseCell(X,Y,52);dnaStrand(X,Y,gap0,P.hema);const fl=st>2?.5+.5*Math.sin(t*12):.7;ctx.fillStyle=A('bad',fl);ctx.beginPath();ctx.arc(X,Y,6,0,TAU);ctx.fill();
+        p53s(X,Y,7,P.spindle,clamp((st-.9)/.4),false,t);stop(X,48,17,clamp((st-1)/.3));if(st>=.9)tag(S,'p53','TL',X-34,Y,clamp((st-.9)/.3));
+        if(st>2)tag(S,'ซ่อมไม่สำเร็จ','TR',X+8,Y,clamp((st-2)/.3));}
+      else{const q=clamp((st-3.4)/2);
+        if(q<.5){const qq=ease(q/.5);blob(ctx,X,Y,lerp(52,36,qq),a=>1+.2*qq*Math.pow(Math.max(0,Math.sin(a*7+1)),2));ctx.fillStyle=A('membrane',.18);ctx.fill();ctx.strokeStyle=P.membrane;ctx.lineWidth=2;ctx.stroke();ctx.fillStyle=A('hema',.8);ctx.beginPath();ctx.arc(X,Y,lerp(24,11,qq),0,TAU);ctx.fill();}
+        else{const qq=ease((q-.5)/.5);for(let i=0;i<6;i++){const a=i/6*TAU+.3,d=lerp(8,34,qq);ctx.fillStyle=A('membrane',.25*(1-qq*.5));ctx.strokeStyle=A('membrane',1-qq*.5);ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(X+Math.cos(a)*d,Y+Math.sin(a)*d,lerp(14,9,qq),0,TAU);ctx.fill();ctx.stroke();}}
+        tag(S,'Apoptosis','BC',X,Y+30,clamp((st-3.6)/.4));}
+    }else{
+      if(st<1.8){baseCell(X,Y,52,st>.9?P.bad:null);dnaStrand(X,Y,gap0,P.hema);ctx.fillStyle=A('bad',.8);ctx.beginPath();ctx.arc(X,Y,5,0,TAU);ctx.fill();
+        p53s(X,Y,6,P.muted,clamp((st-.9)/.4),true,t*.2);if(st>=.9)tag(S,'p53 กลายพันธุ์','TL',X-34,Y,clamp((st-.9)/.3));}
+      else if(st<2.6){const q=ease((st-1.8)/.8);const r=lerp(52,13,q);ctx.fillStyle=A('bad',.2);ctx.strokeStyle=P.bad;ctx.lineWidth=2;ctx.beginPath();ctx.arc(X,Y,r,0,TAU);ctx.fill();ctx.stroke();ctx.fillStyle=A('bad',.7);ctx.beginPath();ctx.arc(X,Y,r*.5,0,TAU);ctx.fill();}
+      else{const e=(st-2.6)/.9;const gen=Math.min(5,Math.floor(e)+1),fr=gen>=5&&e>=5?1:ease(clamp(e-Math.floor(e)));const n=Math.pow(2,gen),half=n/2;
+        for(let i=0;i<n;i++){let x=SPOTS[i][0],y=SPOTS[i][1];if(i>=half&&fr<1){const pp=SPOTS[i-half];x=lerp(pp[0],x,fr);y=lerp(pp[1],y,fr);}
+          blob(ctx,x,y,12.5,a=>1+.12*Math.sin(a*3+i)+.06*Math.sin(a*5+t+i),24);ctx.fillStyle=A('bad',.22);ctx.fill();ctx.strokeStyle=P.bad;ctx.lineWidth=1.6;ctx.stroke();ctx.fillStyle=A('bad',.7);ctx.beginPath();ctx.arc(x,y,5.5,0,TAU);ctx.fill();}
+        tag(S,'Tumor · '+n+' เซลล์','TR',SPOTS[2][0]+10,SPOTS[2][1],1);}
+    }
+  }};
+})();
+
+/* ============ 6. Therapy ============ */
+(function(){
+  const S=stage('cTx',400,250),ctx=S.ctx;const R=rng(23);
+  let cells=[];
+  function build(){const types=[];for(let i=0;i<12;i++)types.push('ca');for(let i=0;i<10;i++)types.push('dv');for(let i=0;i<18;i++)types.push('rs');
+    for(let i=types.length-1;i>0;i--){const j=Math.floor(R()*(i+1));const tmp=types[i];types[i]=types[j];types[j]=tmp;}
+    let ca=0;cells=types.map((ty,i)=>{const col=i%8,row=Math.floor(i/8);const c={x:32+col*48,y:29+row*48,ty,rec:false,ph:R()*TAU,d:0,dying:false};if(ty==='ca'){c.rec=ca<10;ca++;}return c;});}
+  const R2=rng(9);build();
+  const T={run:null,t:0,shots:[],parts:[]};
+  for(let i=0;i<34;i++)T.parts.push({o:R2()*70,y:10+R2()*230,s:R2()*TAU});
+  function reset(){cells.forEach(c=>{c.d=0;c.dying=false;});T.run=null;T.done=false;$('txOut').textContent='เลือกยาเพื่อเริ่มจำลอง';}
+  function start(type){reset();T.run=type;T.t=0;T.done=false;T.shots=cells.filter(c=>c.rec).map((c,i)=>({c,t0:i*.13}));$('txOut').textContent=type==='chemo'?'กำลังให้ยาเคมีบำบัด…':'กำลังให้ยามุ่งเป้า…';}
+  $('txChemo').addEventListener('click',()=>start('chemo'));$('txTarget').addEventListener('click',()=>start('target'));$('txReset').addEventListener('click',reset);
+  function summary(){const dead=ty=>cells.filter(c=>c.ty===ty&&c.dying).length,tot=ty=>cells.filter(c=>c.ty===ty).length;
+    if(T.run==='chemo')return 'เซลล์มะเร็งถูกทำลาย '+dead('ca')+'/'+tot('ca')+' · แต่เซลล์ปกติที่แบ่งตัวเร็วเสียหาย '+dead('dv')+'/'+tot('dv')+' จึงเกิดผลข้างเคียง เช่น ผมร่วง เยื่อบุทางเดินอาหารอักเสบ เม็ดเลือดต่ำ · เซลล์ระยะ G0 ไม่ได้รับผล '+(tot('rs')-dead('rs'))+'/'+tot('rs');
+    const left=tot('ca')-dead('ca');return 'เซลล์มะเร็งที่มีตัวรับเป้าหมายถูกทำลาย '+dead('ca')+'/'+tot('ca')+' · เซลล์ปกติไม่ได้รับผล · อีก '+left+' เซลล์ไม่มีเป้าหมาย ยาจึงไม่ได้ผล ต้องตรวจ biomarker ก่อนใช้ยา เช่น HER2+ สำหรับ Trastuzumab';}
+  function yglyph(x,y,s,col){ctx.strokeStyle=col;ctx.lineWidth=2;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x,y+s);ctx.lineTo(x,y);ctx.lineTo(x-s*.7,y-s*.8);ctx.moveTo(x,y);ctx.lineTo(x+s*.7,y-s*.8);ctx.stroke();}
+  scenes.therapy={tstep(k){if(k==='idle')reset();else start(k);},untutor(){},tick(dt){
+    const t=performance.now()/1000;tutor('therapy',T.run||'idle');
+    if(T.run){T.t+=dt;
+      if(T.run==='chemo'){const wx=-40+T.t*190;cells.forEach(c=>{if(c.ty!=='rs'&&!c.dying&&c.x<wx)c.dying=true;});}
+      else T.shots.forEach(s=>{if(!s.c.dying&&T.t>s.t0+1.1)s.c.dying=true;});
+      if(T.t>3.3&&!T.done){T.done=true;$('txOut').textContent=summary();}}
+    cells.forEach(c=>{if(c.dying)c.d=Math.min(1,c.d+dt*1.6);});
+    S.begin();
+    cells.forEach(c=>{const d=c.d,sc=1-.4*d;ctx.save();ctx.globalAlpha=1-.65*d;
+      if(c.ty==='rs'){ctx.fillStyle=A('muted',.14);ctx.strokeStyle=A('muted',.8);ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(c.x,c.y,15*sc,0,TAU);ctx.fill();ctx.stroke();ctx.fillStyle=A('muted',.5);ctx.beginPath();ctx.arc(c.x,c.y,5*sc,0,TAU);ctx.fill();}
+      else if(c.ty==='dv'){const r=16*(1+(RM?0:.05*Math.sin(t*3+c.ph)))*sc;ctx.fillStyle=A('spindle',.22);ctx.strokeStyle=P.spindle;ctx.lineWidth=1.8;ctx.beginPath();ctx.arc(c.x,c.y,r,0,TAU);ctx.fill();ctx.stroke();
+        ctx.strokeStyle=P.spindle;ctx.lineWidth=2.4;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(c.x-5*sc,c.y-5*sc);ctx.lineTo(c.x+5*sc,c.y+5*sc);ctx.moveTo(c.x+5*sc,c.y-5*sc);ctx.lineTo(c.x-5*sc,c.y+5*sc);ctx.stroke();}
+      else{blob(ctx,c.x,c.y,17*sc,a=>1+.1*Math.sin(a*3+c.ph)+(RM?0:.05*Math.sin(a*5+t*2+c.ph)),28);ctx.fillStyle=A('bad',.2);ctx.fill();ctx.strokeStyle=P.bad;ctx.lineWidth=1.8;ctx.stroke();ctx.fillStyle=A('bad',.65);ctx.beginPath();ctx.arc(c.x,c.y,7*sc,0,TAU);ctx.fill();
+        if(c.rec)[-2.2,-1.57,-.94].forEach(a=>{const x=c.x+Math.cos(a)*17*sc,y=c.y+Math.sin(a)*17*sc;ctx.save();ctx.translate(x,y);ctx.rotate(a+Math.PI/2);yglyph(0,-3,5,P.hema);ctx.restore();});}
+      if(d>.4){ctx.globalAlpha=1;ctx.strokeStyle=A('ink',.75*clamp((d-.4)/.4));ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(c.x-7,c.y-7);ctx.lineTo(c.x+7,c.y+7);ctx.moveTo(c.x+7,c.y-7);ctx.lineTo(c.x-7,c.y+7);ctx.stroke();}
+      ctx.restore();});
+    if(T.run==='chemo'&&T.t<3){const wx=-40+T.t*190;T.parts.forEach(p=>{const x=wx-p.o,y=p.y+6*Math.sin(t*4+p.s);if(x>0&&x<400){ctx.fillStyle=A('warn',.85);ctx.beginPath();ctx.arc(x,y,2.6,0,TAU);ctx.fill();}});}
+    if(T.run==='target')T.shots.forEach(s=>{const q=(T.t-s.t0)/1.1;if(q<0||q>1)return;const e=ease(q);const x=lerp(-12,s.c.x,e),y=lerp(s.c.y+40*Math.sin(s.t0*7),s.c.y-20,e);ctx.save();ctx.translate(x,y);ctx.rotate(Math.atan2(s.c.y-20-y,s.c.x-x)+Math.PI/2);yglyph(0,0,8,P.ok);ctx.restore();});
+  }};
+})();
+
+/* ============ 7. Aging / telomere ============ */
+(function(){
+  const S=stage('cAge',400,200),ctx=S.ctx;const MAX=6;
+  const G={n:MAX,div:0,fly:[],state:'ok',senT:0,clr:0};
+  const divB=$('agDiv'),senB=$('agSeno');
+  function ui(){$('agCount').textContent='แบ่งแล้ว '+G.div+' ครั้ง';$('agBar').style.width=(G.n/MAX*100)+'%';
+    const st=$('agState'),note=$('agNote');
+    if(G.state==='ok'){st.textContent=G.n<=2&&G.div>0?'Telomere ใกล้หมด':'เซลล์ปกติ';st.style.color=G.n<=2&&G.div>0?'var(--warn)':'var(--ok)';note.innerHTML='<b>Telomere</b> คือส่วนปลายของแท่ง chromosome (ลำดับซ้ำ TTAGGG) สั้นลงทุกครั้งที่แบ่งเซลล์ คนที่มี telomere สั้นสัมพันธ์กับความเสี่ยงโรคที่เกี่ยวกับความเสื่อมมากกว่า<p class="src" style="margin-top:6px">'+srcHTML('สไลด์ 23, 33','ลำดับ TTAGGG และการสั้นลงทุกครั้งที่แบ่งเซลล์')+'</p>';}
+    else if(G.state==='sen'){st.textContent='Senescent cell';st.style.color='var(--bad)';note.innerHTML='<b>เซลล์ชรา (senescent cell)</b> หยุดแบ่งตัวแต่ไม่ตาย สะสมในเนื้อเยื่อและหลั่งสารก่อการอักเสบ ลองกด “ให้ Senolytics”<p class="src" style="margin-top:6px">'+srcHTML('สไลด์ 23','เซลล์ชราหยุดแบ่งตัวและหลั่งสารก่อการอักเสบ')+'</p>';}
+    else{st.textContent='เซลล์ชราถูกกำจัด';st.style.color='var(--ok)';note.innerHTML='<b>Senolytics</b> เช่น Quercetin และ Fisetin ออกแบบมาเพื่อทำลายเซลล์เสื่อมสภาพโดยเฉพาะ ลดการสะสมของเซลล์ชราในเนื้อเยื่อ<p class="src" style="margin-top:6px">'+srcHTML('สไลด์ 34','')+'</p>';}
+    divB.disabled=G.state!=='ok';senB.disabled=G.state!=='sen';}
+  divB.addEventListener('click',()=>{if(G.n<=0||G.state!=='ok')return;const k=G.n-1;G.fly.push({side:-1,k,t:0},{side:1,k,t:0});G.n--;G.div++;if(G.n===0){G.state='sen';G.senT=0;}ui();});
+  senB.addEventListener('click',()=>{G.state='clr';G.clr=0;ui();});
+  $('agReset').addEventListener('click',()=>{G.n=MAX;G.div=0;G.fly=[];G.state='ok';G.clr=0;ui();});
+  ui();
+  const BL=104,BR=296,BW=13;
+  const bx=(side,k)=>side<0?BL-BW*(k+1):BR+BW*k;
+  function block(x,y,col,al){ctx.save();ctx.globalAlpha=al;rr(ctx,x+1,y-9,BW-2,18,3);ctx.fillStyle=col;ctx.fill();ctx.restore();}
+  scenes.aging={tstep(k){G.fly=[];if(k==='ok'){G.n=MAX;G.div=0;G.state='ok';}else if(k==='low'){G.n=2;G.div=MAX-2;G.state='ok';}else if(k==='sen'){G.n=0;G.div=MAX;G.state='sen';G.senT=0;}else{G.n=0;G.div=MAX;G.state='clr';G.clr=0;}ui();},untutor(){},tick(dt){
+    const t=performance.now()/1000;G.fly.forEach(f=>f.t+=dt);G.fly=G.fly.filter(f=>f.t<1);if(G.state==='sen')G.senT+=dt;if(G.state==='clr')G.clr=Math.min(1,G.clr+dt*.8);
+    tutor('aging',G.state==='ok'?(G.n<=2&&G.div>0?'low':'ok'):G.state);
+    S.begin();const al=G.state==='clr'?1-G.clr:1;
+    if(G.state==='sen'){const r=120+6*Math.sin(t*3);const g=ctx.createRadialGradient(200,95,20,200,95,r);g.addColorStop(0,A('bad',.22));g.addColorStop(1,A('bad',0));ctx.fillStyle=g;ctx.fillRect(0,0,400,200);}
+    ctx.save();ctx.globalAlpha=al;
+    const bodyCol=G.state==='ok'?P.hema:P.muted;
+    [82,108].forEach(y=>{rr(ctx,BL,y-10,BR-BL,20,9);ctx.fillStyle=bodyCol;ctx.fill();
+      [140,200,232,262].forEach(x=>{ctx.fillStyle=A('surface',.3);ctx.fillRect(x,y-10,5,20);});
+      for(let k=0;k<G.n;k++){block(bx(-1,k),y,P.spindle,1);block(bx(1,k),y,P.spindle,1);}});
+    ctx.fillStyle=G.state==='ok'?P.eosin:P.muted;ctx.beginPath();ctx.ellipse(172,95,7,17,0,0,TAU);ctx.fill();
+    ctx.restore();
+    G.fly.forEach(f=>{const e=ease(f.t);[82,108].forEach((y,j)=>{const x=bx(f.side,f.k)+f.side*e*60,yy=y+(j?1:-1)*e*22;ctx.save();ctx.translate(x+BW/2,yy);ctx.rotate(f.side*e*1.6);ctx.translate(-x-BW/2,-yy);block(x,yy,P.spindle,1-f.t);ctx.restore();});});
+    if(G.state==='ok'){const lx=G.n>0?bx(-1,G.n-1)+6:BL,rx=G.n>0?bx(1,G.n-1)+6:BR;tag(S,'Telomere','TL',lx,72,1);tag(S,'Telomere','TR',rx,72,1);tag(S,'ยีนสำคัญ (coding DNA)','BC',250,118,1);}
+    else if(G.state==='sen'){tag(S,'Telomere หมด → หยุดแบ่งตัว','TL',BL,72,1);tag(S,'หลั่งสารก่อการอักเสบ','BR',330,150,clamp(G.senT*2));}
+    else{tag(S,'Senolytics กำจัดเซลล์ชรา','BC',200,120,clamp(G.clr*2));}
+  }};
+})();
+
+/* ============ Quiz ============ */
+(function(){
+  const Q=[
+    {q:'ระยะใดของ mitosis ที่ chromosome มาเรียงตัวบน metaphase plate',o:['Prophase','Anaphase','Metaphase','Telophase'],a:2,e:'Metaphase: chromosome เรียงกลางเซลล์ และ kinetochore ของ sister chromatids จับ microtubule จากขั้วตรงข้าม',s:'สไลด์ 16'},
+    {q:'คู่ CDK–Cyclin ใดควบคุมการจำลอง DNA ใน S phase',o:['CDK4 / Cyclin D','CDK2 / Cyclin A','CDK1 / Cyclin B','CDK2 / Cyclin E'],a:1,e:'S phase ถูกควบคุมโดย CDK2/Cyclin A ส่วน CDK4/D และ CDK2/E พาเซลล์ผ่าน G1 และ CDK1/B ชักนำเข้าสู่ M phase',s:'สไลด์ 10–12'},
+    {q:'เหตุการณ์ใดเป็นจุดเริ่มต้นของ anaphase',o:['Nuclear envelope แตกเป็นชิ้น','Nucleolus หายไป','Chromatin เริ่มหดตัว','Cohesin protein ถูกตัด'],a:3,e:'เมื่อ cohesin ที่ยึด sister chromatids ถูกตัด chromatid จึงแยกเป็น daughter chromosomes และถูกดึงไปคนละขั้ว',s:'สไลด์ 16–17'},
+    {q:'Palbociclib ออกฤทธิ์รักษามะเร็งเต้านม HR+ / HER2- อย่างไร',o:['ยับยั้ง CDK4/6 ทำให้เซลล์หยุดที่ G1','จับ HER2 บนผิวเซลล์มะเร็ง','ยับยั้งการสร้างเส้นเลือดใหม่','กระตุ้น apoptosis ผ่าน BCL-2'],a:0,e:'Palbociclib เป็น CDK4/6 inhibitor เซลล์จึงผ่าน G1 checkpoint เข้าสู่ S phase ไม่ได้ ใช้ร่วมกับยาต้านฮอร์โมน',s:'สไลด์ 10–11'},
+    {q:'ลักษณะใดพบใน necrosis แต่ไม่พบใน apoptosis',o:['เซลล์หดตัวเล็กลง','เกิด apoptotic bodies','เซลล์บวม แตก และมีการอักเสบ','ยังสร้าง ATP ได้ตามปกติ'],a:2,e:'Necrosis: เซลล์บวม membrane แตก สารรั่วจึงอักเสบและเกิดแผลเป็น ส่วน apoptosis เซลล์หดตัวและไม่อักเสบ',s:'สไลด์ 24–25'},
+    {q:'ยีนใดจัดเป็นยีนต้านมะเร็ง (anti-oncogene)',o:['c-myc','TP53','bcl-2','HER2'],a:1,e:'TP53 (p53) สั่งหยุดแบ่งเซลล์เมื่อ DNA เสียหาย และสั่ง apoptosis ถ้าซ่อมไม่สำเร็จ ส่วน c-myc และ bcl-2 เป็น oncogene',s:'สไลด์ 26–27'},
+    {q:'ทำไมผู้ป่วยที่ได้รับเคมีบำบัดจึงมักผมร่วง',o:['ยาไปทำลาย keratin ของเส้นผมโดยตรง','ยาทำให้ฮอร์โมนเพศลดลง','ยาออกฤทธิ์ต่อเซลล์ระยะ G0','เซลล์รากผมแบ่งตัวเร็วจึงถูกยาทำลายด้วย'],a:3,e:'ยาเคมีบำบัดออกฤทธิ์กับเซลล์ที่กำลังแบ่งตัว เซลล์ปกติที่แบ่งเร็ว เช่น รากผม เยื่อบุทางเดินอาหาร เซลล์ต้นกำเนิดเม็ดเลือด จึงได้รับผลกระทบด้วย',s:'สไลด์ 31'},
+    {q:'ยาใดเป็น monoclonal antibody',o:['Trastuzumab','Erlotinib','Osimertinib','Palbociclib'],a:0,e:'Trastuzumab เป็น monoclonal antibody ส่วนใหญ่เป็นยาฉีด ส่วน Erlotinib และ Osimertinib เป็นยาโมเลกุลเล็ก มักเป็นยารับประทาน',s:'สไลด์ 11, 32'},
+    {q:'เซลล์ร่างกายของคน 2n = 46 แบ่งแบบ mitosis จะได้ผลลัพธ์ใด',o:['4 เซลล์ เซลล์ละ 23 chromosome','2 เซลล์ เซลล์ละ 23 chromosome','2 เซลล์ เซลล์ละ 46 chromosome','4 เซลล์ เซลล์ละ 46 chromosome'],a:2,e:'Mitosis ได้ 2 daughter cells ที่มีจำนวน chromosome เท่าเซลล์แม่ ส่วน meiosis ได้ 4 เซลล์ที่มี chromosome ครึ่งหนึ่ง',s:'สไลด์ 8–9, 19',x:'ตัวเลข 2n = 46 ของคน'},
+    {q:'Quercetin และ Fisetin ถูกกล่าวถึงในศาสตร์ชะลอวัยในบทบาทใด',o:['Exosome กระตุ้น fibroblast','Senolytics กำจัดเซลล์ชราภาพ','Growth factor ฟื้นฟูผิว','NAD+ booster'],a:1,e:'ทั้งสองเป็น senolytic agent ที่มุ่งทำลายเซลล์เสื่อมสภาพ (senescent cell)',s:'สไลด์ 34'}];
+  const list=$('qzList');const ans=new Array(Q.length).fill(-1);
+  function render(){list.innerHTML=Q.map((x,i)=>'<div class="card q" data-q="'+i+'"><p class="qn">ข้อ '+(i+1)+'</p><h3>'+x.q+'</h3><div class="opts">'+x.o.map((o,j)=>'<button class="opt" type="button" data-o="'+j+'"><span class="l">'+'ABCD'[j]+'</span><span>'+o+'</span></button>').join('')+'</div><p class="explain" hidden></p></div>').join('');score();}
+  function score(){const done=ans.filter(a=>a>=0).length,ok=ans.filter((a,i)=>a===Q[i].a).length;$('qzScore').textContent=ok+'/'+Q.length;$('qzDone').textContent='ตอบแล้ว '+done+' ข้อ'+(done===Q.length?' · ครบแล้ว':'');}
+  list.addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;const card=b.closest('[data-q]');const i=+card.dataset.q;if(ans[i]>=0)return;const j=+b.dataset.o;ans[i]=j;
+    card.querySelectorAll('.opt').forEach((x,k)=>{x.disabled=true;if(k===Q[i].a)x.classList.add('right');else if(k===j)x.classList.add('wrong');});
+    const ex=card.querySelector('.explain');ex.hidden=false;ex.innerHTML=(j===Q[i].a?'<b style="color:var(--ok)">ถูกต้อง</b> · ':'<b style="color:var(--bad)">ยังไม่ถูก</b> · คำตอบคือ '+'ABCD'[Q[i].a]+' · ')+Q[i].e+'<span class="src" style="margin-top:6px">'+srcHTML(Q[i].s,Q[i].x||'')+'</span>';score();});
+  $('qzReset').addEventListener('click',()=>{ans.fill(-1);render();});
+  render();
+})();
+
+/* ============ Exam ============ */
+const CHN={dna:'DNA → Chromosome',cycle:'Cell cycle',mitosis:'Mitosis',death:'Cell death',cancer:'Cancer',therapy:'การรักษามะเร็ง',aging:'Aging'};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t;}return a;};
+const BANK=[
+ {c:'dna',q:'DNA ของ prokaryotic cell มีลักษณะอย่างไร',o:['เป็นวงแหวนและไม่มี nucleus ห่อหุ้ม','เป็นเส้นตรงและอยู่ใน nucleus','พันรอบ histone เป็น chromosome หลายแท่ง','อยู่ใน mitochondria เท่านั้น'],a:0,e:'Prokaryotic cell ไม่มี nucleus DNA อยู่ในลักษณะวงแหวน (circular)',s:'สไลด์ 3'},
+ {c:'dna',q:'โครงสร้างที่ DNA พันรอบโปรตีน histone มีลักษณะเหมือนลูกปัด เรียกว่าอะไร',o:['Centromere','Nucleosome','Kinetochore','Telomere'],a:1,e:'DNA พันรอบ histone เป็นโครงสร้างกลมคล้ายลูกปัด เรียกว่า nucleosome หรือ beads on a string',s:'สไลด์ 4'},
+ {c:'dna',q:'ข้อใดกล่าวถูกต้องเกี่ยวกับ chromatin',o:['เป็นโปรตีนชนิดเดียวกับ histone','พบเฉพาะในเซลล์สืบพันธุ์','หดตัวเป็นแท่ง chromosome ในช่วงแบ่งเซลล์','สร้างขึ้นใหม่ในระยะ telophase เท่านั้น'],a:2,e:'Chromosome ของ eukaryote ประกอบด้วยเส้นใย chromatin ซึ่งหดตัว (condense) ในช่วงการแบ่งเซลล์',s:'สไลด์ 4'},
+ {c:'dna',q:'เซลล์ใดมีโครโมโซมเพียงชุดเดียว',o:['เซลล์ผิวหนัง','เซลล์ประสาท','เซลล์กระดูก','เซลล์อสุจิ'],a:3,e:'เซลล์สืบพันธุ์ (gamete) เช่น เซลล์ไข่และเซลล์อสุจิ เป็น haploid มีโครโมโซมชุดเดียว',s:'สไลด์ 5'},
+ {c:'dna',q:'Centromere คืออะไร',o:['ส่วนปลายสุดของแท่ง chromosome','บริเวณที่แคบที่สุดซึ่ง sister chromatids อยู่ชิดกัน','โปรตีนที่ตัดแยก sister chromatids','ศูนย์กลางสร้าง spindle ที่ขั้วเซลล์'],a:1,e:'Centromere คือบริเวณที่แคบที่สุดคล้าย “waist” ทำให้ sister chromatids ใกล้ชิดกันมากที่สุด',s:'สไลด์ 6'},
+ {c:'dna',q:'สิ่งมีชีวิตแต่ละชนิดมีจำนวนโครโมโซมเป็นอย่างไร',o:['ชนิดเดียวกันเท่ากัน ต่างชนิดกันต่างกัน','ทุกชนิดมีจำนวนเท่ากันหมด','แต่ละเซลล์ในร่างกายมีจำนวนต่างกัน','เปลี่ยนไปตามอายุของสิ่งมีชีวิต'],a:0,e:'สิ่งมีชีวิตแต่ละชนิดจะมีโครโมโซมเท่ากัน และจะต่างกันในแต่ละชนิด',s:'สไลด์ 4'},
+ {c:'dna',q:'เซลล์ร่างกาย เช่น เซลล์ผิวหนังและเซลล์กล้ามเนื้อ มีโครโมโซมกี่ชุด',o:['1 ชุด เรียกว่า haploid','2 ชุด เรียกว่า diploid','3 ชุด เรียกว่า triploid','4 ชุด เรียกว่า tetraploid'],a:1,e:'Somatic cell มีโครโมโซม 2 ชุด (diploid, 2n)',s:'สไลด์ 5'},
+ {c:'cycle',q:'ระยะใดของ interphase ที่เซลล์เติบโตและสังเคราะห์โปรตีนและเอนไซม์ก่อนเข้าสู่ S phase',o:['G0','G1','S','G2'],a:1,e:'G1 phase คือช่วง protein/enzyme synthesis และ cell growth ควบคุมโดย CDK4/Cyclin D และ CDK2/Cyclin E',s:'สไลด์ 10'},
+ {c:'cycle',q:'คู่ CDK–Cyclin ใดชักนำเซลล์เข้าสู่ระยะแบ่งเซลล์',o:['CDK4 / Cyclin D','CDK2 / Cyclin E','CDK2 / Cyclin A','CDK1 / Cyclin B'],a:3,e:'G2 และการเข้าสู่ mitosis ถูกกระตุ้นโดย CDK1/Cyclin B',s:'สไลด์ 10, 12'},
+ {c:'cycle',q:'Checkpoint ในวัฏจักรเซลล์ทำหน้าที่ใด',o:['สร้าง spindle fiber ให้เซลล์','ตรวจสอบความสมบูรณ์และความพร้อมของเซลล์ในแต่ละระยะ','สังเคราะห์ DNA สายใหม่','สลาย nuclear envelope'],a:1,e:'Checkpoint คือกลไกควบคุมระดับโมเลกุลที่ตรวจความสมบูรณ์ ถูกต้อง และความพร้อมของเซลล์ในแต่ละระยะ',s:'สไลด์ 11'},
+ {c:'cycle',q:'หาก CDK ถูกกระตุ้นให้ทำงานมากเกินไป จะเกิดผลอย่างไร',o:['เซลล์เข้าสู่ G0 ถาวร','เซลล์ตายแบบ necrosis','เซลล์แบ่งตัวไม่หยุดจนเกิดเป็นเซลล์มะเร็ง','DNA ไม่ถูกจำลอง'],a:2,e:'CDK ที่ทำงานมากเกินไปทำให้เซลล์แบ่งตัวไม่หยุดจนเกิดเป็นเซลล์มะเร็ง จึงมีการพัฒนา CDK4/6 inhibitors',s:'สไลด์ 11'},
+ {c:'cycle',q:'Palbociclib ใช้ร่วมกับยาต้านฮอร์โมนในผู้ป่วยมะเร็งเต้านมกลุ่มใด',o:['HR+ และ HER2-','HR- และ HER2+','HR- และ HER2-','ทุกชนิดโดยไม่ต้องตรวจ'],a:0,e:'Palbociclib เป็น CDK4/6 inhibitor ใช้สำหรับผู้ป่วย HR+ และ HER2- ร่วมกับยาต้านฮอร์โมน',s:'สไลด์ 11'},
+ {c:'cycle',q:'ระยะใดที่เซลล์สร้าง DNA และ RNA มากที่สุด และกินเวลานานที่สุด',o:['Prophase','Metaphase','Interphase','Telophase'],a:2,e:'Interphase เป็นช่วงที่มีการสร้าง DNA และ RNA มากที่สุด และกินเวลามากเมื่อเทียบกับระยะอื่น',s:'สไลด์ 10'},
+ {c:'cycle',q:'ข้อใดจับคู่ระยะกับคู่ CDK–Cyclin ไม่ถูกต้อง',o:['G1 กับ CDK4 / Cyclin D','G1 กับ CDK2 / Cyclin E','S กับ CDK2 / Cyclin A','S กับ CDK1 / Cyclin B'],a:3,e:'S phase ควบคุมโดย CDK2/Cyclin A ส่วน CDK1/Cyclin B เกี่ยวกับ G2 และการเข้าสู่ M phase',s:'สไลด์ 10'},
+ {c:'cycle',q:'เซลล์ที่ยังไม่ได้รับสัญญาณให้แบ่งตัว และไม่มีการเปลี่ยนแปลงใด ๆ อยู่ในระยะใด',o:['G0','G1','S','M'],a:0,e:'G0 phase เป็นระยะพัก ไม่มีการเปลี่ยนแปลงใด ๆ จนกว่าจะได้รับสัญญาณการแบ่งเซลล์',s:'สไลด์ 10'},
+ {c:'mitosis',q:'Nucleolus หายไปในระยะใดของ mitosis',o:['Prophase','Metaphase','Anaphase','Telophase'],a:0,e:'ใน prophase chromosome หดตัวจนมองเห็น และ nucleoli หายไป',s:'สไลด์ 13'},
+ {c:'mitosis',q:'Kinetochore มีหน้าที่อะไร',o:['ยึด DNA เข้ากับ histone','จับกับ microtubule เพื่อดึง chromatid แยกจากกัน','สร้าง nuclear envelope ใหม่','สร้าง cell plate ในเซลล์พืช'],a:1,e:'Kinetochore เป็นกลุ่มโปรตีนบริเวณ centromere ที่จับกับ microtubule (spindle fiber) เพื่อดึงโครมาทิดแยกจากกัน',s:'สไลด์ 7'},
+ {c:'mitosis',q:'เหตุการณ์ใดเกิดขึ้นในระยะ prometaphase',o:['Nucleoli ปรากฏขึ้นใหม่','Chromosome จับกับ microtubule ที่ kinetochore','Cleavage furrow ก่อตัว','Cohesin ถูกตัด'],a:1,e:'Prometaphase: chromosome หดตัวมากขึ้น จับกับ microtubule ที่ kinetochore และเคลื่อนเข้าหากลางเซลล์',s:'สไลด์ 13'},
+ {c:'mitosis',q:'ข้อใดอธิบายระยะ anaphase ได้ถูกต้อง',o:['Chromosome เรียงตัวที่ metaphase plate','Nuclear envelope สร้างขึ้นใหม่','Daughter chromosomes เคลื่อนไปขั้วตรงข้ามเมื่อ kinetochore microtubule หดสั้น','Chromatin เริ่มหดตัวเป็นแท่ง'],a:2,e:'Anaphase เริ่มเมื่อ cohesin ถูกตัด daughter chromosomes เคลื่อนไปขั้วตรงข้ามขณะที่ kinetochore microtubule หดสั้น',s:'สไลด์ 16'},
+ {c:'mitosis',q:'ข้อใดเป็นลักษณะของระยะ telophase',o:['Nucleoli ปรากฏใหม่และเกิด daughter nuclei 2 อัน','Centrosome จำลองตัวเอง','Sister chromatids ยังติดกันที่ centromere','Mitotic spindle เริ่มก่อตัว'],a:0,e:'Telophase: เกิด daughter nuclei 2 อัน nuclear envelope สร้างใหม่ nucleoli กลับมา และ spindle สลายไป',s:'สไลด์ 16'},
+ {c:'mitosis',q:'Cytokinesis ของเซลล์พืชต่างจากเซลล์สัตว์อย่างไร',o:['เซลล์พืชเกิด cleavage furrow','เซลล์พืชสร้าง cell plate','เซลล์พืชไม่มีการแบ่ง cytoplasm','เซลล์พืชใช้ contractile ring รัดเซลล์'],a:1,e:'เซลล์สัตว์เกิด cleavage furrow จาก contractile ring ของ microfilament ส่วนเซลล์พืชสร้าง cell plate',s:'สไลด์ 18'},
+ {c:'mitosis',q:'เซลล์แม่มี 4 chromosome หลังผ่าน mitosis เซลล์ลูกแต่ละเซลล์จะมีกี่ chromosome',o:['1','2','4','8'],a:2,e:'Mitosis ได้เซลล์ลูก 2 เซลล์ จำนวน chromosome เท่าเดิม คือ 4 chromosome',s:'สไลด์ 19–21'},
+ {c:'mitosis',q:'การแบ่งนิวเคลียสแบบ meiosis ต่างจาก mitosis อย่างไร',o:['ได้ 2 เซลล์ chromosome เท่าเดิม','ได้ 4 เซลล์ chromosome ลดลงครึ่งหนึ่ง','ได้ 4 เซลล์ chromosome เท่าเดิม','ได้ 2 เซลล์ chromosome เพิ่มเป็นสองเท่า'],a:1,e:'Meiosis แบ่ง 2 ระยะ ได้เซลล์ลูก 4 เซลล์ โครโมโซมลดลงครึ่งหนึ่งของเซลล์เริ่มต้น',s:'สไลด์ 8'},
+ {c:'mitosis',q:'เหตุการณ์ใดคือ anaphase B',o:['Chromosome ถูกดึงไปขั้วตรงข้าม','Spindle poles เคลื่อนห่างออกจากกัน','Chromosome คลายตัว','Golgi complex และ ER สร้างใหม่'],a:1,e:'Anaphase A คือ chromosome ถูกดึงไปขั้วตรงข้าม ส่วน anaphase B คือ spindle poles เคลื่อนห่างกัน',s:'สไลด์ 17'},
+ {c:'mitosis',q:'ข้อใดเรียงลำดับเหตุการณ์ใน mitosis ได้ถูกต้อง',o:['Nucleolus หาย → envelope แตก → เรียงที่ plate → chromatid แยก','Envelope แตก → nucleolus หาย → chromatid แยก → เรียงที่ plate','Chromatid แยก → เรียงที่ plate → envelope แตก → nucleolus หาย','เรียงที่ plate → nucleolus หาย → chromatid แยก → envelope แตก'],a:0,e:'Prophase nucleolus หาย → prometaphase envelope แตก → metaphase เรียงที่ plate → anaphase chromatid แยก',s:'สไลด์ 13, 16'},
+ {c:'mitosis',q:'ในระยะ metaphase kinetochore ของ sister chromatids จับกับ microtubule อย่างไร',o:['จับจากขั้วเดียวกันทั้งคู่','จับจากขั้วตรงข้ามกัน','ยังไม่จับกับ microtubule','จับกับ polar microtubule เท่านั้น'],a:1,e:'ใน metaphase kinetochore ของ sister chromatids แต่ละข้างจับกับ kinetochore microtubule ที่มาจากขั้วตรงข้ามกัน',s:'สไลด์ 16'},
+ {c:'mitosis',q:'ข้อใดไม่ใช่เหตุการณ์ในระยะ telophase',o:['เกิด daughter nuclei 2 อัน','Nuclear envelope สร้างจากชิ้นส่วนของ envelope เดิม','Sister chromatids เริ่มแยกออกจากกัน','Spindle microtubule ที่เหลือสลายไป'],a:2,e:'Sister chromatids แยกกันใน anaphase ส่วนข้ออื่นเป็นเหตุการณ์ของ telophase',s:'สไลด์ 16'},
+ {c:'mitosis',q:'เซลล์ระยะ G2 ของสิ่งมีชีวิตที่มี 2n = 4 มี chromatid ทั้งหมดกี่เส้น',o:['2','4','8','16'],a:2,e:'หลัง S phase แต่ละ chromosome มี 2 sister chromatids จึงมี 4 × 2 = 8 chromatids',s:'สไลด์ 6, 9, 19'},
+ {c:'death',q:'ข้อใดเป็นลักษณะของ apoptosis',o:['เซลล์บวม membrane โป่งพองแล้วแตก','เกิดการอักเสบบริเวณรอบ ๆ','เซลล์หดตัว ยังสร้าง ATP ได้ และไม่อักเสบ','บริเวณนั้นถูกแทนที่ด้วยแผลเป็น'],a:2,e:'Apoptosis: เซลล์หดตัว ยังสร้าง ATP และโปรตีนได้ ไม่มีการอักเสบ และไม่เกิดแผลเป็น',s:'สไลด์ 25'},
+ {c:'death',q:'ข้อใดเป็นตัวอย่างของ apoptosis',o:['แผลเนื้อตายที่ผิวหนัง','การฝ่อของต่อมไทมัส','บริเวณที่เกิดการอักเสบรุนแรง','เซลล์ที่ขาดสารให้พลังงานจนแตก'],a:1,e:'ตัวอย่าง apoptosis ได้แก่ การฝ่อของต่อมไทมัส การเจริญของนิ้วมือนิ้วเท้า และการกำจัดเซลล์เสื่อมสภาพหรือเซลล์มะเร็ง',s:'สไลด์ 25'},
+ {c:'death',q:'Necrosis ทำให้เกิดการอักเสบเพราะเหตุใด',o:['เซลล์แตกสลายและปล่อยสารภายในเซลล์ออกมา','เซลล์ถูก phagocyte กลืนกินทั้งเซลล์','เซลล์สร้าง ATP มากเกินไป','เซลล์หดตัวจนเล็กลง'],a:0,e:'ใน necrosis เซลล์ที่ตายถูกทำให้แตกสลาย มีการปล่อยสารภายในเซลล์ออกมา บริเวณนั้นจึงอักเสบ',s:'สไลด์ 24–25'},
+ {c:'death',q:'ข้อใดไม่ใช่สาเหตุของการเสื่อมของเซลล์ตามเอกสาร',o:['ภาวะพร่องของระบบฮอร์โมน','การสะสมของเสียในเซลล์','ภาวะการเกิดอนุมูลอิสระ','ความยาว telomere ที่เพิ่มขึ้น'],a:3,e:'สาเหตุตามเอกสารคือ telomere หดสั้นลง ไม่ใช่ยาวขึ้น ร่วมกับฮอร์โมนพร่อง ของเสียสะสม อนุมูลอิสระ และอื่น ๆ',s:'สไลด์ 23'},
+ {c:'death',q:'ข้อใดเปรียบเทียบ necrosis กับ apoptosis ได้ถูกต้อง',o:['Necrosis ยังสร้าง ATP ได้ แต่ apoptosis สร้างไม่ได้','Necrosis ตายทีละเซลล์ แต่ apoptosis ตายเป็นกลุ่ม','Necrosis เกิดแผลเป็น แต่ apoptosis ไม่เกิดแผลเป็น','Necrosis เซลล์หดตัว แต่ apoptosis เซลล์บวม'],a:2,e:'บริเวณที่เกิด necrosis ถูกแทนที่ด้วยแผลเป็น ส่วน apoptosis ไม่เกิดแผลเป็น',s:'สไลด์ 25'},
+ {c:'death',q:'การตายของร่างกาย (somatic death) หมายถึงข้อใด',o:['การตายของเซลล์เพียงเซลล์เดียว','การสูญเสียการทำงานประสานกันของหัวใจ ระบบไหลเวียน ระบบหายใจ และสมอง','การตายแบบ apoptosis ของเซลล์ผิวหนัง','การฝ่อของต่อมไทมัส'],a:1,e:'การตาย หมายถึง การสูญเสียการทำงานที่ประสานกันของหัวใจ ระบบหมุนเวียนโลหิต ระบบการหายใจ และสมอง',s:'สไลด์ 24'},
+ {c:'cancer',q:'ยีน p53 ทำหน้าที่อย่างไรเมื่อ DNA ของเซลล์เสียหาย',o:['เร่งให้เซลล์แบ่งตัวเร็วขึ้น','สั่งหยุดแบ่งเซลล์เพื่อซ่อม และสั่ง apoptosis หากซ่อมไม่สำเร็จ','สร้าง histone เพิ่มขึ้น','ทำให้เซลล์ตายแบบ necrosis'],a:1,e:'p53 สั่งหยุดการแบ่งเซลล์เพื่อซ่อม DNA หากซ่อมไม่สำเร็จจะสั่งให้เซลล์ที่กลายพันธุ์ตายแบบ apoptosis',s:'สไลด์ 27'},
+ {c:'cancer',q:'ข้อใดเป็น oncogene ทั้งคู่',o:['TP53 และ BRCA2','BRCA2 และ PALB2','c-myc และ bcl-2','TP53 และ c-myc'],a:2,e:'Oncogene ได้แก่ c-myc และ bcl-2 ส่วน TP53, BRCA2 และ PALB2 เป็น anti-oncogene',s:'สไลด์ 27'},
+ {c:'cancer',q:'มะเร็งที่มีลักษณะใดมีแนวโน้มดื้อต่อเคมีบำบัด',o:['มียีน bcl-2 สูงและ TP53 กลายพันธุ์','มียีน TP53 ปกติ','มียีน BRCA2 ปกติ','มีเซลล์อยู่ในระยะแบ่งตัวจำนวนมาก'],a:0,e:'การมียีน bcl-2 ปริมาณสูงและ TP53 กลายพันธุ์ทำให้ดื้อต่อการรักษาด้วยเคมีบำบัด',s:'สไลด์ 27'},
+ {c:'cancer',q:'ข้อใดจับคู่ปัจจัยเสี่ยงกับชนิดมะเร็งได้ถูกต้อง',o:['สูบบุหรี่ กับ มะเร็งปากมดลูก','ดื่มแอลกอฮอล์ กับ มะเร็งหลอดอาหาร','อาหารไฟเบอร์สูง กับ มะเร็งลำไส้','ขาด folic acid กับ มะเร็งปอด'],a:1,e:'แอลกอฮอล์เสี่ยงมะเร็งหลอดอาหารและกระเพาะอาหาร บุหรี่สัมพันธ์กับมะเร็งปอด ไฟเบอร์ลดความเสี่ยงมะเร็งลำไส้ ขาด folic acid เสี่ยงมะเร็งปากมดลูก',s:'สไลด์ 28–29'},
+ {c:'cancer',q:'ผู้ป่วยกลุ่มใดเสี่ยงมะเร็งปากมดลูกมากกว่าคนปกติจากระบบภูมิคุ้มกันบกพร่อง',o:['ผู้ที่ได้รับการปลูกถ่ายไต','ผู้ที่รับประทานอาหารไฟเบอร์สูง','ผู้ที่ได้รับวิตามินซีเพียงพอ','ผู้ที่ไม่สูบบุหรี่'],a:0,e:'ผู้ที่ได้รับการปลูกถ่ายไตหรือติดเชื้อ HIV มีภูมิคุ้มกันบกพร่อง จึงเสี่ยงมะเร็งปากมดลูกมากกว่าคนปกติ',s:'สไลด์ 29'},
+ {c:'cancer',q:'ผลของการกลายพันธุ์ของ oncogene หรือ anti-oncogene คือข้อใด',o:['เซลล์ผิดปกติรอดจาก apoptosis และแบ่งตัวต่อเนื่อง','เซลล์ตายแบบ necrosis ทันที','เซลล์เข้าสู่ G0 ถาวร','เซลล์มี telomere ยาวขึ้น'],a:0,e:'ทั้งสองกรณีทำให้เซลล์ที่ผิดปกติเหลือรอดจากโปรแกรมการตาย (apoptosis) และแบ่งตัวอย่างต่อเนื่อง',s:'สไลด์ 27'},
+ {c:'cancer',q:'อาหารชนิดใดช่วยลดโอกาสการเกิดมะเร็งลำไส้',o:['อาหารไขมันสูง','อาหารไหม้เกรียม','อาหารไฟเบอร์สูง','เครื่องดื่มแอลกอฮอล์'],a:2,e:'อาหารไขมันสูงเพิ่มความเสี่ยงมะเร็งลำไส้ ขณะที่อาหารไฟเบอร์สูงลดโอกาสเกิดมะเร็งลำไส้',s:'สไลด์ 29'},
+ {c:'therapy',q:'ยาเคมีบำบัดออกฤทธิ์ต่อเซลล์กลุ่มใด',o:['เฉพาะเซลล์ระยะ G0','เซลล์ที่กำลังแบ่งตัว ทั้งเซลล์มะเร็งและเซลล์ปกติ','เฉพาะเซลล์ที่มีตัวรับ HER2','เฉพาะเซลล์ประสาท'],a:1,e:'ยาเคมีบำบัดออกฤทธิ์กับเซลล์ที่กำลังแบ่งตัว ไม่ใช่เซลล์ระยะ G0 จึงโดนเซลล์ปกติที่แบ่งเร็ว เช่น รากผม เยื่อบุทางเดินอาหาร ด้วย',s:'สไลด์ 31'},
+ {c:'therapy',q:'ยาใดเป็นยามุ่งเป้าชนิดโมเลกุลเล็ก ซึ่งมักเป็นยารับประทาน',o:['Trastuzumab','Rituximab','Osimertinib','Bevacizumab'],a:2,e:'ยามุ่งเป้าแบบโมเลกุลเล็กผ่านเยื่อหุ้มเซลล์ได้ มักเป็นยารับประทาน เช่น Erlotinib และ Osimertinib',s:'สไลด์ 32'},
+ {c:'therapy',q:'ข้อใดจับคู่ยามุ่งเป้ากับกลไกการออกฤทธิ์ได้ถูกต้อง',o:['Bevacizumab กับ ยับยั้งการสร้างเส้นเลือดใหม่','Rituximab กับ ขัดขวางสัญญาณการแบ่งตัว','Erlotinib กับ ส่งสารพิษเข้าเซลล์เป้าหมาย','Venetoclax กับ ยับยั้งการสร้างเส้นเลือดใหม่'],a:0,e:'Bevacizumab ยับยั้งการสร้างเส้นเลือดใหม่ · Rituximab กระตุ้นภูมิคุ้มกัน · Erlotinib ขัดขวางสัญญาณการแบ่งตัว · Venetoclax กระตุ้น apoptosis',s:'สไลด์ 32'},
+ {c:'therapy',q:'Trastuzumab emtansine ออกฤทธิ์อย่างไร',o:['กระตุ้นภูมิคุ้มกันให้ทำลายเซลล์มะเร็ง','ส่งสารพิษเข้าสู่เซลล์เป้าหมาย','ยับยั้ง CDK4/6','กระตุ้นการตายแบบ apoptosis'],a:1,e:'Trastuzumab emtansine ส่งสารพิษเข้าสู่เซลล์เป้าหมาย',s:'สไลด์ 32'},
+ {c:'therapy',q:'ยามุ่งเป้าแบบ monoclonal antibody มีลักษณะอย่างไร',o:['ผ่านเยื่อหุ้มเซลล์ได้ มักเป็นยารับประทาน','จับเป้าหมายบนผิวหรือภายนอกเซลล์ ส่วนใหญ่เป็นยาฉีด','ออกฤทธิ์เฉพาะเซลล์ระยะ G0','ทำลายทุกเซลล์ที่กำลังแบ่งตัว'],a:1,e:'Monoclonal antibodies จับเป้าหมายบนผิวหรือภายนอกเซลล์ ส่วนใหญ่เป็นยาฉีด เช่น Trastuzumab, Rituximab',s:'สไลด์ 32'},
+ {c:'therapy',q:'การรักษาใดใช้อุปกรณ์จี้ทำลายก้อนมะเร็งด้วยความร้อน หรือฉีดยาอุดเส้นเลือดที่เลี้ยงก้อนมะเร็ง',o:['รังสีรักษา','ภูมิคุ้มกันบำบัด','รักษาเฉพาะจุด','ปลูกถ่ายเซลล์ต้นกำเนิด'],a:2,e:'การรักษาเฉพาะจุดใช้อุปกรณ์จี้ทำลายก้อนมะเร็งด้วยความร้อน หรือฉีดยาอุดเส้นเลือดที่เลี้ยงก้อนมะเร็ง',s:'สไลด์ 30'},
+ {c:'aging',q:'Telomere คืออะไร',o:['บริเวณที่แคบที่สุดของ chromosome','ส่วนปลายของแท่ง chromosome','โปรตีนที่จับกับ microtubule','โครงสร้างลูกปัดของ DNA'],a:1,e:'Telomere เป็นส่วนปลายของแท่งโครโมโซม',s:'สไลด์ 33'},
+ {c:'aging',q:'Quercetin และ Fisetin จัดอยู่ในกลุ่มใด',o:['Senolytic agents','Monoclonal antibodies','CDK4/6 inhibitors','Growth factors'],a:0,e:'Quercetin และ Fisetin เป็น senolytic agent ยากำจัดเซลล์ชราภาพ',s:'สไลด์ 34'},
+ {c:'aging',q:'Exosome-based therapy ช่วยฟื้นฟูผิวโดยกระตุ้นการทำงานของเซลล์ใด',o:['Neuron','Fibroblast','Red blood cell','Chondrocyte'],a:1,e:'Exosome เป็นสารส่งสัญญาณระหว่างเซลล์ ช่วยกระตุ้นเซลล์สร้างเส้นใยผิว (fibroblast) ลดริ้วรอย',s:'สไลด์ 34'},
+ {c:'aging',q:'ข้อใดจัดอยู่ในกลุ่มเวชสำอางและโภชนาการชะลอวัย',o:['Senolytics','Exosome-based therapy','NAD+ therapy','Stem cell therapy'],a:2,e:'NAD+ therapy อยู่ในกลุ่ม longevity cosmeceuticals & nutrition ส่วนข้ออื่นอยู่ในกลุ่มการรักษาระดับเซลล์',s:'สไลด์ 34–35'},
+ {c:'aging',q:'บุคคลที่มี telomere สั้นสัมพันธ์กับข้อใด',o:['ความเสี่ยงโรคที่เกี่ยวกับความเสื่อมสูงขึ้น','อายุยืนยาวขึ้น','เซลล์แบ่งตัวได้มากขึ้น','ภูมิคุ้มกันแข็งแรงขึ้น'],a:0,e:'บุคคลที่มี telomere สั้นสัมพันธ์กับความเสี่ยงเป็นโรคต่าง ๆ ได้ง่ายกว่า โดยเฉพาะโรคที่เกี่ยวกับความเสื่อม',s:'สไลด์ 33'},
+ /* ---- ชุดเพิ่มเติม 48 ข้อ ---- */
+ {c:'dna',q:'คุณสมบัติสำคัญที่ทำให้สิ่งมีชีวิตแตกต่างจากสิ่งไม่มีชีวิตคือข้อใด',o:['การเคลื่อนที่','การสืบพันธุ์','การมีน้ำเป็นองค์ประกอบ','การมีสีสัน'],a:1,e:'คุณสมบัติที่สำคัญของสิ่งมีชีวิตที่แตกต่างจากสิ่งไม่มีชีวิตคือ การสืบพันธุ์ (reproduction)',s:'สไลด์ 3'},
+ {c:'dna',q:'การสืบพันธุ์ของสิ่งมีชีวิตจะเกิดขึ้นได้ต้องอาศัยกระบวนการใด',o:['การหายใจระดับเซลล์','การสังเคราะห์แสง','การแบ่งเซลล์','การย่อยอาหาร'],a:2,e:'การสืบพันธุ์จะเกิดขึ้นได้ ต้องอาศัยการแบ่งเซลล์ (cell division)',s:'สไลด์ 3'},
+ {c:'dna',q:'DNA ของ eukaryotic cell รวมตัวกับโปรตีนชนิดใดก่อนขดและทบไปมาจนเป็นโครโมโซม',o:['Cyclin','Cohesin','Keratin','Histone'],a:3,e:'DNA ของ eukaryotic cell รวมตัวกับโปรตีน histone จากนั้นขดและทบไปมาจนกลายเป็นโครโมโซม',s:'สไลด์ 4'},
+ {c:'dna',q:'ข้อใดเป็นเซลล์ร่างกาย (somatic cell) ทั้งหมด',o:['เซลล์ประสาท เซลล์กระดูก เซลล์ในระบบเลือด','เซลล์ไข่ เซลล์ประสาท เซลล์ไขมัน','เซลล์อสุจิ เซลล์ผิวหนัง เซลล์กล้ามเนื้อ','เซลล์ไข่ เซลล์อสุจิ เซลล์กระดูก'],a:0,e:'เซลล์ร่างกาย ได้แก่ เซลล์ผิวหนัง ประสาท กล้ามเนื้อ ไขมัน กระดูก และเซลล์ในระบบเลือด ส่วนเซลล์ไข่และอสุจิเป็นเซลล์สืบพันธุ์',s:'สไลด์ 5'},
+ {c:'dna',q:'Sister chromatids ของแต่ละโครโมโซมจะแยกออกจากกันในระยะใดของการแบ่งเซลล์',o:['Prophase','Anaphase','Metaphase','Interphase'],a:1,e:'แต่ละโครโมโซมประกอบด้วย 2 sister chromatids ซึ่งจะแยกกันในการแบ่งเซลล์ระยะแอนาเฟส',s:'สไลด์ 6'},
+ {c:'dna',q:'DNA จำลองตัวเองและโครโมโซมเริ่มหดตัวในช่วงใด',o:['หลังการแบ่งเซลล์เสร็จสมบูรณ์','ระหว่างการเกิด cleavage furrow','ขณะเซลล์เตรียมตัวเพื่อแบ่งเซลล์','ขณะเซลล์ตายแบบ apoptosis'],a:2,e:'ขณะที่เซลล์เตรียมตัวเพื่อแบ่งเซลล์ DNA มีการจำลองตัวเอง (replication) และโครโมโซมเริ่มหดตัว',s:'สไลด์ 6'},
+ {c:'cycle',q:'Cyclin-dependent kinase (CDK) ทำหน้าที่ใด',o:['เป็นเอนไซม์ที่ทำหน้าที่เป็นตัวกระตุ้น','เป็นโปรตีนโครงสร้างของ chromosome','เป็นโปรตีนที่ตัดแยก sister chromatids','เป็นเอนไซม์ที่ย่อยสลาย DNA'],a:0,e:'CDK เป็นเอนไซม์ที่ทำหน้าที่เป็น “ตัวกระตุ้น” ในวัฏจักรเซลล์',s:'สไลด์ 11'},
+ {c:'cycle',q:'Cyclin มีบทบาทอย่างไรในวัฏจักรเซลล์',o:['สร้าง spindle fiber','จำลอง DNA ใน S phase','ย่อยสลาย nuclear envelope','จับคู่กับ CDK เพื่อเปิดใช้งานและควบคุมการทำงาน'],a:3,e:'Cyclin เป็นโปรตีนควบคุมที่จับคู่กับ CDK เพื่อเปิดใช้งานและควบคุมการทำงาน',s:'สไลด์ 11'},
+ {c:'cycle',q:'การตรวจสอบ DNA และการจำลอง centrosome เกิดขึ้นในระยะใด',o:['G1','S','G2','G0'],a:2,e:'G2 phase เป็นช่วงเตรียมแบ่งเซลล์ มีการตรวจสอบ DNA (DNA checking) และ centrosome duplicated',s:'สไลด์ 10'},
+ {c:'cycle',q:'S phase เป็นช่วงของเหตุการณ์ใด',o:['การสังเคราะห์โปรตีนและการเติบโตของเซลล์','การจำลอง DNA','การแบ่ง cytoplasm','การหยุดพักจนกว่าจะได้รับสัญญาณ'],a:1,e:'S phase คือช่วง DNA replication ซึ่งถูกควบคุมโดย CDK2/Cyclin A',s:'สไลด์ 10'},
+ {c:'cycle',q:'เมื่อเสร็จสิ้นระยะ interphase เซลล์จะเข้าสู่ระยะใด',o:['G0 phase','G1 phase','S phase','M phase'],a:3,e:'เมื่อเสร็จสิ้นระยะ interphase เซลล์จะเข้าสู่ระยะแบ่งเซลล์หรือระยะไมโทซีส (M phase)',s:'สไลด์ 10'},
+ {c:'cycle',q:'ลักษณะของโครโมโซมในระยะ interphase เป็นอย่างไร',o:['เส้นใยเล็กที่บางและยาวพันกันไปมา','แท่งหดสั้นเรียงตัวกลางเซลล์','แยกเป็น daughter chromosomes','แท่งหนาที่เห็นชัดที่สุด'],a:0,e:'ในระยะ interphase โครโมโซมเป็นเส้นใยเล็ก ๆ ที่บางและยาวพันกันไปมา',s:'สไลด์ 10'},
+ {c:'cycle',q:'Palbociclib จัดเป็นยากลุ่มใด',o:['Monoclonal antibody','CDK4/6 inhibitor','Senolytic agent','ยากระตุ้นการตายแบบ apoptosis'],a:1,e:'Palbociclib เป็นยากลุ่ม CDK4/6 inhibitors ใช้รักษามะเร็งเต้านมบางชนิด',s:'สไลด์ 11'},
+ {c:'cycle',q:'คู่ CDK2 / Cyclin E ควบคุมและกระตุ้นเซลล์ในระยะใด',o:['G1','S','G2','M'],a:0,e:'G1 phase ถูกควบคุมและกระตุ้นเข้าสู่ S phase ด้วย CDK4/Cyclin D และ CDK2/Cyclin E',s:'สไลด์ 10'},
+ {c:'mitosis',q:'Mitosis มีวัตถุประสงค์หลักเพื่ออะไร',o:['สร้างเซลล์สืบพันธุ์','ลดจำนวนโครโมโซมลงครึ่งหนึ่ง','เพิ่มจำนวนเซลล์ร่างกาย','กำจัดเซลล์ที่เสื่อมสภาพ'],a:2,e:'Mitosis เป็นการแบ่งเซลล์เพื่อเพิ่มจำนวนเซลล์ร่างกาย (somatic cell)',s:'สไลด์ 9'},
+ {c:'mitosis',q:'การแบ่งเซลล์ของยูคาริโอตประกอบด้วย 2 กระบวนการใด',o:['Mitosis และ apoptosis','Replication และ condensation','Necrosis และ apoptosis','Karyokinesis และ cytokinesis'],a:3,e:'การแบ่งเซลล์ของยูคาริโอตมี 2 กระบวนการ คือ karyokinesis (แบ่งนิวเคลียส) และ cytokinesis (แบ่งไซโทพลาซึม)',s:'สไลด์ 8'},
+ {c:'mitosis',q:'Meiosis แบ่งออกเป็นกี่ระยะ',o:['1 ระยะ','2 ระยะ คือ meiosis I และ meiosis II','3 ระยะ','4 ระยะ'],a:1,e:'ไมโอซีสแบ่งเป็น 2 ระยะ คือ meiosis I และ meiosis II',s:'สไลด์ 8'},
+ {c:'mitosis',q:'ในระยะ metaphase centrosome อยู่ที่ตำแหน่งใด',o:['ขั้วตรงข้ามของเซลล์','กึ่งกลางเซลล์บน metaphase plate','ภายใน nucleus','ติดกันที่ขั้วเดียว'],a:0,e:'ในระยะ metaphase centrosome อยู่ที่ขั้วตรงข้ามของเซลล์',s:'สไลด์ 16'},
+ {c:'mitosis',q:'Nuclear envelope ของ daughter nuclei ในระยะ telophase เกิดขึ้นจากอะไร',o:['Spindle microtubule ที่สลายตัว','Cell plate ของเซลล์พืช','ชิ้นส่วนของ nuclear envelope ของเซลล์แม่','Kinetochore ที่หลุดออกมา'],a:2,e:'ใน telophase nuclear envelope เกิดจากชิ้นส่วนของ nuclear envelope ของเซลล์แม่',s:'สไลด์ 16'},
+ {c:'mitosis',q:'ในระยะ telophase spindle microtubule ที่เหลืออยู่จะเป็นอย่างไร',o:['ยาวขึ้นเพื่อดึงเซลล์','กลับไปจับ kinetochore อีกครั้ง','เปลี่ยนเป็น cell plate','ถูกสลายตัวไป'],a:3,e:'ใน telophase spindle microtubule ที่เหลืออยู่จะถูกสลายตัว (depolymerized)',s:'สไลด์ 16'},
+ {c:'mitosis',q:'Cleavage furrow เกิดขึ้นในเซลล์ชนิดใด',o:['เซลล์สัตว์','เซลล์พืช','Prokaryotic cell','เซลล์ทุกชนิดเหมือนกัน'],a:0,e:'ในเซลล์สัตว์ cytokinesis เกิดโดยกระบวนการ cleavage เกิดเป็น cleavage furrow ส่วนเซลล์พืชเกิด cell plate',s:'สไลด์ 18'},
+ {c:'mitosis',q:'ในระยะ prophase โครโมโซมแต่ละแท่งปรากฏเป็นลักษณะใด',o:['Chromatid เส้นเดียว','2 sister chromatids','เส้นใยบางยาวมองไม่เห็นเป็นแท่ง','Daughter chromosomes ที่แยกกันแล้ว'],a:1,e:'ใน prophase โครโมโซมหดตัวจนมองเห็นได้ และปรากฏเป็น 2 sister chromatids',s:'สไลด์ 13'},
+ {c:'mitosis',q:'ข้อใดเป็นเหตุการณ์ของระยะ interphase G2 ก่อนเข้าสู่ prophase',o:['Nucleolus หายไป','Nuclear envelope แตก','Cohesin ถูกตัด','DNA จำลองตัวแล้วและ centriole จำลองตัว'],a:3,e:'Interphase G2: DNA จำลองตัวแล้ว centriole จำลองตัว และเซลล์เตรียมพร้อมแบ่งตัว',s:'สไลด์ 13'},
+ {c:'mitosis',q:'ในระยะ metaphase โครโมโซมทุกแท่งอยู่ในสภาพใด',o:['เรียงตัวที่แนวกึ่งกลางเซลล์และถูกดึงจากสองขั้ว','กระจายอยู่ทั่ว nucleus','รวมกลุ่มที่ขั้วเซลล์','คลายตัวเป็นเส้นใย chromatin'],a:0,e:'ใน metaphase โครโมโซมทุกแท่งเรียงตัวที่ equator ของเซลล์ (metaphase plate) และยึดติดกับขั้วตรงข้ามภายใต้แรงตึง',s:'สไลด์ 17'},
+ {c:'death',q:'การตายแบ่งออกได้เป็น 2 ประเภทใด',o:['Necrosis และ mitosis','การตายของเซลล์ และการตายของร่างกาย','Apoptosis และ senescence','การตายเฉพาะส่วน และการจำศีลของเซลล์'],a:1,e:'การตายแบ่งเป็น การตายของเซลล์ (cellular death) และการตายของร่างกายหรือการเสียชีวิต (somatic death)',s:'สไลด์ 24'},
+ {c:'death',q:'Necrosis คือการตายของเซลล์แบบใด',o:['การตายแบบที่มีการโปรแกรมไว้แล้ว','การตายของร่างกายทั้งหมด','การตายเฉพาะส่วน','การหยุดแบ่งตัวของเซลล์ชรา'],a:2,e:'การตายของเซลล์มี 2 แบบ คือ การตายเฉพาะส่วน (necrosis) และการตายแบบที่มีการโปรแกรมไว้แล้ว (apoptosis)',s:'สไลด์ 24'},
+ {c:'death',q:'Apoptosis หมายถึงข้อใด',o:['การตายของเซลล์แบบที่มีการโปรแกรมไว้แล้ว','การตายเฉพาะส่วนจากเซลล์บวมแตก','การตายของร่างกาย','การแบ่งเซลล์ที่ผิดพลาด'],a:0,e:'Apoptosis คือการตายของเซลล์แบบที่มีการโปรแกรมไว้แล้ว',s:'สไลด์ 24'},
+ {c:'death',q:'ในการตายแบบ necrosis การสร้างพลังงานของเซลล์เป็นอย่างไร',o:['ยังสร้าง ATP และสังเคราะห์โปรตีนได้ตามปกติ','สร้าง ATP เพิ่มขึ้นมากกว่าปกติ','ใช้พลังงานจากเซลล์ข้างเคียง','Mitochondria สูญเสียหน้าที่ ขาดแคลนสารให้พลังงาน'],a:3,e:'ใน necrosis ไมโทคอนเดรียสูญเสียหน้าที่ เกิดการขาดแคลนสารให้พลังงานแก่เซลล์',s:'สไลด์ 25'},
+ {c:'death',q:'การเจริญของนิ้วมือและนิ้วเท้าเป็นตัวอย่างของกระบวนการใด',o:['Necrosis','Apoptosis','Meiosis','การอักเสบ'],a:1,e:'ตัวอย่างของ apoptosis ได้แก่ การฝ่อของต่อมไทมัส การเจริญของนิ้วมือและเท้า และการกำจัดเซลล์เสื่อมสภาพหรือเซลล์มะเร็ง',s:'สไลด์ 25'},
+ {c:'death',q:'การจำศีลของเซลล์เป็นสาเหตุของการเสื่อมได้อย่างไร',o:['ทำให้ telomere ยาวขึ้น','เพิ่มระดับฮอร์โมนในร่างกาย','เซลล์เหล่านี้สะสมจนเนื้อเยื่อสูญเสียเซลล์และอวัยวะทำงานไม่ได้','ทำให้เซลล์ปกติแบ่งตัวเร็วขึ้น'],a:2,e:'เซลล์ที่แบ่งตัวผิดพลาดจะอยู่ในภาวะจำศีลหรือสลายตัวไปเอง แต่หากสะสม เนื้อเยื่อจะสูญเสียเซลล์จนอวัยวะทำงานไม่ได้',s:'สไลด์ 23'},
+ {c:'death',q:'ภาวะการเกิดอนุมูลอิสระเป็นผลจากปัจจัยใด',o:['ปัจจัยภายในร่างกายและมลภาวะภายนอก','พันธุกรรมเพียงอย่างเดียว','การแบ่งเซลล์แบบ mitosis','ฮอร์โมนที่เพิ่มขึ้นตามอายุ'],a:0,e:'ภาวะการเกิดอนุมูลอิสระเป็นผลจากปัจจัยภายในร่างกาย และมลภาวะภายนอก',s:'สไลด์ 23'},
+ {c:'cancer',q:'โรคมะเร็งเกิดจากสาเหตุใดตามเอกสาร',o:['เซลล์ตายแบบ apoptosis มากเกินไป','การทำงานของยีนและโปรตีนบกพร่อง ทำให้การควบคุมเซลล์ผิดปกติ','telomere ยาวขึ้นผิดปกติ','การขาดน้ำในเซลล์'],a:1,e:'มะเร็งเกิดจากการทำงานของยีนและโปรตีนต่าง ๆ บกพร่อง ทำให้การควบคุมเซลล์ผิดปกติ เซลล์แบ่งตัวเพิ่มขึ้นอย่างต่อเนื่อง',s:'สไลด์ 26'},
+ {c:'cancer',q:'ข้อใดกล่าวถูกต้องเกี่ยวกับตำแหน่งที่เซลล์มะเร็งเจริญได้',o:['เจริญได้เฉพาะที่ผิวหนัง','เจริญได้เฉพาะในเลือด','เจริญไม่ได้ในกระดูก','เจริญได้ทุกส่วนของร่างกาย รวมถึงต่อมน้ำเหลืองและกระดูก'],a:3,e:'เซลล์มะเร็งเจริญได้ทุกส่วนของร่างกาย ทั้งในเนื้อเยื่อทั่วไป ช่องว่างของอวัยวะ ต่อมน้ำเหลือง หรือแม้แต่ในกระดูก',s:'สไลด์ 26'},
+ {c:'cancer',q:'ข้อใดเป็นยีนต้านมะเร็ง (anti-oncogene) ทั้งหมด',o:['c-myc, bcl-2, TP53','bcl-2, BRCA2, PALB2','TP53, BRCA2, PALB2','c-myc, TP53, BRCA2'],a:2,e:'ยีนต้านมะเร็ง ได้แก่ TP53, BRCA2 และ PALB2 ส่วน c-myc และ bcl-2 เป็น oncogene',s:'สไลด์ 27'},
+ {c:'cancer',q:'ตัวอย่างเซลล์ในระบบภูมิคุ้มกันที่เฝ้าระวังเซลล์ที่เปลี่ยนแปลงผิดปกติคือข้อใด',o:['NK cell','Fibroblast','Red blood cell','Osteocyte'],a:0,e:'ระบบภูมิคุ้มกันเฝ้าระวังเซลล์ผิดปกติ เช่น NK cell การทำงานที่บกพร่องจึงมีผลต่อการเกิดมะเร็ง',s:'สไลด์ 29'},
+ {c:'cancer',q:'การขาดสารใดเพิ่มความเสี่ยงต่อการเกิดมะเร็งปากมดลูก',o:['ไฟเบอร์','Folic acid รวมถึงวิตามินเอและซี','โปรตีน','แคลเซียม'],a:1,e:'การขาด folic acid รวมถึงการขาดวิตามินเอและซี เพิ่มความเสี่ยงต่อการเกิดมะเร็งปากมดลูก',s:'สไลด์ 29'},
+ {c:'cancer',q:'อาหารไขมันสูงเพิ่มความเสี่ยงต่อมะเร็งชนิดใด',o:['มะเร็งปอดและมะเร็งผิวหนัง','มะเร็งปากมดลูก','มะเร็งหลอดอาหาร','มะเร็งเต้านมและมะเร็งลำไส้'],a:3,e:'อาหารที่มีไขมันสูงเพิ่มความเสี่ยงต่อการเป็นมะเร็งเต้านมและมะเร็งลำไส้',s:'สไลด์ 29'},
+ {c:'cancer',q:'การได้รับรังสีเพิ่มความเสี่ยงการเกิดมะเร็งเพราะเหตุใด',o:['ทำให้ telomere ยาวขึ้น','ทำให้เซลล์เข้าสู่ G0 ถาวร','ทำให้ DNA เสียหาย จนเซลล์เปลี่ยนแปลงเป็นมะเร็ง','กระตุ้นการทำงานของ p53'],a:2,e:'การได้รับรังสีทำให้ DNA เสียหาย ทำให้เซลล์เปลี่ยนแปลงจนเกิดเป็นมะเร็งได้',s:'สไลด์ 28'},
+ {c:'cancer',q:'ตามเอกสาร มีการวินิจฉัยมะเร็งในผู้ที่อายุมากกว่า 75 ปีมากถึงร้อยละเท่าใด',o:['50%','10%','25%','90%'],a:0,e:'โดยทั่วไปมีการวินิจฉัยมะเร็งมากถึง 50% ในผู้ที่อายุมากกว่า 75 ปี เพราะโอกาสการกลายพันธุ์เพิ่มขึ้นตามอายุ',s:'สไลด์ 28'},
+ {c:'therapy',q:'ข้อใดเป็นเป้าหมายของการใช้เคมีบำบัด',o:['เพิ่มจำนวนเซลล์ต้นกำเนิดเม็ดเลือด','ควบคุมโรค บรรเทาอาการ หรือทำให้ก้อนมะเร็งเล็กลงจนผ่าตัดได้ง่ายขึ้น','ชะลอความเสื่อมของเซลล์ผิว','ทำให้ telomere ยาวขึ้น'],a:1,e:'เคมีบำบัดใช้ยับยั้งหรือทำลายเซลล์มะเร็ง เพื่อควบคุมโรค บรรเทาอาการ หรือทำให้ก้อนมะเร็งเล็กลงจนผ่าตัดได้ง่ายขึ้น',s:'สไลด์ 31'},
+ {c:'therapy',q:'ยามุ่งเป้า (targeted therapy) หมายถึงข้อใด',o:['ยาที่ทำลายทุกเซลล์ที่กำลังแบ่งตัว','ยาที่ออกฤทธิ์เฉพาะเซลล์ระยะ G0','ยาที่ใช้ชะลอวัย','ยาที่ออกฤทธิ์เฉพาะต่อโปรตีนหรือโมเลกุลที่เกี่ยวข้องกับการเจริญและแพร่กระจายของเซลล์มะเร็ง'],a:3,e:'ยามุ่งเป้าออกฤทธิ์เฉพาะต่อโปรตีนหรือโมเลกุลที่เกี่ยวข้องกับการเจริญเติบโตและแพร่กระจายของเซลล์มะเร็ง',s:'สไลด์ 32'},
+ {c:'therapy',q:'Rituximab ออกฤทธิ์อย่างไร',o:['กระตุ้นภูมิคุ้มกันให้ทำลายเซลล์มะเร็ง','ยับยั้งการสร้างเส้นเลือดใหม่','ส่งสารพิษเข้าสู่เซลล์เป้าหมาย','ยับยั้ง CDK4/6'],a:0,e:'Rituximab กระตุ้นภูมิคุ้มกันให้ทำลายเซลล์มะเร็ง',s:'สไลด์ 32'},
+ {c:'therapy',q:'Venetoclax ออกฤทธิ์อย่างไร',o:['ขัดขวางสัญญาณการแบ่งตัว','ยับยั้งการสร้างเส้นเลือดใหม่','กระตุ้นการตายแบบ apoptosis','กำจัดเซลล์ชราภาพ'],a:2,e:'Venetoclax ออกฤทธิ์กระตุ้นการตายแบบ apoptosis',s:'สไลด์ 32'},
+ {c:'therapy',q:'ยาคู่ใดออกฤทธิ์ขัดขวางสัญญาณการแบ่งตัว',o:['Rituximab และ Trastuzumab','Erlotinib และ Gefitinib','Bevacizumab และ Venetoclax','Quercetin และ Fisetin'],a:1,e:'Erlotinib และ Gefitinib ออกฤทธิ์ขัดขวางสัญญาณการแบ่งตัว',s:'สไลด์ 32'},
+ {c:'therapy',q:'การปลูกถ่ายเซลล์ต้นกำเนิดในการรักษามะเร็งมีจุดประสงค์ใด',o:['ใช้อุปกรณ์จี้ทำลายก้อนมะเร็งด้วยความร้อน','ใช้ยากระตุ้นภูมิคุ้มกัน','ผ่าตัดก้อนมะเร็งออก','เพิ่มเซลล์ที่นำไปสร้างเซลล์เม็ดเลือดและภูมิคุ้มกันใหม่'],a:3,e:'การปลูกถ่ายเซลล์ต้นกำเนิด คือการเพิ่มเซลล์ที่นำไปสร้างเซลล์เม็ดเลือดและภูมิคุ้มกันใหม่',s:'สไลด์ 30'},
+ {c:'aging',q:'ศาสตร์ชะลอวัยหมายถึงข้อใด',o:['การชะลอความเสื่อมของเซลล์และอวัยวะ โดยการฟื้นฟูเซลล์และสร้างเซลล์ใหม่','การหยุดการแบ่งเซลล์ทั้งหมด','การรักษามะเร็งด้วยเคมีบำบัด','การเพิ่มจำนวนเซลล์สืบพันธุ์'],a:0,e:'การชะลอวัยเป็นศาสตร์ของการชะลอความเสื่อมของเซลล์และอวัยวะ โดยการฟื้นฟูเซลล์และการสร้างเซลล์ใหม่',s:'สไลด์ 33'},
+ {c:'aging',q:'ข้อใดจัดอยู่ในกลุ่มการรักษาและฟื้นฟูระดับเซลล์',o:['Botox','Filler','Stem cell therapy','Pico-Laser'],a:2,e:'การรักษาระดับเซลล์ ได้แก่ Senolytics, Exosome-based therapies และ Stem cell therapy ส่วน Botox, Filler และ Pico-Laser อยู่ในกลุ่มเวชสำอาง',s:'สไลด์ 34–35'},
+ {c:'aging',q:'Fortified foods ตามเอกสาร ประกอบด้วยสารกลุ่มใด',o:['Growth factor, Botox, Filler','Quercetin, Fisetin, exosome','Trastuzumab, Rituximab, Erlotinib','Anti-oxidants, NAD+ boosters, autophagy inducers'],a:3,e:'Fortified foods ได้แก่ anti-oxidants, NAD+ boosters และ autophagy inducers',s:'สไลด์ 35'}];
+BANK.forEach((q,i)=>q.id=i);
+const shuffleQ=q=>{const idx=shuffle([0,1,2,3]);return{ref:q,o:idx.map(i=>q.o[i]),a:idx.indexOf(q.a)};};
+const fmt=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
+const EXAM={locked:false};
+(function(){
+  const PRE=[{k:'quiz',t:'สอบย่อย',n:15,min:20},{k:'mid',t:'สอบกลางภาค',n:30,min:40},{k:'full',t:'สอบเต็มชุด',n:BANK.length,min:120},{k:'custom',t:'กำหนดเอง'}];
+  const PASS=60;
+  const E={pre:'quiz',n:10,t:60,chs:new Set(Object.keys(CHN)),qs:[],i:0,ans:[],flag:[],left:0,limit:0,used:0,timer:null,confirm:false,exitAsk:false,filter:'all',label:'',name:'',hist:[],at:null};
+  try{E.hist=JSON.parse(localStorage.getItem('mcl-exam-hist')||'[]');E.name=localStorage.getItem('mcl-exam-name')||'';}catch(e){}
+  const setup=$('exSetup'),run=$('exRun'),done=$('exDone'),bar=$('exBar');
+  $('exBankN').textContent=BANK.length;
+  $('exName').value=E.name;
+  $('exName').addEventListener('input',e=>{E.name=e.target.value.trim();try{localStorage.setItem('mcl-exam-name',E.name);}catch(err){}});
+  $('exP').innerHTML=PRE.map(p=>'<button class="preset" type="button" data-p="'+p.k+'" aria-pressed="'+(p.k===E.pre)+'"><b>'+p.t+'</b><span>'+(p.n?p.n+' ข้อ · '+p.min+' นาที':'เลือกบท จำนวนข้อ และเวลาเอง')+'</span></button>').join('');
+  $('exCh').innerHTML=Object.keys(CHN).map(k=>'<button class="chip" type="button" data-ch="'+k+'" aria-pressed="true">'+CHN[k]+' · '+BANK.filter(q=>q.c===k).length+'</button>').join('');
+  const pool=()=>BANK.filter(q=>E.chs.has(q.c));
+  function plan(){const p=PRE.find(x=>x.k===E.pre);if(p.n)return{n:p.n,sec:p.min*60,label:p.t+' · '+p.n+' ข้อ',src:BANK};const src=pool(),n=Math.min(E.n,src.length);return{n,sec:E.t*n,label:'กำหนดเอง · '+n+' ข้อ',src};}
+  function info(){const p=plan();$('exCustom').hidden=E.pre!=='custom';
+    $('exInfo').innerHTML=p.n?('จำนวน '+p.n+' ข้อ · '+(p.sec?'เวลา '+fmt(p.sec)+' นาที':'ไม่จับเวลา')+' · คะแนนเต็ม '+p.n+' · ผ่านที่ '+Math.ceil(p.n*PASS/100)+' คะแนน'):'<span class="warnline">เลือกอย่างน้อย 1 บท</span>';$('exStart').disabled=!p.n;}
+  function hist(){const c=$('exHistCard');c.hidden=!E.hist.length;if(!E.hist.length)return;
+    $('exHist').innerHTML='<table><thead><tr><th>วันที่</th><th>ชุด</th><th>คะแนน</th><th>ผล</th></tr></thead><tbody>'+E.hist.map(h=>'<tr><td>'+h.d+'</td><td>'+h.l+'</td><td style="font-variant-numeric:tabular-nums">'+h.s+'/'+h.n+' · '+h.p+'%</td><td class="'+(h.p>=PASS?'tagok">ผ่าน':'tagng">ไม่ผ่าน')+'</td></tr>').join('')+'</tbody></table>';}
+  setup.addEventListener('click',e=>{
+    const p=e.target.closest('[data-p]');if(p){E.pre=p.dataset.p;$('exP').querySelectorAll('[data-p]').forEach(x=>x.setAttribute('aria-pressed',x===p?'true':'false'));info();return;}
+    const n=e.target.closest('[data-n]');if(n){E.n=+n.dataset.n;$('exN').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===n?'true':'false'));info();return;}
+    const t=e.target.closest('[data-t]');if(t){E.t=+t.dataset.t;$('exT').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===t?'true':'false'));info();return;}
+    const c=e.target.closest('[data-ch]');if(c){const k=c.dataset.ch;if(E.chs.has(k))E.chs.delete(k);else E.chs.add(k);c.setAttribute('aria-pressed',E.chs.has(k)?'true':'false');info();}});
+  info();hist();
+  function lock(on){EXAM.locked=on;document.body.classList.toggle('examlock',on);}
+  function top(){window.scrollTo({top:0,behavior:'smooth'});}
+  function start(list,label,sec){
+    const p=plan();const src=list||shuffle(p.src).slice(0,p.n);
+    E.qs=shuffle(src).map(shuffleQ);E.label=label||p.label;E.limit=sec!==undefined?sec:p.sec;E.left=E.limit;
+    E.i=0;E.ans=E.qs.map(()=>-1);E.flag=E.qs.map(()=>false);E.used=0;E.confirm=false;E.exitAsk=false;E.at=new Date();
+    clearInterval(E.timer);E.timer=setInterval(tickClock,1000);
+    lock(true);setup.hidden=true;done.hidden=true;run.hidden=false;renderBar();renderRun();top();
+  }
+  function tickClock(){E.used++;if(E.limit){E.left--;if(E.left<=0){submit(true);return;}}const el=$('exClock');if(el){el.textContent=fmt(E.limit?E.left:E.used);el.classList.toggle('low',!!E.limit&&E.left<=60);}}
+  function renderBar(){const n=E.qs.length,a=E.ans.filter(x=>x>=0).length;
+    bar.innerHTML='<span class="exttl">'+E.label+'</span><span class="kv">ตอบแล้ว '+a+'/'+n+'</span><span class="timer'+(E.limit&&E.left<=60?' low':'')+'" id="exClock" aria-label="เวลา">'+fmt(E.limit?E.left:E.used)+'</span><button class="btn primary" type="button" data-ex="submit">ส่งข้อสอบ</button>';}
+  function renderRun(){
+    const q=E.qs[E.i],n=E.qs.length,answered=E.ans.filter(a=>a>=0).length;
+    run.innerHTML='<div class="card exq" style="gap:14px"><div class="exhead"><span class="qnum">ข้อ '+(E.i+1)+'</span><span class="kv">จาก '+n+' ข้อ</span></div>'+
+      '<h3 class="qtext">'+q.ref.q+'</h3>'+
+      '<div class="opts">'+q.o.map((o,j)=>'<button class="opt" type="button" data-eo="'+j+'" aria-pressed="'+(E.ans[E.i]===j)+'"><span class="l">'+'กขคง'[j]+'</span><span>'+o+'</span></button>').join('')+'</div>'+
+      '<div class="controls"><button class="btn" type="button" data-ex="prev"'+(E.i===0?' disabled':'')+'>← ข้อก่อนหน้า</button><button class="btn" type="button" data-ex="flag" aria-pressed="'+E.flag[E.i]+'">'+(E.flag[E.i]?'ยกเลิกปักธง':'ปักธง')+'</button>'+
+      (E.i<n-1?'<button class="btn primary" type="button" data-ex="next">ข้อถัดไป →</button>':'<button class="btn primary" type="button" data-ex="submit">ส่งข้อสอบ</button>')+'</div></div>'+
+      '<div class="card" style="gap:10px"><div class="exhead"><h3 style="font-size:17px">กระดาษคำตอบ</h3><span class="kv">ตอบแล้ว '+answered+'/'+n+' · จุดส้ม = ปักธง</span></div>'+
+      (E.confirm?'<p class="warnline">ยังไม่ได้ตอบ '+(n-answered)+' ข้อ กด “ส่งข้อสอบ” อีกครั้งเพื่อยืนยัน</p>':'')+
+      '<div class="qmap">'+E.qs.map((_,k)=>'<button type="button" class="qm'+(E.ans[k]>=0?' ans':'')+(E.flag[k]?' flag':'')+(k===E.i?' cur':'')+'" data-qm="'+k+'" aria-label="ไปข้อ '+(k+1)+'">'+(k+1)+'</button>').join('')+'</div>'+
+      '<div class="controls" style="margin-top:4px">'+(E.exitAsk?'<span class="warnline">ออกจากการสอบ? คำตอบทั้งหมดจะไม่ถูกบันทึก</span><button class="btn" type="button" data-ex="exitok">ยืนยันออก</button><button class="btn" type="button" data-ex="exitno">ทำข้อสอบต่อ</button>':'<button class="btn" type="button" data-ex="exit">ออกจากการสอบ</button>')+'</div></div>';
+  }
+  document.addEventListener('click',e=>{
+    if(!EXAM.locked)return;
+    const o=e.target.closest('[data-eo]');if(o){E.ans[E.i]=+o.dataset.eo;E.confirm=false;renderRun();renderBar();return;}
+    const m=e.target.closest('[data-qm]');if(m){E.i=+m.dataset.qm;renderRun();return;}
+    const b=e.target.closest('[data-ex]');if(!b)return;const a=b.dataset.ex;
+    if(a==='prev'&&E.i>0)E.i--;else if(a==='next'&&E.i<E.qs.length-1)E.i++;else if(a==='flag')E.flag[E.i]=!E.flag[E.i];
+    else if(a==='submit'){const left=E.ans.filter(x=>x<0).length;if(left&&!E.confirm){E.confirm=true;E.i=E.ans.findIndex(x=>x<0);}else{submit(false);return;}}
+    else if(a==='exit')E.exitAsk=true;else if(a==='exitno')E.exitAsk=false;
+    else if(a==='exitok'){clearInterval(E.timer);lock(false);run.hidden=true;setup.hidden=false;bar.innerHTML='';top();return;}
+    renderRun();renderBar();});
+  function submit(auto){clearInterval(E.timer);E.timer=null;lock(false);bar.innerHTML='';
+    const n=E.qs.length,s=E.qs.filter((q,k)=>E.ans[k]===q.a).length,p=Math.round(s/n*100);
+    E.auto=auto;E.hist.unshift({d:E.at.toLocaleDateString('th-TH',{day:'numeric',month:'short'})+' '+E.at.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}),l:E.label,s,n,p});E.hist=E.hist.slice(0,8);
+    try{localStorage.setItem('mcl-exam-hist',JSON.stringify(E.hist));}catch(e){}
+    run.hidden=true;done.hidden=false;E.filter='all';renderDone();hist();top();}
+  function renderDone(){
+    const n=E.qs.length,ok=E.qs.filter((q,k)=>E.ans[k]===q.a).length,blank=E.ans.filter(a=>a<0).length,p=Math.round(ok/n*100),pass=p>=PASS;
+    const by={};E.qs.forEach((q,k)=>{const c=q.ref.c;by[c]=by[c]||[0,0];by[c][1]++;if(E.ans[k]===q.a)by[c][0]++;});
+    const wrong=n-ok;const weak=Object.keys(CHN).filter(c=>by[c]&&by[c][0]/by[c][1]<.6);
+    const list=E.qs.map((q,k)=>({q,k,st:E.ans[k]<0?'na':E.ans[k]===q.a?'ok':'ng'})).filter(r=>E.filter==='all'||(E.filter==='ng'?r.st!=='ok':r.st==='ok'));
+    const d=E.at;
+    done.innerHTML='<div class="card report"><div class="exhead"><div><p class="eyebrow">ใบรายงานผลการสอบ</p><h3>Mitosis &amp; Cell Aging</h3></div><span class="stamp '+(pass?'pass':'fail')+'">'+(pass?'ผ่าน':'ไม่ผ่าน')+'</span></div>'+
+      '<dl class="rep"><dt>ผู้สอบ</dt><dd>'+(E.name?E.name.replace(/[<>&]/g,''):'—')+'</dd><dt>ชุดข้อสอบ</dt><dd>'+E.label+'</dd><dt>วันที่สอบ</dt><dd>'+d.toLocaleDateString('th-TH',{dateStyle:'long'})+' '+d.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.</dd><dt>เวลาที่ใช้</dt><dd>'+fmt(E.used)+(E.limit?' จาก '+fmt(E.limit):'')+(E.auto?' · ส่งอัตโนมัติเมื่อหมดเวลา':'')+'</dd></dl>'+
+      '<div class="scorebox"><span class="big">'+ok+'<small>/'+n+'</small></span><div><p class="score" style="font-size:24px">'+p+'%</p><p class="kv">ถูก '+ok+' · ผิด '+(n-ok-blank)+' · ไม่ได้ตอบ '+blank+' · เกณฑ์ผ่าน '+PASS+'%</p></div></div>'+
+      (weak.length?'<p class="note" style="margin:0"><b>ควรทบทวน:</b> '+weak.map(c=>CHN[c]).join(', ')+' — เปิดโหมด Tutor บทนี้เพื่อเรียนซ้ำ</p>':'')+
+      '<div class="controls"><button class="btn primary" type="button" data-dx="again">สอบชุดใหม่</button>'+(wrong?'<button class="btn" type="button" data-dx="wrong">สอบซ่อมเฉพาะข้อที่ผิด · '+wrong+'</button>':'')+'<button class="btn" type="button" data-dx="setup">กลับหน้าตั้งค่า</button></div></div>'+
+      '<div class="tablewrap"><table><thead><tr><th>บท</th><th>ถูก / ทั้งหมด</th><th>ร้อยละ</th></tr></thead><tbody>'+Object.keys(CHN).filter(c=>by[c]).map(c=>{const r=Math.round(by[c][0]/by[c][1]*100);return '<tr><td>'+CHN[c]+'</td><td style="font-variant-numeric:tabular-nums">'+by[c][0]+' / '+by[c][1]+'</td><td><div class="chrow" style="grid-template-columns:1fr 44px"><div class="bar"><i style="width:'+r+'%;background:'+(r>=PASS?'var(--ok)':'var(--bad)')+'"></i></div><span>'+r+'%</span></div></td></tr>';}).join('')+'</tbody></table></div>'+
+      '<div class="card" style="gap:10px"><div class="exhead"><h3 style="font-size:18px">เฉลยและคำอธิบาย</h3><div class="seg" role="group" aria-label="กรองเฉลย"><button type="button" data-fl="all" aria-pressed="'+(E.filter==='all')+'">ทั้งหมด</button><button type="button" data-fl="ng" aria-pressed="'+(E.filter==='ng')+'">ผิด / ไม่ตอบ</button><button type="button" data-fl="ok" aria-pressed="'+(E.filter==='ok')+'">ถูก</button></div></div>'+
+      '<div class="qmap">'+E.qs.map((q,k)=>'<span class="qm '+(E.ans[k]===q.a?'ok':'ng')+'" style="display:grid;place-items:center;cursor:default">'+(k+1)+'</span>').join('')+'</div></div>'+
+      (list.length?list.map(r=>{const q=r.q;return '<div class="card rv"><p class="kv">ข้อ '+(r.k+1)+' · '+CHN[q.ref.c]+' · <span class="'+(r.st==='ok'?'tagok">ถูก':r.st==='ng'?'tagng">ผิด':'tagna">ไม่ได้ตอบ')+'</span></p><h3 class="qtext" style="font-size:17px">'+q.ref.q+'</h3><div class="opts">'+
+        q.o.map((o,j)=>'<div class="opt'+(j===q.a?' right':(j===E.ans[r.k]?' wrong':''))+'"><span class="l">'+'กขคง'[j]+'</span><span>'+o+(j===E.ans[r.k]?' <span class="kv">· คำตอบของคุณ</span>':'')+'</span></div>').join('')+
+        '</div><p class="explain">'+q.ref.e+'</p><p class="src">'+srcHTML(q.ref.s,'')+'</p></div>';}).join(''):'<p class="kv">ไม่มีข้อในหมวดนี้</p>');
+  }
+  done.addEventListener('click',e=>{const f=e.target.closest('[data-fl]');if(f){E.filter=f.dataset.fl;renderDone();return;}
+    const b=e.target.closest('[data-dx]');if(!b)return;const a=b.dataset.dx;
+    if(a==='again')start();
+    else if(a==='wrong'){const w=E.qs.filter((q,k)=>E.ans[k]!==q.a).map(q=>q.ref);start(w,'สอบซ่อม · '+w.length+' ข้อ',E.limit?w.length*60:0);}
+    else{done.hidden=true;run.hidden=true;setup.hidden=false;top();}});
+  $('exStart').addEventListener('click',()=>start());
+})();
+
+/* ============ Tutor lessons ============ */
+const LESSONS=[
+ {v:'dna',t:'DNA → Chromosome',steps:['0','1','2','3'],titles:['DNA double helix','Nucleosome','Chromatin fiber','Metaphase chromosome'],
+  obj:['อธิบายความต่างของ DNA ใน prokaryote และ eukaryote','บอกลำดับการขดตัว DNA → nucleosome → chromatin → chromosome','ระบุส่วนของ chromosome ได้แก่ centromere, p arm, q arm และ telomere'],
+  sum:['Prokaryote: DNA เป็นวงแหวน ไม่มี nucleus','DNA พันรอบ histone ได้ nucleosome (beads on a string)','Chromatin หดตัวเป็น chromosome ในช่วงแบ่งเซลล์','Chromosome ที่จำลองแล้ว = 2 sister chromatids ยึดกันที่ centromere','Somatic cell = 2n (diploid) · Gamete = n (haploid)'],src:'สไลด์ 3–6'},
+ {v:'cycle',t:'Cell cycle',steps:['G1','S','G2','M','G0','over','palbo'],titles:['G1 phase','S phase','G2 phase','M phase','G0 phase','เมื่อ CDK ทำงานเกิน','เมื่อให้ Palbociclib'],
+  obj:['เรียงลำดับ G1 → S → G2 → M และบอกเหตุการณ์หลัก','จับคู่ CDK–Cyclin กับแต่ละระยะ','อธิบายหน้าที่ checkpoint และกลไกของ Palbociclib'],
+  sum:['G1: เซลล์เติบโต · CDK4/Cyclin D, CDK2/Cyclin E','S: DNA replication · CDK2/Cyclin A','G2: ตรวจ DNA และจำลอง centrosome · CDK1/Cyclin B','G0: ระยะพักจนกว่าจะได้สัญญาณ','CDK ทำงานเกิน → แบ่งไม่หยุด → มะเร็ง','Palbociclib = CDK4/6 inhibitor ใช้ใน HR+ / HER2- ร่วมกับยาต้านฮอร์โมน'],src:'สไลด์ 10–12'},
+ {v:'mitosis',t:'Mitosis',steps:['0','1','2','3','4','5','6'],titles:['Interphase (G2)','Prophase','Prometaphase','Metaphase','Anaphase','Telophase','Cytokinesis'],
+  obj:['เรียงลำดับระยะของ mitosis ได้ถูกต้อง','บอกเหตุการณ์สำคัญของแต่ละระยะ','เปรียบเทียบ cytokinesis ในเซลล์สัตว์และเซลล์พืช'],
+  sum:['Prophase: chromosome หดตัว nucleolus หาย spindle เริ่มก่อตัว','Prometaphase: nuclear envelope แตก kinetochore จับ microtubule','Metaphase: chromosome เรียงที่ metaphase plate','Anaphase: cohesin ถูกตัด chromatid แยกไปขั้วตรงข้าม','Telophase: daughter nuclei 2 อัน nucleolus กลับมา','Cytokinesis: สัตว์ cleavage furrow · พืช cell plate','ผลลัพธ์: 2 เซลล์ chromosome เท่าเซลล์แม่'],src:'สไลด์ 9–21'},
+ {v:'death',t:'Cell death',steps:['0','1','2','3'],titles:['หดตัว vs บวม','Blebbing vs membrane แตก','Apoptotic bodies vs สารรั่ว','เก็บกวาด vs อักเสบ'],
+  obj:['แยก apoptosis กับ necrosis จากลักษณะของเซลล์','อธิบายว่าทำไม necrosis จึงเกิดการอักเสบ','ยกตัวอย่าง apoptosis ในร่างกาย'],
+  sum:['Apoptosis: หดตัว ยังสร้าง ATP ได้ ไม่อักเสบ ไม่เกิดแผลเป็น','Necrosis: บวม membrane แตก สารรั่ว อักเสบ เกิดแผลเป็น','Necrosis ทำให้เซลล์ข้างเคียงตายร่วม ส่วน apoptosis ตายทีละเซลล์','ตัวอย่าง apoptosis: ต่อมไทมัสฝ่อ การเจริญของนิ้ว กำจัดเซลล์เสื่อม/มะเร็ง','สาเหตุการเสื่อม: ฮอร์โมนพร่อง DNA เสียหาย telomere สั้น ของเสียสะสม อนุมูลอิสระ'],src:'สไลด์ 23–25'},
+ {v:'cancer',t:'Cancer',steps:['idle','low','high','mut'],titles:['รู้จัก p53','p53 ปกติ · เสียหายน้อย','p53 ปกติ · เสียหายมาก','p53 กลายพันธุ์'],
+  obj:['อธิบายบทบาทของ p53 เมื่อ DNA เสียหาย','แยก oncogene กับ anti-oncogene','บอกปัจจัยเสี่ยงของมะเร็ง'],
+  sum:['p53 สั่งหยุดแบ่งเพื่อซ่อม DNA ถ้าซ่อมไม่ได้สั่ง apoptosis','Oncogene: c-myc, bcl-2 · Anti-oncogene: TP53, BRCA2, PALB2','กลายพันธุ์ → เซลล์รอดจาก apoptosis และแบ่งตัวต่อเนื่อง','bcl-2 สูง + TP53 กลายพันธุ์ → ดื้อเคมีบำบัด','ปัจจัยเสี่ยง: อายุ บุหรี่ รังสี ภูมิคุ้มกันบกพร่อง อาหาร'],src:'สไลด์ 26–29'},
+ {v:'therapy',t:'การรักษามะเร็ง',steps:['idle','chemo','target'],titles:['ก่อนให้ยา','Chemotherapy','Targeted therapy'],
+  obj:['อธิบายว่าทำไมเคมีบำบัดจึงมีผลข้างเคียง','เปรียบเทียบ monoclonal antibody กับ small molecule','จับคู่ยามุ่งเป้ากับกลไกการออกฤทธิ์'],
+  sum:['คีโมทำลายเซลล์ที่กำลังแบ่งตัว ไม่ใช่เซลล์ G0','ผลข้างเคียงมาจากเซลล์ปกติที่แบ่งเร็ว: รากผม เยื่อบุทางเดินอาหาร เซลล์ต้นกำเนิดเม็ดเลือด','Monoclonal antibody: จับนอกเซลล์ ส่วนใหญ่ฉีด · Small molecule: ผ่าน membrane มักรับประทาน','Rituximab ภูมิคุ้มกัน · Erlotinib/Gefitinib สัญญาณ · Bevacizumab เส้นเลือด · T-DM1 ส่งสารพิษ · Venetoclax apoptosis'],src:'สไลด์ 30–32'},
+ {v:'aging',t:'Aging',steps:['ok','low','sen','clr'],titles:['Telomere สั้นลง','Telomere ใกล้หมด','Senescent cell','Senolytics'],
+  obj:['อธิบายความสัมพันธ์ของ telomere กับความเสื่อม','บอกแนวคิดของการชะลอวัยระดับเซลล์','ยกตัวอย่างเทคโนโลยีชะลอวัย'],
+  sum:['Telomere = ส่วนปลายของ chromosome','Telomere สั้นสัมพันธ์กับโรคที่เกี่ยวกับความเสื่อม','Senolytics (Quercetin, Fisetin) กำจัดเซลล์ชรา','Exosome กระตุ้น fibroblast · Stem cell therapy','เวชสำอางและโภชนาการ: Growth factor, NAD+, Botox, Filler, Pico-Laser ฯลฯ'],src:'สไลด์ 23, 33–35'}];
+const TS={li:0,si:0,phase:'step',ck:null,done:new Set()};
+try{JSON.parse(localStorage.getItem('mcl-tdone')||'[]').forEach(v=>TS.done.add(v));const l=+localStorage.getItem('mcl-tli');if(l>=0&&l<LESSONS.length)TS.li=l;}catch(e){}
+LESSONS.forEach(L=>{const sec=document.querySelector('[data-view="'+L.v+'"]');const sc=sec.querySelector('.scope');
+  const h=document.createElement('div');h.className='tlesson';h.dataset.tl=L.v;sec.insertBefore(h,sc);
+  const p=document.createElement('div');p.className='tutor';p.dataset.tutor=L.v;p.setAttribute('aria-live','polite');sc.after(p);});
+function saveT(){try{localStorage.setItem('mcl-tdone',JSON.stringify([...TS.done]));localStorage.setItem('mcl-tli',String(TS.li));}catch(e){}}
+function lessonNav(){const row=$('tLessons');row.innerHTML=LESSONS.map((L,i)=>'<button class="lchip'+(i===TS.li?' cur':'')+(TS.done.has(L.v)?' done':'')+'" type="button" data-tl-go="'+i+'" aria-current="'+(i===TS.li?'step':'false')+'"><b>'+(TS.done.has(L.v)?'✓':(i+1))+'</b>'+L.t+'</button>').join('');
+  $('tProg').textContent='เรียนผ่านแล้ว '+TS.done.size+' / '+LESSONS.length+' บท';
+  const c=row.querySelector('.cur');if(c)row.scrollTo({left:c.offsetLeft-row.clientWidth/2+c.offsetWidth/2,behavior:'smooth'});}
+function openLesson(i,keep){if(!(keep&&i===TS.li)){TS.li=i;TS.si=0;TS.phase='step';}saveT();show(LESSONS[i].v,true);renderLesson();if(TS.phase==='step')applyStep();else renderPanel();lessonNav();}
+function applyStep(){const L=LESSONS[TS.li],sc=scenes[L.v];if(sc&&sc.tstep)sc.tstep(L.steps[TS.si]);renderPanel();}
+function renderLesson(){const L=LESSONS[TS.li],h=document.querySelector('.tlesson[data-tl="'+L.v+'"]');h.parentElement.classList.toggle('tquiet',TS.phase!=='step');
+  h.innerHTML='<p class="eyebrow">บทเรียนที่ '+(TS.li+1)+' / '+LESSONS.length+(TS.phase==='check'?' · แบบทดสอบท้ายบท':TS.phase==='sum'?' · สรุปบท':'')+'</p><h2>'+L.t+'</h2>'+
+    (TS.phase==='step'?'<details class="obj"'+(TS.si===0?' open':'')+'><summary>วัตถุประสงค์การเรียนรู้</summary><ul>'+L.obj.map(o=>'<li>'+o+'</li>').join('')+'</ul></details>':'');}
+const thead=r=>'<div class="tutor-head"><span class="tav">'+capIcon+'</span><b>Tutor</b><span class="kv">'+r+'</span></div>';
+function renderPanel(){
+  const L=LESSONS[TS.li],el=document.querySelector('.tutor[data-tutor="'+L.v+'"]');el.hidden=false;
+  if(TS.phase==='step'){const n=L.steps.length,d=TD[L.v][L.steps[TS.si]];
+    el.innerHTML=thead('ขั้นที่ '+(TS.si+1)+' / '+n)+'<div class="tdots">'+L.steps.map((_,k)=>'<i class="'+(k<=TS.si?'on':'')+'"></i>').join('')+'</div>'+
+      '<h3 class="tstep">'+L.titles[TS.si]+'</h3><p class="say">'+d.say+'</p>'+
+      (d.tip?'<div class="trow"><span class="tlab tip">เทคนิคจำ</span><span>'+d.tip+'</span></div>':'')+
+      (d.trap?'<div class="trow"><span class="tlab trap">ระวังสับสน</span><span>'+d.trap+'</span></div>':'')+
+      (d.q?'<details><summary>ถามตัวเอง: '+d.q+'</summary><p>'+d.a+'</p></details>':'')+
+      '<div class="controls"><button class="btn" type="button" data-tt="prev"'+(TS.si===0?' disabled':'')+'>← ย้อนกลับ</button><button class="btn" type="button" data-tt="replay">เล่นภาพซ้ำ</button><button class="btn primary" type="button" data-tt="next">'+(TS.si===n-1?'ทำแบบทดสอบท้ายบท →':'ขั้นถัดไป →')+'</button></div>'+
+      '<p class="src">'+srcHTML(d.src,d.x||'')+'</p>';return;}
+  if(TS.phase==='check'){const ck=TS.ck,answered=ck.ans.filter(a=>a>=0).length,score=ck.qs.filter((q,k)=>ck.ans[k]===q.a).length,need=Math.ceil(ck.qs.length*2/3);
+    el.innerHTML=thead('แบบทดสอบท้ายบท')+'<p class="say">ตอบถูกอย่างน้อย '+need+' จาก '+ck.qs.length+' ข้อ จึงจะนับว่าเรียนผ่านบทนี้</p>'+
+      ck.qs.map((q,k)=>{const a=ck.ans[k];return '<div class="tq"><p class="kv">ข้อ '+(k+1)+'</p><h4>'+q.ref.q+'</h4><div class="opts">'+q.o.map((o,j)=>'<button class="opt'+(a>=0?(j===q.a?' right':(j===a?' wrong':'')):'')+'" type="button" data-tq="'+k+'" data-o="'+j+'"'+(a>=0?' disabled':'')+'><span class="l">'+'กขคง'[j]+'</span><span>'+o+'</span></button>').join('')+'</div>'+
+        (a>=0?'<p class="explain">'+(a===q.a?'<b class="tagok">ถูกต้อง</b> · ':'<b class="tagng">ยังไม่ถูก</b> · ')+q.ref.e+'</p><p class="src">'+srcHTML(q.ref.s,'')+'</p>':'')+'</div>';}).join('')+
+      (answered===ck.qs.length?(score>=need?'<p class="status" style="color:var(--ok)">ผ่าน '+score+' / '+ck.qs.length+' · บันทึกว่าเรียนจบบทนี้แล้ว</p><div class="controls"><button class="btn primary" type="button" data-tt="sum">ดูสรุปบท →</button></div>':'<p class="status" style="color:var(--bad)">ได้ '+score+' / '+ck.qs.length+' ยังไม่ผ่าน</p><div class="controls"><button class="btn primary" type="button" data-tt="restart">เรียนบทนี้อีกครั้ง</button><button class="btn" type="button" data-tt="recheck">ทำแบบทดสอบใหม่</button><button class="btn" type="button" data-tt="sum">ดูสรุปบท</button></div>'):'');return;}
+  const last=TS.li===LESSONS.length-1;
+  el.innerHTML=thead('สรุปบท')+'<h3 class="tstep">สิ่งที่ต้องจำจากบท '+L.t+'</h3><ul class="sumlist">'+L.sum.map(s=>'<li>'+s+'</li>').join('')+'</ul>'+
+    '<div class="controls"><button class="btn" type="button" data-tt="restart">ทวนบทนี้อีกครั้ง</button>'+(last?'<button class="btn primary" type="button" data-mode-go="exam">ไปโหมด Exam →</button>':'<button class="btn primary" type="button" data-tl-go="'+(TS.li+1)+'">บทถัดไป: '+LESSONS[TS.li+1].t+' →</button>')+'</div>'+
+    '<p class="src">'+srcHTML(L.src,'')+'</p>';
+}
+function newCheck(){const L=LESSONS[TS.li];TS.ck={qs:shuffle(BANK.filter(q=>q.c===L.v)).slice(0,3).map(shuffleQ),ans:[-1,-1,-1]};}
+function panelTop(){const L=LESSONS[TS.li];const el=document.querySelector('.tlesson[data-tl="'+L.v+'"]');const nav=document.querySelector('.tabs');const y=el.getBoundingClientRect().top+window.scrollY-nav.offsetHeight-8;window.scrollTo({top:Math.max(0,y),behavior:'smooth'});}
+document.addEventListener('click',e=>{
+  const tq=e.target.closest('[data-tq]');if(tq&&TS.ck){const k=+tq.dataset.tq;if(TS.ck.ans[k]<0){TS.ck.ans[k]=+tq.dataset.o;const ck=TS.ck;if(ck.ans.every(a=>a>=0)&&ck.qs.filter((q,j)=>ck.ans[j]===q.a).length>=Math.ceil(ck.qs.length*2/3)){TS.done.add(LESSONS[TS.li].v);saveT();lessonNav();}renderPanel();}return;}
+  const b=e.target.closest('[data-tt]');if(!b)return;const a=b.dataset.tt,L=LESSONS[TS.li];
+  if(a==='prev'&&TS.si>0){TS.si--;renderLesson();applyStep();}
+  else if(a==='replay')applyStep();
+  else if(a==='next'){if(TS.si<L.steps.length-1){TS.si++;renderLesson();applyStep();}else{TS.phase='check';newCheck();renderLesson();renderPanel();panelTop();}}
+  else if(a==='recheck'){newCheck();renderPanel();}
+  else if(a==='sum'){TS.phase='sum';renderLesson();renderPanel();panelTop();}
+  else if(a==='restart'){TS.si=0;TS.phase='step';renderLesson();applyStep();panelTop();}
+});
+/* ============ routing + loop ============ */
+const LABV=['dna','cycle','mitosis','death','cancer','therapy','aging','quiz'];
+let cur='dna',lastLab='dna';
+try{const l=localStorage.getItem('mcl-lab');if(LABV.indexOf(l)>=0)lastLab=l;}catch(e){}
+function show(name,scroll){cur=name;
+  document.querySelectorAll('[data-view]').forEach(v=>{v.hidden=v.dataset.view!==name;});
+  document.querySelectorAll('.tab').forEach(t=>{const on=t.dataset.go===name;t.setAttribute('aria-selected',on?'true':'false');if(on){const row=t.parentElement;if(row.clientWidth)row.scrollTo({left:t.offsetLeft-row.clientWidth/2+t.offsetWidth/2,behavior:'smooth'});}});
+  if(scroll){const nav=document.querySelector('.tabs');const top=nav.getBoundingClientRect().top+window.scrollY-2;if(window.scrollY>top)window.scrollTo({top,behavior:'smooth'});}
+}
+function setModeUI(m){const prev=document.body.dataset.mode;document.body.dataset.mode=m;
+  document.querySelectorAll('[data-mode-go]').forEach(b=>{if(b.closest('.modebar'))b.setAttribute('aria-selected',b.dataset.modeGo===m?'true':'false');});
+  if(prev==='tutor'&&m!=='tutor')Object.keys(scenes).forEach(k=>{const s=scenes[k];if(s.untutor)s.untutor();});
+  if(m!=='tutor')document.querySelectorAll('.view.tquiet').forEach(v=>v.classList.remove('tquiet'));}
+function route(){
+  const h=location.hash.slice(1);
+  if(EXAM.locked){if(h!=='exam')history.replaceState(null,'','#exam');return;}
+  if(h==='exam'){setModeUI('exam');show('exam',true);}
+  else if(h.indexOf('t-')===0){let i=LESSONS.findIndex(L=>L.v===h.slice(2));if(i<0)i=TS.li;setModeUI('tutor');openLesson(i,true);}
+  else{const v=LABV.indexOf(h)>=0?h:lastLab;lastLab=v;try{localStorage.setItem('mcl-lab',v);}catch(e){}setModeUI('lab');show(v,!!h);}
+}
+document.addEventListener('click',e=>{
+  if(EXAM.locked)return;
+  const m=e.target.closest('[data-mode-go]');
+  if(m){const k=m.dataset.modeGo;const h=k==='lab'?lastLab:k==='tutor'?'t-'+LESSONS[TS.li].v:'exam';if(location.hash!=='#'+h)location.hash=h;else route();return;}
+  const t=e.target.closest('[data-tl-go]');
+  if(t){const i=+t.getAttribute('data-tl-go');const h='t-'+LESSONS[i].v;if(location.hash!=='#'+h)location.hash=h;else openLesson(i,true);return;}
+  const b=e.target.closest('[data-go]');
+  if(b){const n=b.dataset.go;if(location.hash!=='#'+n)location.hash=n;else show(n,true);}
+});
+window.addEventListener('hashchange',route);
+route();
+let last=performance.now();
+function frame(now){const dt=Math.max(0,Math.min(.05,(now-last)/1000));last=now;const sc=scenes[cur];if(sc){try{sc.tick(dt);}catch(err){console.error(err);}}requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+})();
+</script>
+
+<style id="hub-embed">html.embedded .modebar{display:none!important}</style>
+<script src="xk2-bank-s11.js"></script><script src="exam-kit-2.js"></script>
+<script>(function(){function go(){if(!window.XK||!window.XK_BANK)return;XK.mount({host:"section[data-view=\"exam\"]",id:"s11",title:"Mitosis & Cell Aging",bank:window.XK_BANK,accent:"#7A3FA0",hide:["nav.tabs", "#fab", "#chat"]});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",go);else go();})();</script>
+<script>window.HLK={"en": ["cell cycle", "interphase", "G0", "G1 phase", "S phase", "G2 phase", "M phase", "mitosis", "prophase", "prometaphase", "metaphase", "anaphase", "telophase", "cytokinesis", "karyokinesis", "cleavage furrow", "cell plate", "kinetochore", "centromere", "centrosome", "centriole", "spindle", "microtubule", "sister chromatids", "sister chromatid", "chromatin", "nucleosome", "histone", "checkpoint", "cyclin", "CDK", "p53", "Rb", "apoptosis", "necrosis", "caspase", "telomere", "telomerase", "senescence", "oncogene", "tumor suppressor", "proto-oncogene", "carcinogen", "metastasis", "BRCA1", "BRCA2", "HER2", "BCL-2", "c-Myc", "trastuzumab", "rituximab", "palbociclib", "venetoclax", "erlotinib", "free radical", "Hayflick limit"], "th": ["สารก่อมะเร็ง"]};</script><script src="hl-kit-1.js"></script>
+</body></html>
