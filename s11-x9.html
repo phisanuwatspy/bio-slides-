@@ -518,7 +518,37 @@ body.examlock .modebar,body.examlock .subnav:not(.exbar),body.examlock .hero,bod
   </section>
 
   <!-- EXAM -->
-  <section class="view" data-view="exam" hidden>
+  <section class="view" data-view="tutor" hidden><div class="tscope t11"><div class="wrap tbar"><div class="overall"><svg class="ring" viewBox="0 0 44 44" aria-hidden="true"><circle class="bgc" cx="22" cy="22" r="18"/><circle class="fgc" id="ovRing" cx="22" cy="22" r="18" transform="rotate(-90 22 22)" stroke-dasharray="113.1" stroke-dashoffset="113.1"/></svg><div><b id="ovTxt">0 / 7 บท</b>ผ่านแล้ว</div></div></div>
+
+
+
+<div class="wrap"><div class="app">
+  <aside class="index" id="index">
+    <button class="idxToggle" type="button" id="idxToggle" aria-expanded="false"><span id="idxLabel">รายการบทเรียน</span><span class="chev" aria-hidden="true">▾</span></button>
+    <div class="chlist" id="chlist"></div>
+    <a class="labLink" id="labLink" href="#lab-home">อยากลองเอง? เปิดหัวข้อนี้ใน <b>Lab mode</b> →</a>
+  </aside>
+  <section class="player" id="player" aria-live="polite">
+    <div class="phead">
+      <div class="prow">
+        <div class="ltitle"><div class="k" id="lk"></div><h2 id="lt"></h2></div>
+        <div class="hbtns"><button class="iconbtn ask" type="button" id="askBtn" hidden><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5h14v9H8l-4 3v-3H3z"/></svg>ถามติวเตอร์</button><button class="iconbtn" type="button" id="focusBtn" aria-pressed="false"></button></div>
+      </div>
+      <div class="segs" id="segs"></div>
+    </div>
+    <div class="stage" id="stage"></div>
+    <div class="pfoot">
+      <button class="btn quiet" type="button" id="backBtn">← ย้อนกลับ</button>
+      <span class="cnt" id="cnt"></span>
+      <button class="btn" type="button" id="nextBtn">ถัดไป →</button>
+    </div>
+  </section>
+</div></div>
+
+
+
+</div></section>
+<section class="view" data-view="exam" hidden>
     <div class="vh"><p class="eyebrow">Exam · คลังข้อสอบ <span id="exBankN">100</span> ข้อ</p><h2>แบบทดสอบ Mitosis &amp; Cell Aging</h2>
       <p class="lede">ข้อสอบปรนัย 4 ตัวเลือก ครอบคลุมทั้ง 7 บท ลำดับข้อและตำแหน่งตัวเลือกสุ่มใหม่ทุกครั้ง</p></div>
     <div id="exSetup" style="display:grid;gap:12px">
@@ -1385,7 +1415,7 @@ function show(name,scroll){cur=name;
   document.querySelectorAll('.tab').forEach(t=>{const on=t.dataset.go===name;t.setAttribute('aria-selected',on?'true':'false');if(on){const row=t.parentElement;if(row.clientWidth)row.scrollTo({left:t.offsetLeft-row.clientWidth/2+t.offsetWidth/2,behavior:'smooth'});}});
   if(scroll){const nav=document.querySelector('.tabs');const top=nav.getBoundingClientRect().top+window.scrollY-2;if(window.scrollY>top)window.scrollTo({top,behavior:'smooth'});}
 }
-function setModeUI(m){const prev=document.body.dataset.mode;document.body.dataset.mode=m;
+function setModeUI(m){const prev=document.body.dataset.mode;document.body.dataset.mode=m;if(prev==='tutor'&&m!=='tutor'&&window.T11)T11.leave();if(window.T11)setTimeout(T11.chat,0);
   document.querySelectorAll('[data-mode-go]').forEach(b=>{if(b.closest('.modebar'))b.setAttribute('aria-selected',b.dataset.modeGo===m?'true':'false');});
   if(prev==='tutor'&&m!=='tutor')Object.keys(scenes).forEach(k=>{const s=scenes[k];if(s.untutor)s.untutor();});
   if(m!=='tutor')document.querySelectorAll('.view.tquiet').forEach(v=>v.classList.remove('tquiet'));}
@@ -1393,13 +1423,13 @@ function route(){
   const h=location.hash.slice(1);
   if(EXAM.locked){if(h!=='exam')history.replaceState(null,'','#exam');return;}
   if(h==='exam'){setModeUI('exam');show('exam',true);}
-  else if(h.indexOf('t-')===0){let i=LESSONS.findIndex(L=>L.v===h.slice(2));if(i<0)i=TS.li;setModeUI('tutor');openLesson(i,true);}
+  else if(h.indexOf('t-')===0){const sw=document.body.dataset.mode!=='tutor';setModeUI('tutor');show('tutor',false);if(window.T11)T11.route(h.slice(2),sw);}
   else{const v=LABV.indexOf(h)>=0?h:lastLab;lastLab=v;try{localStorage.setItem('mcl-lab',v);}catch(e){}setModeUI('lab');show(v,!!h);}
 }
 document.addEventListener('click',e=>{
   if(EXAM.locked)return;
   const m=e.target.closest('[data-mode-go]');
-  if(m){const k=m.dataset.modeGo;const h=k==='lab'?lastLab:k==='tutor'?'t-'+LESSONS[TS.li].v:'exam';if(location.hash!=='#'+h)location.hash=h;else route();return;}
+  if(m){const k=m.dataset.modeGo;const h=k==='lab'?lastLab:k==='tutor'?'t-'+((window.T11&&T11.cur())||'home'):'exam';if(location.hash!=='#'+h)location.hash=h;else route();return;}
   const t=e.target.closest('[data-tl-go]');
   if(t){const i=+t.getAttribute('data-tl-go');const h='t-'+LESSONS[i].v;if(location.hash!=='#'+h)location.hash=h;else openLesson(i,true);return;}
   const b=e.target.closest('[data-go]');
@@ -1413,8 +1443,945 @@ requestAnimationFrame(frame);
 })();
 </script>
 
-<style id="hub-embed">html.embedded .modebar{display:none!important}</style>
-<script src="xk2-bank-s11.js"></script><script src="exam-kit-2.js"></script>
+<style id="t11css">@keyframes pop{to{opacity:1;transform:none}}
+@keyframes arrive{to{opacity:1;transform:none}}
+@keyframes fade{to{opacity:1}}
+@keyframes grow{to{transform:none}}
+@keyframes flow{from{transform:translateX(-20px)}to{transform:translateX(340px)}}
+@keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(46px);opacity:0}}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes swapIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes press{from{transform:scale(.9)}to{transform:none}}
+@keyframes parIn{from{opacity:0;transform:translateY(-10px) scale(.94)}}
+@keyframes xxIn{from{opacity:0;transform:rotate(-90deg) scale(.4)}}
+@keyframes pick{40%{transform:scale(1.14)}}
+@keyframes bob{from{transform:translate(-.6px,-1.6px)}to{transform:translate(.6px,1.6px)}}
+@keyframes npop{40%{transform:scale(1.3)}}
+@keyframes growX{from{transform:scaleX(0)}}
+@keyframes growY{from{transform:scaleY(0)}}
+@keyframes wig{from{transform:translateY(-1.5px)}to{transform:translateY(1.5px)}}
+@keyframes zoomIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+@keyframes zoomOut{to{opacity:0;transform:scale(.96)}}
+.tscope{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.tscope a{color:var(--accent)}
+.tscope button{font-family:inherit}
+.tscope :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tscope .wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.tscope header.top .wrap{padding-block:20px 14px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 20px}
+.tscope .eyebrow{font:600 12px/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tscope h1{font:700 clamp(28px,6vw,38px)/1.1 var(--f-display);margin:4px 0 0;letter-spacing:-.015em}
+.tscope h1 span{color:var(--accent)}
+.tscope .topright{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.tscope .overall{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.tscope .overall b{font:600 15px var(--f-display);color:var(--ink);display:block}
+.tscope .ring{width:44px;height:44px;flex:none}
+.tscope .ring circle{fill:none;stroke-width:5}
+.tscope .ring .bgc{stroke:var(--soft)}
+.tscope .ring .fgc{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .9s cubic-bezier(.2,.8,.2,1)}
+.tscope .switch{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font:600 13px var(--f-display);color:var(--muted)}
+.tscope .switch input{appearance:none;-webkit-appearance:none;width:40px;height:24px;border-radius:999px;background:var(--line);position:relative;cursor:pointer;transition:background .2s;margin:0;flex:none}
+.tscope .switch input::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--surface);transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.tscope .switch input:checked{background:var(--accent)}
+.tscope .switch input:checked::after{transform:translateX(16px)}
+.tscope .app{display:grid;grid-template-columns:280px minmax(0,1fr);gap:20px;align-items:start;padding-block:4px 120px}
+@media (max-width:880px){.tscope .app{grid-template-columns:minmax(0,1fr)}}
+.tscope aside.index{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);display:grid;gap:12px;max-height:calc(100vh - 24px);overflow:auto;padding-bottom:8px}
+@media (max-width:880px){.tscope aside.index{position:static;max-height:none}}
+.tscope .idxToggle{display:none}
+@media (max-width:880px){.tscope .idxToggle{display:flex;align-items:center;justify-content:space-between;width:100%;font:600 15px var(--f-display);padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}.tscope .idxToggle .chev{transition:transform .3s}.tscope aside.index.open .idxToggle .chev{transform:rotate(180deg)}.tscope aside.index:not(.open) .chlist{display:none}}
+.tscope .chlist{display:grid;gap:14px}
+.tscope .ch h3{font:600 13px/1.3 var(--f-display);letter-spacing:.02em;color:var(--muted);margin:0 0 6px}
+.tscope .ch ol{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.tscope .lesson-link{display:grid;grid-template-columns:22px minmax(0,1fr) auto;align-items:center;gap:10px;width:100%;text-align:left;text-decoration:none;color:var(--ink);padding:9px 10px;border-radius:10px;border:1px solid transparent;transition:background-color .2s,border-color .2s,transform .15s}
+.tscope .lesson-link:hover{background:var(--surface);border-color:var(--line)}
+.tscope .lesson-link:active{transform:scale(.98)}
+.tscope .lesson-link[aria-current="page"]{background:var(--surface);border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.tscope .lesson-link .t{font:500 14px/1.35 var(--f-body);min-width:0}
+.tscope .lesson-link .t small{display:block;font:400 12px/1.35 var(--f-body);color:var(--muted)}
+.tscope .st{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font:700 11px var(--f-mono);color:var(--muted);background:var(--surface)}
+.tscope .st.part{border-color:var(--accent);color:var(--accent)}
+.tscope .st.done{border-color:var(--ok);background:var(--ok);color:var(--surface)}
+.tscope .sc{font:600 12px var(--f-mono);color:var(--muted)}
+.tscope .labLink{font-size:13px;padding:10px 12px;border-radius:10px;border:1px dashed var(--line);display:block;color:var(--muted);text-decoration:none}
+.tscope .labLink b{color:var(--accent);font-weight:600}
+.tscope .player{background:var(--surface);border:1px solid var(--line);border-radius:18px;min-width:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden}
+.tscope .phead{display:grid;gap:10px;padding:16px 20px 12px;border-bottom:1px solid var(--line)}
+.tscope .prow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.tscope .ltitle{min-width:0}
+.tscope .ltitle .k{font:600 13px/1.3 var(--f-display);color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.tscope .ltitle h2{font:700 clamp(19px,3.4vw,24px)/1.25 var(--f-display);margin:2px 0 0;text-wrap:balance}
+.tscope .iconbtn{flex:none;display:inline-flex;align-items:center;gap:6px;font:600 13px var(--f-display);padding:8px 12px;min-height:38px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:border-color .2s,color .2s,transform .15s}
+.tscope .iconbtn:hover{border-color:var(--accent);color:var(--accent)}
+.tscope .iconbtn:active{transform:scale(.95)}
+.tscope .iconbtn svg{width:14px;height:14px}
+.tscope .segs{display:flex;gap:4px}
+.tscope .segs i{flex:1;height:6px;border-radius:3px;background:var(--soft);position:relative;overflow:hidden}
+.tscope .segs i::after{content:"";position:absolute;inset:0;background:var(--c,var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.tscope .segs i.on::after{transform:none}
+.tscope .segs i.ok{--c:var(--ok)}
+.tscope .segs i.no{--c:var(--rec)}
+.tscope .segs i.cur{outline:2px solid var(--accent);outline-offset:1px}
+.tscope .stage{padding:20px;min-width:0;overflow:hidden}
+.tscope .step{display:grid;gap:16px;min-width:0}
+.tscope .step.in-next{animation:inNext .5s cubic-bezier(.2,.8,.2,1)}
+.tscope .step.in-prev{animation:inPrev .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes inNext{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+@keyframes inPrev{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+.tscope .pfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 20px;border-top:1px solid var(--line);background:var(--surface);padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+.tscope .pfoot .cnt{font:500 13px var(--f-mono);color:var(--muted)}
+.tscope .btn{position:relative;font:600 15px/1 var(--f-display);padding:13px 20px;min-height:46px;border-radius:12px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);cursor:pointer;transition:transform .15s,box-shadow .25s,opacity .2s,background-color .2s}
+.tscope .btn.ghost{background:transparent;color:var(--accent)}
+.tscope .btn.quiet{background:transparent;color:var(--muted);border-color:var(--line)}
+.tscope .btn:disabled{opacity:.35;cursor:default}
+.tscope .btn:not(:disabled):active{transform:scale(.95)}
+@media (hover:hover){.tscope .btn:not(:disabled):hover{box-shadow:0 8px 18px -10px var(--accent);transform:translateY(-1px)}}
+.tscope .btn.pulse:not(:disabled){animation:nudge 1.6s ease-in-out 1.2s infinite}
+@keyframes nudge{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 0 6px var(--accent-soft)}}
+.tscope .btns{display:flex;flex-wrap:wrap;gap:8px}
+.tscope .say{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:start}
+.tscope .av{width:40px;height:40px;border-radius:50%;background:var(--accent);display:grid;place-items:center;flex:none}
+.tscope .av svg{width:24px;height:24px}
+.tscope .bubble{background:var(--soft);border-radius:4px 16px 16px 16px;padding:12px 16px;display:grid;gap:8px;min-width:0}
+.tscope .bubble .who{font:600 13px var(--f-display);color:var(--accent);letter-spacing:.04em}
+.tscope .bubble p{margin:0}
+.tscope .bubble ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.tscope .al{font-family:var(--f-mono);font-weight:600;font-style:normal}
+.tscope .al.dom{color:var(--accent)}
+.tscope .al.rec{color:var(--rec)}
+.tscope .al.alt{color:var(--alt)}
+.tscope .al.neu{color:var(--ink)}
+.tscope .gt{white-space:nowrap}
+.tscope sup{font-size:.66em;line-height:0;vertical-align:.55em}
+.tscope .key{font-weight:600;background:var(--accent-soft);padding:0 4px;border-radius:4px}
+.tscope .vis{border-radius:14px;background:var(--bg);border:1px solid var(--line);overflow:hidden;position:relative}
+.tscope .vis svg{display:block;width:100%;height:auto;max-height:340px}
+.tscope .vis .replay{display:block;margin:0 10px 10px auto;font:600 12px var(--f-display);padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.tscope .vis .vctl{display:flex;justify-content:center;padding:0 10px 12px}
+.tscope svg text{font-family:var(--f-display)}
+.tscope svg .lbl{font-size:12px;font-weight:600;fill:var(--ink)}
+.tscope svg .sm{font-size:10px;font-weight:500;fill:var(--muted)}
+.tscope svg .mono{font-family:var(--f-mono);font-weight:600}
+.tscope .q{font:600 clamp(17px,2.6vw,20px)/1.45 var(--f-display);margin:0;text-wrap:pretty}
+.tscope .qtag{font:600 13px var(--f-display);color:var(--accent);letter-spacing:.02em}
+.tscope .opts{display:grid;gap:10px}
+.tscope .opt{position:relative;display:grid;grid-template-columns:32px minmax(0,1fr) 22px;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;min-height:54px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:500 15.5px/1.45 var(--f-body);cursor:pointer;transition:border-color .2s,background-color .25s,transform .15s,opacity .3s}
+.tscope .opt .lt{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--soft);font:600 14px var(--f-mono);color:var(--muted);transition:background-color .25s,color .25s}
+.tscope .opt .mk{width:22px;height:22px;display:grid;place-items:center}
+@media (hover:hover){.tscope .opt:not(:disabled):hover{border-color:var(--accent)}}
+.tscope .opt:not(:disabled):active{transform:scale(.985)}
+.tscope .opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.tscope .opt.sel .lt{background:var(--accent);color:var(--accent-ink)}
+.tscope .opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.tscope .opt.right .lt{background:var(--ok);color:var(--surface)}
+.tscope .opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tscope .opt.wrong .lt{background:var(--bad);color:var(--surface)}
+.tscope .opt.miss{border-style:dashed;border-color:var(--ok)}
+.tscope .opt.dim{opacity:.5}
+.tscope .opt:disabled{cursor:default}
+.tscope .shake{animation:shake .45s}
+@keyframes shake{20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+.tscope .burst{position:absolute;left:50%;top:50%;width:0;height:0;pointer-events:none}
+.tscope .burst i{position:absolute;width:7px;height:7px;border-radius:2px;left:-3px;top:-3px;background:var(--c);animation:fly .8s cubic-bezier(.15,.7,.3,1) forwards}
+@keyframes fly{to{transform:translate(var(--dx),var(--dy)) rotate(200deg);opacity:0}}
+.tscope .hintbox,.tscope .fb{border-radius:12px;padding:12px 14px;display:grid;gap:6px;font-size:15px;animation:inNext .4s cubic-bezier(.2,.8,.2,1)}
+.tscope .hintbox{background:var(--warn-soft)}
+.tscope .hintbox b{font-family:var(--f-display)}
+.tscope .fb.ok{background:var(--ok-soft)}
+.tscope .fb.no{background:var(--bad-soft)}
+.tscope .fb .h{font:700 16px var(--f-display)}
+.tscope .fb.ok .h{color:var(--ok)}
+.tscope .fb.no .h{color:var(--bad)}
+.tscope .fb p{margin:0}
+.tscope .again{display:grid;gap:8px;padding:12px 14px;border-radius:12px;border:1px dashed var(--accent);font-size:15px}
+.tscope .again .ans{white-space:pre-wrap}
+.tscope .linkbtn{background:none;border:0;padding:0;color:var(--accent);font:600 14px var(--f-display);cursor:pointer;text-align:left}
+.tscope .linkbtn:disabled{opacity:.5;cursor:default}
+.tscope .pf{display:grid;gap:12px;justify-items:center}
+.tscope .pfp{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+.tscope .pfp .par{display:grid;justify-items:center;padding:6px 12px;border:1px solid var(--line);border-radius:12px;min-width:110px}
+.tscope .pfp .par small{font:600 12px var(--f-display);color:var(--muted)}
+.tscope .pfp .par .gt{font-size:21px}
+.tscope .pfp .x{font:600 22px var(--f-display);color:var(--muted)}
+.tscope .pgrid{display:grid;grid-template-columns:52px repeat(2,minmax(0,1fr));gap:8px;width:100%;max-width:380px}
+.tscope .pgrid .corner{font:500 11px/1.3 var(--f-body);color:var(--muted);display:grid;place-items:center;text-align:center}
+.tscope .pgrid .gh{display:grid;place-items:center}
+.tscope .pgrid .gam{display:inline-grid;place-items:center;min-width:44px;height:44px;padding:0 8px;border-radius:999px;border:2px solid var(--line);background:var(--surface);font-size:16px;animation:popIn .45s var(--d,0s) cubic-bezier(.3,1.5,.5,1) backwards}
+.tscope .pcell{aspect-ratio:1/1;border-radius:12px;border:2px dashed var(--line);background:var(--surface);display:grid;place-items:center;align-content:center;gap:2px;font-size:20px;cursor:pointer;color:var(--muted);transition:border-color .2s,background-color .25s,transform .15s;padding:4px}
+.tscope .pcell small{font:500 11px var(--f-body);color:var(--muted)}
+.tscope .pcell.filled{border-style:solid;border-color:var(--accent);color:var(--ink)}
+.tscope .pcell.right{border-color:var(--ok);background:var(--ok-soft)}
+.tscope .pcell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tscope .pcell:disabled{cursor:default}
+.tscope .pcell:not(:disabled):active{transform:scale(.94)}
+.tscope .pcell .gt{animation:popIn .3s cubic-bezier(.3,1.5,.5,1)}
+@keyframes popIn{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+.tscope .ptip{font-size:13px;color:var(--muted);text-align:center}
+.tscope .sum{display:grid;gap:16px;justify-items:start}
+.tscope .scorebig{display:flex;align-items:center;gap:16px}
+.tscope .scorebig svg{width:96px;height:96px}
+.tscope .scorebig .bgc{stroke:var(--soft);fill:none;stroke-width:9}
+.tscope .scorebig .fgc{stroke:var(--ok);fill:none;stroke-width:9;stroke-linecap:round}
+.tscope .scorebig .num{font:700 30px var(--f-display)}
+.tscope .scorebig .num small{font:500 15px var(--f-body);color:var(--muted)}
+.tscope .keypts{margin:0;padding:0;list-style:none;display:grid;gap:8px;width:100%}
+.tscope .keypts li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;padding:10px 12px;border-radius:10px;background:var(--soft);animation:inNext .5s var(--d,0s) cubic-bezier(.2,.8,.2,1) backwards}
+.tscope .keypts li::before{content:"✓";font:700 14px var(--f-mono);color:var(--ok);display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ok-soft)}
+.tscope .home{display:grid;gap:18px}
+.tscope .howto{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.tscope .howto{grid-template-columns:minmax(0,1fr)}}
+.tscope .howto div{padding:12px 14px;border-radius:12px;background:var(--soft);display:grid;gap:4px;font-size:14px;animation:inNext .5s var(--d,0s) cubic-bezier(.2,.8,.2,1) backwards}
+.tscope .howto b{font:600 15px var(--f-display)}
+.tscope .chmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.tscope .chcard{display:grid;gap:6px;padding:14px;border-radius:14px;border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:border-color .2s,transform .2s,box-shadow .25s;animation:inNext .5s var(--d,0s) cubic-bezier(.2,.8,.2,1) backwards}
+.tscope .chcard:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 10px 20px -14px var(--accent)}
+.tscope .chcard .n{font:700 28px/1 var(--f-display);color:var(--accent)}
+.tscope .chcard b{font:600 15px/1.3 var(--f-display)}
+.tscope .chcard .bar{height:6px;border-radius:3px;background:var(--soft);overflow:hidden}
+.tscope .chcard .bar i{display:block;height:100%;background:var(--ok);transform-origin:left;animation:growX 1s .3s cubic-bezier(.2,.8,.2,1) backwards}
+@keyframes growX{from{transform:scaleX(0)}}
+.tscope .chcard small{font:500 13px var(--f-body);color:var(--muted)}
+.tscope .tbl{border-collapse:collapse;width:100%;font-size:15px}
+.tscope .tbl th,.tscope .tbl td{border:1px solid var(--line);padding:10px;text-align:center}
+.tscope .tbl th{font:600 13px var(--f-display);color:var(--muted)}
+.tscope .tbl td{animation:fadeCell .5s var(--d,0s) backwards}
+.tscope .tbl td.y{background:var(--bad-soft);color:var(--bad);font-weight:600}
+@keyframes fadeCell{from{opacity:0;transform:scale(.9)}}
+.tscope .fab{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;display:inline-flex;align-items:center;gap:8px;font:600 15px var(--f-display);padding:14px 18px;border-radius:999px;border:0;background:var(--ink);color:var(--bg);cursor:pointer;box-shadow:0 10px 24px -10px rgba(0,0,0,.45);transition:transform .2s;animation:fabIn .6s 1s cubic-bezier(.3,1.5,.5,1) backwards}
+.tscope .fab:active{transform:scale(.94)}
+.tscope .fab svg{width:18px;height:18px}
+@keyframes fabIn{from{opacity:0;transform:translateY(30px) scale(.8)}}
+.tscope .chat{position:fixed;z-index:40;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(420px,calc(100vw - 32px));height:min(620px,calc(100vh - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)));background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 60px -20px rgba(0,0,0,.45);display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;overflow:hidden;animation:chatIn .35s cubic-bezier(.2,.8,.2,1);transform-origin:bottom right}
+@keyframes chatIn{from{opacity:0;transform:translateY(20px) scale(.96)}}
+@media (max-width:560px){.tscope .chat{right:0;left:0;bottom:0;width:100%;border-radius:18px 18px 0 0;height:min(78vh,620px);padding-bottom:env(safe-area-inset-bottom,0px)}}
+.tscope .chat header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.tscope .chat header b{font:600 16px var(--f-display);display:block}
+.tscope .chat header small{font-size:12px;color:var(--muted)}
+.tscope .msgs{overflow:auto;padding:14px;display:grid;gap:10px;align-content:start;overscroll-behavior:contain}
+.tscope .m{max-width:88%;padding:10px 13px;border-radius:14px;font-size:15px;line-height:1.6;animation:inNext .3s ease-out;white-space:normal;overflow-wrap:anywhere}
+.tscope .m.u{justify-self:end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px}
+.tscope .m.a{justify-self:start;background:var(--soft);border-bottom-left-radius:4px}
+.tscope .m.a ul{margin:4px 0;padding-left:18px}
+.tscope .m.a p{margin:0 0 6px}
+.tscope .m.a p:last-child{margin:0}
+.tscope .m.note{justify-self:center;background:none;color:var(--muted);font-size:13px;text-align:center}
+.tscope .thinking{display:inline-flex;gap:4px;align-items:center}
+.tscope .thinking i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:dot 1s infinite}
+.tscope .thinking i:nth-child(2){animation-delay:.15s}
+.tscope .thinking i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+.tscope .chips{display:flex;gap:6px;overflow-x:auto;padding:8px 14px;scrollbar-width:none}
+.tscope .chips::-webkit-scrollbar{display:none}
+.tscope .chips button{flex:none;font:500 13px var(--f-body);padding:7px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.tscope .chips button:hover{border-color:var(--accent);color:var(--accent)}
+.tscope .compose{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:10px 14px 14px;border-top:1px solid var(--line)}
+.tscope .compose textarea{resize:none;font:400 16px/1.45 var(--f-body);padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);min-height:46px;max-height:120px}
+.tscope .compose .btn{padding:0 16px}
+.tscope .hbtns{display:flex;gap:8px;flex:none}
+.tscope .iconbtn.ask{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tscope .iconbtn.ask:hover{color:var(--bg);opacity:.9}
+html.lock .tscope .fab{display:none!important}
+html:not(.lock) .tscope #askBtn{display:none}
+@media (max-width:480px){.tscope .iconbtn.ask .lbl2{display:none}}
+html.lock,html.lock body{overflow:hidden}
+.tscope .player.focus{position:fixed;inset:0;z-index:35;border-radius:0;border:0;padding-top:env(safe-area-inset-top,0px);animation:chatIn .35s cubic-bezier(.2,.8,.2,1);overflow:auto}
+.tscope .player.focus .stage{max-width:880px;width:100%;margin:0 auto;overflow:visible}
+.tscope .player.focus .phead,.tscope .player.focus .pfoot{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.tscope .player.focus{grid-template-rows:auto 1fr auto}
+.tscope .player.focus .pfoot{position:sticky;bottom:0;z-index:5;box-shadow:0 -10px 20px -16px rgba(0,0,0,.35)}
+.tscope .player.focus .phead{position:sticky;top:0;z-index:5;background:var(--surface)}
+.tscope .rbc{fill:var(--rbc)}
+.tscope .rbcIn{fill:var(--rbc-hi)}
+.tscope .ag{fill:var(--antigen)}
+.tscope .agB{fill:var(--alt)}
+.tscope .abp{stroke:var(--ab);stroke-width:2.4;fill:none;stroke-linecap:round}
+.tscope .pea{fill:var(--pea)}
+.tscope .peaY{fill:var(--peaY)}
+.tscope .peaG{fill:var(--peaG)}
+.tscope .stem{fill:var(--stem)}
+.tscope .cellb{fill:var(--surface);stroke:var(--muted);stroke-width:1.5}
+.tscope .chA{fill:var(--accent)}
+.tscope .chB{fill:var(--rec)}
+.tscope .chX{fill:#C2364B}
+.tscope .chY{fill:var(--alt)}
+.tscope .vlumen{fill:var(--lumen)}
+.tscope .vwall{stroke:var(--rbc);stroke-width:3;fill:none;stroke-linecap:round}
+.tscope .uterus{fill:var(--uterus);stroke:var(--placenta);stroke-width:1.5}
+.tscope .placenta{fill:var(--placenta)}
+.tscope .fetus{fill:var(--fetus)}
+.tscope .pnode{stroke:var(--ink);stroke-width:1.6;fill:var(--surface)}
+.tscope .pnode.aff{fill:var(--bad)}
+.tscope .pdot{fill:var(--bad)}
+.tscope .pline{stroke:var(--muted);stroke-width:1.4;fill:none}
+.tscope .phl{stroke:var(--accent);stroke-width:3.2;fill:none;stroke-linecap:round}
+.tscope .node{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.tscope .enz{fill:var(--ok-soft);stroke:var(--ok);stroke-width:1.2}
+.tscope .flowdot{fill:var(--accent)}
+.tscope .oxd{fill:#E8632B}
+.tscope .egg{fill:var(--uterus);stroke:var(--placenta);stroke-width:2}
+.tscope .emito{fill:var(--rec)}
+.tscope .sphd{fill:var(--p2);stroke:var(--accent);stroke-width:1.5}
+.tscope .sptl{stroke:var(--muted);stroke-width:2;fill:none;stroke-linecap:round}
+.tscope .spmid{fill:var(--soft);stroke:var(--muted);stroke-width:1}
+.tscope .spm{fill:var(--alt)}
+.tscope .gridc{fill:var(--soft);stroke:var(--surface);stroke-width:2}
+.tscope .gridc.on{fill:var(--accent)}
+.tscope .gridc.r2{fill:var(--p1)}
+html.calm .tscope .step,html.calm .tscope .hintbox,html.calm .tscope .fb,html.calm .tscope .keypts li,html.calm .tscope .howto div,html.calm .tscope .chcard,html.calm .tscope .chcard .bar i,html.calm .tscope .tbl td,html.calm .tscope .fab,html.calm .tscope .chat,html.calm .tscope .m,html.calm .tscope .btn.pulse,html.calm .tscope .pgrid .gam,html.calm .tscope .pcell .gt,html.calm .tscope .burst,html.calm .tscope .player.focus{animation:none!important}
+.tscope .zv{position:relative;overflow:hidden;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.tscope .zv.zpad{padding-top:42px}
+.tscope .zv .zc{transform-origin:0 0}
+.tscope .zv.zpad .zc{transform-origin:0 0}
+.tscope .zv.zoomed{cursor:grab}
+.tscope .zv.grabbing{cursor:grabbing}
+.tscope .zv.zoomed::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 2px var(--accent);pointer-events:none;z-index:2}
+.tscope .zui{position:absolute;top:6px;right:6px;z-index:3;display:flex;align-items:center;gap:2px;padding:2px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:0 4px 12px -8px rgba(0,0,0,.4);transition:opacity .2s}
+.tscope .zv:not(.zoomed) .zui{opacity:.8}
+.tscope .zv:not(.zoomed) .zout,.tscope .zv:not(.zoomed) .zr,.tscope .zv:not(.zoomed) .zl{display:none}
+.tscope .zb{width:32px;height:32px;border-radius:50%;border:0;background:transparent;color:var(--ink);font:600 17px/1 var(--f-mono);cursor:pointer;display:grid;place-items:center;padding:0}
+.tscope .zb:hover{background:var(--soft,var(--norm))}
+.tscope .zb:active{transform:scale(.9)}
+.tscope .zb.zr{font-size:12px}
+.tscope .zl{font:600 12px var(--f-mono);min-width:34px;text-align:center;color:var(--accent)}
+@keyframes gdIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.tscope{--accent:var(--hema);--accent-ink:#fff;--accent-soft:color-mix(in srgb,var(--hema) 14%,var(--surface));--soft:var(--sunk);--ok-soft:color-mix(in srgb,var(--ok) 16%,var(--surface));--bad-soft:color-mix(in srgb,var(--bad) 14%,var(--surface));--warn-soft:color-mix(in srgb,var(--warn) 16%,var(--surface));--rec:var(--eosin);--alt:var(--pat);--ab:var(--spindle);
+  --f-display:var(--font-display);--f-body:var(--font-body);--f-mono:var(--font-mono)}
+.tscope.t11{background:transparent}
+section.view[data-view="tutor"]{padding-top:6px}
+section.view[data-view="tutor"] .tscope .wrap{max-width:1180px;padding-left:0;padding-right:0}
+body[data-mode="tutor"] .subnav[data-for="tutor"]{display:none!important}
+.tscope svg .sm{font-size:11px}
+.tscope .vis svg{max-height:360px}
+.tscope .t11flow{display:grid;gap:12px;padding:16px}
+.tscope .t11flow .fl-top{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.tscope .t11flow .chip{font:600 15px/1.3 var(--f-display);padding:8px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.tscope .t11flow .chip.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tscope .t11flow .ar{color:var(--muted);font-weight:700}
+.tscope .t11flow .fl-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tscope .t11flow .fl-cols.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tscope .t11flow .fl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.tscope .t11flow .fl{display:grid;gap:4px;align-content:start;padding:12px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--muted)}
+.tscope .t11flow .fl b{font:700 15px/1.35 var(--f-display)}
+.tscope .t11flow .fl span{font-size:14.5px;line-height:1.55}
+.tscope .t11flow .fl small{font:600 13px/1.4 var(--f-mono);color:var(--muted)}
+.tscope .t11flow .fl.ok{border-top-color:var(--ok)}.tscope .t11flow .fl.ok b{color:var(--ok)}
+.tscope .t11flow .fl.warn{border-top-color:var(--warn)}.tscope .t11flow .fl.warn b{color:var(--warn)}
+.tscope .t11flow .fl.bad{border-top-color:var(--bad)}.tscope .t11flow .fl.bad b{color:var(--bad)}
+.tscope .t11flow .fl-note{margin:0;font-size:14.5px;padding:10px 14px;border-radius:10px;background:var(--warn-soft)}
+@media (max-width:640px){.tscope .t11flow .fl-cols,.tscope .t11flow .fl-cols.two{grid-template-columns:1fr}.tscope .t11flow{padding:12px}}
+html.embedded section.view[data-view="tutor"] .tscope aside.index{top:calc(env(safe-area-inset-top,0px) + 12px)}
+section.view[data-view="tutor"]{position:relative;width:min(1180px,calc(100vw - 32px));left:50%;margin-left:calc(min(1180px,calc(100vw - 32px)) / -2)}
+body[data-mode="tutor"] section.view[data-view="tutor"] > .tscope.t11{display:block!important}
+.tscope .q{display:block}
+body[data-mode="tutor"] nav.tabs{position:static}
+.tscope.t11 .zv.zpad{padding-top:40px}
+</style>
+<div class="tscope"><button class="fab" type="button" id="fab" hidden><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5h14v9H8l-4 3v-3H3z"/><path d="M7 9h.01M10 9h.01M13 9h.01"/></svg>ถามติวเตอร์</button>
+<section class="chat" id="chat" hidden aria-label="ถามติวเตอร์">
+  <header><div><b>ถามติวเตอร์</b><small id="chatCtx"></small></div><button class="iconbtn" type="button" id="chatClose">ปิด</button></header>
+  <div class="msgs" id="msgs"></div>
+  <div class="chips" id="chips"></div>
+  <form class="compose" id="compose"><textarea id="chatIn" rows="1" placeholder="พิมพ์คำถาม เช่น Palbociclib ออกฤทธิ์ที่ระยะไหน"></textarea><button class="btn" type="submit" id="sendBtn">ส่ง</button></form>
+</section></div>
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+const NS="http://www.w3.org/2000/svg";
+/* ---------- pinch zoom (touch, trackpad, buttons) ---------- */
+const Zoom=(function(){
+  const MAX=4,all=[];
+  const INTERACTIVE="button,a,input,select,textarea,label,[role=button]";
+  const dist=(a,b)=>Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
+  function make(content,opts){
+    opts=opts||{};
+    if(!content||!content.parentNode||(content.parentNode.classList&&content.parentNode.classList.contains("zv")))return;
+    const wrap=document.createElement("div");wrap.className="zv"+(opts.pad?" zpad":"");
+    content.parentNode.insertBefore(wrap,content);wrap.appendChild(content);content.classList.add("zc");
+    const ui=document.createElement("div");ui.className="zui";
+    ui.innerHTML=`<button type="button" class="zb zout" aria-label="ซูมออก">−</button><span class="zl" aria-live="polite"></span><button type="button" class="zb zin" aria-label="ซูมเข้า">+</button><button type="button" class="zb zr" aria-label="รีเซ็ตการซูม">1×</button>`;
+    wrap.appendChild(ui);
+    let s=1,x=0,y=0,g=null,touching=false,lastTap=0,lx=0,ly=0,moved=false,gs=1;
+    const rect=()=>wrap.getBoundingClientRect();
+    const box=()=>{const cs=getComputedStyle(wrap),pl=parseFloat(cs.paddingLeft)||0,pt=parseFloat(cs.paddingTop)||0;return{ox:pl,oy:pt,w:wrap.clientWidth-pl-(parseFloat(cs.paddingRight)||0),h:wrap.clientHeight-pt-(parseFloat(cs.paddingBottom)||0)};};
+    function clampXY(){const{w,h}=box();x=Math.min(0,Math.max(w-w*s,x));y=Math.min(0,Math.max(h-h*s,y));}
+    function apply(anim){
+      content.style.transition=anim&&!reduce?"transform .28s cubic-bezier(.2,.8,.2,1)":"none";
+      content.style.transform=s===1?"":`translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${s.toFixed(3)})`;
+      const z=s>1.01;wrap.classList.toggle("zoomed",z);ui.querySelector(".zl").textContent=z?s.toFixed(1)+"×":"";
+      wrap.style.touchAction=z?"none":"pan-y";
+    }
+    function zoomAt(ns,cx,cy,anim){
+      ns=Math.min(MAX,Math.max(1,ns));const r=rect(),b=box(),px=cx-r.left-b.ox,py=cy-r.top-b.oy;
+      x=px-(px-x)*(ns/s);y=py-(py-y)*(ns/s);s=ns;
+      if(s<1.02){s=1;x=0;y=0;}clampXY();apply(anim);
+    }
+    const center=()=>{const r=rect();return[r.left+r.width/2,r.top+r.height/2];};
+    function reset(anim){s=1;x=0;y=0;apply(anim);}
+    ui.querySelector(".zin").onclick=e=>{e.stopPropagation();const c=center();zoomAt(s*1.6,c[0],c[1],true);};
+    ui.querySelector(".zout").onclick=e=>{e.stopPropagation();const c=center();zoomAt(s/1.6,c[0],c[1],true);};
+    ui.querySelector(".zr").onclick=e=>{e.stopPropagation();reset(true);};
+
+    /* touch: two fingers pinch, one finger pans while zoomed, double-tap toggles */
+    wrap.addEventListener("touchstart",e=>{
+      touching=true;moved=false;
+      if(e.touches.length===2){const a=e.touches[0],b=e.touches[1];g={d:dist(a,b)||1,s,x,y,mx:(a.clientX+b.clientX)/2,my:(a.clientY+b.clientY)/2};}
+      else if(e.touches.length===1){const a=e.touches[0];lx=a.clientX;ly=a.clientY;g=s>1.01?{pan:true,sx:a.clientX,sy:a.clientY,x,y}:null;}
+    },{passive:true});
+    wrap.addEventListener("touchmove",e=>{
+      if(e.touches.length===2&&g&&g.d){
+        e.preventDefault();moved=true;
+        const a=e.touches[0],b=e.touches[1],r=rect();
+        const ns=Math.min(MAX,Math.max(1,g.s*dist(a,b)/g.d));
+        const mx=(a.clientX+b.clientX)/2,my=(a.clientY+b.clientY)/2,bx=box(),px=g.mx-r.left-bx.ox,py=g.my-r.top-bx.oy;
+        x=px-(px-g.x)*(ns/g.s)+(mx-g.mx);y=py-(py-g.y)*(ns/g.s)+(my-g.my);s=ns;
+        if(s<1.02){s=1;x=0;y=0;}clampXY();apply(false);
+      }else if(e.touches.length===1&&g&&g.pan){
+        const a=e.touches[0];if(Math.abs(a.clientX-g.sx)+Math.abs(a.clientY-g.sy)>4)moved=true;
+        e.preventDefault();x=g.x+(a.clientX-g.sx);y=g.y+(a.clientY-g.sy);clampXY();apply(false);
+      }else if(e.touches.length===1){const a=e.touches[0];if(Math.abs(a.clientX-lx)+Math.abs(a.clientY-ly)>8)moved=true;}
+    },{passive:false});
+    wrap.addEventListener("touchend",e=>{
+      if(e.touches.length===1&&s>1.01){const a=e.touches[0];g={pan:true,sx:a.clientX,sy:a.clientY,x,y};return;}
+      if(e.touches.length)return;
+      touching=false;g=null;
+      if(!moved&&e.changedTouches.length===1&&!e.target.closest(INTERACTIVE)){
+        const t=e.changedTouches[0],now=Date.now();
+        if(now-lastTap<300&&Math.abs(t.clientX-lx)<30&&Math.abs(t.clientY-ly)<30){
+          e.preventDefault();lastTap=0;
+          if(s>1.01)reset(true);else zoomAt(2.5,t.clientX,t.clientY,true);
+        }else lastTap=now;
+      }
+    },{passive:false});
+    wrap.addEventListener("touchcancel",()=>{touching=false;g=null;});
+
+    /* Safari trackpad / iOS: block page zoom; use the gesture on desktop Safari */
+    wrap.addEventListener("gesturestart",e=>{e.preventDefault();gs=s;});
+    wrap.addEventListener("gesturechange",e=>{e.preventDefault();if(!touching&&e.scale)zoomAt(gs*e.scale,e.clientX,e.clientY,false);});
+    wrap.addEventListener("gestureend",e=>e.preventDefault());
+
+    /* Chrome / Edge / Firefox trackpad pinch arrives as ctrl+wheel */
+    wrap.addEventListener("wheel",e=>{if(!e.ctrlKey)return;e.preventDefault();zoomAt(s*Math.exp(-e.deltaY*0.01),e.clientX,e.clientY,false);},{passive:false});
+
+    /* mouse drag to pan while zoomed */
+    let md=null;
+    wrap.addEventListener("pointerdown",e=>{if(e.pointerType!=="mouse"||s<=1.01||e.target.closest(INTERACTIVE))return;md={sx:e.clientX,sy:e.clientY,x,y};wrap.setPointerCapture(e.pointerId);wrap.classList.add("grabbing");});
+    wrap.addEventListener("pointermove",e=>{if(!md)return;x=md.x+(e.clientX-md.sx);y=md.y+(e.clientY-md.sy);clampXY();apply(false);});
+    const up=()=>{md=null;wrap.classList.remove("grabbing");};
+    wrap.addEventListener("pointerup",up);wrap.addEventListener("pointercancel",up);
+    wrap.addEventListener("dblclick",e=>{if(e.target.closest(INTERACTIVE))return;if(s>1.01)reset(true);else zoomAt(2.5,e.clientX,e.clientY,true);});
+
+    const inst={wrap,reset,fit(){clampXY();apply(false);}};all.push(inst);apply(false);return inst;
+  }
+  window.addEventListener("resize",()=>all.forEach(i=>{if(i.wrap.isConnected)i.fit();}));
+  return{make};
+})();
+
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+let sample=null;
+const mq=window.matchMedia?matchMedia("(prefers-reduced-motion: reduce)"):null;
+let reduce=!!(mq&&mq.matches);
+const MODE=()=>document.body.dataset.mode||"lab";
+const clamp=(x)=>x<0?0:x>1?1:x;
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const span=(t,a,b)=>ease(clamp((t-a)/(b-a)));
+let cleanups=[];
+function loop(fn,total,opts={}){
+  const fin=opts.final!=null?opts.final:total;
+  if(reduce){fn(fin);return;}
+  let start=performance.now(),raf=0,dead=false;
+  const f=now=>{if(dead)return;let t=now-start;if(t>=total){if(opts.loop){start=now;t=0;}else{fn(total);return;}}fn(t);raf=requestAnimationFrame(f);};
+  raf=requestAnimationFrame(f);
+  cleanups.push(()=>{dead=true;cancelAnimationFrame(raf);});
+}
+const A=(el,k,v)=>el&&el.setAttribute(k,v);
+const tr=(el,x,y,s)=>A(el,"transform",`translate(${x.toFixed(1)},${y.toFixed(1)})${s!=null?` scale(${s.toFixed(3)})`:""}`);
+const op=(el,o)=>A(el,"opacity",clamp(o).toFixed(3));
+/* ---------- s11 visuals ---------- */
+const SRC=s=>`<span class="hk-src">สไลด์ ${s}</span>`;
+function seqIn(r,gap,dur,first){gap=gap||650;dur=dur||500;first=first||250;
+  const g=[...r.querySelectorAll("[data-s]")].sort((a,b)=>a.dataset.s-b.dataset.s);
+  const n=g.length?+g[g.length-1].dataset.s:0;
+  loop(t=>g.forEach(e=>{const i=+e.dataset.s,k=span(t,first+i*gap,first+i*gap+dur);op(e,k);}),first+(n+1)*gap+dur);}
+/* X-shaped replicated chromosome */
+const XC=(x,y,p,q,c,w)=>{w=w||6;const d=w*.75,n=w*.5,k=Math.min(p,q)*.45;return`<g class="xc" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M${x-d-n},${y-p} C${x-d},${y-k} ${x-n*.9},${y-k*.5} ${x-n*.9},${y} C${x-n*.9},${y+k*.5} ${x-d},${y+k} ${x-d-n},${y+q}"/><path d="M${x+d+n},${y-p} C${x+d},${y-k} ${x+n*.9},${y-k*.5} ${x+n*.9},${y} C${x+n*.9},${y+k*.5} ${x+d},${y+k} ${x+d+n},${y+q}"/></g>`;};
+const XH=(x,y,p,q,c,w)=>{w=w||6;const d=w*.95;return`<g stroke="${c}" stroke-width="${w}" stroke-linecap="round" fill="none"><path d="M${x-p},${y-d} Q${x},${y-1} ${x+q},${y-d}"/><path d="M${x-p},${y+d} Q${x},${y+1} ${x+q},${y+d}"/></g>`;};
+const CEN=(x,y)=>`<circle cx="${x}" cy="${y}" r="3.2" fill="var(--spindle)"/>${[0,45,90,135,180,225,270,315].map(a=>{const r=a*Math.PI/180;return`<line x1="${(x+5*Math.cos(r)).toFixed(1)}" y1="${(y+5*Math.sin(r)).toFixed(1)}" x2="${(x+10*Math.cos(r)).toFixed(1)}" y2="${(y+10*Math.sin(r)).toFixed(1)}" stroke="var(--spindle)" stroke-width="1.2"/>`;}).join("")}`;
+const SP=(x1,y1,x2,y2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--spindle)" stroke-width="1.2" opacity=".85"/>`;
+const C1="var(--hema)",C2="var(--eosin)";
+function arc(cx,cy,r,a0,a1){const p=a=>[cx+r*Math.cos(a*Math.PI/180),cy+r*Math.sin(a*Math.PI/180)];const[x0,y0]=p(a0),[x1,y1]=p(a1);return`M${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 ${a1-a0>180?1:0} 1 ${x1.toFixed(1)},${y1.toFixed(1)}`;}
+const PH=[["G1",-90,54,"var(--g1)"],["S",54,162,"var(--s)"],["G2",162,227,"var(--g2)"],["M",227,270,"var(--m)"]];
+function ring(mode){
+  const cx=110,cy=112,r=72;
+  const mid=(a,b,rr)=>{const m=(a+b)/2*Math.PI/180;return[cx+rr*Math.cos(m),cy+rr*Math.sin(m)];};
+  const seg=PH.map(([n,a,b,c])=>{const[x,y]=mid(a,b,r);return`<path d="${arc(cx,cy,r,a+1,b-1)}" stroke="${c}" stroke-width="30" fill="none"/><text x="${x.toFixed(1)}" y="${(y+4.5).toFixed(1)}" class="lbl" text-anchor="middle" style="font-size:14px">${n}</text>`;}).join("");
+  const ck=a=>{const t=a*Math.PI/180;return`<line x1="${(cx+(r-19)*Math.cos(t)).toFixed(1)}" y1="${(cy+(r-19)*Math.sin(t)).toFixed(1)}" x2="${(cx+(r+19)*Math.cos(t)).toFixed(1)}" y2="${(cy+(r+19)*Math.sin(t)).toFixed(1)}" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>`;};
+  const g1=mid(-90,54,r);
+  const right={
+    cycle:[["G1","เซลล์เติบโต สร้างโปรตีน"],["S","จำลอง DNA (Synthesis)"],["G2","ตรวจ DNA · จำลอง centrosome"],["M","แบ่ง nucleus + cytoplasm"],["G0","พัก ไม่แบ่ง"]],
+    cdk:[["G1","CDK4 · Cyclin D"],["G1→S","CDK2 · Cyclin E"],["S","CDK2 · Cyclin A"],["G2→M","CDK1 · Cyclin B"]],
+    palbo:[["ยา","Palbociclib"],["ยับยั้ง","CDK4/6"],["ผล","ติดที่ G1 เข้า S ไม่ได้"],["ใช้กับ","มะเร็งเต้านม HR+ / HER2-"]]}[mode];
+  const leg=right.map(([a,b],i)=>`<g data-s="${i+1}"><text x="244" y="${44+i*34}" class="lbl mono" style="fill:var(--hema)">${a}</text><text x="244" y="${60+i*34}" class="sm" style="font-size:11.5px;fill:var(--ink)">${b}</text></g>`).join("");
+  return`<svg viewBox="0 0 384 224" role="img" aria-label="Cell cycle">
+  ${seg}${ck(54)}${ck(227)}
+  <text x="${cx}" y="${cy-4}" class="lbl" text-anchor="middle">Cell cycle</text><text x="${cx}" y="${cy+13}" class="sm" text-anchor="middle">Interphase = G1 S G2</text>
+  ${mode==="cycle"?`<g data-s="5"><path d="M176,58 q14,-18 22,-26" stroke="var(--muted)" stroke-width="1.6" fill="none" stroke-dasharray="3 3"/><circle cx="208" cy="24" r="15" fill="var(--sunk)" stroke="var(--muted)"/><text x="208" y="28.5" class="lbl" text-anchor="middle">G0</text></g>`:""}}
+  ${mode==="palbo"?`<g data-s="1"><circle cx="${(cx+r*Math.cos(54*Math.PI/180)).toFixed(1)}" cy="${(cy+r*Math.sin(54*Math.PI/180)).toFixed(1)}" r="13" fill="var(--bad)"/><path d="M${(cx+r*Math.cos(54*Math.PI/180)-5).toFixed(1)},${(cy+r*Math.sin(54*Math.PI/180)).toFixed(1)} h10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>`:""}
+  <circle class="cdot" r="7" fill="var(--ink)" stroke="var(--surface)" stroke-width="2" cx="${cx}" cy="${cy-r}"/>
+  ${leg}</svg>`;}
+function ringInit(stopAt){return r=>{const d=r.querySelector(".cdot"),cx=110,cy=112,R=72;seqIn(r,500,450,200);
+  loop(t=>{let a;if(stopAt!=null){a=-90+(stopAt+90-6)*span(t,300,2300);}else a=-90+360*(t%6000)/6000;const k=a*Math.PI/180;A(d,"cx",(cx+R*Math.cos(k)).toFixed(1));A(d,"cy",(cy+R*Math.sin(k)).toFixed(1));},stopAt!=null?2400:6000,{loop:stopAt==null,final:stopAt!=null?2400:900});};}
+
+const VIS={
+cells:{h:`<svg viewBox="0 0 340 190" role="img" aria-label="DNA ใน prokaryote และ eukaryote">
+  <g data-s="0"><rect x="16" y="34" width="140" height="104" rx="40" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="2"/>
+  <path d="M86,62 c26,0 34,14 30,26 c-4,14 -28,20 -44,12 c-16,-8 -16,-26 -4,-32 c6,-4 12,-6 18,-6z" fill="none" stroke="var(--hema)" stroke-width="3"/>
+  <text x="86" y="26" class="lbl" text-anchor="middle">Prokaryote</text><text x="86" y="160" class="sm" text-anchor="middle" style="font-size:11.5px">DNA วงแหวน · ไม่มี nucleus</text></g>
+  <g data-s="1"><rect x="184" y="34" width="140" height="104" rx="22" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="2"/>
+  <circle cx="254" cy="86" r="34" fill="var(--nuc)" stroke="var(--hema)" stroke-width="2"/>
+  <path d="M232,78 q8,-10 16,0 t16,0 t12,4 M234,92 q8,8 16,0 t16,0 t10,-2" fill="none" stroke="var(--hema)" stroke-width="2.4" stroke-linecap="round"/>
+  <text x="254" y="26" class="lbl" text-anchor="middle">Eukaryote</text><text x="254" y="160" class="sm" text-anchor="middle" style="font-size:11.5px">DNA อยู่ใน nucleus</text></g>
+</svg>`,init:r=>seqIn(r,800)},
+
+pack:{h:(()=>{const lab=["DNA","Nucleosome","Chromatin","Chromosome"];
+  const helix=`<path d="M22,40 C34,58 34,82 22,100 C10,118 10,140 22,158" stroke="${C1}" stroke-width="3" fill="none"/><path d="M50,40 C38,58 38,82 50,100 C62,118 62,140 50,158" stroke="${C2}" stroke-width="3" fill="none"/>${[52,70,88,112,130,148].map(y=>`<line x1="${y<100?28:26}" y1="${y}" x2="${y<100?44:46}" y2="${y}" stroke="var(--muted)" stroke-width="2"/>`).join("")}`;
+  const beads=[52,82,112,142].map((y,i)=>`<circle cx="${i%2?42:30}" cy="${y}" r="10" fill="var(--g1)" stroke="${C1}" stroke-width="2"/>`).join("")+`<path d="M30,40 L30,52 M30,52 C44,62 44,72 42,82 C28,92 28,102 30,112 C44,122 44,132 42,142 L42,158" stroke="${C1}" stroke-width="2" fill="none"/>`;
+  const fiber=`<path d="M36,38 c18,8 -18,16 0,24 c18,8 -18,16 0,24 c18,8 -18,16 0,24 c18,8 -18,16 0,24 c18,8 -18,16 0,24" stroke="${C1}" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+  const xc=XC(36,92,46,62,C1,9);
+  return`<svg viewBox="0 0 340 196" role="img" aria-label="การขดตัวของ DNA จนเป็น chromosome">${[helix,beads,fiber,xc].map((g,i)=>`<g data-s="${i}" transform="translate(${8+i*84},0)">${g}<text x="36" y="182" class="lbl" text-anchor="middle" style="font-size:${i===1||i===3?11:12}px">${lab[i]}</text></g>${i<3?`<text data-s="${i+.5}" x="${80+i*84}" y="104" class="lbl" text-anchor="middle" style="fill:var(--muted)">→</text>`:""}`).join("")}</svg>`;})(),init:r=>seqIn(r,420)},
+
+chromo:{h:`<svg viewBox="0 0 340 230" role="img" aria-label="ส่วนประกอบของ chromosome">
+  ${XC(170,84,58,112,C1,13)}
+  <circle cx="170" cy="84" r="5" fill="var(--spindle)"/>
+  ${[[159,30],[181,30],[159,192],[181,192]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="6.5" fill="var(--eosin)"/>`).join("")}
+  <g data-s="0"><line x1="150" y1="84" x2="96" y2="84" stroke="var(--muted)"/><text x="92" y="80" class="lbl" text-anchor="end">Centromere</text><text x="92" y="96" class="sm" text-anchor="end">ส่วนที่คอดแคบที่สุด</text></g>
+  <g data-s="1"><line x1="190" y1="84" x2="236" y2="84" stroke="var(--muted)"/><text x="240" y="80" class="lbl">Kinetochore</text><text x="240" y="96" class="sm">ที่ spindle มาจับ</text></g>
+  <g data-s="2"><line x1="186" y1="52" x2="236" y2="44" stroke="var(--muted)"/><text x="240" y="40" class="lbl">p arm</text><text x="240" y="55" class="sm">แขนสั้น</text></g>
+  <g data-s="3"><line x1="188" y1="150" x2="236" y2="150" stroke="var(--muted)"/><text x="240" y="146" class="lbl">q arm</text><text x="240" y="161" class="sm">แขนยาว</text></g>
+  <g data-s="4"><line x1="152" y1="30" x2="100" y2="30" stroke="var(--muted)"/><text x="96" y="26" class="lbl" text-anchor="end" style="fill:var(--eosin)">Telomere</text><text x="96" y="41" class="sm" text-anchor="end">ปลาย chromosome</text></g>
+  <g data-s="5"><path d="M156,210 h28" stroke="var(--muted)"/><text x="170" y="225" class="sm" text-anchor="middle">2 sister chromatids = 1 chromosome</text></g>
+</svg>`,init:r=>seqIn(r,450)},
+
+ploidy:{h:`<svg viewBox="0 0 340 170" role="img" aria-label="diploid และ haploid">
+  <g data-s="0"><circle cx="88" cy="78" r="58" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="2"/>
+  <path d="M66,52 v26 M74,52 v26" stroke="${C1}" stroke-width="5" stroke-linecap="round"/><path d="M100,50 v40 M108,50 v40" stroke="${C1}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M66,92 v14 M74,92 v14" stroke="${C2}" stroke-width="5" stroke-linecap="round"/><path d="M100,98 v12 M108,98 v12" stroke="${C2}" stroke-width="5" stroke-linecap="round"/>
+  <text x="88" y="158" class="lbl" text-anchor="middle">Somatic cell · 2n</text></g>
+  <g data-s="1"><circle cx="252" cy="78" r="42" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="2"/>
+  <path d="M240,56 v26 M262,52 v40" stroke="${C1}" stroke-width="5" stroke-linecap="round"/><path d="M240,90 v14 M262,98 v10" stroke="${C2}" stroke-width="5" stroke-linecap="round"/>
+  <text x="252" y="158" class="lbl" text-anchor="middle">Gamete · n</text></g>
+  <text data-s="0" x="88" y="16" class="sm" text-anchor="middle">โครโมโซม 2 ชุด (diploid)</text><text data-s="1" x="252" y="16" class="sm" text-anchor="middle">ชุดเดียว (haploid)</text>
+</svg>`,init:r=>seqIn(r,800)},
+
+cycle:{h:ring("cycle"),init:ringInit(null)},
+cdk:{h:ring("cdk"),init:ringInit(null)},
+palbo:{h:ring("palbo"),init:ringInit(54)},
+
+mitoA:{h:(()=>{const cell=(x,inner,lab)=>`<g transform="translate(${x},0)"><ellipse cx="56" cy="96" rx="50" ry="56" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="2"/>${inner}<text x="56" y="176" class="lbl" text-anchor="middle">${lab}</text></g>`;
+  const pro=`<circle cx="56" cy="100" r="30" fill="var(--nuc)" stroke="${C1}" stroke-width="2"/>${XC(42,98,10,13,C1,4.5)}${XC(70,102,9,12,C2,4.5)}${CEN(40,52)}${CEN(72,52)}${SP(40,52,72,52)}`;
+  const prom=`${[[-80,-40],[-10,30],[60,100],[140,180],[215,250]].map(([a,b])=>`<path d="${arc(56,98,32,a,b)}" stroke="${C1}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`).join("")}${CEN(12,96)}${CEN(100,96)}${XH(46,84,9,12,C1,4.5)}${XH(62,110,9,11,C2,4.5)}${SP(12,96,44,84)}${SP(100,96,58,84)}${SP(12,96,52,110)}${SP(100,96,72,110)}`;
+  const meta=`${CEN(12,96)}${CEN(100,96)}<line x1="56" y1="52" x2="56" y2="142" stroke="var(--muted)" stroke-dasharray="3 4"/>${XH(56,80,9,9,C1,4.5)}${XH(56,112,9,9,C2,4.5)}${SP(12,96,47,80)}${SP(100,96,65,80)}${SP(12,96,47,112)}${SP(100,96,65,112)}`;
+  return`<svg viewBox="0 0 340 186" role="img" aria-label="Prophase Prometaphase Metaphase"><g data-s="0">${cell(0,pro,"Prophase")}</g><g data-s="1">${cell(114,prom,"Prometaphase")}</g><g data-s="2">${cell(228,meta,"Metaphase")}</g><text x="170" y="18" class="sm" text-anchor="middle">nucleus สีม่วง · spindle สีส้ม · centrosome ที่ขั้ว</text></svg>`;})(),init:r=>seqIn(r,900)},
+
+mitoB:{h:(()=>{const V=(x,y,dir,c)=>`<path d="M${x+dir*10},${y-9} L${x},${y} L${x+dir*10},${y+9}" stroke="${c}" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const ana=`<ellipse cx="56" cy="96" rx="54" ry="52" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="2"/>${CEN(8,96)}${CEN(104,96)}${V(30,84,1,C1)}${V(30,110,1,C2)}${V(82,84,-1,C1)}${V(82,110,-1,C2)}${SP(8,96,30,84)}${SP(8,96,30,110)}${SP(104,96,82,84)}${SP(104,96,82,110)}<path d="M40,58 l-8,0 m8,0 l-4,-4 m4,4 l-4,4 M72,58 l8,0 m-8,0 l4,-4 m-4,4 l4,4" stroke="var(--muted)" stroke-width="1.6" fill="none" transform="translate(0,0)"/>`;
+  const telo=`<path d="M6,96 C6,50 50,46 56,70 C62,46 106,50 106,96 C106,142 62,146 56,122 C50,146 6,142 6,96z" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="2"/><circle cx="30" cy="96" r="18" fill="var(--nuc)" stroke="${C1}" stroke-width="2"/><circle cx="82" cy="96" r="18" fill="var(--nuc)" stroke="${C1}" stroke-width="2"/><path d="M22,92 q6,-6 12,0 t8,2 M24,102 q6,4 12,0" stroke="${C1}" stroke-width="2" fill="none"/><path d="M74,92 q6,-6 12,0 t8,2 M76,102 q6,4 12,0" stroke="${C1}" stroke-width="2" fill="none"/>`;
+  const cyt=`<circle cx="28" cy="96" r="26" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="2"/><circle cx="86" cy="96" r="26" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="2"/><circle cx="28" cy="96" r="12" fill="var(--nuc)" stroke="${C1}" stroke-width="2"/><circle cx="86" cy="96" r="12" fill="var(--nuc)" stroke="${C1}" stroke-width="2"/>`;
+  const cell=(x,inner,lab)=>`<g transform="translate(${x},0)">${inner}<text x="56" y="176" class="lbl" text-anchor="middle">${lab}</text></g>`;
+  return`<svg viewBox="0 0 340 186" role="img" aria-label="Anaphase Telophase Cytokinesis"><g data-s="0">${cell(0,ana,"Anaphase")}</g><g data-s="1">${cell(114,telo,"Telophase")}</g><g data-s="2">${cell(228,cyt,"Cytokinesis")}</g><text x="170" y="18" class="sm" text-anchor="middle">chromatid แยก → nucleus 2 อัน → เซลล์ลูก 2 เซลล์</text></svg>`;})(),init:r=>seqIn(r,900)},
+
+cyto:{h:`<svg viewBox="0 0 340 176" role="img" aria-label="cytokinesis เซลล์สัตว์และเซลล์พืช">
+  <g data-s="0"><path id="fur" d="M14,86 C14,40 66,38 82,62 C98,38 150,40 150,86 C150,132 98,134 82,110 C66,134 14,132 14,86z" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="2"/>
+  <circle cx="48" cy="86" r="15" fill="var(--nuc)" stroke="${C1}" stroke-width="2"/><circle cx="116" cy="86" r="15" fill="var(--nuc)" stroke="${C1}" stroke-width="2"/>
+  <path d="M82,40 v14 m0,0 l-4,-5 m4,5 l4,-5 M82,132 v-14 m0,0 l-4,5 m4,-5 l4,5" stroke="var(--eosin)" stroke-width="2" fill="none"/>
+  <text x="82" y="156" class="lbl" text-anchor="middle">เซลล์สัตว์</text><text x="82" y="171" class="sm" text-anchor="middle">Cleavage furrow รัดคอด</text></g>
+  <g data-s="1"><rect x="190" y="36" width="136" height="100" rx="4" fill="var(--cyto)" stroke="var(--pat)" stroke-width="4"/>
+  <circle cx="224" cy="86" r="15" fill="var(--nuc)" stroke="${C1}" stroke-width="2"/><circle cx="292" cy="86" r="15" fill="var(--nuc)" stroke="${C1}" stroke-width="2"/>
+  <line id="plate" x1="258" y1="86" x2="258" y2="86" stroke="var(--pat)" stroke-width="5" stroke-linecap="round"/>
+  <text x="258" y="156" class="lbl" text-anchor="middle">เซลล์พืช</text><text x="258" y="171" class="sm" text-anchor="middle">Cell plate จากด้านใน</text></g>
+</svg>`,init(r){seqIn(r,700);const p=r.querySelector("#plate");loop(t=>{const k=span(t,900,2600);A(p,"y1",(86-48*k).toFixed(1));A(p,"y2",(86+48*k).toFixed(1));},2700);}},
+
+death:{h:(()=>{const blob=(cx,cy,rr,ex)=>`<circle cx="${cx}" cy="${cy}" r="${rr}" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="2" ${ex||""}/>`;
+  const X=[44,128,212,296];
+  const ap=[blob(X[0],52,18)+`<circle cx="${X[0]}" cy="52" r="7" fill="${C1}"/>`,
+    blob(X[1],52,18)+[0,72,144,216,288].map(a=>{const t=a*Math.PI/180;return`<circle cx="${(X[1]+19*Math.cos(t)).toFixed(1)}" cy="${(52+19*Math.sin(t)).toFixed(1)}" r="5.5" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="1.6"/>`;}).join("")+`<circle cx="${X[1]}" cy="52" r="5" fill="${C1}"/>`,
+    [[-12,-8],[10,-10],[-6,12],[13,9]].map(([dx,dy])=>`<circle cx="${X[2]+dx}" cy="${52+dy}" r="8" fill="var(--cyto)" stroke="var(--membrane)" stroke-width="1.6"/><circle cx="${X[2]+dx}" cy="${52+dy}" r="2.6" fill="${C1}"/>`).join(""),
+    `<path d="M${X[3]-26},52 c0,-22 18,-30 30,-24 c14,6 20,20 12,32 c-8,14 -30,16 -40,6 c-4,-4 -2,-10 -2,-14z" fill="var(--g1)" stroke="${C1}" stroke-width="2"/><circle cx="${X[3]-2}" cy="50" r="6" fill="var(--cyto)" stroke="var(--membrane)"/><circle cx="${X[3]+9}" cy="58" r="4.5" fill="var(--cyto)" stroke="var(--membrane)"/>`];
+  const ne=[blob(X[0],146,24,'style="fill:var(--surface)"')+`<circle cx="${X[0]}" cy="146" r="8" fill="${C1}" opacity=".5"/>`,
+    `<circle cx="${X[1]}" cy="146" r="24" fill="var(--surface)" stroke="var(--membrane)" stroke-width="2" stroke-dasharray="14 7"/><circle cx="${X[1]}" cy="146" r="7" fill="${C1}" opacity=".4"/>`,
+    `<circle cx="${X[2]}" cy="146" r="22" fill="none" stroke="var(--membrane)" stroke-width="2" stroke-dasharray="6 9"/>`+[...Array(12)].map((_,i)=>{const t=i/12*Math.PI*2,rr=26+(i%3)*7;return`<circle cx="${(X[2]+rr*Math.cos(t)).toFixed(1)}" cy="${(146+rr*.8*Math.sin(t)).toFixed(1)}" r="2.4" fill="var(--eosin)"/>`;}).join(""),
+    `<circle cx="${X[3]}" cy="146" r="25" fill="var(--bad)" opacity=".14"/>`+[[-14,-6],[12,-8],[0,12]].map(([dx,dy])=>`<circle cx="${X[3]+dx}" cy="${146+dy}" r="11" fill="var(--surface)" stroke="var(--bad)" stroke-width="1.6" stroke-dasharray="4 3"/>`).join("")];
+  const capA=["หดตัว","Blebbing",["Apoptotic","bodies"],["Phagocyte","เก็บกวาด"]],capN=["บวม",["Membrane","แตก"],"สารรั่ว",["อักเสบ","ลามข้างเคียง"]];const cap=(x,y,c)=>Array.isArray(c)?`<text x="${x}" y="${y-6}" class="sm" text-anchor="middle" style="font-size:11px">${c[0]}</text><text x="${x}" y="${y+7}" class="sm" text-anchor="middle" style="font-size:11px">${c[1]}</text>`:`<text x="${x}" y="${y}" class="sm" text-anchor="middle" style="font-size:11px">${c}</text>`;
+  return`<svg viewBox="0 0 340 200" role="img" aria-label="Apoptosis เทียบ Necrosis">
+  <text x="6" y="16" class="lbl" style="fill:var(--pat)">Apoptosis · ไม่อักเสบ</text><text x="6" y="110" class="lbl" style="fill:var(--bad)">Necrosis · อักเสบ</text>
+  ${X.map((x,i)=>`<g data-s="${i}">${ap[i]}${cap(x,88,capA[i])}${ne[i]}${cap(x,186,capN[i])}</g>`).join("")}</svg>`;})(),init:r=>seqIn(r,850)},
+
+p53:{h:`<div class="t11flow"><div class="fl-top"><span class="chip">DNA เสียหาย</span><span class="ar">→</span><span class="chip pri">p53 ตรวจ</span></div>
+  <div class="fl-cols"><div class="fl ok" data-s="1"><b>เสียหายน้อย</b><span>หยุดแบ่งเซลล์ → ซ่อม DNA → แบ่งต่อ</span><small>เซลล์ลูกปกติ</small></div>
+  <div class="fl warn" data-s="2"><b>เสียหายมาก</b><span>ซ่อมไม่สำเร็จ → สั่ง apoptosis</span><small>ตายเงียบ ไม่อักเสบ</small></div>
+  <div class="fl bad" data-s="3"><b>p53 กลายพันธุ์</b><span>ไม่มีใครสั่งหยุดหรือสั่งตาย → แบ่ง 1 → 2 → 4 …</span><small>กลายเป็นก้อนมะเร็ง</small></div></div></div>`,init:r=>seqIn(r,650)},
+
+onco:{h:`<div class="t11flow"><div class="fl-cols two"><div class="fl bad" data-s="0"><b>Oncogene = คันเร่งค้าง</b><span>ยีนก่อมะเร็งกลายพันธุ์ กระตุ้นให้แบ่งตัวตลอดเวลา</span><small>c-myc · bcl-2</small></div>
+  <div class="fl warn" data-s="1"><b>Anti-oncogene = เบรกแตก</b><span>ยีนต้านมะเร็งกลายพันธุ์ เซลล์ผิดปกติจึงรอดจาก apoptosis</span><small>TP53 · BRCA2 · PALB2</small></div></div>
+  <p class="fl-note" data-s="2">bcl-2 สูง + TP53 กลายพันธุ์ → มักดื้อเคมีบำบัด เพราะยาเคมีหลายตัวอาศัยการสั่ง apoptosis</p></div>`,init:r=>seqIn(r,650)},
+
+risk:{h:`<div class="t11flow"><div class="fl-grid">
+  <div class="fl" data-s="0"><b>อายุ</b><span>การกลายพันธุ์สะสมตามอายุ · มีการวินิจฉัยมะเร็งในผู้อายุเกิน 75 ปีมากถึง 50%</span></div>
+  <div class="fl" data-s="1"><b>บุหรี่</b><span>มะเร็งปอด ตามปริมาณและระยะเวลา</span></div>
+  <div class="fl" data-s="2"><b>รังสี</b><span>UV ทำลาย DNA → มะเร็งผิวหนัง</span></div>
+  <div class="fl" data-s="3"><b>ภูมิคุ้มกันบกพร่อง</b><span>ผู้ปลูกถ่ายไต ผู้ติดเชื้อ HIV → มะเร็งปากมดลูก</span></div>
+  <div class="fl" data-s="4"><b>อาหาร</b><span>ไขมันสูง ของไหม้ แอลกอฮอล์ เพิ่มเสี่ยง · ไฟเบอร์ลดเสี่ยงมะเร็งลำไส้</span></div></div></div>`,init:r=>seqIn(r,350)},
+
+chemo:{h:(()=>{const C=[["เซลล์มะเร็ง",1,"bad"],["รากผม",1,""],["เยื่อบุทางเดินอาหาร",1,""],["ต้นกำเนิดเม็ดเลือด",1,""],["มะเร็งระยะ G0",0,"bad"],["เซลล์ที่ไม่แบ่ง",0,""]];
+  return`<svg viewBox="0 0 340 214" role="img" aria-label="ยาเคมีบำบัดทำลายเซลล์ที่กำลังแบ่งตัว">${C.map(([n,div,k],i)=>{const x=57+(i%3)*113,y=48+Math.floor(i/3)*100,f=k==="bad"?"var(--m)":"var(--cyto)";
+    const body=div?`<circle cx="${x-10}" cy="${y}" r="14" fill="${f}" stroke="var(--membrane)" stroke-width="2"/><circle cx="${x+10}" cy="${y}" r="14" fill="${f}" stroke="var(--membrane)" stroke-width="2"/>`:`<circle cx="${x}" cy="${y}" r="17" fill="${f}" stroke="var(--membrane)" stroke-width="2"/>`;
+    const mark=div?`<g class="hit" opacity="0"><path d="M${x-12},${y-12} l24,24 M${x+12},${y-12} l-24,24" stroke="var(--bad)" stroke-width="4" stroke-linecap="round"/></g>`:`<g class="hit" opacity="0"><circle cx="${x}" cy="${y}" r="22" fill="none" stroke="var(--ok)" stroke-width="3"/></g>`;
+    return`${body}${mark}<text x="${x}" y="${y+36}" class="sm" text-anchor="middle" style="font-size:11px;fill:var(--ink)">${n}</text><text x="${x}" y="${y+50}" class="sm" text-anchor="middle" style="font-size:10.5px">${div?"กำลังแบ่ง":"ไม่แบ่ง"}</text>`;}).join("")}</svg>`;})(),
+  init(r){const h=[...r.querySelectorAll(".hit")];loop(t=>h.forEach((e,i)=>op(e,span(t,500+i*280,800+i*280))),2600);}},
+
+target:{h:`<svg viewBox="0 0 340 200" role="img" aria-label="Monoclonal antibody และ small molecule">
+  <rect x="0" y="0" width="340" height="96" fill="var(--surface)"/><rect x="0" y="108" width="340" height="92" fill="var(--cyto)"/>
+  <line x1="0" y1="96" x2="340" y2="96" stroke="var(--membrane)" stroke-width="3"/><line x1="0" y1="108" x2="340" y2="108" stroke="var(--membrane)" stroke-width="3"/>
+  <text x="8" y="18" class="sm">นอกเซลล์</text><text x="8" y="194" class="sm">ในเซลล์</text>
+  ${[100,220].map(x=>`<rect x="${x-7}" y="70" width="14" height="70" rx="5" fill="var(--g1)" stroke="${C1}" stroke-width="2"/><rect x="${x-14}" y="138" width="28" height="16" rx="5" fill="var(--g1)" stroke="${C1}" stroke-width="2"/>`).join("")}
+  <g id="ab"><path d="M100,66 v-22 M100,44 l-12,-14 M100,44 l12,-14" stroke="var(--spindle)" stroke-width="6" stroke-linecap="round" fill="none"/></g>
+  <circle id="sm" cx="220" cy="30" r="7" fill="var(--eosin)"/>
+  <text x="86" y="40" class="lbl" text-anchor="end">mAb</text><text x="86" y="56" class="sm" text-anchor="end">จับนอกเซลล์ · ฉีด</text>
+  <text x="236" y="40" class="lbl">Small molecule</text><text x="236" y="56" class="sm">เข้าเซลล์ · กิน</text>
+</svg>`,init(r){const ab=r.querySelector("#ab"),sm=r.querySelector("#sm");loop(t=>{tr(ab,0,-26*(1-span(t,200,1400)));const k=span(t,600,2400);A(sm,"cy",(30+116*k).toFixed(1));},2500);}},
+
+telo:{h:(()=>{const n=[30,20,10,3];return`<svg viewBox="0 0 340 186" role="img" aria-label="Telomere สั้นลงทุกครั้งที่แบ่งเซลล์">${n.map((t,i)=>{const x=46+i*82;return`<g data-s="${i}"><rect x="${x-8}" y="${40+(30-t)}" width="16" height="${100-2*(30-t)}" rx="8" fill="var(--g1)" stroke="${C1}" stroke-width="2"/><rect x="${x-8}" y="${40+(30-t)}" width="16" height="${t}" rx="${Math.min(8,t/2)}" fill="var(--eosin)"/><rect x="${x-8}" y="${140-(30-t)-t}" width="16" height="${t}" rx="${Math.min(8,t/2)}" fill="var(--eosin)"/><text x="${x}" y="162" class="lbl" text-anchor="middle" style="font-size:11px">${["เริ่มต้น","แบ่งหลายรอบ","ใกล้หมด","Senescence"][i]}</text></g>${i<3?`<text data-s="${i+.5}" x="${x+41}" y="94" class="lbl" text-anchor="middle" style="fill:var(--muted)">→</text>`:""}`;}).join("")}<text x="170" y="20" class="sm" text-anchor="middle">สีชมพู = telomere ที่ปลาย chromosome</text></svg>`;})(),init:r=>seqIn(r,600)},
+
+seno:{h:(()=>{const P=[[40,60,0],[96,48,1],[150,70,0],[206,52,1],[262,66,0],[310,50,0],[66,128,1],[124,136,0],[182,124,0],[240,134,1],[296,126,0]];
+  return`<svg viewBox="0 0 340 190" role="img" aria-label="Senolytics กำจัดเซลล์ชรา">${P.map(([x,y,s])=>`<g class="${s?"sen":"ok"}"><circle cx="${x}" cy="${y}" r="${s?19:16}" fill="${s?"var(--sunk)":"var(--cyto)"}" stroke="${s?"var(--muted)":"var(--membrane)"}" stroke-width="2" ${s?'stroke-dasharray="4 3"':""}/><circle cx="${x}" cy="${y}" r="5" fill="${s?"var(--muted)":"var(--hema)"}"/></g>`).join("")}
+  <text x="170" y="178" class="sm" text-anchor="middle"><tspan style="fill:var(--ink);font-weight:600">เทา = senescent cell</tspan> · Senolytics (Quercetin, Fisetin) เก็บกวาดออก</text></svg>`;})(),
+  init(r){const s=[...r.querySelectorAll(".sen")];loop(t=>s.forEach((e,i)=>{const k=span(t,900+i*250,1500+i*250);op(e,1-.85*k);}),3000);}}
+};
+
+const T=(say,vis,extra)=>({t:"teach",say,vis,extra});
+const Q=(q,o,a,why,hint,vis)=>({t:"mcq",q,o,a,why,hint,vis});
+const MQ=(q,o,a,why,hint,vis)=>({t:"multi",q,o,a,why,hint,vis});
+const L={
+dna:{k:"1.1",title:"DNA → Chromosome",sub:"Nucleosome · chromatin · centromere",steps:[
+  T(`<p>เริ่มจากสารพันธุกรรม <b>DNA</b> หน้าตาเหมือนบันไดเกลียว ราวบันไดคือ backbone ขั้นบันไดคือคู่เบส</p><p><b>Prokaryote</b> ไม่มี nucleus DNA เป็น<b>วงแหวน (circular)</b> ส่วน <b>Eukaryote</b> เก็บ DNA ไว้ใน nucleus ${SRC("3–4")}</p>`,"cells"),
+  T(`<p>DNA ในเซลล์เดียวยาวมาก จึงต้องพับเก็บเป็นขั้น เหมือนม้วนสายไฟก่อนย้ายบ้าน</p><ul><li>พัน DNA รอบโปรตีน <b>histone</b> ได้เม็ด <b>nucleosome</b> เรียงเป็น “beads on a string”</li><li>ลูกปัดขดทบต่อเป็นเส้นใย <b>chromatin</b> (ช่วง interphase เห็นเป็นเส้นบางยาว)</li><li>ก่อนแบ่งเซลล์ chromatin หดตัวเต็มที่เป็นแท่ง <b>chromosome</b></li></ul>${SRC("4, 10")}`,"pack"),
+  Q(`Nucleosome ประกอบด้วยอะไร`,["DNA พันรอบโปรตีน histone","RNA พันรอบโปรตีน cyclin","DNA พันรอบ centromere","โปรตีน histone ล้วน ไม่มี DNA"],0,`Nucleosome คือ DNA ที่พันรอบ histone เป็นเม็ดคล้ายลูกปัด histone เป็นโปรตีน ไม่ใช่ DNA`,`นึกถึงด้ายที่พันรอบหลอดด้าย อะไรคือด้าย อะไรคือหลอด`),
+  T(`<p>Chromosome ที่จำลองตัวแล้วมี <b>sister chromatids</b> 2 เส้นที่เหมือนกันทุกประการ ยึดกันที่ <b>centromere</b> ซึ่งเป็นส่วนที่คอดแคบที่สุด และมี <b>kinetochore</b> ให้ spindle มาจับ</p><p><b>p arm</b> = แขนสั้น · <b>q arm</b> = แขนยาว · ปลายสุดคือ <b>telomere</b></p><p>ระวัง: 2 chromatids ยังนับเป็น <b>1 chromosome</b> ${SRC("4, 6–7")}</p>`,"chromo"),
+  Q(`ส่วนที่คอดแคบที่สุดของ chromosome ซึ่ง sister chromatids อยู่ชิดกันมากที่สุด คือข้อใด`,["Telomere","Nucleosome","Centromere","q arm"],2,`<b>Centromere</b> ทำให้ sister chromatids อยู่ชิดกันที่สุด และเป็นที่อยู่ของ kinetochore ส่วน telomere อยู่ที่ปลาย`,`telomere อยู่ปลาย ส่วนที่ถามอยู่ตรงกลางที่คอด`),
+  T(`<p>จำนวนชุดโครโมโซมบอกชนิดเซลล์</p><ul><li><b>Somatic cell</b> เช่น ผิวหนัง กล้ามเนื้อ ประสาท กระดูก มี 2 ชุด = <b>diploid (2n)</b></li><li><b>Gamete</b> คือเซลล์ไข่และอสุจิ มีชุดเดียว = <b>haploid (n)</b></li></ul><p>สิ่งมีชีวิตชนิดเดียวกันมีจำนวนโครโมโซมเท่ากัน ต่างชนิดกันต่างกัน ${SRC("4–5")}</p>`,"ploidy"),
+  Q(`เซลล์ใดมีโครโมโซมเพียงชุดเดียว (haploid)`,["เซลล์ผิวหนัง","เซลล์อสุจิ","เซลล์ประสาท","เซลล์กล้ามเนื้อ"],1,`เซลล์สืบพันธุ์ (gamete) เช่น เซลล์ไข่และอสุจิ เป็น haploid ส่วนเซลล์ร่างกายเป็น diploid`,`เซลล์ไหนต้องรวมกับอีกเซลล์ตอน fertilization`),
+  {t:"sum",pts:["Prokaryote: DNA วงแหวน ไม่มี nucleus","DNA + histone → nucleosome → chromatin → chromosome","2 sister chromatids ยึดกันที่ centromere (มี kinetochore) · ปลาย = telomere","Somatic cell = 2n (diploid) · Gamete = n (haploid)"]}
+]},
+cycle:{k:"1.2",title:"Cell cycle",sub:"G1 S G2 M · CDK–Cyclin · Palbociclib",steps:[
+  T(`<p>วัฏจักรเซลล์ (<b>cell cycle</b>) แบ่งเป็น <b>interphase</b> (G1 → S → G2) ซึ่งกินเวลานานที่สุด กับ <b>M phase</b> ที่สั้นแต่มีเหตุการณ์มากที่สุด</p><ul><li><b>G1</b> เซลล์เติบโต สร้างโปรตีนและเอนไซม์</li><li><b>S</b> = Synthesis จำลอง DNA</li><li><b>G2</b> = Get ready ตรวจ DNA และจำลอง centrosome</li><li><b>M</b> แบ่ง nucleus (karyokinesis) และ cytoplasm (cytokinesis)</li></ul><p>เซลล์ที่ยังไม่ได้รับสัญญาณให้แบ่ง ออกไปพักที่ <b>G0</b> ${SRC("8, 10")}</p>`,"cycle"),
+  Q(`การตรวจสอบ DNA และการจำลอง centrosome เกิดขึ้นในระยะใด`,["G1","S","G0","G2"],3,`<b>G2</b> เป็นด่านตรวจสุดท้ายก่อนแบ่ง เช็ก DNA ที่จำลองแล้ว และเตรียม centrosome 2 ชุดไว้สร้าง spindle`,`G2 = Get ready`),
+  T(`<p>ใครเป็นคนสั่งให้เซลล์เดินหน้า? คือ <b>CDK</b> (cyclin-dependent kinase) เอนไซม์ตัวกระตุ้น ซึ่งทำงานได้เมื่อจับคู่กับ <b>cyclin</b></p><p>วิธีจำ: cyclin เรียง <b>D → E → A → B</b> ตามลำดับ cycle ส่วน CDK นับถอยหลัง <b>4 → 2 → 2 → 1</b></p><p>ระหว่างทางมี <b>checkpoint</b> ตรวจความพร้อมของเซลล์ เหมือนไฟแดง ส่วน CDK เหมือนคันเร่ง ${SRC("10–11")}</p>`,"cdk"),
+  Q(`คู่ CDK–Cyclin ใดชักนำเซลล์เข้าสู่ระยะแบ่งเซลล์ (G2 → M)`,["CDK4 / Cyclin D","CDK1 / Cyclin B","CDK2 / Cyclin E","CDK2 / Cyclin A"],1,`ลำดับ D-E-A-B คู่กับ 4-2-2-1 คู่สุดท้ายคือ <b>CDK1 / Cyclin B</b> ที่พาเซลล์เข้า mitosis`,`ใช้ตัวท้ายสุดของทั้งสองลำดับ`),
+  Q(`ข้อใดจับคู่ระยะกับคู่ CDK–Cyclin <b>ไม่</b>ถูกต้อง`,["G1 กับ CDK4 / Cyclin D","G1 กับ CDK2 / Cyclin E","S กับ CDK1 / Cyclin B","S กับ CDK2 / Cyclin A"],2,`S phase ใช้ <b>CDK2 / Cyclin A</b> ส่วน CDK1 / Cyclin B ใช้ช่วง G2 → M`,`G1 ใช้ 2 คู่ แล้ว S ใช้คู่ที่ 3`),
+  T(`<p>ถ้า CDK ทำงานมากเกิน เซลล์จะวิ่งข้าม checkpoint ไม่มีใครตรวจ จึงแบ่งตัวไม่หยุดจนเป็น<b>มะเร็ง</b></p><p>จากกลไกนี้จึงมียา <b>Palbociclib</b> เป็น <b>CDK4/6 inhibitor</b> ทำให้เซลล์ติดที่ G1 เข้า S phase ไม่ได้ ใช้ร่วมกับยาต้านฮอร์โมนในมะเร็งเต้านม <b>HR+ / HER2-</b></p><p>คำลงท้าย <b>-ciclib</b> = CDK inhibitor ${SRC("11")}</p>`,"palbo"),
+  Q(`ทำไม Palbociclib จึงหยุดเซลล์ไว้ที่ G1 ไม่ใช่ที่ G2`,["เพราะยายับยั้ง CDK1 ที่ทำงานช่วง G1","เพราะยาทำลาย DNA ใน S phase","เพราะยากระตุ้นให้เซลล์ไปพักที่ G0 ทันที","เพราะ CDK4 / Cyclin D ทำงานช่วง G1"],3,`Palbociclib ยับยั้ง CDK4/6 ซึ่งจับกับ Cyclin D ทำงานช่วง G1 ส่วน G2 → M ใช้ CDK1 / Cyclin B`,`ยาชื่อกลุ่มว่าอะไร แล้ว CDK ตัวนั้นทำงานระยะไหน`),
+  {t:"sum",pts:["Interphase G1 → S → G2 ยาวที่สุด · M สั้นที่สุด · G0 = พัก","G1: CDK4/D, CDK2/E · S: CDK2/A · G2→M: CDK1/B","Checkpoint ตรวจความพร้อม · CDK เกิน → แบ่งไม่หยุด → มะเร็ง","Palbociclib = CDK4/6 inhibitor ติดที่ G1 · มะเร็งเต้านม HR+ / HER2-"]}
+]},
+mitosis:{k:"2.1",title:"Mitosis",sub:"Prophase → Cytokinesis",steps:[
+  T(`<p>Mitosis เพิ่มจำนวน<b>เซลล์ร่างกาย</b> ได้เซลล์ลูก 2 เซลล์ที่มี chromosome เท่าเซลล์แม่ ต่างจาก meiosis ที่ได้ 4 เซลล์และ chromosome ลดลงครึ่งหนึ่ง</p><p>ก่อนเริ่ม เซลล์ระยะ <b>G2</b> จำลอง DNA และ centrosome เสร็จแล้ว ลำดับที่ต้องจำคือ <b>IPMAT</b> ${SRC("8–9, 13")}</p><ul><li><b>Prophase</b> chromosome หดเป็นแท่ง (2 sister chromatids) <b>nucleolus หายไป</b> spindle เริ่มก่อตัว</li><li><b>Prometaphase</b> <b>nuclear envelope แตก</b> kinetochore จับ microtubule</li><li><b>Metaphase</b> เรียงที่ <b>metaphase plate</b> ถูกดึงจากขั้วตรงข้าม</li></ul>`,"mitoA"),
+  Q(`เหตุการณ์ใดเกิดขึ้นในระยะ prometaphase`,["Nucleoli ปรากฏขึ้นใหม่และ chromosome คลายตัว","Chromosome จับกับ microtubule ที่ kinetochore","Cleavage furrow ก่อตัวรัดกลางเซลล์","Cohesin ถูกตัด chromatid แยกไปสองขั้ว"],1,`Prometaphase: nuclear envelope แตก spindle จึงเข้าถึง chromosome ได้ kinetochore จับ microtubule แล้วถูกลากเข้ากลางเซลล์`,`ระยะนี้ nuclear envelope เพิ่งแตก spindle เพิ่งเข้าถึง chromosome`),
+  Q(`ถ้าต้องการนับจำนวน chromosome ควรดูเซลล์ระยะใด`,["Metaphase","Prophase","Telophase","Interphase"],0,`<b>Metaphase</b> chromosome หดตัวเต็มที่และเรียงตัวที่ plate จึงเห็นชัดที่สุด`,`ระยะที่ chromosome หดสุดและมาเข้าแถวกลางเซลล์`),
+  T(`<ul><li><b>Anaphase</b> = Apart · cohesin ถูกตัด chromatid แยกไปขั้วตรงข้ามเพราะ kinetochore microtubule หดสั้น เห็นเป็นรูปตัว V</li><li><b>Telophase</b> = Two nuclei · nuclear envelope ใหม่สร้างจากชิ้นส่วนของ envelope เดิม nucleolus กลับมา chromosome คลายตัว spindle สลาย</li><li><b>Cytokinesis</b> แบ่ง cytoplasm ได้เซลล์ลูก 2 เซลล์</li></ul>${SRC("16–17")}`,"mitoB"),
+  Q(`ข้อใด<b>ไม่ใช่</b>เหตุการณ์ในระยะ telophase`,["เกิด daughter nuclei 2 อัน","Nuclear envelope สร้างจากชิ้นส่วนของ envelope เดิม","Sister chromatids เริ่มแยกออกจากกัน","Spindle microtubule ที่เหลือสลายไป"],2,`Sister chromatids แยกกันใน <b>anaphase</b> ส่วน telophase เป็นภาพกลับด้านของ prophase`,`chromatid แยกกันใน "A" ของ IPMAT`),
+  T(`<p>Cytokinesis ของเซลล์ 2 แบบต่างกัน</p><ul><li><b>เซลล์สัตว์</b> วงแหวน microfilament รัดตรงกลางเกิด <b>cleavage furrow</b></li><li><b>เซลล์พืช</b> มี cell wall แข็ง จึงสร้าง <b>cell plate</b> จากด้านในออกไป</li></ul><p>ผลคือเซลล์ลูก 2 เซลล์ เซลล์ 2n = 46 จะได้เซลล์ละ 46 chromosome ${SRC("17–21")}</p>`,"cyto"),
+  Q(`เซลล์แม่มี 4 chromosome หลังผ่าน mitosis เซลล์ลูกแต่ละเซลล์จะมีกี่ chromosome`,["1","2","8","4"],3,`Mitosis ได้เซลล์ลูก 2 เซลล์ แต่ละเซลล์มี chromosome <b>เท่าเซลล์แม่</b> คือ 4`,`mitosis ไม่ลดจำนวน chromosome`),
+  Q(`เซลล์ระยะ G2 ของสิ่งมีชีวิตที่มี 2n = 4 มี chromatid ทั้งหมดกี่เส้น`,["4","8","2","16"],1,`DNA จำลองแล้ว แต่ละ chromosome มี 2 sister chromatids จึงเป็น 4 × 2 = <b>8</b>`,`จำนวน chromosome ยังเท่าเดิม แต่แต่ละแท่งมีกี่ chromatid`),
+  {t:"sum",pts:["Prophase: หดตัว nucleolus หาย spindle เริ่มก่อตัว","Prometaphase: nuclear envelope แตก kinetochore จับ microtubule","Metaphase: เรียงที่ plate · Anaphase: cohesin ถูกตัด chromatid แยก","Telophase: daughter nuclei 2 อัน · Cytokinesis: สัตว์ furrow · พืช cell plate"]}
+]},
+death:{k:"2.2",title:"Cell death",sub:"Apoptosis vs Necrosis",steps:[
+  T(`<p>การตายของเซลล์มี 2 แบบหลัก</p><ul><li><b>Apoptosis</b> การตายที่ถูกโปรแกรมไว้ เซลล์หดตัว ยังสร้าง ATP ได้ membrane โป่งเป็นตุ่ม (blebbing) แล้วแบ่งเป็น <b>apoptotic bodies</b> ให้ phagocyte เก็บกวาด <b>ไม่อักเสบ ไม่เกิดแผลเป็น</b></li><li><b>Necrosis</b> การตายเฉพาะส่วน เซลล์บวม mitochondria เสียหน้าที่ membrane แตก สารรั่ว <b>อักเสบ</b> ลามถึงเซลล์ข้างเคียง ซ่อมด้วย<b>แผลเป็น</b></li></ul><p>เปรียบเทียบ: apoptosis = แยกขยะใส่ถุงก่อนทิ้ง · necrosis = ถุงขยะแตก ${SRC("24–25")}</p>`,"death"),
+  Q(`ข้อใดเป็นลักษณะของ apoptosis`,["เซลล์บวม membrane โป่งพองแล้วแตกออก","เซลล์หดตัว ยังสร้าง ATP ได้ และไม่อักเสบ","เกิดการอักเสบลามไปถึงเซลล์ข้างเคียง","บริเวณนั้นถูกซ่อมแซมด้วยแผลเป็นในภายหลัง"],1,`Apoptosis เซลล์หดตัว ยังสร้าง ATP ได้ ตายทีละเซลล์ ไม่อักเสบ ข้ออื่นเป็นลักษณะของ necrosis`,`apoptosis = หด · necrosis = บวม`),
+  Q(`Necrosis ทำให้เกิดการอักเสบเพราะเหตุใด`,["เซลล์แตกและปล่อยสารภายในเซลล์ออกมา","เซลล์ถูก phagocyte กลืนกินทั้งเซลล์","เซลล์สร้าง ATP มากเกินไป","เซลล์หดตัวจนเล็กลง"],0,`เมื่อ membrane แตก สารภายในเซลล์รั่วออกมากระตุ้นการอักเสบ`,`ถุงขยะแตก ของข้างในไปไหน`),
+  T(`<p>ตัวอย่าง apoptosis ในร่างกาย: <b>ต่อมไทมัสฝ่อ</b> การแยก<b>นิ้วมือนิ้วเท้า</b>ระหว่างการเจริญ และการกำจัดเซลล์ที่เสื่อมหรือเซลล์มะเร็ง</p><p>สาเหตุการเสื่อมของเซลล์ เช่น ภาวะพร่องของระบบฮอร์โมน การสะสมของเสีย อนุมูลอิสระ DNA เสียหาย และ telomere ที่สั้นลง</p><p>ส่วน <b>somatic death</b> คือการตายของร่างกาย เมื่อหัวใจ ระบบไหลเวียน ระบบหายใจ และสมองหยุดทำงานประสานกัน ${SRC("23–25")}</p>`),
+  Q(`ข้อใดเป็นตัวอย่างของ apoptosis`,["แผลเนื้อตายที่ผิวหนัง","บริเวณที่อักเสบรุนแรง","การฝ่อของต่อมไทมัส","เซลล์ขาดพลังงานจนบวมแตก"],2,`ต่อมไทมัสฝ่อเป็นการตายแบบโปรแกรมไว้ (apoptosis) ข้ออื่นเป็นลักษณะของ necrosis`,`ข้อไหนเกิดตามธรรมชาติอย่างเป็นระเบียบ ไม่อักเสบ`),
+  {t:"sum",pts:["Apoptosis: หดตัว ยังสร้าง ATP ไม่อักเสบ ไม่เกิดแผลเป็น","Necrosis: บวม membrane แตก สารรั่ว อักเสบ เกิดแผลเป็น","Apoptosis ตายทีละเซลล์ · Necrosis ลามถึงเซลล์ข้างเคียง","ตัวอย่าง apoptosis: ต่อมไทมัสฝ่อ การแยกนิ้ว กำจัดเซลล์มะเร็ง"]}
+]},
+cancer:{k:"3.1",title:"Cancer",sub:"p53 · oncogene · ปัจจัยเสี่ยง",steps:[
+  T(`<p>ยีน <b>p53</b> (ชื่อยีน <b>TP53</b>) เปรียบเหมือนยามเฝ้า DNA มี 2 คำสั่ง: <b>หยุดเพื่อซ่อม</b> หรือ <b>สั่งให้ตาย</b></p><p>p53 ไม่ได้ซ่อม DNA เอง แต่สั่งหยุดการแบ่งเซลล์ (cell cycle arrest) เพื่อให้มีเวลาซ่อม ${SRC("26–27")}</p>`,"p53"),
+  Q(`ยีน p53 ทำหน้าที่อย่างไรเมื่อ DNA ของเซลล์เสียหาย`,["เร่งให้เซลล์แบ่งตัวเร็วขึ้นเพื่อทดแทนเซลล์ที่เสียหาย","สั่งหยุดแบ่งเพื่อซ่อม ถ้าซ่อมไม่ได้สั่ง apoptosis","สร้าง histone เพิ่มเพื่อห่อหุ้ม DNA ส่วนที่เสียหายไว้","สั่งให้เซลล์ตายแบบ necrosis ทันทีโดยไม่ซ่อม"],1,`p53 สั่งหยุดเพื่อซ่อม ถ้าซ่อมไม่ได้จึงสั่ง <b>apoptosis</b> (ไม่ใช่ necrosis จึงไม่อักเสบ)`,`ยามมี 2 คำสั่ง`),
+  T(`<p>มะเร็งเกิดเมื่อยีนควบคุมการแบ่งเซลล์กลายพันธุ์ เซลล์ผิดปกติจึง<b>รอดจาก apoptosis</b> และแบ่งตัวต่อเนื่อง</p>`,"onco"),
+  Q(`ข้อใดเป็น oncogene ทั้งคู่`,["TP53 และ BRCA2","BRCA2 และ PALB2","c-myc และ bcl-2","TP53 และ c-myc"],2,`<b>c-myc</b> และ <b>bcl-2</b> เป็น oncogene ส่วน TP53, BRCA2, PALB2 เป็น anti-oncogene`,`oncogene = คันเร่ง · ยีนเบรกมี TP53 รวมอยู่ด้วย`),
+  Q(`มะเร็งที่มีลักษณะใดมีแนวโน้มดื้อต่อเคมีบำบัด`,["TP53 ปกติ และมี bcl-2 ในระดับต่ำ","bcl-2 สูง และ TP53 กลายพันธุ์","BRCA2 ปกติ และมี c-myc ในระดับต่ำ","มีเซลล์ที่กำลังแบ่งตัวอยู่จำนวนมาก"],1,`ยาเคมีหลายตัวอาศัยการสั่ง apoptosis เมื่อ bcl-2 สูงและ TP53 กลายพันธุ์ เซลล์จึงไม่ยอมตาย`,`ยาเคมีหลายตัวฆ่าเซลล์ผ่าน apoptosis อะไรขัดขวางกลไกนี้`),
+  T(`<p>ปัจจัยเสี่ยงของมะเร็ง ${SRC("28–29")}</p>`,"risk"),
+  Q(`ข้อใดจับคู่ปัจจัยเสี่ยงกับชนิดมะเร็งได้ถูกต้อง`,["สูบบุหรี่ กับ มะเร็งปากมดลูกในผู้หญิง","อาหารไฟเบอร์สูง กับ มะเร็งลำไส้ที่เพิ่มขึ้น","ภูมิคุ้มกันบกพร่อง กับ มะเร็งปากมดลูก","ขาด folic acid กับ มะเร็งปอดในผู้สูงอายุ"],2,`ผู้ปลูกถ่ายไตภูมิคุ้มกันบกพร่อง NK cell เฝ้าระวังน้อยลง จึงเสี่ยงมะเร็งปากมดลูก บุหรี่สัมพันธ์กับมะเร็งปอด ไฟเบอร์ช่วย<b>ลด</b>เสี่ยงมะเร็งลำไส้`,`ไฟเบอร์เพิ่มหรือลดความเสี่ยง?`),
+  {t:"sum",pts:["p53 สั่งหยุดเพื่อซ่อม ถ้าซ่อมไม่ได้สั่ง apoptosis","Oncogene: c-myc, bcl-2 · Anti-oncogene: TP53, BRCA2, PALB2","bcl-2 สูง + TP53 กลายพันธุ์ → ดื้อเคมีบำบัด","ปัจจัยเสี่ยง: อายุ บุหรี่ รังสี ภูมิคุ้มกันบกพร่อง อาหาร"]}
+]},
+therapy:{k:"3.2",title:"การรักษามะเร็ง",sub:"Chemotherapy vs Targeted therapy",steps:[
+  T(`<p>ทางเลือกการรักษามีทั้งศัลยกรรม รังสีรักษา เคมีบำบัด การรักษาเฉพาะจุด (จี้ด้วยความร้อน หรืออุดเส้นเลือดที่เลี้ยงก้อน) และยามุ่งเป้า ${SRC("30")}</p><p><b>Chemotherapy</b> ทำลายเซลล์ที่<b>กำลังแบ่งตัว</b> ทั้งเซลล์มะเร็งและเซลล์ปกติที่แบ่งเร็ว จึงมีผลข้างเคียง ผมร่วง เยื่อบุทางเดินอาหารอักเสบ เม็ดเลือดต่ำ ส่วนเซลล์ระยะ <b>G0</b> รอด ${SRC("31")}</p>`,"chemo"),
+  Q(`ทำไมผู้ป่วยที่ได้รับเคมีบำบัดจึงติดเชื้อง่าย`,["เซลล์ต้นกำเนิดเม็ดเลือดถูกทำลาย เม็ดเลือดขาวต่ำ","ยาทำให้เซลล์ทุกเซลล์ในร่างกายหยุดอยู่ที่ระยะ G0","ยาไปกระตุ้นให้เกิดการอักเสบแบบ necrosis ทั่วร่างกาย","ยาทำลายเฉพาะเซลล์ที่มีตัวรับ HER2 บนผิวเซลล์"],0,`เซลล์ต้นกำเนิดเม็ดเลือดแบ่งตัวเร็ว จึงโดนยาเคมีไปด้วย เม็ดเลือดขาวลดลงจึงติดเชื้อง่าย`,`ยาเล็งเซลล์ที่แบ่งเร็ว เซลล์ไหนสร้างเม็ดเลือดขาว`),
+  T(`<p><b>Targeted therapy</b> วิ่งหาเฉพาะเซลล์ที่มีโมเลกุลเป้าหมาย ผลข้างเคียงน้อยกว่าคีโม แต่ไม่ได้แปลว่าไม่มี</p><ul><li><b>Monoclonal antibody (-mab)</b> จับบนผิวหรือนอกเซลล์ ส่วนใหญ่เป็นยาฉีด เช่น Trastuzumab, Rituximab, Bevacizumab</li><li><b>Small molecule (-tinib)</b> ผ่าน membrane เข้าเซลล์ได้ มักเป็นยากิน เช่น Erlotinib, Gefitinib, Osimertinib</li></ul>${SRC("32")}`,"target"),
+  T(`<p>จับคู่ยากับกลไก ${SRC("32")}</p>`,null,`<table class="tbl"><thead><tr><th>กลไก</th><th>ยา</th></tr></thead><tbody><tr><td>กระตุ้นภูมิคุ้มกันให้ทำลายเซลล์มะเร็ง</td><td>Rituximab</td></tr><tr><td>ขัดขวางสัญญาณการแบ่งตัว</td><td>Erlotinib, Gefitinib</td></tr><tr><td>ยับยั้งการสร้างเส้นเลือดใหม่</td><td>Bevacizumab</td></tr><tr><td>ส่งสารพิษเข้าเซลล์เป้าหมาย</td><td>Trastuzumab emtansine</td></tr><tr><td>กระตุ้น apoptosis (ยับยั้ง BCL-2)</td><td>Venetoclax</td></tr></tbody></table>`),
+  Q(`ยาใดเป็นยามุ่งเป้าชนิดโมเลกุลเล็ก ซึ่งมักเป็นยารับประทาน`,["Trastuzumab","Rituximab","Bevacizumab","Osimertinib"],3,`ชื่อลงท้าย <b>-tinib</b> เป็น small molecule เข้าเซลล์ได้ มักรับประทาน ส่วน -mab เป็น monoclonal antibody`,`ดูคำลงท้ายชื่อยา`),
+  Q(`ข้อใดจับคู่ยามุ่งเป้ากับกลไกได้ถูกต้อง`,["Rituximab กับ ขัดขวางสัญญาณการแบ่งตัว","Bevacizumab กับ ยับยั้งการสร้างเส้นเลือดใหม่","Erlotinib กับ ส่งสารพิษเข้าเซลล์เป้าหมาย","Venetoclax กับ ยับยั้งการสร้างเส้นเลือดใหม่"],1,`Bevacizumab ยับยั้งการสร้างเส้นเลือดใหม่ · Rituximab กระตุ้นภูมิคุ้มกัน · Erlotinib ขัดขวางสัญญาณ · Venetoclax ยับยั้ง BCL-2`,`ก้อนมะเร็งต้องการเลือดมาเลี้ยง ยาตัวไหนตัดท่อส่ง`),
+  {t:"sum",pts:["คีโมทำลายเซลล์ที่กำลังแบ่งตัว ไม่ใช่เซลล์ G0","ผลข้างเคียง: รากผม เยื่อบุทางเดินอาหาร เซลล์ต้นกำเนิดเม็ดเลือด","Monoclonal antibody (-mab) จับนอกเซลล์ ส่วนใหญ่ฉีด · Small molecule (-tinib) เข้าเซลล์ มักกิน","Rituximab ภูมิคุ้มกัน · Erlotinib สัญญาณ · Bevacizumab เส้นเลือด · Venetoclax BCL-2"]}
+]},
+aging:{k:"4.1",title:"Aging",sub:"Telomere · senescence · senolytics",steps:[
+  T(`<p><b>Telomere</b> คือส่วนปลายของ chromosome เหมือนปลอกพลาสติกที่ปลายเชือกรองเท้า ทุกครั้งที่เซลล์แบ่ง telomere จะ<b>สั้นลง</b></p><p>เมื่อสั้นจนใกล้หมด เซลล์จะหยุดแบ่งเพื่อปกป้องยีนด้านใน คนที่มี telomere สั้นสัมพันธ์กับความเสี่ยง<b>โรคที่เกี่ยวกับความเสื่อม</b> ${SRC("23, 33")}</p>`,"telo"),
+  Q(`บุคคลที่มี telomere สั้นสัมพันธ์กับข้อใด`,["อายุยืนยาวขึ้นกว่าคนทั่วไป","เซลล์แบ่งตัวได้จำนวนครั้งมากขึ้น","ความเสี่ยงโรคที่เกี่ยวกับความเสื่อมสูงขึ้น","ภูมิคุ้มกันแข็งแรงและติดเชื้อน้อยลง"],2,`Telomere สั้นเป็นหนึ่งในสาเหตุการเสื่อมของเซลล์ จึงสัมพันธ์กับโรคที่เกี่ยวกับความเสื่อม`,`telomere เหลือน้อย = แบ่งได้อีกกี่ครั้ง`),
+  T(`<p>เมื่อ telomere หมด เซลล์เข้าสู่ภาวะชรา (<b>senescent cell</b>) หยุดแบ่งแต่<b>ยังไม่ตาย</b> สะสมในเนื้อเยื่อ</p><p>การชะลอวัยระดับเซลล์ ${SRC("34")}</p><ul><li><b>Senolytics</b> เช่น Quercetin, Fisetin กำจัดเซลล์ชรา</li><li><b>Exosome-based therapy</b> กระตุ้น <b>fibroblast</b> ฟื้นฟูผิว</li><li><b>Stem cell therapy</b></li></ul>`,"seno"),
+  Q(`Quercetin และ Fisetin จัดอยู่ในกลุ่มใด`,["Growth factors","Senolytic agents","Monoclonal antibodies","CDK4/6 inhibitors"],1,`Quercetin และ Fisetin เป็น <b>senolytic agents</b> สลายเซลล์ชรา`,`Seno = ชรา · lytic = สลาย`),
+  T(`<p>กลุ่ม<b>เวชสำอางและโภชนาการ</b>ชะลอวัย เช่น Growth factor, NAD+ therapy, Botox, Filler, Pico-Laser และ <b>fortified foods</b> ได้แก่ anti-oxidants, NAD+ boosters, autophagy inducers ${SRC("34–35")}</p>`),
+  Q(`ข้อใดจัดอยู่ในกลุ่มเวชสำอางและโภชนาการชะลอวัย`,["NAD+ therapy","Senolytics","Exosome-based therapy","Stem cell therapy"],0,`<b>NAD+ therapy</b> อยู่กลุ่มเวชสำอางและโภชนาการ ส่วนอีก 3 ข้อเป็นการชะลอวัยระดับเซลล์`,`3 ข้อเพิ่งเรียนในหน้าที่แล้วว่าเป็นระดับเซลล์`),
+  {t:"sum",pts:["Telomere = ปลาย chromosome สั้นลงทุกครั้งที่แบ่ง","Telomere สั้นสัมพันธ์กับโรคที่เกี่ยวกับความเสื่อม","Senescent cell หยุดแบ่งแต่ไม่ตาย · Senolytics (Quercetin, Fisetin) กำจัด","Exosome กระตุ้น fibroblast · Stem cell · เวชสำอาง: Growth factor, NAD+, Botox, Filler"]}
+]}};
+const CH=[{n:1,t:"DNA & Cell cycle",ls:["dna","cycle"]},{n:2,t:"Mitosis & Cell death",ls:["mitosis","death"]},{n:3,t:"Cancer",ls:["cancer","therapy"]},{n:4,t:"Aging",ls:["aging"]}];
+const ORDER=CH.flatMap(c=>c.ls);
+const TITLE="ติวเตอร์ Mitosis & Cell Aging";
+const HOME_SAY=`<p>สวัสดีครับ ผมจะพาเรียน <b>Mitosis &amp; Cell Aging</b> ทีละขั้น ตั้งแต่ DNA ขดตัวเป็น chromosome, cell cycle, mitosis ไปจนถึง cell death, มะเร็ง และความชรา</p><p>ทุกบทอธิบายสั้นๆ พร้อมภาพ แล้วถามให้ลองคิด ถ้าตอบผิดครั้งแรกจะมีคำใบ้ให้ลองใหม่</p>`;
+const RULES=`คุณคือ "ติวเตอร์" วิชาชีววิทยาเรื่อง Mitosis & Cell Aging (Slide 11) สำหรับนักศึกษาเภสัชศาสตร์ปี 1 มหาวิทยาลัยสยาม
+- ตอบเป็นภาษาไทย ใช้ศัพท์เฉพาะและชื่อเฉพาะเป็นภาษาอังกฤษ (เช่น nucleosome, centromere, CDK, apoptosis, telomere)
+- อธิบายทีละขั้น สั้น กระชับ ไม่เกินประมาณ 150 คำ ใช้การเปรียบเทียบในชีวิตจริง
+- เนื้อหาเอกสาร: DNA + histone → nucleosome → chromatin → chromosome; centromere, kinetochore, p/q arm, telomere; 2n/n; cell cycle G1 S G2 M G0; CDK4/Cyclin D, CDK2/Cyclin E (G1), CDK2/Cyclin A (S), CDK1/Cyclin B (G2→M); checkpoint; Palbociclib CDK4/6 inhibitor ใช้ HR+/HER2-; mitosis prophase prometaphase metaphase anaphase telophase cytokinesis (furrow/cell plate); apoptosis vs necrosis; p53 หยุดซ่อมหรือสั่ง apoptosis; oncogene c-myc bcl-2, anti-oncogene TP53 BRCA2 PALB2; ปัจจัยเสี่ยง อายุ บุหรี่ รังสี ภูมิคุ้มกันบกพร่อง อาหาร; chemotherapy ทำลายเซลล์ที่แบ่งตัว; targeted therapy mAb (-mab) vs small molecule (-tinib), Rituximab Erlotinib Gefitinib Bevacizumab Trastuzumab emtansine Venetoclax; telomere, senescent cell, senolytics Quercetin Fisetin, exosome → fibroblast, stem cell, เวชสำอาง Growth factor NAD+ Botox Filler Pico-Laser
+- ใช้ข้อความธรรมดา ใช้ **ตัวหนา** และรายการขึ้นต้นด้วย "- " ได้ ห้ามใช้ตาราง หัวข้อ # หรือ code block
+- ข้อมูลยาและโรคต้องถูกต้องตามหลักวิชาการ ถ้าไม่แน่ใจให้บอกตรงๆ
+- ถ้าคำถามไม่เกี่ยวกับชีววิทยาหรือเภสัชศาสตร์ ตอบสั้นๆ แล้วชวนกลับมาที่บทเรียน`;
+const CHAT_HELLO="ถามอะไรก็ได้เกี่ยวกับบทเรียน ผมเห็นหน้าที่คุณกำลังเรียนอยู่ด้วย เช่น \"ทำไม apoptosis ไม่อักเสบ\" หรือ \"ขอวิธีจำ CDK–Cyclin\"";
+const CHAT_PH="พิมพ์คำถาม เช่น Palbociclib ออกฤทธิ์ที่ระยะไหน";
+
+const isQ=s=>s.t==="mcq"||s.t==="multi";
+const qCount=l=>L[l].steps.filter(isQ).length;
+
+/* ---------- progress ---------- */
+let prog=store.get("s11t-progress",{});
+function saveProg(){store.set("s11t-progress",prog);}
+
+/* ---------- index ---------- */
+function renderIndex(){
+  {const ll=document.getElementById("labLink");if(ll)ll.href="#"+(cur||"dna");}
+  const done=ORDER.filter(l=>prog[l]&&prog[l].done).length;
+  $("#ovTxt").textContent=`${done} / ${ORDER.length} บท`;
+  A($("#ovRing"),"stroke-dashoffset",(113.1*(1-done/ORDER.length)).toFixed(1));
+  $("#idxLabel").textContent=`รายการบทเรียน · ผ่าน ${done}/${ORDER.length}`;
+  $("#chlist").innerHTML=`<ol style="list-style:none;margin:0;padding:0"><li><a class="lesson-link" href="#t-home" ${cur===null?'aria-current="page"':""}><span class="st">⌂</span><span class="t">หน้าแรก<small>ภาพรวมและวิธีเรียน</small></span><span></span></a></li></ol>`+CH.map(c=>`<div class="ch"><h3>บทที่ ${c.n} · ${c.t}</h3><ol>${c.ls.map(l=>{const p=prog[l],tot=qCount(l);const cls=p&&p.done?"done":p?"part":"";
+    return`<li><a class="lesson-link" href="#t-${l}" ${cur===l?'aria-current="page"':""}><span class="st ${cls}">${p&&p.done?"✓":""}</span><span class="t">${L[l].k} ${L[l].title}<small>${L[l].sub}</small></span><span class="sc">${p&&p.done?`${p.best}/${tot}`:""}</span></a></li>`;}).join("")}</ol></div>`).join("");
+}
+$("#idxToggle").onclick=()=>{const ix=$("#index");ix.classList.toggle("open");$("#idxToggle").setAttribute("aria-expanded",ix.classList.contains("open"));};
+
+/* ---------- player ---------- */
+let cur=null,si=0,ans=[];
+const stage=$("#stage");
+function startLesson(id,step){
+  cur=id;si=step||0;ans=[];
+  if(!prog[id]){prog[id]={best:0,done:false};saveProg();}
+  renderIndex();renderStep(1);
+  $("#index").classList.remove("open");
+}
+function header(){
+  if(cur===null){$("#lk").textContent="เริ่มที่นี่";$("#lt").textContent=TITLE;$("#segs").innerHTML="";$("#cnt").textContent="";return;}
+  const les=L[cur];$("#lk").textContent=`บทเรียน ${les.k}`;$("#lt").textContent=les.title;
+  $("#segs").innerHTML=les.steps.map((s,i)=>{const a=ans[i];let c="";if(i<si||(a&&a.done))c="on";if(a&&a.done&&isQ(s))c+=a.first?" ok":" no";if(i===si)c+=" cur on";return`<i class="${c}"></i>`;}).join("");
+  $("#cnt").textContent=`${si+1} / ${les.steps.length}`;
+}
+function setNext(){
+  const nb=$("#nextBtn"),bb=$("#backBtn");
+  if(cur===null){bb.hidden=true;nb.hidden=true;return;}
+  bb.hidden=false;nb.hidden=false;
+  const st=L[cur].steps[si],a=ans[si];
+  bb.disabled=si===0;
+  if(st.t==="sum"){nb.hidden=true;return;}
+  nb.textContent=si===L[cur].steps.length-2?"ดูสรุป →":"ถัดไป →";
+  nb.disabled=isQ(st)&&!(a&&a.done);
+  nb.classList.toggle("pulse",!nb.disabled&&isQ(st));
+}
+function runCleanups(){cleanups.forEach(f=>f());cleanups=[];}
+function mountVis(box,name,extra){
+  const v=VIS[name];if(!v)return;
+  const d=document.createElement("div");d.className=name==="bald"?"":"vis";d.innerHTML=v.h+(extra||"");box.appendChild(d);
+  if(v.init)v.init(d);
+  const sv=d.querySelector(":scope > svg");if(sv)Zoom.make(sv,{pad:true});
+}
+function sayHTML(html){return`<div class="say"><div class="av">${AV}</div><div class="bubble"><span class="who">ติวเตอร์</span>${html}</div></div>`;}
+const AV=`<svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-ink)" stroke-width="2" stroke-linecap="round"><path d="M7 3c0 6 10 6 10 12s-10 6-10 6"/><path d="M17 3c0 6-10 6-10 12s10 6 10 6"/><path d="M9 7h6M9 17h6"/></svg>`;
+
+function renderStep(dir){
+  runCleanups();
+  header();
+  stage.innerHTML="";
+  const box=document.createElement("div");box.className="step "+(dir<0?"in-prev":"in-next");stage.appendChild(box);
+  if(cur===null){renderHome(box);setNext();return;}
+  const st=L[cur].steps[si];
+  if(st.t==="teach"){box.insertAdjacentHTML("beforeend",sayHTML(st.say));if(st.vis)mountVis(box,st.vis,st.extra);else if(st.extra)box.insertAdjacentHTML("beforeend",st.extra);}
+  else if(st.t==="mcq"||st.t==="multi")renderMCQ(box,st,ans[si]=ans[si]||{done:false,tries:0,sel:[],wrong:[]},record);
+  else if(st.t==="sum")renderSum(box,st);
+  setNext();
+  updateChatCtx();
+}
+function go(d){
+  if(cur===null)return;
+  const n=si+d;if(n<0||n>=L[cur].steps.length)return;
+  si=n;renderStep(d);
+  const p=$("#player");if(!p.classList.contains("focus")){const top=p.getBoundingClientRect().top+scrollY-12;if(scrollY>top)scrollTo({top,behavior:reduce?"auto":"smooth"});}else p.scrollTop=0;
+}
+$("#nextBtn").onclick=()=>go(1);
+$("#backBtn").onclick=()=>go(-1);
+document.addEventListener("keydown",e=>{if(e.target.closest("textarea,input"))return;if(MODE()!=="tutor"&&e.key!=="Escape")return;if(e.key==="ArrowRight"&&!$("#nextBtn").disabled&&!$("#nextBtn").hidden)go(1);if(e.key==="ArrowLeft"&&!$("#backBtn").disabled)go(-1);if(e.key==="Escape"){if(!$("#chat").hidden)closeChat();else if($("#player").classList.contains("focus"))focusMode(false);}});
+
+function burst(el){if(reduce)return;const b=document.createElement("span");b.className="burst";const C=["var(--ok)","var(--accent)","var(--ab)","var(--rec)"];
+  for(let i=0;i<12;i++){const a=i/12*Math.PI*2,r=40+Math.random()*30,s=document.createElement("i");s.style.setProperty("--dx",(Math.cos(a)*r).toFixed(0)+"px");s.style.setProperty("--dy",(Math.sin(a)*r).toFixed(0)+"px");s.style.setProperty("--c",C[i%4]);b.appendChild(s);}
+  el.appendChild(b);setTimeout(()=>b.remove(),900);}
+function shake(el){el.classList.remove("shake");void el.offsetWidth;el.classList.add("shake");}
+const MARK_OK=`<svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="var(--ok)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>`;
+const MARK_NO=`<svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="var(--bad)" stroke-width="2.6" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>`;
+const LET=["A","B","C","D","E","F"];
+
+function feedback(box,ok,st,picked){
+  box.querySelectorAll(".fb,.again,.hintbox .ptip").forEach(e=>e.remove());
+  const f=document.createElement("div");f.className="fb "+(ok?"ok":"no");
+  f.innerHTML=`<span class="h">${ok?["ถูกต้อง เยี่ยมมาก","ใช่เลย","ถูกต้อง"][si%3]:"ยังไม่ถูก ดูเฉลยกัน"}</span><p>${st.why}</p>`;
+  box.appendChild(f);
+  if(!ok&&sample){const ag=document.createElement("div");ag.className="again";ag.innerHTML=`<button class="linkbtn" type="button">ยังไม่เข้าใจ? ให้ติวเตอร์อธิบายอีกแบบ</button><div class="ans" hidden></div>`;box.appendChild(ag);
+    ag.querySelector("button").onclick=()=>explainAgain(ag,st,picked);}
+  if(ok)f.scrollIntoView({block:"nearest",behavior:reduce?"auto":"smooth"});
+}
+const GENERIC_HINT="ลองอ่านคำถามอีกครั้งช้าๆ แล้วตัดตัวเลือกที่ขัดกับสิ่งที่เพิ่งเรียนออกไปก่อน";
+function showHint(box,st){if(box.querySelector(".hintbox"))return;const h=document.createElement("div");h.className="hintbox";h.innerHTML=`<b>คำใบ้จากติวเตอร์</b><span>${st.hint||GENERIC_HINT}</span><span class="ptip" style="text-align:left">ลองตอบอีกครั้ง</span>`;box.appendChild(h);}
+function record(first){const a=ans[si];a.done=true;a.first=first;header();setNext();
+  if(first)$("#nextBtn").focus({preventScroll:true});}
+
+function renderMCQ(box,st,a,rec){
+  const multi=st.t==="multi";
+  box.insertAdjacentHTML("beforeend",`<span class="qtag">คำถาม${multi?" · เลือกได้หลายข้อ":""}</span><p class="q">${st.q}</p>`);
+  if(st.vis)mountVis(box,st.vis);
+  const ol=document.createElement("div");ol.className="opts";box.appendChild(ol);
+  st.o.forEach((o,i)=>{const b=document.createElement("button");b.type="button";b.className="opt";b.innerHTML=`<span class="lt">${LET[i]}</span><span>${o}</span><span class="mk"></span>`;b.dataset.i=i;ol.appendChild(b);});
+  const btns=[...ol.children];
+  const correct=multi?st.a:[st.a];
+  function paintDone(){btns.forEach((b,i)=>{b.disabled=true;const isC=correct.includes(i),picked=a.sel.includes(i);
+    b.classList.toggle("right",isC&&(picked||!multi));b.classList.toggle("miss",multi&&isC&&!picked);b.classList.toggle("wrong",!isC&&(picked||a.wrong.includes(i)));b.classList.toggle("dim",!isC&&!picked&&!a.wrong.includes(i));
+    b.querySelector(".mk").innerHTML=isC?MARK_OK:(picked||a.wrong.includes(i))?MARK_NO:"";});}
+  let chk=null;
+  if(multi){chk=document.createElement("div");chk.className="btns";chk.innerHTML=`<button class="btn" type="button" disabled>ตรวจคำตอบ</button>`;box.appendChild(chk);chk=chk.firstChild;}
+  if(a.done){paintDone();if(chk)chk.parentNode.remove();feedback(box,a.first,st,a.sel);return;}
+  btns.forEach(b=>b.onclick=()=>{const i=+b.dataset.i;
+    if(multi){const k=a.sel.indexOf(i);if(k<0)a.sel.push(i);else a.sel.splice(k,1);b.classList.toggle("sel",k<0);chk.disabled=!a.sel.length;return;}
+    a.tries++;a.sel=[i];
+    if(i===st.a){paintDone();burst(b);feedback(box,a.tries===1,st,[i]);rec(a.tries===1);}
+    else{a.wrong.push(i);b.classList.add("wrong");b.disabled=true;b.querySelector(".mk").innerHTML=MARK_NO;shake(b);
+      if(a.tries<2)showHint(box,st);else{paintDone();feedback(box,false,st,[i]);rec(false);}}
+  });
+  if(multi)chk.onclick=()=>{a.tries++;const ok=a.sel.length===correct.length&&a.sel.every(i=>correct.includes(i));
+    if(ok){paintDone();burst(chk);chk.parentNode.remove();feedback(box,a.tries===1,st,a.sel);rec(a.tries===1);}
+    else if(a.tries<2){shake(ol);showHint(box,st);}
+    else{paintDone();chk.parentNode.remove();feedback(box,false,st,a.sel);rec(false);}};
+}
+
+function renderSum(box,st){
+  const tot=qCount(cur),got=ans.filter((a,i)=>a&&a.first&&isQ(L[cur].steps[i])).length;
+  const answered=ans.filter((a,i)=>a&&a.done&&isQ(L[cur].steps[i])).length;
+  const p=prog[cur];if(answered===tot){p.done=true;p.best=Math.max(p.best||0,got);}saveProg();renderIndex();
+  const C=2*Math.PI*40,frac=tot?got/tot:1;
+  const nx=ORDER[ORDER.indexOf(cur)+1];
+  const msg=answered<tot?`ยังมี ${tot-answered} ข้อที่ยังไม่ได้ตอบ ย้อนกลับไปทำให้ครบได้`:frac===1?"ตอบถูกตั้งแต่ครั้งแรกทุกข้อ เข้าใจบทนี้แล้ว":frac>=.6?"ดีมาก ทบทวนข้อที่พลาดอีกนิดจะแน่นขึ้น":"ไม่เป็นไร ลองทำบทนี้ใหม่อีกรอบ หรือถามติวเตอร์ในจุดที่ยังไม่เข้าใจ";
+  box.innerHTML=`<div class="sum">${sayHTML(`<p><b>สรุปบท ${L[cur].k} ${L[cur].title}</b></p><p>${msg}</p>`)}
+    <div class="scorebig"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bgc" cx="50" cy="50" r="40"/><circle class="fgc" id="sring" cx="50" cy="50" r="40" transform="rotate(-90 50 50)" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${C.toFixed(1)}"/></svg><div class="num">${got}<small> / ${tot} ข้อ</small><br><small>ตอบถูกในครั้งแรก</small></div></div>
+    <ul class="keypts">${st.pts.map((t,i)=>`<li style="--d:${.15+i*.1}s"><span>${t}</span></li>`).join("")}</ul>
+    <div class="btns">${nx?`<button class="btn" type="button" data-nx>บทถัดไป: ${L[nx].k} ${L[nx].title} →</button>`:`<button class="btn" type="button" data-home>กลับหน้าแรก</button>`}<button class="btn ghost" type="button" data-redo>ทำบทนี้ใหม่</button>${sample?`<button class="btn ghost" type="button" data-gen>ให้ติวเตอร์ออกโจทย์เพิ่ม</button>`:""}</div>
+    <div id="genBox" style="display:grid;gap:12px;width:100%"></div></div>`;
+  const ring=box.querySelector("#sring");loop(t=>A(ring,"stroke-dashoffset",(C*(1-frac*span(t,200,1300))).toFixed(1)),1400);
+  const nb=box.querySelector("[data-nx]");if(nb)nb.onclick=()=>{location.hash="t-"+nx;};
+  const hb=box.querySelector("[data-home]");if(hb)hb.onclick=()=>{location.hash="t-home";};
+  box.querySelector("[data-redo]").onclick=()=>startLesson(cur,0);
+  const gb=box.querySelector("[data-gen]");if(gb)gb.onclick=()=>genPractice(gb,box.querySelector("#genBox"));
+}
+
+function renderHome(box){
+  const next=ORDER.find(l=>!(prog[l]&&prog[l].done));
+  box.innerHTML=`<div class="home">${sayHTML(HOME_SAY)}
+    <div class="howto"><div style="--d:.1s"><b>1 · ฟังอธิบาย</b>อ่านสั้นๆ ดูภาพเคลื่อนไหว</div><div style="--d:.2s"><b>2 · ลองตอบ</b>ผิดครั้งแรกได้คำใบ้ ลองใหม่ได้อีกครั้ง</div><div style="--d:.3s"><b>3 · ถามได้ตลอด</b>${sample?"กดปุ่ม \"ถามติวเตอร์\" มุมขวาล่าง":"ใช้ปุ่มย้อนกลับเพื่อทบทวน"}</div></div>
+    <div class="btns"><button class="btn" type="button" id="goNext">${next?(prog[next]?`เรียนต่อ: ${L[next].k} ${L[next].title} →`:`เริ่ม ${L[next].k} ${L[next].title} →`):"ทบทวนอีกรอบตั้งแต่บทแรก →"}</button></div>
+    <div class="chmap">${CH.map((c,i)=>{const d=c.ls.filter(l=>prog[l]&&prog[l].done).length;return`<a class="chcard" href="#t-${c.ls[0]}" style="--d:${.2+i*.08}s"><span class="n">${c.n}</span><b>${c.t}</b><small>${d}/${c.ls.length} บท</small><span class="bar"><i style="width:${(d/c.ls.length*100).toFixed(0)}%"></i></span></a>`;}).join("")}</div>
+    ${Object.keys(prog).length?`<button class="linkbtn" type="button" id="resetAll">ล้างความคืบหน้าทั้งหมด</button>`:""}</div>`;
+  box.querySelector("#goNext").onclick=()=>{location.hash="t-"+(next||ORDER[0]);};
+  const r=box.querySelector("#resetAll");if(r)r.onclick=()=>{if(r.dataset.c){prog={};saveProg();renderIndex();renderStep(0);}else{r.dataset.c="1";r.textContent="แตะอีกครั้งเพื่อยืนยันการล้าง";}};
+}
+
+/* ---------- focus mode ---------- */
+const IC_EXP=`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2h4v4M6 14H2v-4M14 2 9.5 6.5M2 14l4.5-4.5"/></svg>`;
+const IC_CLS=`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg>`;
+function focusMode(on){const p=$("#player");$("#askBtn").hidden=!sample;p.classList.toggle("focus",on);document.documentElement.classList.toggle("lock",on);const b=$("#focusBtn");b.innerHTML=(on?IC_CLS+"ออก":IC_EXP+"เต็มจอ");b.setAttribute("aria-pressed",on);}
+$("#focusBtn").onclick=()=>focusMode(!$("#player").classList.contains("focus"));
+focusMode(false);
+
+/* ---------- routing ---------- */
+function route(h,switched){h=h||"";
+  if(switched&&((L[h]&&h===cur)||(!L[h]&&cur===null))){renderIndex();renderStep(0);return;}
+  if(L[h]){startLesson(h,0);}else{cur=null;ans=[];renderIndex();renderStep(1);}}
+
+
+const plain=h=>{const d=document.createElement("div");d.innerHTML=h;return d.textContent.replace(/\s+/g," ").trim();};
+function stepText(){const m=MODE();if(m==="lab")return"ผู้เรียนกำลังใช้ Lab mode (ทดลองเองกับภาพเคลื่อนไหว)";if(m==="exam")return"Exam mode";if(cur===null)return"หน้าแรกของ Tutor";const st=L[cur].steps[si];let s="";
+  if(st.say)s+=plain(st.say);if(st.q)s+="คำถาม: "+plain(st.q)+" ตัวเลือก: "+(st.o||[]).map((o,i)=>LET[i]+") "+plain(o)).join(" ");
+  if(st.pts)s+="สรุป: "+st.pts.map(plain).join("; ");
+  const a=ans[si];if(a&&a.done&&st.why)s+=" เฉลย: "+plain(st.why);return s.slice(0,1500);}
+function md(t){let h=esc(t).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/\^(\w+)/g,"<sup>$1</sup>");
+  const lines=h.split(/\n/);let out="",ul=false;
+  lines.forEach(l=>{const m=l.match(/^\s*[-•]\s+(.*)/);if(m){if(!ul){out+="<ul>";ul=true;}out+=`<li>${m[1]}</li>`;}else{if(ul){out+="</ul>";ul=false;}if(l.trim())out+=`<p>${l}</p>`;}});
+  if(ul)out+="</ul>";return out;}
+const ERR={not_granted:"ยังไม่ได้อนุญาตให้หน้านี้ใช้ Claude จึงถามติวเตอร์ไม่ได้",sampling_disabled:"บัญชีนี้ใช้ Claude จากหน้านี้ไม่ได้",rate_limited:"ถามถี่เกินไปหรือถึงขีดจำกัดการใช้งาน รอสักครู่แล้วลองใหม่",session_expired:"ต้องลงชื่อเข้าใช้ใหม่ก่อน",refused:"ติวเตอร์ตอบคำถามนี้ไม่ได้ ลองถามใหม่อีกแบบ",prompt_too_large:"คำถามยาวเกินไป ลองถามให้สั้นลง"};
+const errMsg=c=>ERR[c]||"การเชื่อมต่อขัดข้อง ลองส่งใหม่อีกครั้ง";
+const HIDE=["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"];
+function hideSample(){sample=null;$("#fab").hidden=true;$("#askBtn").hidden=true;closeChat();document.querySelectorAll(".again,[data-gen]").forEach(e=>e.remove());}
+
+function addMsg(cls,html){const m=document.createElement("div");m.className="m "+cls;m.innerHTML=html;$("#msgs").appendChild(m);$("#msgs").scrollTop=1e9;return m;}
+const THINK=`<span class="thinking"><i></i><i></i><i></i></span>`;
+function updateChatCtx(){const m=MODE();$("#chatCtx").textContent=m==="lab"?"Lab mode":m==="exam"?"Exam mode":cur?`กำลังเรียน ${L[cur].k} ${L[cur].title}`:"หน้าแรก";}
+function openChat(){$("#chat").hidden=false;$("#fab").hidden=true;updateChatCtx();if(!$("#msgs").children.length)addMsg("a",md(CHAT_HELLO));setTimeout(()=>$("#chatIn").focus(),50);}
+function closeChat(){$("#chat").hidden=true;if(sample)$("#fab").hidden=false;if(ctl)ctl.abort();}
+$("#fab").onclick=openChat;$("#askBtn").onclick=openChat;$("#chatClose").onclick=closeChat;
+const CHIPS=["อธิบายหน้านี้ให้ง่ายกว่านี้","ขอโจทย์คล้ายๆ กันอีก 1 ข้อ","เกี่ยวกับงานเภสัชกรยังไง","จำยังไงไม่ให้สับสน"];
+$("#chips").innerHTML=CHIPS.map(c=>`<button type="button">${c}</button>`).join("");
+$("#chips").onclick=e=>{const b=e.target.closest("button");if(b)ask(b.textContent);};
+$("#compose").onsubmit=e=>{e.preventDefault();const v=$("#chatIn").value.trim();if(v){$("#chatIn").value="";ask(v);}};
+$("#chatIn").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();$("#compose").requestSubmit();}});
+async function ask(q){
+  if(!sample)return;
+  if(ctl){ctl.abort();}
+  addMsg("u",esc(q));
+  const content=`[บทเรียนตอนนี้: ${cur?L[cur].k+" "+L[cur].title:"หน้าแรก"}]\n[สิ่งที่ผู้เรียนเห็นบนหน้าจอ: ${stepText()}]\n\nคำถามของผู้เรียน: ${q}`;
+  turns.push({role:"user",content});
+  const m=addMsg("a",THINK);const sb=$("#sendBtn");sb.textContent="หยุด";sb.type="button";
+  ctl=new AbortController();const my=ctl;sb.onclick=()=>my.abort();
+  try{
+    const{text}=await sample([{role:"user",content:RULES},...turns.slice(-10)],{cache:false,signal:my.signal,onText:({text})=>{m.innerHTML=md(text);$("#msgs").scrollTop=1e9;}});
+    m.innerHTML=md(text);turns.push({role:"assistant",content:text});
+  }catch(e){turns.pop();
+    if(e&&e.code==="cancelled"){m.innerHTML=e.text?md(e.text):"<i>หยุดแล้ว</i>";}
+    else if(e&&HIDE.includes(e.code)){m.remove();addMsg("note",esc(errMsg(e.code)));if(e.code!=="not_granted")hideSample();}
+    else{m.innerHTML=(e&&e.text?md(e.text):"")+`<p><i>${esc(errMsg(e&&e.code))}</i></p>`;}
+  }finally{if(ctl===my)ctl=null;sb.textContent="ส่ง";sb.type="submit";sb.onclick=null;}
+}
+async function explainAgain(box,st,picked){
+  const b=box.querySelector("button"),out=box.querySelector(".ans");b.disabled=true;out.hidden=false;out.innerHTML=THINK;
+  const prompt=`${RULES}\n\nผู้เรียนตอบคำถามนี้ผิด ช่วยอธิบายใหม่อีกแบบที่ต่างจากเฉลยเดิม ใช้การเปรียบเทียบหรือวิธีคิดทีละขั้น ไม่เกิน 120 คำ ชี้ด้วยว่าคำตอบที่ผู้เรียนเลือกผิดตรงไหน\n\nคำถาม: ${plain(st.q)}\n${st.o?"ตัวเลือก: "+st.o.map((o,i)=>LET[i]+") "+plain(o)).join(" | "):"แบบฝึก Punnett square แม่ "+st.mom.join(" ")+" × พ่อ "+st.dad.join(" ")}\nผู้เรียนเลือก: ${picked&&picked.length&&st.o?picked.map(i=>LET[i]+") "+plain(st.o[i])).join(", "):"เติมช่องไม่ถูก"}\nคำตอบที่ถูก: ${st.o?(Array.isArray(st.a)?st.a:[st.a]).map(i=>LET[i]+") "+plain(st.o[i])).join(", "):""}\nเฉลยเดิม: ${plain(st.why)}`;
+  try{const{text}=await sample(prompt,{onText:({text})=>{out.innerHTML=md(text);}});out.innerHTML=md(text);b.remove();}
+  catch(e){if(e&&HIDE.includes(e.code)){box.remove();if(e.code!=="not_granted")hideSample();return;}out.innerHTML=esc(errMsg(e&&e.code));b.disabled=false;}
+}
+async function genPractice(btn,host){
+  btn.disabled=true;const old=btn.textContent;btn.textContent="ติวเตอร์กำลังออกโจทย์…";
+  const prompt=`${RULES}\n\nออกโจทย์ปรนัยใหม่ 1 ข้อ ระดับนักศึกษาเภสัชศาสตร์ปี 1 สำหรับบทเรียน "${L[cur].title}" ให้ต่างจากตัวอย่างเหล่านี้: ${L[cur].steps.filter(s=>s.q).map(s=>plain(s.q)).join(" | ").slice(0,1500)}\nตอบเป็น JSON เท่านั้น รูปแบบ {"question": string, "options": [4 strings], "answer": 0-3, "explanation": string} ห้ามใส่ markdown ใน string ใช้ข้อความธรรมดา เขียน genotype เช่น X^H X^h`;
+  try{const d=await sample.json(prompt,{cache:false});
+    if(!d||typeof d.question!=="string"||!Array.isArray(d.options)||d.options.length!==4||!(d.answer>=0&&d.answer<=3))throw{code:"invalid_json"};
+    const st={t:"mcq",q:md(String(d.question)).replace(/^<p>|<\/p>$/g,""),o:d.options.map(o=>md(String(o)).replace(/^<p>|<\/p>$/g,"")),a:Number(d.answer),why:md(String(d.explanation||""))};
+    const card=document.createElement("div");card.className="step in-next";card.style.cssText="padding:16px;border:1px dashed var(--accent);border-radius:14px";host.prepend(card);
+    renderMCQ(card,st,{done:false,tries:0,sel:[],wrong:[]},()=>{});
+    card.querySelector(".qtag").textContent="โจทย์เพิ่มจากติวเตอร์ (ไม่นับคะแนน)";
+    card.scrollIntoView({block:"nearest",behavior:reduce?"auto":"smooth"});
+  }catch(e){if(e&&HIDE.includes(e.code)){if(e.code!=="not_granted")hideSample();btn.remove();return;}host.insertAdjacentHTML("afterbegin",`<p class="ptip">${esc(e&&e.code==="invalid_json"?"ติวเตอร์ออกโจทย์ไม่สำเร็จ กดอีกครั้งได้":errMsg(e&&e.code))}</p>`);}
+  finally{btn.disabled=false;btn.textContent=old;}
+}
+if(window.claude&&window.claude.use){window.claude.use("sample").then(s=>{if(!s)return;sample=s;$("#fab").hidden=false;$("#askBtn").hidden=false;if(cur===null||L[cur].steps[si].t==="sum")renderStep(0);}).catch(()=>{});}
+window.T11={route(h,sw){route(h,sw);},leave(){if($("#player").classList.contains("focus"))focusMode(false);runCleanups();if(!$("#chat").hidden)closeChat();},cur(){return cur;},chat:updateChatCtx};
+if(MODE()==="tutor"){const h=location.hash.slice(1);route(h.indexOf("t-")===0?h.slice(2):"",true);}
+})();
+</script>
+<style id="hub-embed">html.embedded .modebar{display:none!important}html.embedded body[data-mode="tutor"] nav.tabs{display:none!important}</style>
+<script src="xk2-bank-s11.js"></script><script src="exam-kit-6.js"></script>
 <script>(function(){function go(){if(!window.XK||!window.XK_BANK)return;XK.mount({host:"section[data-view=\"exam\"]",id:"s11",title:"Mitosis & Cell Aging",bank:window.XK_BANK,accent:"#7A3FA0",hide:["nav.tabs", "#fab", "#chat"]});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",go);else go();})();</script>
-<script>window.HLK={"en": ["cell cycle", "interphase", "G0", "G1 phase", "S phase", "G2 phase", "M phase", "mitosis", "prophase", "prometaphase", "metaphase", "anaphase", "telophase", "cytokinesis", "karyokinesis", "cleavage furrow", "cell plate", "kinetochore", "centromere", "centrosome", "centriole", "spindle", "microtubule", "sister chromatids", "sister chromatid", "chromatin", "nucleosome", "histone", "checkpoint", "cyclin", "CDK", "p53", "Rb", "apoptosis", "necrosis", "caspase", "telomere", "telomerase", "senescence", "oncogene", "tumor suppressor", "proto-oncogene", "carcinogen", "metastasis", "BRCA1", "BRCA2", "HER2", "BCL-2", "c-Myc", "trastuzumab", "rituximab", "palbociclib", "venetoclax", "erlotinib", "free radical", "Hayflick limit"], "th": ["สารก่อมะเร็ง"]};</script><script src="hl-kit-1.js"></script>
+<script>window.HLK={"en": ["cell cycle", "interphase", "G0", "G1 phase", "S phase", "G2 phase", "M phase", "mitosis", "prophase", "prometaphase", "metaphase", "anaphase", "telophase", "cytokinesis", "karyokinesis", "cleavage furrow", "cell plate", "kinetochore", "centromere", "centrosome", "centriole", "spindle", "microtubule", "sister chromatids", "sister chromatid", "chromatin", "nucleosome", "histone", "checkpoint", "cyclin", "CDK", "p53", "Rb", "apoptosis", "necrosis", "caspase", "telomere", "telomerase", "senescence", "oncogene", "tumor suppressor", "proto-oncogene", "carcinogen", "metastasis", "BRCA1", "BRCA2", "HER2", "BCL-2", "c-Myc", "trastuzumab", "rituximab", "palbociclib", "venetoclax", "erlotinib", "free radical", "Hayflick limit"], "th": ["สารก่อมะเร็ง"], "css": "header.hero{display:none!important}\nhtml.hub-exam footer,html.hub-exam .foot{display:none!important}"};</script><script src="hl-kit-3.js"></script>
 </body></html>

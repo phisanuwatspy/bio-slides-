@@ -8,13 +8,14 @@ const CSS=`
 .xk *{box-sizing:border-box}
 .xk h2,.xk h3{margin:0;line-height:1.25}
 .xk p{margin:0}
-.xk .xk-eb{font:600 12.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
-.xk .xk-h{font-size:clamp(24px,4.6vw,32px)!important;font-weight:700!important;letter-spacing:0!important;color:var(--ink)!important}
-.xk .xk-lede{color:var(--mut);max-width:72ch;margin-top:6px;line-height:1.6}
-.xk .xk-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
-.xk .xk-stats div{background:var(--bg2);border-radius:12px;padding:10px 12px}
-.xk .xk-stats b{display:block;font-size:22px;line-height:1.2;font-variant-numeric:tabular-nums}
-.xk .xk-stats span{font-size:12.5px;color:var(--mut)}
+.xk .xk-eb{font:600 11.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.xk .xk-h{font-size:clamp(19px,2.4vw,22px)!important;line-height:1.25!important;margin-top:2px!important;font-weight:700!important;letter-spacing:0!important;color:var(--ink)!important}
+.xk .xk-lede{color:var(--mut);max-width:72ch;margin-top:4px;line-height:1.5;font-size:13.5px}
+.xk .xk-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.xk .xk-stats{display:flex;flex-wrap:wrap;gap:6px}
+.xk .xk-stats div{background:var(--bg2);border-radius:999px;padding:4px 11px;display:inline-flex;align-items:baseline;gap:5px;white-space:nowrap}
+.xk .xk-stats b{display:inline;font-size:14.5px;line-height:1.4;font-variant-numeric:tabular-nums}
+.xk .xk-stats span{font-size:12.5px;line-height:1.4;color:var(--mut)}
 .xk .xk-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px}
 .xk .xk-lab{font-weight:600;color:var(--mut);margin:4px 2px -8px;font-size:15px}
 .xk .xk-opts{display:grid;gap:12px}
@@ -26,7 +27,7 @@ const CSS=`
 .xk .xk-pick:focus-visible{outline:3px solid var(--a);outline-offset:2px}
 .xk .xk-pick[aria-pressed="true"]{border:2.5px solid var(--a);background:var(--a2);padding:15px 19px}
 .xk .xk-pick[aria-disabled="true"]{opacity:.45;cursor:not-allowed}
-.xk .xk-pick b{font-size:22px!important;line-height:1.25!important;font-weight:700!important;color:var(--ink)!important}
+.xk .xk-pick b{font-size:19px!important;line-height:1.25!important;font-weight:700!important;color:var(--ink)!important}
 .xk .xk-pick span{color:var(--mut)!important;font-size:14.5px!important;line-height:1.45!important}
 .xk .xk-pick .xk-ic{font-size:24px;line-height:1}
 .xk .xk-sum{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
@@ -36,7 +37,7 @@ const CSS=`
 .xk .xk-btn:hover{border-color:var(--a)}
 .xk .xk-btn:active{transform:scale(.96)}
 .xk .xk-btn:focus-visible{outline:3px solid var(--a);outline-offset:2px}
-.xk .xk-btn.xk-pri{background:var(--a);border-color:var(--a);color:#fff}
+.xk .xk-btn.xk-pri{background:var(--a);border-color:var(--a);color:#fff!important}
 .xk .xk-btn.xk-pri:hover{filter:brightness(1.1)}
 .xk .xk-btn.xk-lg{padding:14px 26px;font-size:17px;border-radius:14px}
 .xk .xk-btn.xk-dan{color:var(--ng);border-color:#efc3c5}
@@ -104,14 +105,103 @@ const CSS=`
 @keyframes xkshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
 html.calm .xk *,html.calm .xk-dlg *{animation:none!important;transition:none!important}
 .xk-host>:not(.xk):not(.xk-keep){display:none!important}
+.xk-host{transform:none!important;filter:none!important;will-change:auto!important;animation:none!important}
+.xk .xk-nav,.xk .xk-scrim,.xk .xk-palx,.xk .xk-tx-s,.xk .xk-mprog{display:none}
+.xk .xk-pbar{height:4px;border-radius:2px;background:var(--bg2);overflow:hidden;flex-basis:100%;order:9}
+.xk .xk-pbar i{display:block;height:100%;width:0;background:var(--a);transition:width .25s}
+.xk .xk-gostick{display:none}
+.xk.xk-setup{padding-top:12px}
+@media (max-width:860px){
+  .xk.xk-running{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+  .xk .xk-nav{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px max(12px,env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid var(--line);box-shadow:0 -8px 20px -16px rgba(0,0,0,.4)}
+  .xk .xk-nav .xk-btn{min-height:50px;font-size:16px;border-radius:14px}
+  .xk .xk-nav #xkMapBtn{font:700 15px/1 ui-monospace,Menlo,monospace;min-width:96px;background:var(--bg2)}
+  .xk .xk-qnav{display:none!important}
+  .xk .xk-pal{position:fixed!important;left:0;right:0;bottom:0;top:auto!important;z-index:60;transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.7,.2,1);max-height:72vh;overflow:auto;padding:0}
+  .xk .xk-pal.xk-open{transform:none}
+  .xk .xk-pal>.xk-card{border-radius:20px 20px 0 0;padding:16px max(16px,env(safe-area-inset-left)) calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -12px 30px -12px rgba(0,0,0,.35)}
+  .xk .xk-palx{display:inline-flex;min-height:38px;padding:6px 14px;float:right;margin:-6px -4px 0 8px}
+  .xk .xk-map{grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:8px;clear:both;margin-top:12px}
+  .xk .xk-qm{padding:13px 0;font-size:15px;border-radius:11px}
+  .xk .xk-scrim{position:fixed;inset:0;z-index:55;background:rgba(20,14,35,.38)}
+  .xk .xk-scrim.xk-open{display:block}
+  .xk .xk-gostick{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;align-items:center;gap:12px;padding:10px max(14px,env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid var(--line);box-shadow:0 -8px 20px -16px rgba(0,0,0,.4)}
+  .xk .xk-gostick div{flex:1;min-width:0;font-size:15px;line-height:1.35;font-weight:600}
+  .xk .xk-gostick div span{display:block;font-weight:500;color:var(--mut);font-size:13px}
+  .xk .xk-gostick .xk-btn{min-height:50px;font-size:17px;padding:10px 20px;border-radius:14px;flex:none}
+  .xk.xk-setup{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  .xk.xk-setup .xk-sum:not(.xk-resume){display:none}
+}
+@media (max-width:640px){
+  .xk{gap:12px;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+  .xk .xk-h{font-size:19px!important}
+  .xk .xk-lede{display:none}
+  .xk .xk-stats div{padding:3px 9px}
+  .xk .xk-stats b{font-size:13.5px}.xk .xk-stats span{font-size:12px}
+  .xk .xk-lab{font-size:14px;margin:2px 2px -4px}
+  .xk .xk-opts{gap:8px}
+  .xk #xkT .xk-pick{grid-template-columns:30px 1fr;column-gap:10px;row-gap:2px;padding:11px 14px;min-height:0}
+  .xk #xkT .xk-pick[aria-pressed="true"]{padding:10px 13px}
+  .xk #xkT .xk-pick .xk-ic{grid-row:span 2;align-self:center;font-size:24px}
+  .xk #xkT .xk-pick b{font-size:17px!important}
+  .xk #xkT .xk-pick span:not(.xk-ic){font-size:13px!important}
+  .xk #xkN{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .xk #xkM{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .xk #xkN .xk-pick,.xk #xkM .xk-pick{padding:10px 8px;min-height:0;text-align:center;justify-items:center}
+  .xk #xkN .xk-pick[aria-pressed="true"],.xk #xkM .xk-pick[aria-pressed="true"]{padding:9px 7px}
+  .xk #xkN .xk-pick b,.xk #xkM .xk-pick b{font-size:17px!important}
+  .xk #xkN .xk-pick span,.xk #xkM .xk-pick span{font-size:11.5px!important;line-height:1.35!important}
+  .xk .xk-bar{gap:8px;padding:8px 10px;border-radius:0 0 14px 14px;border-top:0;top:0}
+  .xk .xk-bar>.xk-row:first-child{display:none}
+  .xk .xk-bar>.xk-row:last-child{display:flex!important;flex-wrap:nowrap;width:100%;gap:6px}
+  .xk .xk-bar .xk-btn{padding:8px 10px!important;min-height:42px;font-size:15px}
+  .xk .xk-bar .xk-time{order:2;margin:0 auto 0 4px;font-size:18px}
+  .xk .xk-bar .xk-mprog{display:block;order:2;margin:0 auto 0 4px;font:700 15px ui-monospace,Menlo,monospace;color:var(--mut)}
+  .xk .xk-bar .xk-time~.xk-mprog{display:none}
+  .xk .xk-bar #xkCancel{order:1}.xk .xk-bar #xkFlag{order:3}.xk .xk-bar #xkSend{order:4;min-width:68px}
+  .xk .xk-tx-l{display:none}.xk .xk-tx-s{display:inline}
+  .xk .xk-card{padding:14px 14px;border-radius:16px}
+  .xk .xk-q{font-size:17.5px;margin:6px 0 12px}
+  .xk .xk-c{padding:12px 12px;grid-template-columns:24px minmax(0,1fr);gap:8px;font-size:15.5px;min-height:52px;align-items:center}
+}
 @media (max-width:860px){.xk .xk-grid{grid-template-columns:1fr}.xk .xk-pal{position:static}.xk .xk-map{grid-template-columns:repeat(10,1fr)}}
 @media (max-width:600px){
   .xk .xk-o3,.xk .xk-o2{grid-template-columns:1fr}.xk .xk-pick{min-height:0;padding:13px 16px}.xk .xk-pick[aria-pressed="true"]{padding:12px 15px}.xk .xk-pick b{font-size:19px}
-  .xk .xk-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.xk .xk-map{grid-template-columns:repeat(8,1fr)}
-  .xk .xk-bar>.xk-row:last-child{display:grid;grid-template-columns:repeat(3,1fr);width:100%;gap:8px}
-  .xk .xk-bar>.xk-row:last-child .xk-time{grid-column:1/-1}.xk .xk-bar .xk-btn{padding:10px 6px}
+  .xk .xk-map{grid-template-columns:repeat(8,1fr)}
   .xk .xk-sum .xk-btn{width:100%}
-}`;
+}
+@media (max-width:640px){
+  .xk{gap:9px!important}
+  .xk.xk-setup{padding-top:8px;padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+  .xk.xk-setup .xk-hist{display:none}
+  .xk .xk-h{font-size:17px!important}
+  .xk .xk-head{gap:6px 10px}
+  .xk .xk-stats{gap:5px}.xk .xk-stats div{padding:2px 8px}.xk .xk-stats b{font-size:12.5px}.xk .xk-stats span{font-size:11.5px}
+  .xk .xk-lab{font-size:12.5px;margin:0 2px -4px}
+  .xk .xk-opts{gap:6px}
+  .xk #xkT{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .xk #xkT .xk-pick,.xk #xkT .xk-pick[aria-pressed="true"]{grid-template-columns:1fr!important;justify-items:center;text-align:center;padding:9px 5px!important;row-gap:2px}
+  .xk #xkT .xk-pick .xk-ic{grid-row:auto!important;font-size:19px}
+  .xk #xkT .xk-pick b{font-size:13.5px!important;line-height:1.3!important}
+  .xk #xkT .xk-pick span:not(.xk-ic){font-size:11px!important;line-height:1.3!important}
+  .xk #xkN .xk-pick,.xk #xkM .xk-pick,.xk #xkN .xk-pick[aria-pressed="true"],.xk #xkM .xk-pick[aria-pressed="true"]{padding:8px 5px!important}
+  .xk #xkN .xk-pick b,.xk #xkM .xk-pick b{font-size:15px!important}
+  .xk #xkN .xk-pick span,.xk #xkM .xk-pick span{font-size:11px!important}
+  .xk .xk-gostick{padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  .xk .xk-gostick .xk-btn{min-height:44px;font-size:16px}
+  .xk .xk-gostick div{font-size:14px}
+  .xk.xk-running{padding-bottom:calc(66px + env(safe-area-inset-bottom,0px))}
+  .xk .xk-bar{padding:6px 8px}
+  .xk .xk-bar .xk-btn{min-height:38px;padding:6px 9px!important;font-size:14px}
+  .xk .xk-card{padding:12px}
+  .xk .xk-q{font-size:16px;margin:4px 0 10px;line-height:1.5}
+  .xk .xk-c{min-height:44px;padding:9px 11px;font-size:14.5px}
+  .xk .xk-opts2,.xk #xkQ .xk-opts{gap:6px}
+  .xk .xk-nav{padding-top:7px;padding-bottom:calc(7px + env(safe-area-inset-bottom,0px))}
+  .xk .xk-nav .xk-btn{min-height:44px;font-size:15px}
+  .xk .xk-why,.xk .xk-fb{font-size:14px}
+}
+`;
 const TY={rec:"ความจำ",ana:"วิเคราะห์",app:"ประยุกต์",mix:"ผสม"};
 const LET=["ก","ข","ค","ง","จ","ฉ"];
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
@@ -157,36 +247,35 @@ function mount(opt){
 
   /* ---------------- setup ---------------- */
   function setup(){
-    lock(false);
+    lock(false);root.classList.add("xk-setup");root.classList.remove("xk-running");
     const hist=st.get(K+"hist",[]),best=hist.length?Math.max(...hist.map(h=>h.p)):null;
     const saved=st.get(K+"run",null),resumable=saved&&!saved.done&&(!saved.end||saved.end>Date.now());
     const pool=poolOf(cfg.type).length;
     if(cfg.n!==0&&cfg.n>pool)cfg.n=0;
     const n=cfg.n?Math.min(cfg.n,pool):pool,mins=Math.round(n*per(cfg.type)/60);
-    root.innerHTML=`<div class="xk-in"><p class="xk-eb">Exam · คลังข้อสอบ</p><h2 class="xk-h">ข้อสอบ ${esc(opt.title)}</h2>
-      <p class="xk-lede">คลัง ${B.length} ข้อ · ความจำ ${cnt("rec")} · วิเคราะห์ ${cnt("ana")} · ประยุกต์ ${cnt("app")} ครอบคลุม ${SEC.length} หัวข้อ สุ่มลำดับข้อและตัวเลือกใหม่ทุกครั้ง และเลือกข้อที่ยังไม่เคยทำก่อน</p>
-      <div class="xk-stats"><div><b>${B.length}</b><span>ข้อในคลัง</span></div><div><b>${SEC.length}</b><span>หัวข้อ</span></div><div><b>${best==null?"–":best+"%"}</b><span>คะแนนสูงสุด (สอบจริง)</span></div><div><b>${hist.length}</b><span>ครั้งที่ทำ</span></div></div></div>
+    root.innerHTML=`<div class="xk-in xk-head"><h2 class="xk-h">ข้อสอบ ${esc(opt.title)}</h2><div class="xk-stats"><div><b>${B.length}</b><span>ข้อ</span></div><div><span>สูงสุด</span><b>${best==null?"–":best+"%"}</b></div><div><span>ทำแล้ว</span><b>${hist.length}</b><span>ครั้ง</span></div></div></div>
     ${resumable?`<div class="xk-card xk-resume xk-sum"><div><b>มีข้อสอบที่ทำค้างไว้</b><span>${saved.qs.length} ข้อ · ${TY[saved.cfg.type]} · ตอบแล้ว ${Object.keys(saved.ans).length} ข้อ</span></div><div class="xk-row"><button type="button" class="xk-btn" id="xkDrop">ทิ้งชุดนี้</button><button type="button" class="xk-btn xk-pri" id="xkResume">ทำต่อ →</button></div></div>`:""}
     <p class="xk-lab">ประเภทข้อสอบ</p>
     <div class="xk-opts xk-o3" id="xkT">
-      <button type="button" class="xk-pick" data-t="mix" aria-pressed="${cfg.type==="mix"}"><span class="xk-ic">🎲</span><b>สุ่มข้อสอบชุดใหม่</b><span>ผสมทุกแบบ ${B.length} ข้อ · ไม่ซ้ำชุดก่อน</span></button>
-      <button type="button" class="xk-pick" data-t="ana" aria-pressed="${cfg.type==="ana"}" ${cnt("ana")?"":'aria-disabled="true"'}><span class="xk-ic">🔍</span><b>ข้อสอบวิเคราะห์</b><span>คำนวณ ตีความ เชื่อมหลายขั้นตอน · ${cnt("ana")} ข้อ</span></button>
-      <button type="button" class="xk-pick" data-t="app" aria-pressed="${cfg.type==="app"}" ${cnt("app")?"":'aria-disabled="true"'}><span class="xk-ic">💊</span><b>ข้อสอบประยุกต์</b><span>สถานการณ์จริง ยา และสุขภาพ · ${cnt("app")} ข้อ</span></button>
+      <button type="button" class="xk-pick" data-t="mix" aria-pressed="${cfg.type==="mix"}"><span class="xk-ic">🎲</span><b>สุ่มข้อสอบชุดใหม่</b><span>ผสมทุกแบบ · ${B.length} ข้อ</span></button>
+      <button type="button" class="xk-pick" data-t="ana" aria-pressed="${cfg.type==="ana"}" ${cnt("ana")?"":'aria-disabled="true"'}><span class="xk-ic">🔍</span><b>ข้อสอบวิเคราะห์</b><span>คำนวณ ตีความ · ${cnt("ana")} ข้อ</span></button>
+      <button type="button" class="xk-pick" data-t="app" aria-pressed="${cfg.type==="app"}" ${cnt("app")?"":'aria-disabled="true"'}><span class="xk-ic">💊</span><b>ข้อสอบประยุกต์</b><span>สถานการณ์จริง ยา · ${cnt("app")} ข้อ</span></button>
     </div>
     <p class="xk-lab">จำนวนข้อ</p>
     <div class="xk-opts xk-o3" id="xkN">
-      ${[[15,"15 ข้อ","ทบทวนเร็ว ราว "+Math.round(15*per(cfg.type)/60)+" นาที"],[30,"30 ข้อ","สุ่มครอบคลุมทุกส่วน"],[0,"ชุดเต็ม",`ทั้ง ${pool} ข้อในคลัง${cfg.type==="mix"?"":TY[cfg.type]}`]].map(([v,b,s])=>{const dis=v&&v>=pool;return `<button type="button" class="xk-pick" data-n="${v}" aria-pressed="${cfg.n===v}" ${dis?'aria-disabled="true"':""}><b>${b}</b><span>${dis?`คลังมี ${pool} ข้อ เลือกชุดเต็ม`:s}</span></button>`;}).join("")}
+      ${[[15,"15 ข้อ","ราว "+Math.round(15*per(cfg.type)/60)+" นาที"],[30,"30 ข้อ","ราว "+Math.round(30*per(cfg.type)/60)+" นาที"],[0,"ชุดเต็ม",`${pool} ข้อ`]].map(([v,b,s])=>{const dis=v&&v>=pool;return `<button type="button" class="xk-pick" data-n="${v}" aria-pressed="${cfg.n===v}" ${dis?'aria-disabled="true"':""}><b>${b}</b><span>${dis?`มี ${pool} ข้อ`:s}</span></button>`;}).join("")}
     </div>
     <p class="xk-lab">โหมด</p>
     <div class="xk-opts xk-o2" id="xkM">
-      <button type="button" class="xk-pick" data-m="real" aria-pressed="${cfg.mode==="real"}"><b>สอบจริง</b><span>จับเวลา ${per(cfg.type)===60?"1 นาที":"1.5 นาที"}/ข้อ เฉลยหลังส่ง</span></button>
-      <button type="button" class="xk-pick" data-m="prac" aria-pressed="${cfg.mode==="prac"}"><b>ฝึกทำ</b><span>ไม่จับเวลา เฉลยทันทีทุกข้อ</span></button>
+      <button type="button" class="xk-pick" data-m="real" aria-pressed="${cfg.mode==="real"}"><b>สอบจริง</b><span>จับเวลา · เฉลยหลังส่ง</span></button>
+      <button type="button" class="xk-pick" data-m="prac" aria-pressed="${cfg.mode==="prac"}"><b>ฝึกทำ</b><span>เฉลยทันที</span></button>
     </div>
-    <div class="xk-card xk-sum"><div><b>${n} ข้อ · ${TY[cfg.type]==="ผสม"?"ผสมทุกแบบ":TY[cfg.type]} · ${cfg.mode==="real"?"สอบจริง · "+mins+" นาที":"ฝึกทำ · ไม่จับเวลา"}</b><span>${cfg.mode==="real"?"ระหว่างสอบปิดปุ่มถามติวเตอร์ หมดเวลาระบบจะส่งคำตอบให้อัตโนมัติ":"ตอบแล้วเห็นเฉลยทันที กดยกเลิกได้ทุกเมื่อ"}</span></div><button type="button" class="xk-btn xk-pri xk-lg" id="xkGo">เริ่มสอบ →</button></div>
-    ${hist.length?`<div class="xk-card" style="display:grid;gap:8px"><b>ประวัติการสอบ</b>${hist.slice(0,5).map(h=>`<div class="xk-chrow"><span>${esc(h.d)} · ${esc(h.ty)}${h.m==="prac"?" · ฝึก":""}</span><span class="xk-bar2"><i style="width:${h.p}%"></i></span><span>${h.s}/${h.n}</span></div>`).join("")}</div>`:""}`;
-    const pick=(id,key,attr,num)=>$(id).addEventListener("click",e=>{const b=e.target.closest(`[data-${attr}]`);if(!b||b.getAttribute("aria-disabled")==="true")return;cfg[key]=num?+b.dataset[attr]:b.dataset[attr];if(key==="type"){const p=poolOf(cfg.type).length;if(cfg.n&&cfg.n>=p)cfg.n=0;}st.set(K+"cfg",cfg);setup();});
+    <div class="xk-card xk-sum"><div><b>${n} ข้อ · ${TY[cfg.type]==="ผสม"?"ผสมทุกแบบ":TY[cfg.type]} · ${cfg.mode==="real"?"สอบจริง · "+mins+" นาที":"ฝึกทำ · ไม่จับเวลา"}</b></div><button type="button" class="xk-btn xk-pri xk-lg" id="xkGo">เริ่มสอบ →</button></div>
+    <div class="xk-gostick"><div>${n} ข้อ · ${TY[cfg.type]==="ผสม"?"ผสมทุกแบบ":TY[cfg.type]}<span>${cfg.mode==="real"?"สอบจริง · "+mins+" นาที":"ฝึกทำ · ไม่จับเวลา"}</span></div><button type="button" class="xk-btn xk-pri" id="xkGo2">เริ่มสอบ →</button></div>
+    ${hist.length?`<div class="xk-card xk-hist" style="display:grid;gap:8px"><b>ประวัติการสอบ</b>${hist.slice(0,5).map(h=>`<div class="xk-chrow"><span>${esc(h.d)} · ${esc(h.ty)}${h.m==="prac"?" · ฝึก":""}</span><span class="xk-bar2"><i style="width:${h.p}%"></i></span><span>${h.s}/${h.n}</span></div>`).join("")}</div>`:""}`;
+    const pick=(id,key,attr,num)=>$(id).addEventListener("click",e=>{const b=e.target.closest(`[data-${attr}]`);if(!b||b.getAttribute("aria-disabled")==="true")return;cfg[key]=num?+b.dataset[attr]:b.dataset[attr];if(key==="type"){const p=poolOf(cfg.type).length;if(cfg.n&&cfg.n>=p)cfg.n=0;}st.set(K+"cfg",cfg);const sc=scEl(),y=sc.scrollTop;setup();sc.scrollTop=y;});
     pick("#xkT","type","t",false);pick("#xkN","n","n",true);pick("#xkM","mode","m",false);
-    $("#xkGo").onclick=()=>start(Object.assign({},cfg));
+    $("#xkGo").onclick=$("#xkGo2").onclick=()=>start(Object.assign({},cfg));
     if(resumable){$("#xkResume").onclick=()=>{E=saved;run();};$("#xkDrop").onclick=()=>{if(saved.seenBefore)st.set(K+"seen",saved.seenBefore);st.set(K+"run",null);setup();};}
   }
 
@@ -208,36 +297,51 @@ function mount(opt){
     lock(true);
     const c=E.cfg;
     root.innerHTML=`<div class="xk-bar"><div class="xk-row"><b>Exam · ${esc(opt.title)}</b><span class="xk-ty ty-${c.type}">${TY[c.type]==="ผสม"?"ผสมทุกแบบ":TY[c.type]}</span><span class="xk-ty ty-rec">${c.mode==="real"?"สอบจริง":"ฝึกทำ"}</span><span class="xk-prog" id="xkProg"></span></div>
-      <div class="xk-row">${E.end?`<span class="xk-time" id="xkTime">⏱ ${fmt((E.end-Date.now())/1000)}</span>`:""}<button type="button" class="xk-btn xk-dan" id="xkCancel">ยกเลิกสอบ</button><button type="button" class="xk-btn" id="xkFlag">ปักธง</button><button type="button" class="xk-btn xk-pri" id="xkSend">${c.mode==="real"?"ส่งคำตอบ":"จบการฝึก"}</button></div></div>
-      <div class="xk-grid"><div class="xk-card" id="xkQ"></div><div class="xk-pal"><div class="xk-card"><b style="font-size:14px">แผนที่ข้อสอบ</b><div class="xk-map" id="xkMap"></div><p style="font-size:13px;color:var(--mut);margin-top:8px;line-height:1.5">สีเข้ม = ตอบแล้ว · จุดส้ม = ปักธง · กด 1–4 เลือกคำตอบ ← → เปลี่ยนข้อ</p></div></div></div>`;
+      <div class="xk-row">${E.end?`<span class="xk-time" id="xkTime">⏱ ${fmt((E.end-Date.now())/1000)}</span>`:""}<span class="xk-mprog" id="xkMProg"></span><button type="button" class="xk-btn xk-dan" id="xkCancel" aria-label="ยกเลิกสอบ"><span class="xk-tx-l">ยกเลิกสอบ</span><span class="xk-tx-s">✕ ยกเลิก</span></button><button type="button" class="xk-btn" id="xkFlag"></button><button type="button" class="xk-btn xk-pri" id="xkSend"><span class="xk-tx-l">${c.mode==="real"?"ส่งคำตอบ":"จบการฝึก"}</span><span class="xk-tx-s">${c.mode==="real"?"ส่ง":"จบ"}</span></button></div><div class="xk-pbar"><i id="xkPB"></i></div></div>
+      <div class="xk-grid"><div class="xk-card" id="xkQ"></div><div class="xk-scrim" id="xkScrim"></div><div class="xk-pal" id="xkPal"><div class="xk-card"><button type="button" class="xk-btn xk-palx" id="xkPalX">ปิด</button><b style="font-size:14px">แผนที่ข้อสอบ</b><div class="xk-map" id="xkMap"></div><p style="font-size:12.5px;color:var(--mut);margin-top:8px;line-height:1.5">สีเข้ม = ตอบแล้ว · จุดส้ม = ธง</p></div></div></div>
+      <div class="xk-nav"><button type="button" class="xk-btn" id="xkNP">← ก่อน</button><button type="button" class="xk-btn" id="xkMapBtn" aria-label="เปิดแผนที่ข้อสอบ"></button><button type="button" class="xk-btn" id="xkNX">ถัดไป →</button></div>`;
+    root.classList.add("xk-running");root.classList.remove("xk-setup");
+    const pal=$("#xkPal"),scrim=$("#xkScrim"),sheet=on=>{pal.classList.toggle("xk-open",on);scrim.classList.toggle("xk-open",on);};
+    $("#xkMapBtn").onclick=()=>sheet(!pal.classList.contains("xk-open"));scrim.onclick=$("#xkPalX").onclick=()=>sheet(false);
+    $("#xkNP").onclick=()=>go(-1);$("#xkNX").onclick=()=>go(1);
+    let sx=0,sy=0,st0=0;
+    $("#xkQ").addEventListener("touchstart",e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;st0=Date.now();},{passive:true});
+    $("#xkQ").addEventListener("touchend",e=>{const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Date.now()-st0<700&&Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.8){if(e.target.closest(".xk-fig"))return;go(dx<0?1:-1);}},{passive:true});
     $("#xkFlag").onclick=()=>{E.flag[E.cur]=!E.flag[E.cur];save();paint();};
     $("#xkSend").onclick=confirmSend;$("#xkCancel").onclick=confirmCancel;
-    $("#xkMap").onclick=e=>{const b=e.target.closest("[data-q]");if(b){E.cur=+b.dataset.q;save();paint();}};
+    $("#xkMap").onclick=e=>{const b=e.target.closest("[data-q]");if(b){E.cur=+b.dataset.q;save();paint();$("#xkPal").classList.remove("xk-open");$("#xkScrim").classList.remove("xk-open");toQ();}};
     clearInterval(tick);
     if(E.end)tick=setInterval(()=>{const t=$("#xkTime");if(!t){clearInterval(tick);return;}const left=(E.end-Date.now())/1000;t.textContent="⏱ "+fmt(left);t.classList.toggle("xk-low",left<60);if(left<=0){clearInterval(tick);finish(true);}},500);
-    paint();top();
+    paint();{const r=root.getBoundingClientRect(),sc=scEl();sc.scrollBy({top:r.top-8});}
   }
+  function scEl(){let e=root.parentElement;while(e&&e!==document.body&&e!==document.documentElement){const o=getComputedStyle(e).overflowY;if((o==="auto"||o==="scroll"||o==="overlay")&&e.scrollHeight>e.clientHeight+2)return e;e=e.parentElement;}return document.scrollingElement||document.documentElement;}
+  function scBy(dy){if(Math.abs(dy)<2)return;scEl().scrollBy({top:dy,behavior:document.documentElement.classList.contains("calm")?"auto":"smooth"});}
+  function toQ(){const q=$("#xkQ"),bar=$(".xk-bar");if(!q)return;const off=(bar?bar.getBoundingClientRect().height:0)+22,r=q.getBoundingClientRect();if(r.top<off||r.top>innerHeight*.5)scBy(r.top-off);}
+  function go(d){const k=E.cur+d;if(k<0||k>=E.qs.length)return;E.cur=k;save();paint();toQ();}
   function answered(k){const a=E.ans[k];return a!=null&&(!Array.isArray(a)||a.length>0);}
   function paint(){
     const it=E.qs[E.cur],q=B[it.i],n=E.qs.length,prac=E.cfg.mode==="prac",multi=isMulti(q);
     const done=prac&&E.chk[E.cur];
     $("#xkProg").textContent=`ตอบแล้ว ${E.qs.filter((_,k)=>answered(k)).length}/${n}`;
-    $("#xkFlag").textContent=E.flag[E.cur]?"เอาธงออก":"ปักธง";
+    $("#xkFlag").innerHTML=E.flag[E.cur]?'<span class="xk-tx-l">เอาธงออก</span><span class="xk-tx-s">⚑ ออก</span>':'<span class="xk-tx-l">ปักธง</span><span class="xk-tx-s">⚑ ธง</span>';
+    {const na=E.qs.filter((_,k)=>answered(k)).length;$("#xkPB").style.width=(na/n*100)+"%";$("#xkMProg").textContent=`${na}/${n}`;
+     $("#xkMapBtn").textContent=`▦ ${E.cur+1}/${n}`;$("#xkNP").disabled=E.cur===0;$("#xkNX").disabled=E.cur===n-1;$("#xkNX").classList.toggle("xk-pri",!!(prac&&E.chk[E.cur])||(!prac&&answered(E.cur)&&!isMulti(q)));}
     const a=E.ans[E.cur],sel=i=>multi?(a||[]).includes(i):a===i,cor=i=>multi?q.a.includes(i):q.a===i;
     $("#xkQ").innerHTML=`<div class="xk-in"><p class="xk-meta">ข้อ ${E.cur+1} / ${n} · ${esc(q.sec)} <span class="xk-ty ty-${tyOf(q)}">${TY[tyOf(q)]}</span>${multi?` <span class="xk-ty ty-mix">เลือกได้หลายข้อ</span>`:""}</p>
       ${q.fig?`<div class="xk-fig">${q.fig}</div>`:""}<div class="xk-q">${q.q}</div>
       <div class="xk-ch">${it.ord.map((oi,j)=>{let cls=sel(oi)?"xk-sel":"";if(done)cls=cor(oi)?(sel(oi)?"xk-ok":"xk-miss"):(sel(oi)?"xk-ng":"");return `<button type="button" class="xk-c ${cls}" data-o="${oi}" ${done?'aria-disabled="true"':""}><span class="xk-L">${LET[j]}</span><span>${q.o[oi]}</span></button>`;}).join("")}</div>
       ${prac&&multi&&!done?`<div class="xk-row" style="margin-top:10px"><button type="button" class="xk-btn xk-pri" id="xkCheck" ${answered(E.cur)?"":"disabled"}>ตรวจคำตอบ</button></div>`:""}
       ${done?`<div class="xk-fb ${same(a,q.a)?"xk-ok":"xk-ng"}"><b>${same(a,q.a)?"ถูกต้อง":"ยังไม่ถูก"}</b> ${q.e||""}${SRC(q)}</div>`:""}
-      <div class="xk-row" style="justify-content:space-between;margin-top:14px"><button type="button" class="xk-btn" id="xkP" ${E.cur===0?"disabled":""}>← ข้อก่อน</button><button type="button" class="xk-btn ${done?"xk-pri":""}" id="xkX" ${E.cur===n-1?"disabled":""}>ข้อถัดไป →</button></div></div>`;
+      <div class="xk-row xk-qnav" style="justify-content:space-between;margin-top:14px"><button type="button" class="xk-btn" id="xkP" ${E.cur===0?"disabled":""}>← ข้อก่อน</button><button type="button" class="xk-btn ${done?"xk-pri":""}" id="xkX" ${E.cur===n-1?"disabled":""}>ข้อถัดไป →</button></div></div>`;
     $$("#xkQ .xk-c").forEach(b=>b.onclick=()=>{if(done)return;const oi=+b.dataset.o;
       if(multi){const s=new Set(E.ans[E.cur]||[]);s.has(oi)?s.delete(oi):s.add(oi);E.ans[E.cur]=[...s];}
       else{E.ans[E.cur]=oi;if(prac)E.chk[E.cur]=true;}
-      save();paint();});
-    const ck=$("#xkCheck");if(ck)ck.onclick=()=>{E.chk[E.cur]=true;save();paint();};
-    $("#xkP").onclick=()=>{E.cur--;save();paint();};$("#xkX").onclick=()=>{E.cur++;save();paint();};
+      save();paint();if(prac&&E.chk[E.cur])showFb();});
+    const ck=$("#xkCheck");if(ck)ck.onclick=()=>{E.chk[E.cur]=true;save();paint();showFb();};
+    $("#xkP").onclick=()=>go(-1);$("#xkX").onclick=()=>go(1);
     $("#xkMap").innerHTML=E.qs.map((it2,k)=>{const q2=B[it2.i];let c=answered(k)?"xk-ans":"";if(prac&&E.chk[k])c=same(E.ans[k],q2.a)?"xk-ok":"xk-ng";return `<button type="button" class="xk-qm ${c} ${E.flag[k]?"xk-flag":""} ${k===E.cur?"xk-cur":""}" data-q="${k}" aria-label="ข้อ ${k+1}">${k+1}</button>`;}).join("");
   }
+  function showFb(){const f=$("#xkQ .xk-fb");if(!f)return;const nav=$(".xk-nav"),nb=nav&&getComputedStyle(nav).display!=="none"?nav.getBoundingClientRect().height:0,r=f.getBoundingClientRect(),lim=innerHeight-nb-12,bar=$(".xk-bar"),off=(bar?bar.getBoundingClientRect().height:0)+22;if(r.bottom>lim)scBy(Math.min(r.bottom-lim,r.top-off));}
   function confirmSend(){
     const n=E.qs.length,un=n-E.qs.filter((_,k)=>answered(k)).length;
     dialog(E.cfg.mode==="real"?"ส่งคำตอบเลยไหม":"จบการฝึกเลยไหม",un?`ยังไม่ได้ตอบ ${un} ข้อ ข้อที่ไม่ตอบจะนับเป็นผิด`:"ตอบครบทุกข้อแล้ว ส่งแล้วจะดูเฉลยได้ทันที",[{l:"กลับไปทำต่อ"},{l:E.cfg.mode==="real"?"ส่งคำตอบ":"จบการฝึก",cls:"xk-pri",f:()=>finish(false)}]);
@@ -255,7 +359,7 @@ function mount(opt){
       (bySec[q.sec]=bySec[q.sec]||[0,0])[1]++;if(ok)bySec[q.sec][0]++;const t=tyOf(q);(byTy[t]=byTy[t]||[0,0])[1]++;if(ok)byTy[t][0]++;});
     const p=Math.round(s/n*100),d=new Date();
     const hist=st.get(K+"hist",[]);hist.unshift({d:`${d.getDate()}/${d.getMonth()+1} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`,s,n,p,ty:TY[c.type],m:c.mode});st.set(K+"hist",hist.slice(0,30));
-    st.set(K+"run",null);lock(false);
+    st.set(K+"run",null);lock(false);root.classList.remove("xk-running","xk-setup");
     const R=E;let filt="all";
     root.innerHTML=`<div class="xk-in"><p class="xk-eb">ผลสอบ · ${esc(opt.title)}</p><h2 class="xk-h">${timeout?"หมดเวลา ระบบส่งคำตอบให้แล้ว":"ส่งคำตอบเรียบร้อย"}</h2></div>
     <div class="xk-opts xk-o2"><div class="xk-card" style="display:grid;gap:6px"><span class="xk-big">${s}<span style="font-size:.45em;color:var(--mut)"> / ${n}</span></span><b style="font-size:18px">${p}% ${p>=60?"· ผ่านเกณฑ์ 60%":"· ยังไม่ถึงเกณฑ์ 60%"}</b><p style="color:var(--mut)">${p>=80?"ยอดเยี่ยม พร้อมสอบจริงแล้ว":p>=60?"ดี ทบทวนข้อที่ผิดอีกนิด":"ลองกลับไปเรียนหัวข้อที่คะแนนน้อยใน Tutor แล้วสอบใหม่"}</p></div>
@@ -288,8 +392,8 @@ function mount(opt){
     if(e.target.closest&&e.target.closest("input,textarea"))return;if(e.metaKey||e.ctrlKey||e.altKey)return;
     const m={"1":0,"2":1,"3":2,"4":3}[e.key];
     if(m!==undefined){const b=$$("#xkQ .xk-c")[m];if(b){b.click();e.preventDefault();}}
-    else if(e.key==="ArrowRight"&&E.cur<E.qs.length-1){E.cur++;save();paint();e.preventDefault();}
-    else if(e.key==="ArrowLeft"&&E.cur>0){E.cur--;save();paint();e.preventDefault();}
+    else if(e.key==="ArrowRight"){go(1);e.preventDefault();}
+    else if(e.key==="ArrowLeft"){go(-1);e.preventDefault();}
   });
   setup();
   return {setup};

@@ -1,11 +1,11 @@
-// Offline cache for Bio Slide 07–12. Bump VERSION whenever any file changes.
-const VERSION = "bioslide-v1";
+// Offline cache for Bio Slide 07–13. Bump VERSION whenever any file changes.
+const VERSION = "bioslide-v2";
 const FILES = [
   "./", "index.html", "manifest.webmanifest",
   "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png",
-  "exam-kit-2.js", "hl-kit-1.js",
-  "s07-x2.html", "s08-x2.html", "s09-x2.html", "s10-x2.html", "s11-x2.html", "s12-x2.html",
-  "xk2-bank-s07.js", "xk2-bank-s08.js", "xk2-bank-s09.js", "xk2-bank-s10.js", "xk2-bank-s11.js", "xk2-bank-s12.js"
+  "exam-kit-6.js", "hl-kit-3.js", "pager-1.js",
+  "s07-x8.html", "s08-x8.html", "s09-x8.html", "s10-x8.html", "s11-x9.html", "s12-x8.html", "s13-x9.html",
+  "xk2-bank-s07.js", "xk2-bank-s08.js", "xk2-bank-s09.js", "xk2-bank-s10.js", "xk2-bank-s11.js", "xk2-bank-s12.js", "xk3-bank-s13.js"
 ];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));

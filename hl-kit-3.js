@@ -4,6 +4,9 @@
   const css=document.createElement('style');
   css.textContent=`mark.hk{background:rgba(255,206,58,.42);color:inherit;font-weight:600;padding:0 .16em;border-radius:4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .hk-src{font-size:.8em;font-weight:500;opacity:.55;letter-spacing:.01em;white-space:nowrap}
+@media (max-width:860px){.hk-stk{transition:transform .24s ease,opacity .24s ease}html.hub-hide .hk-stk{transform:translateY(calc(-100% - 20px));opacity:0;pointer-events:none}}
+html .hk-h1.hk-h1{font-size:clamp(21px,2.3vw,25px)!important;line-height:1.18!important;letter-spacing:-.005em!important}
+html .hk-h2.hk-h2{font-size:clamp(18px,1.9vw,21px)!important;line-height:1.25!important;letter-spacing:0!important}
 ${C.css||""}`;
   document.head.appendChild(css);
   const esc=t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
@@ -29,9 +32,11 @@ ${C.css||""}`;
       f.appendChild(document.createTextNode(txt.slice(last)));n.replaceWith(f);
     });
   }
-  function start(){
+  function shrink(r){(r||document).querySelectorAll&&(r||document).querySelectorAll('h1:not(.hk-h1),h2:not(.hk-h2)').forEach(h=>{if(h.closest('svg,.xk'))return;const fs=parseFloat(getComputedStyle(h).fontSize)||0;if(h.tagName==='H1'&&fs>25)h.classList.add('hk-h1');else if(h.tagName==='H2'&&fs>21)h.classList.add('hk-h2');});}
+  function sticky(){try{document.querySelectorAll('body *').forEach(e=>{if(e.classList.contains('hk-stk')||e.closest('.xk'))return;if(getComputedStyle(e).position==='sticky')e.classList.add('hk-stk')})}catch(e){}}
+  function start(){shrink(document);sticky();setTimeout(sticky,1500);
     const root=document.body;let q=new Set(),t=0;
-    const flush=()=>{t=0;mo.disconnect();q.forEach(mark);q.clear();mo.takeRecords();mo.observe(root,{childList:true,subtree:true})};
+    const flush=()=>{t=0;mo.disconnect();q.forEach(e=>{mark(e);shrink(e.parentElement||e)});q.clear();mo.takeRecords();mo.observe(root,{childList:true,subtree:true})};
     const mo=new MutationObserver(recs=>{recs.forEach(r=>r.addedNodes.forEach(n=>{const e=n.nodeType===1?n:n.parentElement;if(e&&e.isConnected)q.add(e)}));if(!t)t=requestAnimationFrame(flush)});
     mark(root);mo.observe(root,{childList:true,subtree:true});
   }

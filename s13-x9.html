@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<script>try{if(window.parent!==window){document.documentElement.classList.add("embedded");if(!window.claude&&window.parent.claude)window.claude=window.parent.claude;}}catch(e){}</script>
+
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Slide 13 · Diversity of Microorganisms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: hero, one sticky bar (mode switch + chapter chips), one view at a time. Lab = one interactive per chapter, Tutor = index + step card, Exam = timed bank. Single light look matching Slide 11. */
+:root{
+  --bg:#f7f4f8; --surface:#ffffff; --sunk:#f0ebf4; --ink:#241c37; --muted:#5f5775; --line:#e0d8e8;
+  --hema:#16735f; --eosin:#c2410c; --mat:#d6407f; --pat:#3b6fd6; --spindle:#cf850f; --plate:#8a7fb0;
+  --cyto:#fdf0e6; --nuc:#dff1ea; --membrane:#bf4d84;
+  --ok:#1c8f61; --ok-soft:#dcf2e7; --bad:#c9343a; --bad-soft:#fbe0e1; --warn:#b86e00; --warn-soft:#fdf0d9;
+  --fsh:#2f9e5b; --lh:#3b6fd6; --est:#d18a12; --pro:#8a4fd6; --temp:#d13f3f; --endo:#e88aa6;
+  --on:#ffffff; --grid:rgba(22,115,95,.06);
+  --font-display:"Bai Jamjuree","IBM Plex Sans Thai",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans Thai",system-ui,-apple-system,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-padding-top:120px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16.5px/1.65 var(--font-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 110px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.wrap{max-width:1040px;margin:0 auto}
+h1,h2,h3,h4{font-family:var(--font-display);text-wrap:balance;margin:0;line-height:1.25}
+p{margin:0}
+button{font:inherit;color:inherit}
+b,strong{font-weight:600}
+.en{font-family:var(--font-display);font-weight:600}
+.hero{padding-block:26px 14px;display:grid;gap:8px}
+.eyebrow{font:600 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.hero h1{font-size:clamp(30px,6.4vw,46px);font-weight:700;letter-spacing:-.01em}
+.hero h1 span{color:var(--eosin)}
+.hero .sub{color:var(--muted);max-width:68ch}
+.keyline{display:flex;flex-wrap:wrap;gap:6px 16px;font:500 12.5px/1.5 var(--font-mono);color:var(--muted)}
+.keyline .x{font-style:italic}
+
+/* sticky bar */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line);margin-bottom:22px;display:grid;gap:10px}
+.modebar{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;background:var(--sunk);border:1.5px solid var(--line);border-radius:18px}
+.modebar button{font:600 17px/1 var(--font-display);color:var(--muted);background:transparent;border:0;border-radius:14px;padding:13px 6px;cursor:pointer;min-height:46px}
+.modebar button[aria-selected="true"]{background:var(--hema);color:var(--on);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.modebar button:focus-visible{outline:2px solid var(--hema);outline-offset:2px}
+.subnav{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px}
+.subnav::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;font:600 15px/1 var(--font-body);color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:10px 14px;cursor:pointer;white-space:nowrap}
+.chip b{font-family:var(--font-mono);font-weight:600;margin-right:6px;color:var(--eosin)}
+.chip[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-selected="true"] b{color:var(--bg);opacity:.75}
+.chip:focus-visible{outline:2px solid var(--hema);outline-offset:2px}
+
+/* generic blocks */
+.view{display:grid;gap:18px}
+.vh{display:grid;gap:6px}
+.vh h2{font-size:clamp(24px,5vw,32px);font-weight:700}
+.vh .lede{color:var(--muted);max-width:70ch}
+.slide{display:inline-block;font:600 12px/1.6 var(--font-mono);color:var(--hema);background:var(--nuc);border-radius:6px;padding:0 7px;margin-left:4px;white-space:nowrap;vertical-align:1px}
+.extra{display:inline-block;font:500 12px/1.6 var(--font-mono);font-style:italic;color:var(--warn);background:var(--warn-soft);border-radius:6px;padding:0 7px;white-space:nowrap;vertical-align:1px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.card h3{font-size:19px;margin-bottom:6px}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+ul.pts{margin:6px 0 0;padding-left:20px;display:grid;gap:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 15px/1.2 var(--font-body);border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);padding:11px 16px;cursor:pointer;min-height:44px}
+.btn:hover{border-color:var(--hema)}
+.btn.pri{background:var(--hema);border-color:var(--hema);color:var(--on)}
+.btn.pri:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible{outline:2px solid var(--hema);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:inline-flex;gap:3px;padding:3px;border-radius:12px;background:var(--sunk);border:1px solid var(--line);flex-wrap:wrap}
+.seg button{border:0;background:transparent;border-radius:9px;padding:8px 12px;font:600 14px/1.2 var(--font-body);color:var(--muted);cursor:pointer;min-height:38px}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--hema);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.switch{display:inline-flex;align-items:center;gap:8px;font:500 14.5px var(--font-body);cursor:pointer;user-select:none}
+.switch input{width:20px;height:20px;accent-color:var(--hema)}
+
+/* scope (lab stage) */
+.scope{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:
+  linear-gradient(var(--grid) 1px,transparent 1px) 0 0/24px 24px,
+  linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/24px 24px,var(--surface)}
+.scope svg{display:block;width:100%;height:auto}
+.scope svg.mei{max-height:min(50vh,440px);margin:0 auto}
+.scope-foot.stack{display:grid;gap:8px;justify-content:stretch;align-items:stretch}
+svg text{font-family:"IBM Plex Sans Thai",system-ui,-apple-system,sans-serif}
+.scope-foot{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid var(--line);background:var(--surface);font-size:14px;color:var(--muted)}
+
+/* meiosis animator */
+.stagebar{display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;padding:2px 2px 6px}
+.stagebar .grp{display:flex;gap:4px;align-items:center;padding:4px;border-radius:12px;background:var(--sunk);flex:none}
+.stagebar .gl{font:600 11.5px/1.2 var(--font-mono);color:var(--muted);padding:0 6px;writing-mode:horizontal-tb;white-space:nowrap}
+.stagebar button{border:1px solid transparent;background:transparent;border-radius:9px;padding:7px 9px;font:600 13px/1.15 var(--font-body);color:var(--muted);cursor:pointer;white-space:nowrap}
+.stagebar button[aria-current="step"]{background:var(--hema);color:var(--on)}
+.stagebar button:hover:not([aria-current="step"]){border-color:var(--line);color:var(--ink)}
+.mei .ct{transition:transform .95s cubic-bezier(.45,.05,.25,1),opacity .7s}
+.mei .ct rect{transition:fill .8s}
+.mei .fade{transition:opacity .8s,transform .95s cubic-bezier(.45,.05,.25,1)}
+.mei.calm .ct,.mei.calm .fade,.mei.calm .ct rect{transition:none}
+.counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.counts div{background:var(--sunk);border-radius:12px;padding:10px 12px;display:grid;gap:2px}
+.counts span{font-size:12.5px;color:var(--muted);line-height:1.3}
+.counts b{font:700 22px/1.1 var(--font-display);font-variant-numeric:tabular-nums}
+.stinfo h3{font-size:22px}
+.stinfo .tag{font:600 12px/1.4 var(--font-mono);color:var(--eosin);letter-spacing:.05em;text-transform:uppercase}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:5px}
+.gam{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.gam div{background:var(--sunk);border-radius:12px;padding:8px;text-align:center;font-size:13px;color:var(--muted)}
+.gam svg{width:100%;height:auto;max-height:90px}
+
+/* sort game & choose */
+.sortq{display:grid;gap:14px}
+.sortq .item{font:600 20px/1.35 var(--font-display)}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:8px}
+.choices button{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;font:600 15px/1.3 var(--font-body);cursor:pointer;text-align:center;min-height:52px}
+.choices button:hover:not(:disabled){border-color:var(--hema)}
+.choices button.ok{border-color:var(--ok);background:var(--ok-soft)}
+.choices button.ng{border-color:var(--bad);background:var(--bad-soft)}
+.fb{border-radius:12px;padding:10px 14px;font-size:15px}
+.fb.ok{background:var(--ok-soft)}
+.fb.ng{background:var(--bad-soft)}
+.fb.hint{background:var(--warn-soft)}
+.score{font:600 14px var(--font-mono);color:var(--muted)}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px}
+.bins div{border:1px dashed var(--line);border-radius:14px;padding:10px 12px;background:var(--surface);min-height:70px}
+.bins h4{font-size:15px;margin-bottom:6px}
+.bins span{display:inline-block;font-size:13px;background:var(--sunk);border-radius:8px;padding:2px 8px;margin:0 4px 4px 0}
+
+/* compare table */
+table.cmp{width:100%;border-collapse:separate;border-spacing:0;font-size:15px;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+table.cmp th,table.cmp td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+table.cmp tr:last-child td{border-bottom:0}
+table.cmp th{background:var(--sunk);font-family:var(--font-display)}
+.tblwrap{overflow-x:auto}
+
+/* flow (gametogenesis) */
+.flow svg{display:block;width:100%;height:auto}
+.flow .node{cursor:pointer}
+.flow .node:focus-visible{outline:none}
+.flow .node:focus-visible circle.hit{stroke:var(--hema);stroke-width:3}
+.flow .node.sel circle.hit{stroke:var(--eosin);stroke-width:3}
+.partlist{display:flex;flex-wrap:wrap;gap:6px}
+.partlist button{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;font:600 14px/1.2 var(--font-body);cursor:pointer}
+.partlist button[aria-pressed="true"]{border-color:var(--eosin);background:var(--cyto);color:var(--eosin)}
+
+/* cycle chart */
+.range{width:100%;accent-color:var(--hema);height:28px}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
+.readout div{background:var(--sunk);border-radius:12px;padding:10px 12px}
+.readout span{display:block;font-size:12.5px;color:var(--muted)}
+.readout .lv{display:inline-block;color:#fff;font:600 12.5px/1.7 var(--font-mono);margin:0 2px;}
+.lv{display:inline-block;min-width:54px;font:600 12px/1.6 var(--font-mono);text-align:center;border-radius:6px;padding:0 6px;color:#fff}
+
+
+/* labelled diagrams + steppers */
+.dg{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:0;align-items:stretch}
+.dg .pic{background:var(--surface);display:grid;place-items:center;padding:8px}
+.dg .pic svg{width:100%;height:auto;max-height:min(56vh,460px)}
+.dg .side{border-left:1px solid var(--line);padding:14px 16px;display:grid;gap:10px;align-content:start;background:var(--surface)}
+.dg .side h3{font-size:18px}
+.dg .info{background:var(--sunk);border-radius:12px;padding:10px 12px;font-size:15px;min-height:72px}
+@media (max-width:760px){.dg{grid-template-columns:1fr}.dg .side{border-left:0;border-top:1px solid var(--line)}}
+[data-part]{cursor:pointer;transition:filter .2s,opacity .2s}
+[data-part]:hover{filter:brightness(1.06)}
+svg.dim [data-part]:not(.hl){opacity:.38}
+[data-part].hl{filter:drop-shadow(0 0 5px rgba(209,63,124,.85))}
+.stepctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.stepctl .dots{display:flex;gap:5px;flex-wrap:wrap}
+.stepctl .dots button{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);font:600 12.5px/1 var(--font-mono);cursor:pointer}
+.stepctl .dots button[aria-current="step"]{background:var(--hema);border-color:var(--hema);color:#fff}
+.cap{font-size:15.5px}
+.cap b.en{color:var(--hema)}
+.mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
+.mini .card{display:grid;gap:6px;align-content:start}
+.mini svg{width:100%;height:auto;background:var(--sunk);border-radius:12px}
+.mini ol{margin:0;padding-left:18px;font-size:14px;color:var(--muted)}
+.tl{display:flex;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tl button{border:0;padding:10px 8px;font:600 14px/1.3 var(--font-body);cursor:pointer;color:var(--ink);text-align:center}
+.tl button[aria-pressed="true"]{outline:3px solid var(--hema);outline-offset:-3px}
+.gl3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.gl3 div{border-radius:12px;padding:10px;font-size:14px}
+@media (max-width:560px){.gl3{grid-template-columns:1fr}}
+.stepPic svg{display:block;margin:0 auto;width:100%;height:auto;max-height:min(42vh,320px)}
+.tl button{min-width:128px}
+/* asexual loops */
+.loop *{transform-box:fill-box;transform-origin:center}
+.anim .bfL{animation:bfL 4.5s ease-in-out infinite}.anim .bfR{animation:bfR 4.5s ease-in-out infinite}
+@keyframes bfL{0%,22%{transform:translateX(0) scaleX(1)}70%,100%{transform:translateX(-34px) scaleX(.62)}}
+@keyframes bfR{0%,22%{transform:translateX(0) scaleX(1)}70%,100%{transform:translateX(34px) scaleX(.62)}}
+.anim .bud{animation:bud 5s ease-in-out infinite}
+@keyframes bud{0%{transform:translate(0,0) scale(0)}45%{transform:translate(0,0) scale(1)}70%{transform:translate(0,0) scale(1.1)}100%{transform:translate(34px,-26px) scale(1.15)}}
+.anim .frL{animation:frL 4.5s ease-in-out infinite}.anim .frR{animation:frR 4.5s ease-in-out infinite}
+@keyframes frL{0%,30%{transform:translate(0,0) rotate(0)}75%,100%{transform:translate(-20px,8px) rotate(-8deg)}}
+@keyframes frR{0%,30%{transform:translate(0,0) rotate(0)}75%,100%{transform:translate(20px,-8px) rotate(8deg)}}
+.anim .sp{animation:sp 4s ease-out infinite}
+@keyframes sp{0%,15%{transform:translate(0,0);opacity:0}25%{opacity:1}100%{transform:translate(var(--dx),var(--dy));opacity:0}}
+.anim .root{stroke-dasharray:60;stroke-dashoffset:60;animation:root 4.5s ease-out infinite}
+@keyframes root{0%,15%{stroke-dashoffset:60}75%,100%{stroke-dashoffset:0}}
+.anim .tilt{animation:tilt 5s ease-in-out infinite}
+@keyframes tilt{0%,20%{opacity:0}45%,100%{opacity:1}}
+
+
+/* ===== motion layer ===== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes frameIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes flash{0%{box-shadow:0 0 0 3px rgba(209,63,124,.45)}100%{box-shadow:0 0 0 0 rgba(209,63,124,0)}}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 3px rgba(209,63,124,.55))}50%{filter:drop-shadow(0 0 10px rgba(209,63,124,1))}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-5px) rotate(-1.5deg)}}
+@keyframes flowd{to{stroke-dashoffset:-22}}
+@keyframes wob{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+@keyframes wig{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes popin{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes growin{from{transform:scale(var(--from))}to{transform:none}}
+.growin{animation:growin .9s cubic-bezier(.2,.7,.2,1);transform-box:fill-box;transform-origin:center}
+.fxin{animation:fadeUp .45s cubic-bezier(.2,.7,.2,1) both}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.stepPic>svg.fx,.stepPic>div.fx{animation:frameIn .5s cubic-bezier(.2,.7,.2,1) both}
+.flash{animation:flash .9s ease-out}
+.choices button.ok,.opts button.ok{animation:pop .45s}
+.choices button.ng,.opts button.ng{animation:shake .45s}
+[data-part].hl{animation:glow 1.6s ease-in-out infinite}
+.pulse,.bob,.wob,.wig,.spin,.popin{transform-box:fill-box;transform-origin:center}
+.pulse{animation:pulse 1.6s ease-in-out infinite}
+.bob{animation:bob 3.2s ease-in-out infinite}
+.wob{animation:wob 2.6s ease-in-out infinite}
+.wig{animation:wig .7s ease-in-out infinite;transform-box:view-box}
+.spin{animation:spin 24s linear infinite}
+.popin{animation:popin .5s cubic-bezier(.2,.9,.3,1.3) both}
+.flowline{stroke-dasharray:6 5;animation:flowd 1.1s linear infinite}
+.mei .sp path{stroke-dasharray:420;stroke-dashoffset:420;transition:stroke-dashoffset 1.3s ease}
+.mei .sp.on path{stroke-dashoffset:0}
+.bins span{animation:popin .45s both}
+.btn{transition:transform .12s,filter .15s,border-color .15s}
+.btn:active:not(:disabled){transform:scale(.96)}
+.chip,.partlist button,.seg button,.stagebar button,.qm{transition:background .2s,color .2s,border-color .2s,transform .12s}
+.chip:active,.partlist button:active,.qm:active{transform:scale(.95)}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:90;background:var(--ink);color:#fff;border-radius:999px;padding:10px 18px;font:600 15px var(--font-body);box-shadow:0 10px 30px -10px rgba(0,0,0,.5);animation:toastIn .35s both;pointer-events:none}
+.mswitch{display:inline-flex;align-items:center;gap:8px;font:600 13.5px var(--font-body);color:var(--muted);cursor:pointer}
+.rmnote{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;background:var(--warn-soft);border:1px solid #f0d29a;border-radius:14px;padding:10px 14px;font-size:14.5px}
+.rmnote b{color:#8a5200}
+.mswitch input{width:18px;height:18px;accent-color:var(--hema)}
+html.calm *,html.calm *::before,html.calm *::after{animation:none!important;transition:none!important}
+html.calm .reveal{opacity:1;transform:none}
+
+/* tutor */
+.tlayout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px;align-items:start}
+aside.index{position:sticky;top:calc(env(safe-area-inset-top,0px) + 140px);display:grid;gap:4px;max-height:calc(100vh - 160px);overflow:auto;padding-bottom:8px}
+aside.index h4{font:600 13px/1.4 var(--font-body);color:var(--muted);margin:10px 4px 2px}
+aside.index button{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;align-items:start;text-align:left;border:1px solid transparent;background:transparent;border-radius:12px;padding:8px 10px;cursor:pointer}
+aside.index button:hover{background:var(--surface);border-color:var(--line)}
+aside.index button[aria-current="true"]{background:var(--surface);border-color:var(--hema);box-shadow:inset 3px 0 0 var(--hema)}
+aside.index .dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font:700 12px/1 var(--font-mono);color:var(--on);margin-top:1px}
+aside.index .dot.done{background:var(--ok);border-color:var(--ok)}
+aside.index .ti{font:600 14.5px/1.35 var(--font-body)}
+aside.index .ts{display:block;font-size:12.5px;color:var(--muted);line-height:1.35}
+.player{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:grid}
+.phead{padding:16px 20px;border-bottom:1px solid var(--line);display:grid;gap:4px}
+.phead .k{font:600 12.5px/1.4 var(--font-mono);color:var(--eosin)}
+.phead h3{font-size:22px}
+.pbar{height:5px;background:var(--sunk);border-radius:3px;overflow:hidden;margin-top:6px}
+.pbar i{display:block;height:100%;background:var(--hema);transition:width .4s}
+.pbody{padding:20px;display:grid;gap:14px;min-height:280px;align-content:start}
+.pbody .ill{background:var(--sunk);border-radius:14px;padding:10px;display:grid;place-items:center}
+.pbody .ill svg{max-width:100%;height:auto;max-height:240px}
+.tutorline{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:start}
+.tutorline .av{width:40px;height:40px;border-radius:50%;background:var(--hema);display:grid;place-items:center;color:#fff}
+.bubble{background:var(--sunk);border-radius:16px;padding:12px 16px;display:grid;gap:8px}
+.qtxt{font:600 18px/1.5 var(--font-display)}
+.opts{display:grid;gap:8px}
+.opts button{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;cursor:pointer;font:500 15.5px/1.5 var(--font-body)}
+.opts button .L{font:700 14px/1.5 var(--font-mono);color:var(--muted)}
+.opts button:hover:not(:disabled){border-color:var(--hema)}
+.opts button.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opts button.ng{border-color:var(--bad);background:var(--bad-soft)}
+.opts button.pick{border-color:var(--hema);background:var(--nuc)}
+.opts button:disabled{cursor:default}
+.pfoot{display:flex;justify-content:space-between;gap:10px;padding:12px 20px;border-top:1px solid var(--line);background:var(--surface);flex-wrap:wrap}
+.thome{display:grid;gap:14px}
+.chcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px}
+.chcards button{border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:14px;text-align:left;cursor:pointer;display:grid;gap:6px}
+.chcards button:hover{border-color:var(--hema)}
+.chcards .n{font:700 26px/1 var(--font-display);color:var(--hema)}
+.chcards .bar{height:5px;background:var(--sunk);border-radius:3px;overflow:hidden}
+.chcards .bar i{display:block;height:100%;background:var(--ok)}
+.aiask{border:1px dashed var(--hema);border-radius:12px;padding:10px 14px;display:grid;gap:8px}
+.aiask .ans{font-size:15px}
+
+/* exam */
+.exsetup{display:grid;gap:14px}
+.exbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:15;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 14px;border-radius:16px;background:var(--surface);border:1px solid var(--line);box-shadow:0 6px 18px -14px rgba(0,0,0,.4)}
+.xcancel{color:var(--bad);border-color:#efc3c5}
+.xcancel:hover{border-color:var(--bad);background:var(--bad-soft)}
+.extime{font:700 20px/1 var(--font-mono);font-variant-numeric:tabular-nums}
+.extime.low{color:var(--bad)}
+.exgrid{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}
+.expal{position:sticky;top:calc(env(safe-area-inset-top,0px) + 86px);display:grid;gap:10px}
+.qmap{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.qm{position:relative;border:1.5px solid var(--line);background:var(--surface);border-radius:9px;padding:7px 0;font:600 13px/1 var(--font-mono);cursor:pointer;text-align:center}
+.qm.ans{background:var(--nuc);border-color:var(--hema)}
+.qm.cur{outline:2.5px solid var(--eosin);outline-offset:1px}
+.qm.flag::after{content:"";position:absolute;top:3px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--warn)}
+.qm.ok{background:var(--ok-soft);border-color:var(--ok)}
+.qm.ng{background:var(--bad-soft);border-color:var(--bad)}
+.big{font:700 clamp(40px,9vw,56px)/1 var(--font-display);font-variant-numeric:tabular-nums}
+.chrow{display:grid;grid-template-columns:minmax(120px,32%) 1fr 54px;gap:10px;align-items:center;font-size:14px}
+.chrow .bar{height:8px;background:var(--sunk);border-radius:4px;overflow:hidden}
+.chrow .bar i{display:block;height:100%;background:var(--hema)}
+.chrow span:last-child{font:600 13px var(--font-mono);text-align:right}
+.rv{display:grid;gap:10px}
+.rv details{border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.rv summary{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:start;padding:12px 14px;cursor:pointer;list-style:none;font-size:15px}
+.rv summary::-webkit-details-marker{display:none}
+.rv .mk{font:700 13px/1.6 var(--font-mono);text-align:center;border-radius:7px}
+.rv .mk.ok{background:var(--ok-soft);color:var(--ok)}
+.rv .mk.ng{background:var(--bad-soft);color:var(--bad)}
+.rv .mk.na{background:var(--warn-soft);color:var(--warn)}
+.rv .rvb{padding:0 14px 14px;display:grid;gap:8px}
+.why{font-size:14.5px;background:var(--sunk);border-radius:10px;padding:9px 12px}
+.dialog{position:fixed;inset:0;z-index:80;background:rgba(20,14,35,.45);display:grid;place-items:center;padding:20px}
+.dialog .card{max-width:420px;width:100%;display:grid;gap:12px;box-shadow:0 20px 50px -20px rgba(0,0,0,.5)}
+body.examlock .modebar,body.examlock .subnav,body.examlock .hero,body.examlock .foot{display:none!important}
+body.examlock .tabs{display:none}
+
+.qk{display:grid;gap:4px;text-align:left;cursor:pointer;font:inherit;color:inherit;transition:border-color .2s,transform .15s,box-shadow .2s}
+.qk:hover{border-color:var(--hema);box-shadow:0 8px 22px -16px rgba(74,53,145,.7);transform:translateY(-2px)}
+.qk:active{transform:scale(.98)}
+.qk b{font:700 18px/1.3 var(--font-display)}
+.qkic{font-size:26px;line-height:1}
+.tyb{display:inline-block;font:600 12px/1.6 var(--font-body);border-radius:999px;padding:0 9px;vertical-align:1px;white-space:nowrap}
+.ty-rec{background:var(--sunk);color:var(--muted)}
+.ty-ana{background:#e3edfb;color:#2a5aa8}
+.ty-app{background:#e2f4ea;color:#1c7a4f}
+/* chat */
+.fab{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;border:0;border-radius:999px;background:var(--hema);color:#fff;font:600 15px/1 var(--font-body);padding:14px 18px;box-shadow:0 10px 24px -10px rgba(74,53,145,.8);cursor:pointer}
+.chat{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:41;width:min(420px,calc(100vw - 28px));height:min(560px,calc(100vh - 40px));background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 60px -24px rgba(0,0,0,.5);display:grid;grid-template-rows:auto minmax(0,1fr) auto auto}
+.chat header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.chat header b{font-family:var(--font-display);font-size:16px}
+.chat header span{display:block;font-size:12.5px;color:var(--muted)}
+.msgs{overflow:auto;padding:12px 14px;display:grid;gap:10px;align-content:start}
+.m{border-radius:14px;padding:9px 12px;font-size:15px;line-height:1.6;max-width:92%}
+.m.u{background:var(--hema);color:#fff;justify-self:end}
+.m.a{background:var(--sunk)}
+.m.note{background:var(--warn-soft);font-size:14px}
+.m p{margin:0 0 6px}.m p:last-child{margin:0}
+.m ul{margin:4px 0;padding-left:18px}
+.qchips{display:flex;gap:6px;overflow-x:auto;padding:6px 14px;scrollbar-width:none}
+.qchips button{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 10px;font-size:13px;cursor:pointer}
+.compose{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--line)}
+.compose textarea{flex:1;resize:none;border:1px solid var(--line);border-radius:12px;padding:9px 12px;font:inherit;font-size:15px;min-height:44px;max-height:120px}
+.thinking i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted);margin-right:4px;animation:blink 1.2s infinite}
+.thinking i:nth-child(2){animation-delay:.2s}.thinking i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.foot{margin-top:30px;color:var(--muted);font-size:13px}
+
+@media (max-width:860px){
+  .tlayout{grid-template-columns:1fr}
+  aside.index{position:static;max-height:none;display:flex;overflow-x:auto;gap:6px;padding-bottom:4px}
+  aside.index h4{display:none}
+  aside.index button{flex:none;grid-template-columns:22px auto;max-width:240px}
+  aside.index .ts{display:none}
+  .exgrid{grid-template-columns:1fr}
+  .expal{position:static}
+  .qmap{grid-template-columns:repeat(10,1fr)}
+}
+@media (max-width:560px){
+  .exbar>.row:last-child{display:grid;grid-template-columns:repeat(3,1fr);width:100%;gap:8px}
+  .exbar>.row:last-child .extime{grid-column:1/-1}
+  .exbar>.row:last-child .btn{padding:10px 6px}
+  body{font-size:16px}
+  .gam{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .qmap{grid-template-columns:repeat(8,1fr)}
+  .card{padding:15px}
+}
+/* ---- Slide 13 additions ---- */
+.view>.card,.view>.grid2,.view>.grid3,.view>.pgrid,.view>p{margin-top:14px}
+.view{display:block}
+.warnbox{margin-top:12px;background:var(--warn-soft);border-radius:12px;padding:10px 14px;font-size:14.5px;line-height:1.6}
+.warnbox b:first-child{color:var(--warn)}
+.pgnav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:26px 0 6px}
+.pgnav .btn{flex-direction:column;align-items:flex-start;gap:2px;min-height:54px;padding:9px 16px;text-decoration:none;max-width:48%}
+.pgnav .btn.pri{margin-left:auto;align-items:flex-end;text-align:right}
+.pgnav small{font-weight:500;font-size:12px;opacity:.8}
+.taxw{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;align-items:center;margin-top:10px}
+.taxw svg{width:100%;height:auto}
+.habw{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:14px;align-items:start}
+.habw .info,.taxw .info{background:var(--sunk);border-radius:12px;padding:12px 14px;min-height:90px;font-size:15px}
+.card>.info{background:var(--sunk);border-radius:12px;padding:12px 14px;font-size:15px}
+@media (max-width:700px){.taxw,.habw{grid-template-columns:1fr}}
+.papaya{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.papaya div{background:var(--sunk);border-radius:12px;padding:8px 10px;display:grid}
+.papaya span{font-size:12.5px;color:var(--muted)}.papaya b{font-size:16px}
+.binom{display:flex;gap:10px;margin:10px 0;font:italic 600 22px/1.2 var(--font-display)}
+.binom span{padding:6px 14px;border-radius:12px;border:2px dashed var(--line)}
+.binom .g{color:var(--hema);border-color:var(--hema)}.binom .s{color:var(--eosin);border-color:var(--eosin)}
+.kings{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:10px}
+.kings button{border:2px solid var(--k);background:color-mix(in srgb,var(--k) 8%,#fff);border-radius:14px;padding:10px 6px;cursor:pointer;display:grid;gap:2px;text-align:center;min-height:64px}
+.kings button b{color:var(--k);font:700 15px/1.2 var(--font-display)}.kings button span{font-size:12px;color:var(--muted)}
+.kings button[aria-pressed="true"]{background:var(--k)}.kings button[aria-pressed="true"] b,.kings button[aria-pressed="true"] span{color:#fff}
+@media (max-width:640px){.kings{grid-template-columns:repeat(3,minmax(0,1fr))}.papaya{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.pcard{border-top:5px solid var(--pc)}
+.pcard .pts{margin-top:8px}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match>div{display:grid;gap:8px;align-content:start}
+.match button{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 12px;min-height:48px;font:600 14.5px/1.35 var(--font-body);cursor:pointer;text-align:left}
+.match button.sel{border-color:var(--hema);background:var(--nuc)}
+.match button.ok{border-color:var(--ok);background:var(--ok-soft);opacity:.85}
+.match button.ng{border-color:var(--bad);background:var(--bad-soft)}
+.mfb{margin-top:10px}
+table.rt{width:100%;border-collapse:separate;border-spacing:0 6px;font-size:14.5px}
+table.rt th,table.rt td{text-align:left;vertical-align:top;padding:6px 8px}
+table.rt thead th{font-size:13px;color:var(--muted);font-weight:600}
+table.rt tbody th{width:22%;font-weight:700;background:var(--sunk);border-radius:10px 0 0 10px}
+table.rt.plain tbody td{background:var(--surface);border-bottom:1px solid var(--line)}
+.rv{all:unset;box-sizing:border-box;display:block;width:100%;min-height:40px;padding:8px 10px;border-radius:10px;border:1.5px dashed var(--line);cursor:pointer;background:var(--surface);line-height:1.5}
+.rv .a{display:none}.rv .q{color:var(--muted);font-size:13px}
+.rv[aria-expanded="true"]{border-style:solid;border-color:var(--hema);background:var(--nuc)}
+.rv[aria-expanded="true"] .a{display:inline}.rv[aria-expanded="true"] .q{display:none}
+.rv:focus-visible{outline:2px solid var(--hema);outline-offset:2px}
+.hcol{border-radius:14px;padding:12px;background:color-mix(in srgb,var(--hc) 8%,#fff);border:1.5px solid color-mix(in srgb,var(--hc) 40%,#fff);display:grid;gap:4px}
+.hcol b{color:var(--hc);font:700 17px/1.2 var(--font-display)}
+.hcol .ins{font:700 12.5px/1 var(--font-mono);color:#fff;background:var(--hc);border-radius:6px;padding:4px 8px;justify-self:start}
+.algc{border-radius:16px;border:2px solid var(--ac);padding:14px;background:color-mix(in srgb,var(--ac) 5%,#fff)}
+.algh{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.algh .dot{width:28px;height:28px;border-radius:50%;background:var(--ac);flex:none}
+.algc em.pg{font-style:normal;display:inline-block;margin:3px 4px 0 0;padding:2px 8px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13px}
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:minmax(120px,1.1fr) minmax(0,2fr) auto;gap:10px;align-items:center}
+.bl{display:grid}.bl b{font-size:15px}.bl span{font-size:12px;color:var(--muted)}
+.bt{height:18px;border-radius:9px;background:var(--sunk);overflow:hidden}
+.bt i{display:block;height:100%;border-radius:9px;transition:width .8s cubic-bezier(.2,.7,.2,1)}
+.bv{font:600 13px/1 var(--font-mono);white-space:nowrap}
+@media (max-width:520px){.bar{grid-template-columns:1fr auto}.bar .bt{grid-column:1/-1;grid-row:2}}
+.wwflow{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin-top:10px}
+.ww{border-radius:14px;padding:12px;display:grid;gap:4px;position:relative;overflow:hidden;align-content:start}
+.ww.aer{background:#e6f3fb;border:1.5px solid #9cc8e4}.ww.ana{background:#efe7dc;border:1.5px solid #c9b394}
+.ww .bub{position:relative;height:26px}
+.ww .bub i{position:absolute;bottom:0;width:9px;height:9px;border-radius:50%;background:#fff;border:1px solid #9cc8e4;animation:rise 2.4s linear infinite}
+@keyframes rise{from{transform:translateY(0);opacity:1}to{transform:translateY(-22px);opacity:0}}
+html.calm .ww .bub i{animation:none}
+.wwflow .arr{align-self:center;font-size:13px;color:var(--muted);text-align:center;max-width:90px}
+@media (max-width:640px){.wwflow{grid-template-columns:1fr}.wwflow .arr{max-width:none}}
+ul.pts{margin:6px 0 0;padding-left:20px;display:grid;gap:4px}
+
+.view .card>svg,.view .card>div>svg,#gsPic svg,#gePic svg,#nPic svg,#fmPic svg,#szSvg{max-height:330px}
+.view .habw svg{max-height:300px}
+
+.fflow{display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
+.fbox{border-radius:14px;padding:10px 14px;background:var(--sunk);border:1.5px solid var(--line);display:grid;gap:2px;min-width:0}
+.fbox span{font-size:12px;color:var(--muted)}.fbox b{font-size:15.5px;line-height:1.35}
+.fbox.p{background:color-mix(in srgb,var(--fc) 10%,#fff);border-color:color-mix(in srgb,var(--fc) 45%,#fff)}
+.fprods{display:grid;gap:8px;flex:1;min-width:0}
+.fmic{display:grid;justify-items:center;gap:2px;flex:none}.fmic span{font:700 13px/1 var(--font-body);color:var(--fc)}
+.farr{display:flex;gap:5px;flex:none}.farr i{width:7px;height:7px;border-radius:50%;background:var(--fc);opacity:.25;animation:fdot 1.2s infinite}
+.farr i:nth-child(2){animation-delay:.2s}.farr i:nth-child(3){animation-delay:.4s}
+@keyframes fdot{50%{opacity:1;transform:scale(1.3)}}
+.bob{animation:bobk 1.8s ease-in-out infinite}@keyframes bobk{50%{transform:translateY(-4px)}}
+html.calm .farr i,html.calm .bob{animation:none}
+@media (max-width:640px){.fflow{flex-direction:column;align-items:stretch}.farr{justify-content:center;transform:rotate(90deg);height:14px}.fmic{justify-self:center;align-self:center}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Biology · Siam University · Slide 13</p>
+    <h1>Diversity of <span>Microorganisms</span></h1>
+    <p class="sub">ความหลากหลายของจุลินทรีย์ (Diversity of Microorganisms)</p>
+    <p class="keyline"><span><b>สไลด์ X</b> = หน้าในเอกสาร PDF (48 หน้า)</span><span class="x">ข้อมูลเสริม = ไม่อยู่ในเอกสาร เพิ่มเพื่อให้เข้าใจง่ายขึ้น</span><label class="mswitch"><input type="checkbox" id="motionOn" checked>Motion ภาพเคลื่อนไหว</label></p>
+  </header>
+
+  <div class="rmnote" id="rmNote" hidden><span><b>ภาพเคลื่อนไหวถูกปิดอยู่</b> เพราะอุปกรณ์นี้ตั้งค่า “ลดการเคลื่อนไหว” (Reduce Motion) ไว้</span><button class="btn pri" type="button" id="rmOn">เปิดภาพเคลื่อนไหว</button></div>
+  <nav class="tabs" aria-label="เมนู">
+    <div class="modebar" role="tablist" aria-label="โหมด">
+      <button type="button" role="tab" data-mode-go="lab" aria-selected="true">Lab</button>
+      <button type="button" role="tab" data-mode-go="tutor" aria-selected="false">Tutor</button>
+      <button type="button" role="tab" data-mode-go="exam" aria-selected="false">Exam</button>
+    </div>
+    <div class="subnav" id="labNav" role="tablist" aria-label="บทใน Lab"></div>
+  </nav>
+
+  <main>
+    <section id="labView" class="view"></section>
+    <section id="tutorView" class="view" hidden></section>
+    <section id="examView" class="view" hidden></section>
+  </main>
+
+  <p class="foot">อ้างอิงเนื้อหา: เอกสารประกอบการสอน ความหลากหลายของจุลินทรีย์ (Diversity of Microorganisms) · Asst. Prof. Jiranart Boonkong · Faculty of Science, Siam University</p>
+</div>
+
+<button class="fab" id="fab" type="button" hidden>ถามติวเตอร์</button>
+<section class="chat" id="chat" hidden aria-label="ถามติวเตอร์">
+  <header><div><b>ติวเตอร์ Slide 13</b><span id="chatCtx">หน้าแรก</span></div><button class="btn" id="chatClose" type="button" aria-label="ปิด">ปิด</button></header>
+  <div class="msgs" id="msgs" aria-live="polite"></div>
+  <div class="qchips" id="qchips"></div>
+  <form class="compose" id="compose"><textarea id="chatIn" rows="1" placeholder="พิมพ์คำถาม…" aria-label="คำถาม"></textarea><button class="btn pri" id="sendBtn" type="submit">ส่ง</button></form>
+</section>
+<div class="dialog" id="dlg" hidden><div class="card" role="dialog" aria-modal="true" aria-labelledby="dlgT"><h3 id="dlgT"></h3><p id="dlgB" class="muted"></p><div class="row" id="dlgA"></div></div></div>
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+const SL=n=>`<span class="slide">สไลด์ ${n}</span>`, EX=`<span class="extra">ข้อมูลเสริม</span>`;
+const WARN=t=>`<p class="warnbox"><b>⚠ ข้อควรรู้</b> ${t}</p>`;
+window.M12={$,$$,esc,store,SL,EX};
+
+const LABS=[
+  {id:"intro",t:"จุลินทรีย์ & การจัดหมวดหมู่"},
+  {id:"arch",t:"Monera: Archaea"},
+  {id:"gram",t:"รูปร่าง & Gram stain"},
+  {id:"bact",t:"Eubacteria & Cyanobacteria"},
+  {id:"path",t:"จุลินทรีย์ก่อโรคในอาหาร"},
+  {id:"fungi",t:"Fungi"},
+  {id:"prot",t:"Protista"},
+  {id:"ferm",t:"อาหารหมัก"},
+  {id:"use",t:"เกษตร สิ่งแวดล้อม การแพทย์"}
+];
+const labNav=$("#labNav"), labView=$("#labView");
+labNav.innerHTML=LABS.map((l,i)=>`<button type="button" class="chip" role="tab" data-lab="${l.id}" aria-selected="false"><b>${i+1}</b>${esc(l.t)}</button>`).join("");
+labNav.addEventListener("click",e=>{const b=e.target.closest("[data-lab]");if(b)location.hash="lab-"+b.dataset.lab;});
+const built={};let labCur=null;const BUILD={};
+function showLab(id){
+  if(!LABS.some(l=>l.id===id))id=store.get("m13-lab","intro")||"intro";
+  if(!LABS.some(l=>l.id===id))id="intro";
+  labCur=id;store.set("m13-lab",id);
+  $$("#labNav [data-lab]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.lab===id)));
+  if(!built[id]){const s=document.createElement("div");s.className="view";s.dataset.lab=id;labView.appendChild(s);BUILD[id](s);
+    const i=LABS.findIndex(l=>l.id===id);
+    s.insertAdjacentHTML("beforeend",`<div class="pgnav">${i>0?`<a class="btn" href="#lab-${LABS[i-1].id}"><small>← ก่อนหน้า</small>${esc(LABS[i-1].t)}</a>`:"<span></span>"}${i<LABS.length-1?`<a class="btn pri" href="#lab-${LABS[i+1].id}"><small>ถัดไป →</small>${esc(LABS[i+1].t)}</a>`:""}</div>`);
+    built[id]=s;}
+  Object.entries(built).forEach(([k,el])=>el.hidden=k!==id);
+  const b=$(`#labNav [data-lab="${id}"]`);if(b&&b.scrollIntoView)try{b.scrollIntoView({block:"nearest",inline:"nearest"})}catch(e){}
+}
+window.M12.showLab=showLab;window.M12.labCur=()=>labCur;window.M12.LABS=LABS;
+
+/* ---------------- shared helpers ---------------- */
+function wireParts(svg,chips,info,list,intro){
+  chips.innerHTML=list.map((p,k)=>`<button type="button" data-p="${p.id}" aria-pressed="false"><b style="font-family:var(--font-mono);margin-right:4px">${k+1}</b>${esc(p.l)}</button>`).join("");
+  const idle=intro||"แตะที่ภาพหรือชื่อด้านบนเพื่ออ่านคำอธิบาย";info.innerHTML=idle;
+  const pick=id=>{const p=list.find(x=>x.id===id);if(!p)return;svg.classList.add("dim");
+    $$("[data-part]",svg).forEach(g=>g.classList.toggle("hl",g.dataset.part===id));
+    $$("button",chips).forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.p===id)));
+    info.innerHTML=`<b>${list.indexOf(p)+1}. ${esc(p.l)}</b> ${p.i} ${p.s?SL(p.s):""}`;};
+  chips.onclick=e=>{const b=e.target.closest("[data-p]");if(b)pick(b.dataset.p);};
+  svg.addEventListener("click",e=>{const g=e.target.closest("[data-part]");if(g)pick(g.dataset.part);else{svg.classList.remove("dim");$$("[data-part]",svg).forEach(x=>x.classList.remove("hl"));$$("button",chips).forEach(b=>b.setAttribute("aria-pressed","false"));info.innerHTML=idle;}});
+  return pick;
+}
+function diagramCard(title,lede,svgHTML,id){
+  return `<div class="card" style="padding:0;overflow:hidden"><div style="padding:14px 18px 0"><h3>${title}</h3>${lede?`<p class="small muted">${lede}</p>`:""}</div>
+  <div class="dg" style="margin-top:10px"><div class="pic">${svgHTML}</div><div class="side"><div class="partlist" id="${id}Chips"></div><div class="info" id="${id}Info" aria-live="polite"></div></div></div></div>`;
+}
+function stepper(host,n,draw,opt={}){
+  let i=0,timer=null;
+  host.innerHTML=`<div class="stepctl"><div class="row"><button class="btn" type="button" data-a="p" aria-label="ก่อนหน้า">←</button><button class="btn pri" type="button" data-a="play">▶ เล่น</button><button class="btn" type="button" data-a="n" aria-label="ถัดไป">→</button></div><div class="dots">${Array.from({length:n},(_,k)=>`<button type="button" data-k="${k}" aria-label="ขั้น ${k+1}">${k+1}</button>`).join("")}</div></div>`;
+  const stop=()=>{if(timer){clearInterval(timer);timer=null;}$('[data-a="play"]',host).textContent="▶ เล่น";};
+  const go=k=>{i=Math.max(0,Math.min(n-1,k));$$(".dots button",host).forEach((b,j)=>{if(j===i)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current");});$('[data-a="p"]',host).disabled=i===0;$('[data-a="n"]',host).disabled=i===n-1;draw(i);};
+  host.onclick=e=>{const b=e.target.closest("button");if(!b)return;
+    if(b.dataset.k!=null){stop();go(+b.dataset.k);}
+    else if(b.dataset.a==="p"){stop();go(i-1);}else if(b.dataset.a==="n"){stop();go(i+1);}
+    else if(b.dataset.a==="play"){if(timer){stop();return;}if(i===n-1)go(0);b.textContent="❚❚ หยุด";timer=setInterval(()=>{if(i>=n-1){stop();return;}go(i+1);},opt.ms||2600);}
+  };
+  document.addEventListener("visibilitychange",()=>{if(document.hidden)stop();});
+  go(0);return {go,stop};
+}
+/* seg picker: items [{id,l}] → render(id) */
+function seg(host,items,render,start){
+  host.innerHTML=`<div class="seg" role="group">${items.map(x=>`<button type="button" data-id="${x.id}" aria-pressed="false">${x.l}</button>`).join("")}</div>`;
+  const go=id=>{$$("button",host).forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.id===id)));render(id);};
+  host.onclick=e=>{const b=e.target.closest("[data-id]");if(b)go(b.dataset.id);};
+  go(start||items[0].id);return go;
+}
+/* sort game: items [{t,a,w,s}] bins [labels] */
+function sortGame(el,items,bins,opt={}){
+  let order=[...items.keys()].sort(()=>Math.random()-.5),k=0,score=0;const placed=bins.map(()=>[]);
+  function draw(){
+    if(k>=order.length){el.innerHTML=`<div class="sortq"><p class="item">ครบ ${items.length} ข้อ · ถูก ${score} ข้อ</p><div class="bins">${bins.map((b,i)=>`<div><h4>${b}</h4>${placed[i].map(x=>`<span>${x}</span>`).join("")}</div>`).join("")}</div><div class="row"><button class="btn pri" type="button" data-r>เล่นอีกครั้ง</button></div></div>`;$("[data-r]",el).onclick=()=>{order=[...items.keys()].sort(()=>Math.random()-.5);k=0;score=0;placed.forEach(p=>p.length=0);draw();};return;}
+    const it=items[order[k]];
+    el.innerHTML=`<div class="sortq" id="sortq"><p class="small muted">ข้อ ${k+1} / ${items.length} · ถูก ${score}</p><p class="item">${it.t}</p><div class="choices">${bins.map((b,i)=>`<button type="button" data-b="${i}">${b}</button>`).join("")}</div><div id="sortFb" aria-live="polite"></div></div>`;
+    $$(".choices button",el).forEach(b=>b.onclick=()=>{
+      const i=+b.dataset.b,ok=i===it.a;if(ok)score++;placed[it.a].push(it.short||it.t);
+      $$(".choices button",el).forEach(x=>{x.disabled=true;if(+x.dataset.b===it.a)x.classList.add("ok");else if(x===b)x.classList.add("ng");});
+      $("#sortFb",el).innerHTML=`<p class="fb ${ok?"ok":"ng"}"><b>${ok?"ถูกต้อง":"ยังไม่ใช่ · คำตอบคือ "+bins[it.a]}</b> ${it.w} ${it.s?SL(it.s):""}</p><div class="row" style="margin-top:8px"><button class="btn pri" type="button" data-n>${k<order.length-1?"ข้อต่อไป →":"ดูผล"}</button></div>`;
+      $("[data-n]",el).onclick=()=>{k++;draw();};
+    });
+  }
+  draw();
+}
+/* self-test table: cells hidden until tapped */
+function revealTable(el,head,rows,note){
+  el.innerHTML=`<div class="tblwrap"><table class="rt"><thead><tr>${head.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr><th scope="row">${r[0]}</th>${r.slice(1).map(c=>`<td><button type="button" class="rv" aria-expanded="false"><span class="q">แตะเพื่อดู</span><span class="a">${c}</span></button></td>`).join("")}</tr>`).join("")}</tbody></table></div><div class="row" style="margin-top:10px"><button class="btn" type="button" data-all>เปิดทั้งหมด</button><button class="btn" type="button" data-hide>ซ่อนทั้งหมด (ทดสอบตัวเอง)</button></div>${note||""}`;
+  el.addEventListener("click",e=>{const b=e.target.closest(".rv");if(b){b.setAttribute("aria-expanded",String(b.getAttribute("aria-expanded")!=="true"));}
+    if(e.target.closest("[data-all]"))$$(".rv",el).forEach(x=>x.setAttribute("aria-expanded","true"));
+    if(e.target.closest("[data-hide]"))$$(".rv",el).forEach(x=>x.setAttribute("aria-expanded","false"));});
+}
+/* match game: pairs [{l,r,w,s}] — tap left then right */
+function matchGame(el,pairs,lt,rt){
+  let sel=null,done=0;const R=[...pairs.keys()].sort(()=>Math.random()-.5);
+  el.innerHTML=`<div class="match"><div><p class="small muted">${lt}</p>${pairs.map((p,i)=>`<button type="button" class="mL" data-i="${i}">${p.l}</button>`).join("")}</div><div><p class="small muted">${rt}</p>${R.map(i=>`<button type="button" class="mR" data-i="${i}">${pairs[i].r}</button>`).join("")}</div></div><div class="mfb" aria-live="polite"><p class="small muted">แตะซ้าย 1 อัน แล้วแตะขวาที่คู่กัน</p></div>`;
+  const fb=$(".mfb",el);
+  el.onclick=e=>{const b=e.target.closest("button");if(!b||b.disabled)return;
+    if(b.classList.contains("mL")){$$(".mL",el).forEach(x=>x.classList.toggle("sel",x===b));sel=+b.dataset.i;return;}
+    if(b.classList.contains("mR")){if(sel==null){fb.innerHTML=`<p class="fb hint">เลือกด้านซ้ายก่อน</p>`;return;}
+      const i=+b.dataset.i;
+      if(i===sel){[$(`.mL[data-i="${i}"]`,el),b].forEach(x=>{x.disabled=true;x.classList.add("ok");x.classList.remove("sel");});done++;
+        fb.innerHTML=`<p class="fb ok"><b>ถูกต้อง</b> ${pairs[i].w||""} ${pairs[i].s?SL(pairs[i].s):""}</p>`+(done===pairs.length?`<div class="row" style="margin-top:8px"><button class="btn pri" type="button" data-again>เล่นอีกครั้ง</button></div>`:"");
+        const ag=$("[data-again]",el);if(ag)ag.onclick=e2=>{e2.stopPropagation();matchGame(el,pairs,lt,rt);};sel=null;}
+      else{b.classList.add("ng");setTimeout(()=>b.classList.remove("ng"),600);fb.innerHTML=`<p class="fb ng">ยังไม่ใช่คู่กัน ลองใหม่</p>`;}
+    }};
+}
+const vh=(h,lede)=>`<div class="vh"><h2>${h}</h2>${lede?`<p class="lede">${lede}</p>`:""}</div>`;
+
+/* =========================== 1 · Intro & taxonomy =========================== */
+const GROUPS=[
+  {id:"virus",l:"ไวรัส",en:"Virus",sz:"20–300 nm",x:.08,c:"#7c5cc4",i:"เล็กที่สุดในกลุ่ม ต้องอาศัยเซลล์โฮสต์จึงเพิ่มจำนวนได้"},
+  {id:"rick",l:"ริคเกตเซีย",en:"Rickettsia",sz:"≈0.3–0.5 µm",x:.27,c:"#b5651d",i:"เอกสารบอกว่าเล็กกว่าแบคทีเรียแต่ใหญ่กว่าไวรัส"},
+  {id:"bact",l:"แบคทีเรีย",en:"Bacteria",sz:"≈1–5 µm",x:.44,c:"#16735f",i:"prokaryote เซลล์เดียว พบได้ทุกที่ ทั้งดิน น้ำ อากาศ และในร่างกาย"},
+  {id:"fung",l:"เชื้อรา (ยีสต์)",en:"Fungi",sz:"ยีสต์ ≈3–8 µm",x:.58,c:"#a0522d",i:"eukaryote ผนังเซลล์เป็นไคติน มีทั้งยีสต์ (เซลล์เดียว) และราเส้นใย"},
+  {id:"alga",l:"สาหร่าย",en:"Algae",sz:"≈ไม่กี่ µm ถึงหลายเซนติเมตร",x:.76,c:"#2f8a3a",i:"มีคลอโรฟิลล์เอ สังเคราะห์แสงได้ มีทั้งเซลล์เดียวและหลายเซลล์"},
+  {id:"prot",l:"โปรโตซัว",en:"Protozoa",sz:"≈10–200 µm",x:.9,c:"#c2410c",i:"eukaryote เซลล์เดียว แบ่งกลุ่มตามอวัยวะที่ใช้เคลื่อนที่"}
+];
+const TAX=[
+  {k:"Kingdom",th:"อาณาจักร",ex:"Animalia"},{k:"Phylum / Division",th:"ไฟลัม / ดิวิชัน",ex:"Chordata"},{k:"Class",th:"ชั้น",ex:"Mammalia"},
+  {k:"Order",th:"อันดับ",ex:"Primates"},{k:"Family",th:"วงศ์",ex:"Hominidae"},{k:"Genus",th:"สกุล",ex:"Homo"},{k:"Species",th:"ชนิด",ex:"Homo sapiens"}
+];
+const NAMES=[
+  {o:["<i>Bacillus subtilis</i>","<i>bacillus Subtilis</i>","<i>Bacillus Subtilis</i>","<i>BacillusSubtilis</i>"],w:"Genus ขึ้นต้นตัวพิมพ์ใหญ่ species ตัวพิมพ์เล็กทั้งหมด และเว้นวรรคระหว่าง 2 คำ"},
+  {o:["<i>Escherichia coli</i>","<i>Escherichia Coli</i>","<i>escherichia coli</i>","<i>E.Coli</i>"],w:"ชื่อเต็มเขียนแบบทวินาม ตัวแรกของ Genus เป็นตัวใหญ่ ส่วน coli เป็นตัวเล็ก"},
+  {o:["<i>Penicillium</i> sp.","<i>penicillium</i> sp.","<i>Penicillium Sp.</i>","Penicillium SP"],w:"sp. ใช้เมื่อรู้ Genus แต่ไม่ระบุ species และไม่ต้องเขียนตัวเอียงที่ sp."},
+  {o:["<i>Musa sapientum</i>","<i>Musa Sapientum</i>","<i>musa sapientum</i>","<i>MusaSapientum</i>"],w:"กล้วยตามเอกสาร: Musa sapientum เขียนกฎเดียวกันทุกชนิด"}
+];
+const KING=[
+  {id:"mon",l:"Monera",th:"อาณาจักรมอเนอรา",i:"prokaryote ไม่มีเยื่อหุ้มนิวเคลียส ได้แก่ archaea, eubacteria, cyanobacteria",go:"arch",c:"#16735f"},
+  {id:"pro",l:"Protista",th:"อาณาจักรโพรทิสตา",i:"eukaryote เซลล์เดียวหรือหลายเซลล์อย่างง่าย ได้แก่ protozoa และ algae",go:"prot",c:"#c2410c"},
+  {id:"fun",l:"Fungi",th:"อาณาจักรฟังไจ",i:"eukaryote ไม่มี chloroplast ผนังเซลล์เป็นไคติน ได้แก่ ยีสต์ รา เห็ด",go:"fungi",c:"#a0522d"},
+  {id:"pla",l:"Plantae",th:"อาณาจักรพืช",i:"สิ่งมีชีวิตหลายเซลล์ สังเคราะห์แสงได้ (ไม่อยู่ในหัวข้อจุลินทรีย์)",c:"#2f8a3a"},
+  {id:"ani",l:"Animalia",th:"อาณาจักรสัตว์",i:"สิ่งมีชีวิตหลายเซลล์ กินสิ่งอื่นเป็นอาหาร (ไม่อยู่ในหัวข้อจุลินทรีย์)",c:"#7c5cc4"}
+];
+BUILD.intro=el=>{
+  el.innerHTML=vh("จุลินทรีย์ & การจัดหมวดหมู่",`จุลินทรีย์ (microorganism) คือสิ่งมีชีวิตเล็กๆ ส่วนมากมองไม่เห็นด้วยตาเปล่า พบได้ทุกที่ ทั้งในร่างกายคน สัตว์ พืช ดิน น้ำ อากาศ มีทั้งประโยชน์และโทษ ${SL(2)}`)+
+  `<div class="card"><h3>6 กลุ่มของจุลินทรีย์ เรียงตามขนาด</h3><p class="small muted">แตะชื่อกลุ่ม · ขนาดโดยประมาณเป็น${EX}</p><div id="szSeg" style="margin-top:10px"></div>
+   <svg id="szSvg" viewBox="0 0 440 150" role="img" aria-label="เทียบขนาดจุลินทรีย์" style="width:100%;height:auto;margin-top:10px"></svg><div class="info" id="szInfo" aria-live="polite"></div>
+   ${WARN("เอกสารเรียก ริคเกตเซีย ว่าเป็น “กึ่งพืชกึ่งสัตว์” แต่ปัจจุบัน Rickettsia จัดเป็น<b>แบคทีเรีย</b>ที่ต้องอาศัยอยู่ในเซลล์โฮสต์ (obligate intracellular) "+EX)}</div>
+  <div class="card"><h3>ลำดับการจัดหมวดหมู่ (taxonomy) ${SL(3)}</h3><p class="small muted">แยกจากกลุ่มใหญ่ไปกลุ่มเล็ก ยิ่งลงไปยิ่งใกล้เคียงกันมาก · ตัวอย่างคือมนุษย์ ${EX}</p>
+   <div class="taxw"><svg id="taxSvg" viewBox="0 0 560 300" role="img" aria-label="ลำดับขั้น taxonomy"></svg><div class="info" id="taxInfo" aria-live="polite"></div></div><div id="taxCtl" style="margin-top:10px"></div>
+   <p class="small muted" style="margin-top:8px">วิธีจำ: <b>K</b>ing <b>P</b>hilip <b>C</b>ame <b>O</b>ver <b>F</b>or <b>G</b>ood <b>S</b>oup ${EX}</p></div>
+  <div class="grid2">
+   <div class="card"><h3>ชื่อสามัญ (common name) ${SL(3)}</h3><p class="small muted">ชื่อที่เรียกกันทั่วไป ต่างกันตามภาษาและท้องถิ่น เช่น มะละกอ</p>
+    <div class="papaya">${[["ภาคกลาง","มะละกอ"],["ภาคอีสาน","บักหุ่ง"],["ภาคเหนือ","บะก้วยเต้ด"],["ภาคใต้","ลอกอ"],["อังกฤษ","papaya"],["ญี่ปุ่น","パパイヤ"]].map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join("")}</div>
+    <p class="small" style="margin-top:10px">ทุกชื่อหมายถึงพืชชนิดเดียวกัน คือ <i>Carica papaya</i> จึงต้องมี<b>ชื่อวิทยาศาสตร์</b>ที่เป็นสากล</p></div>
+   <div class="card"><h3>ชื่อวิทยาศาสตร์ ระบบทวินาม ${SL(4)}</h3><p class="small muted">Binomial nomenclature โดย Carolus Linnaeus · <i>Genus species</i></p>
+    <div class="binom"><span class="g">Genus</span><span class="s">species</span></div>
+    <ul class="pts small"><li>ตัวแรกของ Genus เป็นตัวพิมพ์ใหญ่ ที่เหลือพิมพ์เล็ก</li><li>เว้นวรรคระหว่าง 2 คำ และพิมพ์ตัวเอียง (หรือขีดเส้นใต้เมื่อเขียนมือ) ${EX}</li><li>ไม่ระบุ species ใช้ <i>Penicillium</i> sp.</li></ul>
+    ${WARN("เอกสารเขียนปีของ Linnaeus เป็น 1770–1778 ที่ถูกคือ <b>1707–1778</b> "+EX)}</div>
+  </div>
+  <div class="card"><h3>ฝึก: ข้อใดเขียนชื่อวิทยาศาสตร์ถูก</h3><div id="nmQ" style="margin-top:8px"></div></div>
+  <div class="card"><h3>5 อาณาจักรของ Whittaker (1969) ${SL(5)}</h3><p class="small muted">แตะอาณาจักร · จุลินทรีย์อยู่ใน 3 อาณาจักรแรก</p>
+   <div class="kings" id="kings">${KING.map(k=>`<button type="button" data-k="${k.id}" style="--k:${k.c}"><b>${k.l}</b><span>${k.th}</span></button>`).join("")}</div><div class="info" id="kInfo" aria-live="polite" style="margin-top:10px">แตะอาณาจักรเพื่ออ่าน</div></div>`;
+  // size bars
+  const svg=$("#szSvg",el);
+  const draw=id=>{svg.innerHTML=`<line x1="14" y1="104" x2="426" y2="104" stroke="var(--line)" stroke-width="2"/>`+
+    GROUPS.map(g=>{const cx=34+g.x*368,r=3+g.x*24,on=g.id===id;return `<g opacity="${on||!id?1:.35}"><circle cx="${cx}" cy="${100-r}" r="${r}" fill="${g.c}" fill-opacity=".22" stroke="${g.c}" stroke-width="${on?3:1.6}">${on?`<animate attributeName="r" values="${r};${r*1.12};${r}" dur="1.6s" repeatCount="indefinite"/>`:""}</circle><text x="${cx}" y="${GROUPS.indexOf(g)%2?142:124}" font-size="15" font-weight="700" text-anchor="middle" fill="${g.c}">${g.en}</text></g>`}).join("");
+    const g=GROUPS.find(x=>x.id===id);$("#szInfo",el).innerHTML=g?`<b>${g.l} (${g.en})</b> ขนาด ${g.sz} — ${g.i}`:"";};
+  seg($("#szSeg",el),GROUPS.map(g=>({id:g.id,l:g.l})),draw,"bact");
+  // taxonomy
+  const tsvg=$("#taxSvg",el);
+  stepper($("#taxCtl",el),TAX.length,i=>{
+    tsvg.innerHTML=TAX.map((t,k)=>{const w=540-k*62,h=290-k*38,x=(560-w)/2,y=6+k*19;const on=k===i,past=k<i;
+      return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${16-k}" fill="${on?"var(--nuc)":past?"#fff":"#fafafa"}" stroke="${on?"var(--hema)":"var(--line)"}" stroke-width="${on?3:1.4}" ${on?'class="popin"':""}/><text x="${x+10}" y="${y+15}" font-size="11.5" font-weight="700" fill="${on?"var(--hema)":"var(--muted)"}">${t.k}</text>`}).join("")+
+      `<text x="280" y="${6+i*19+(290-i*38)/2+14}" text-anchor="middle" font-size="18" font-weight="700" font-style="${i>=5?"italic":"normal"}" fill="var(--ink)">${TAX[i].ex}</text>`;
+    $("#taxInfo",el).innerHTML=`<b>${i+1}. ${TAX[i].k}</b> (${TAX[i].th}) · ตัวอย่าง: <i>${TAX[i].ex}</i><br><span class="small muted">${i===0?"กลุ่มใหญ่ที่สุด":i===6?"กลุ่มเล็กที่สุด ผสมพันธุ์กันได้ลูกที่ไม่เป็นหมัน "+EX:"แคบลงจากขั้นก่อนหน้า"}</span>`;
+  },{ms:1800});
+  // naming quiz
+  let nq=0;const nmQ=$("#nmQ",el);
+  const drawNm=()=>{const q=NAMES[nq%NAMES.length],ord=[0,1,2,3].sort(()=>Math.random()-.5);
+    nmQ.innerHTML=`<div class="choices">${ord.map(i=>`<button type="button" data-i="${i}">${q.o[i]}</button>`).join("")}</div><div id="nmFb" aria-live="polite"></div>`;
+    $$("button",nmQ).forEach(b=>b.onclick=()=>{const ok=+b.dataset.i===0;$$("button",nmQ).forEach(x=>{x.disabled=true;if(+x.dataset.i===0)x.classList.add("ok");else if(x===b)x.classList.add("ng");});
+      $("#nmFb",nmQ).innerHTML=`<p class="fb ${ok?"ok":"ng"}" style="margin-top:8px"><b>${ok?"ถูกต้อง":"ยังไม่ใช่"}</b> ${q.w} ${SL(4)}</p><div class="row" style="margin-top:8px"><button class="btn pri" type="button" data-n>ข้อต่อไป →</button></div>`;$("[data-n]",nmQ).onclick=()=>{nq++;drawNm();};});};
+  drawNm();
+  // kingdoms
+  $("#kings",el).onclick=e=>{const b=e.target.closest("[data-k]");if(!b)return;const k=KING.find(x=>x.id===b.dataset.k);
+    $$("#kings button",el).forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+    $("#kInfo",el).innerHTML=`<b>${k.l} · ${k.th}</b> ${k.i} ${SL(5)}${k.go?` <a class="btn" style="margin-top:8px" href="#lab-${k.go}">ไปที่หัวข้อนี้ →</a>`:""}`;};
+};
+
+/* =========================== 2 · Archaea =========================== */
+const HAB=[
+  {id:"salt",l:"ทนเค็มจัด",en:"extreme halophiles",org:["Halobacterium sp.","Halococcus sp."],where:"นาเกลือ บริเวณที่มีเกลือมาก",ph:"Euryarchaeota",s:8,c:"#d9467a"},
+  {id:"meth",l:"สร้างมีเทน",en:"methanogens",org:["Methanococcus sp.","Methanobacterium formicicum"],where:"ที่ไร้ออกซิเจน เช่น น้ำลึก โคลน ดินก้นบ่อ และทางเดินอาหารของสัตว์รวมทั้งมนุษย์",ph:"Euryarchaeota",s:8,c:"#6b6b6b"},
+  {id:"hot",l:"ทนร้อนจัด",en:"extreme thermophiles",org:["Pyrolobus fumarii"],where:"น้ำที่อุณหภูมิสูงกว่า 100 °C เช่น Grand Prismatic Spring อุทยานแห่งชาติเยลโลสโตน",ph:"Crenarchaeota",s:9,c:"#e07b00"},
+  {id:"acid",l:"ชอบกรด",en:"acidophiles",org:["Sulfolobus acidocaldarius","ARMAN"],where:"บริเวณ pH 1–2 เช่น น้ำทิ้งจากเหมืองถ่านหินหรือเหมืองแร่",ph:"Crenarchaeota",s:9,c:"#7a9a00"}
+];
+function habSVG(id){
+  const bg={salt:"#fde7ef",meth:"#e9e4dc",hot:"#e3f1f8",acid:"#eef6d6"}[id];
+  let a="";
+  if(id==="salt")a=`<rect x="0" y="120" width="360" height="60" fill="#f3c4d4"/>${[30,90,150,210,270,330].map((x,k)=>`<g transform="translate(${x} ${128+(k%2)*14})"><rect x="-9" y="-9" width="18" height="18" fill="#fff" stroke="#d9a0b4" transform="rotate(45)"><animate attributeName="opacity" values=".5;1;.5" dur="${2+k%3}s" repeatCount="indefinite"/></rect></g>`).join("")}<text x="180" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#b0305f">NaCl สูงมาก</text>`;
+  if(id==="meth")a=`<path d="M0 110 Q90 96 180 110 T360 108 L360 180 L0 180Z" fill="#8b7355"/>${[50,120,200,280].map((x,k)=>`<circle cx="${x}" cy="160" r="${5+k%2*2}" fill="#fff" fill-opacity=".75" stroke="#ccc"><animate attributeName="cy" values="168;30" dur="${2.6+k*.4}s" begin="${k*.5}s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0" dur="${2.6+k*.4}s" begin="${k*.5}s" repeatCount="indefinite"/></circle>`).join("")}<text x="180" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#555">ไร้ O₂ → ปล่อย CH₄</text>`;
+  if(id==="hot")a=`<ellipse cx="180" cy="140" rx="160" ry="34" fill="#2c9fc9"/><ellipse cx="180" cy="140" rx="110" ry="22" fill="#62c1e3"/><ellipse cx="180" cy="140" rx="54" ry="11" fill="#f4d35e"/>${[120,180,240].map((x,k)=>`<path d="M${x} 108 q -10 -16 0 -32 q 10 -16 0 -32" fill="none" stroke="#9bb" stroke-width="3" stroke-linecap="round" opacity=".7"><animate attributeName="opacity" values="0;.8;0" dur="2.4s" begin="${k*.6}s" repeatCount="indefinite"/></path>`).join("")}<text x="180" y="30" text-anchor="middle" font-size="15" font-weight="700" fill="#b85c00">&gt; 100 °C</text>`;
+  if(id==="acid")a=`<rect x="0" y="118" width="360" height="62" fill="#c8b42a" fill-opacity=".6"/><path d="M40 0 L80 0 L70 118 L50 118Z" fill="#9c8f70"/>${[0,1,2].map(k=>`<circle cx="60" cy="40" r="4" fill="#d4c22e"><animate attributeName="cy" values="40;118" dur="1.4s" begin="${k*.45}s" repeatCount="indefinite"/></circle>`).join("")}<text x="210" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#5d7000">pH 1–2</text>`;
+  const cells=[0,1,2,3,4].map(k=>`<g transform="translate(${60+k*62} ${92+(k%2)*10})"><ellipse rx="16" ry="9" fill="#fff" stroke="#16735f" stroke-width="2"><animateTransform attributeName="transform" type="rotate" values="0;8;0;-8;0" dur="${3+k*.3}s" repeatCount="indefinite"/></ellipse></g>`).join("");
+  return `<svg viewBox="0 0 360 180" role="img" aria-label="แหล่งที่อยู่ของ archaea" style="width:100%;height:auto;border-radius:12px;background:${bg}">${a}${cells}</svg>`;
+}
+const TREE=[
+  {id:"ar",l:"Archaebacteria",i:"อาร์เคียแบคทีเรีย คล้ายแบคทีเรีย แต่วิวัฒนาการแยกสายมา พบในสภาพแวดล้อมที่เลวร้าย",s:"6–7"},
+  {id:"eu",l:"Euryarchaeota",i:"ยูริอาร์เคียโอตา: ทนเกลือ และสร้างก๊าซมีเทน (CH₄)",s:6},
+  {id:"cr",l:"Crenarchaeota",i:"ครินาเคียโอตา: ทนอุณหภูมิสูง และทนกรด",s:6},
+  {id:"ba",l:"Eubacteria",i:"ยูแบคทีเรีย หรือแบคทีเรียแท้ พบได้ทั่วไป",s:6},
+  {id:"gp",l:"Gram positive",i:"แบคทีเรียแกรมบวก ย้อมติดสีม่วง",s:6},
+  {id:"gn",l:"Gram negative",i:"แบคทีเรียแกรมลบ ย้อมติดสีแดง",s:6},
+  {id:"cy",l:"Cyanobacteria",i:"ไซยาโนแบคทีเรีย หรือสาหร่ายสีเขียวแกมน้ำเงิน มีบางคุณสมบัติคล้ายสาหร่าย",s:6}
+];
+function treeSVG(){
+  const n=(id,x,y,w,t,c)=>`<g data-part="${id}" tabindex="0" style="cursor:pointer"><rect x="${x-w/2}" y="${y-19}" width="${w}" height="38" rx="11" fill="${c}" fill-opacity=".14" stroke="${c}" stroke-width="2"/><text x="${x}" y="${y+6}" text-anchor="middle" font-size="16" font-weight="700" fill="${c}">${t}</text></g>`;
+  const V=(x,y1,y2)=>`<path d="M${x} ${y1} V${y2}" stroke="#b8b0c8" stroke-width="2"/>`;
+  const E=(x1,y,x2)=>`<path d="M${x1} ${y} H${x2}" stroke="#b8b0c8" stroke-width="2"/>`;
+  return `<svg viewBox="0 0 440 330" role="img" aria-label="แผนภาพ Kingdom Monera">
+  <rect x="130" y="6" width="180" height="38" rx="11" fill="var(--hema)"/><text x="220" y="31" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">Kingdom Monera</text>
+  ${V(220,44,62)}<path d="M110 62 H330" stroke="#b8b0c8" stroke-width="2"/>${V(110,62,80)}${V(330,62,80)}
+  ${n("ar",110,99,196,"Archaebacteria","#b0305f")}${n("ba",330,99,196,"Eubacteria","#16735f")}
+  ${V(30,118,230)}${E(30,170,44)}${E(30,230,44)}${V(250,118,300)}${E(250,170,262)}${E(250,230,262)}${E(250,290,262)}
+  ${n("eu",120,170,152,"Euryarchaeota","#b0305f")}${n("cr",120,230,152,"Crenarchaeota","#b0305f")}
+  ${n("gp",340,170,156,"Gram +","#6a3fb5")}${n("gn",340,230,156,"Gram −","#c2364b")}${n("cy",340,290,156,"Cyanobacteria","#2f8a3a")}</svg>`;
+}
+BUILD.arch=el=>{
+  el.innerHTML=vh("Kingdom Monera: Archaea",`Monera คือสิ่งมีชีวิตแบบ prokaryote แบ่งเป็น 2 สาย คือ <b>Archaebacteria</b> กับ <b>Eubacteria</b> ${SL(6)}`)+
+  diagramCard("แผนผัง Kingdom Monera","แตะกล่องเพื่ออ่าน",treeSVG(),"tree")+
+  `<div class="card"><h3>ลักษณะสำคัญของ archaea ${SL(7)}</h3><ul class="pts"><li>คล้ายแบคทีเรีย แต่เชื่อว่ามีวิวัฒนาการแยกมา</li><li>เป็น prokaryote พบในสภาพแวดล้อมที่เลวร้ายและในมหาสมุทร</li><li>ผนังเซลล์<b>ไม่มี peptidoglycan</b> (เป็น pseudopeptidoglycan)</li><li><b>ไม่ไวต่อยาปฏิชีวนะ</b> (antibiotic) ที่ใช้กับแบคทีเรีย</li><li>ลำดับนิวคลีโอไทด์ของ rRNA ต่างจากทั้งแบคทีเรียและ eukaryote</li></ul></div>
+  <div class="card"><h3>4 กลุ่มของ archaea ตามที่อยู่ ${SL("8–9")}</h3><div id="habSeg" style="margin-top:8px"></div><div class="habw" style="margin-top:12px"><div id="habPic"></div><div class="info" id="habInfo" aria-live="polite"></div></div></div>
+  <div class="card"><h3>Archaebacteria vs Eubacteria ${SL(10)}</h3><p class="small muted">แตะช่องเพื่อเปิดดู หรือกด “ซ่อนทั้งหมด” เพื่อทดสอบตัวเอง</p><div id="abTbl" style="margin-top:10px"></div></div>
+  <div class="card"><h3>การใช้ประโยชน์เอนไซม์จาก archaea ${SL(10)}</h3><p class="small muted">จับคู่อุตสาหกรรมกับเอนไซม์ที่ต้องการ</p><div id="arMatch" style="margin-top:10px"></div></div>`;
+  wireParts($(".dg .pic svg",el),$("#treeChips",el),$("#treeInfo",el),TREE);
+  seg($("#habSeg",el),HAB.map(h=>({id:h.id,l:h.l})),id=>{const h=HAB.find(x=>x.id===id);$("#habPic",el).innerHTML=habSVG(id);
+    $("#habInfo",el).innerHTML=`<p class="tag" style="font:600 12px var(--font-mono);color:${h.c}">${h.ph}</p><h3 style="font-size:18px">${h.l} <span class="small muted">(${h.en})</span></h3><p class="small" style="margin-top:4px"><b>พบที่</b> ${h.where}</p><p class="small" style="margin-top:4px"><b>ตัวอย่าง</b> ${h.org.map(o=>o==="ARMAN"?"ARMAN (archaeal Richmond Mine acidophilic nanoorganisms)":`<i>${o}</i>`).join(", ")} ${SL(h.s)}</p>`;});
+  revealTable($("#abTbl",el),["เกณฑ์","Archaebacteria","Eubacteria"],[
+    ["แหล่งที่พบ","สภาพแวดล้อมที่เลวร้าย เช่น บ่อน้ำพุร้อน ทะเลลึก ดินโคลน นาเกลือ","พบได้ทั่วไปในดิน น้ำ สิ่งมีชีวิต และสิ่งไม่มีชีวิต"],
+    ["ผนังเซลล์","pseudopeptidoglycan มี N-acetyl glucosamine + N-acetyltalosaminuronic acid","peptidoglycan มี N-acetyl glucosamine + N-acetyl muramic acid"],
+    ["การตอบสนองต่อยาปฏิชีวนะ","ไม่ยับยั้งการเจริญ","ยับยั้งการเจริญ"],
+    ["RNA polymerase","10 หน่วยย่อย","4 หน่วยย่อย"],
+    ["ตัวอย่าง","<i>Pyrolobus fumarii</i>, <i>Sulfolobus acidocaldarius</i>, <i>Halobacterium</i>, <i>Halococcus</i>, <i>Pyrococcus furiosus</i>, <i>Methanobacterium formicicum</i>","<i>Staphylococcus aureus</i>, <i>Streptococcus</i> sp., <i>Bacillus cereus</i>, <i>Escherichia coli</i>, <i>Salmonella enterica</i>"]
+  ],WARN("ตารางในเอกสารใช้หัวข้อว่า “Antibody respond” แต่ความหมายที่ถูกคือการตอบสนองต่อ<b>ยาปฏิชีวนะ (antibiotic)</b> ตามที่สไลด์ 7 เขียนไว้"));
+  matchGame($("#arMatch",el),[
+    {l:"อุตสาหกรรมสิ่งทอ",r:"cellulase ทนร้อน",w:"ขั้นตอนผลิตใช้ความร้อนสูง เอนไซม์ต้องไม่เสียสภาพ",s:10},
+    {l:"บ่อบำบัดน้ำเสีย",r:"protease, lipase, amylase ทนร้อนและทนกรด",w:"ย่อยสารอินทรีย์ในน้ำเสียที่ร้อนและเป็นกรด",s:10},
+    {l:"น้ำปลา ซีอิ๊ว",r:"protease ทนเค็ม",w:"อาหารเหล่านี้มีเกลือสูงมาก",s:10},
+    {l:"เชื้อเพลิง",r:"ก๊าซมีเทน (CH₄)",w:"methanogen สร้างมีเทนนำไปใช้เป็นเชื้อเพลิงได้",s:10}
+  ],"อุตสาหกรรม","สิ่งที่ใช้จาก archaea");
+};
+
+/* =========================== 3 · Shape & Gram stain =========================== */
+const SHAPES=[
+  {id:"diplo",l:"Diplococcus",th:"กลม อยู่เป็นคู่",g:"coccus"},
+  {id:"strepto",l:"Streptococcus",th:"กลม ต่อกันเป็นสายโซ่",g:"coccus"},
+  {id:"staphylo",l:"Staphylococcus",th:"กลม อยู่เป็นกลุ่มคล้ายพวงองุ่น",g:"coccus"},
+  {id:"bacillus",l:"Bacillus",th:"ท่อน อาจเป็นท่อนสั้นหรือยาว",g:"bacillus"},
+  {id:"spirillum",l:"Spirillum",th:"เกลียว ท่อนโค้งงอ",g:"spirillum"}
+];
+function shapeSVG(id){
+  const C=(x,y,d)=>`<circle cx="${x}" cy="${y}" r="15" fill="#e6ddf6" stroke="#6a3fb5" stroke-width="2.2" class="popin" style="animation-delay:${d}s"/>`;
+  let body="";
+  if(id==="diplo")body=[[150,90],[180,90],[240,60],[270,60],[230,125],[260,125]].map(([x,y],k)=>C(x,y,(k%2)*.25)).join("");
+  if(id==="strepto")body=[0,1,2,3,4,5,6,7].map(k=>C(70+k*30,90+Math.sin(k*.9)*14,k*.12)).join("");
+  if(id==="staphylo")body=[[160,70],[190,70],[220,72],[175,96],[205,98],[235,96],[150,96],[190,122],[220,124],[162,122],[248,118]].map(([x,y],k)=>C(x+20,y,k*.08)).join("");
+  if(id==="bacillus")body=[[90,60,0],[180,92,20],[260,58,-14],[120,125,8],[230,130,0]].map(([x,y,r],k)=>`<rect x="${x-34}" y="${y-13}" width="68" height="26" rx="13" fill="#e6ddf6" stroke="#6a3fb5" stroke-width="2.2" transform="rotate(${r} ${x} ${y})" class="popin" style="animation-delay:${k*.12}s"/>`).join("");
+  if(id==="spirillum")body=[[70,70],[170,120],[200,50]].map(([x,y],k)=>`<path d="M${x} ${y} q 15 -22 30 0 t 30 0 t 30 0 t 30 0" fill="none" stroke="#6a3fb5" stroke-width="9" stroke-linecap="round" opacity=".85"><animateTransform attributeName="transform" type="translate" values="0 0;10 0;0 0" dur="${2+k*.4}s" repeatCount="indefinite"/></path>`).join("");
+  return `<svg viewBox="0 0 360 170" role="img" aria-label="${id}" style="width:100%;height:auto;background:#faf8fd;border-radius:12px">${body}</svg>`;
+}
+const GSTEP=[
+  {h:"1 · Crystal violet",d:"หยดสีม่วง crystal violet ทั้ง 2 เซลล์ติดสีม่วงเหมือนกัน",gp:"#6a3fb5",gn:"#6a3fb5",s:13},
+  {h:"2 · Iodine",d:"iodine จับกับ crystal violet เป็นสารประกอบขนาดใหญ่ ทั้ง 2 เซลล์ยังเป็นสีม่วง "+EX,gp:"#5b2fa6",gn:"#5b2fa6",ex:1},
+  {h:"3 · ล้างด้วย alcohol",d:"แกรมบวกมี peptidoglycan หนา สีม่วงจึงติดอยู่ แกรมลบมี peptidoglycan บางและชั้นไขมันถูกละลาย สีม่วงหลุดจนเซลล์ไม่มีสี "+EX,gp:"#5b2fa6",gn:"#f4f1f6",ex:1},
+  {h:"4 · Safranin O",d:"ย้อมทับด้วยสีแดง safranin แกรมลบติดสี<b>แดง/ชมพู</b> แกรมบวกยังเป็น<b>สีม่วง</b>",gp:"#5b2fa6",gn:"#e0507a",s:13}
+];
+function gramCells(gp,gn,i){
+  const cell=(x,c,lbl,thick)=>`<g transform="translate(${x} 0)"><rect x="-70" y="40" width="140" height="64" rx="32" fill="${c}" fill-opacity=".85" stroke="${thick?"#3d2a6b":"#8a3050"}" stroke-width="${thick?7:2.5}" style="transition:fill .8s"/>${!thick?`<rect x="-76" y="34" width="152" height="76" rx="38" fill="none" stroke="#c2364b" stroke-width="2" stroke-dasharray="${i>=2?"5 4":"0"}"/>`:""}<text x="0" y="140" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">${lbl}</text></g>`;
+  const drops=i<4?`<g>${[0,1].map(k=>`<circle cx="${110+k*220}" cy="6" r="6" fill="${["#6a3fb5","#8b6b1f","#d8eaf5","#e0507a"][i]}" stroke="#999" stroke-width=".8"><animate attributeName="cy" values="0;36" dur="1s" begin="${k*.25}s" repeatCount="2" fill="freeze"/><animate attributeName="opacity" values="1;0" dur="1s" begin="${k*.25}s" repeatCount="2" fill="freeze"/></circle>`).join("")}</g>`:"";
+  return `<svg viewBox="0 0 440 160" role="img" aria-label="ขั้นตอนการย้อมแกรม" style="width:100%;height:auto">${drops}${cell(110,gp,"แกรมบวก (Gram +)",1)}${cell(330,gn,"แกรมลบ (Gram −)",0)}</svg>`;
+}
+const WALL=[
+  {id:"om",l:"Outer membrane + LPS",i:"ชั้นสารประกอบไขมันและคาร์โบไฮเดรต (lipopolysaccharides) หุ้มภายนอก <b>มีเฉพาะแกรมลบ</b>",s:13},
+  {id:"pg",l:"Peptidoglycan",i:"แกรมบวก: ชั้นหนา หลายชั้น · แกรมลบ: ชั้นบาง",s:13},
+  {id:"ps",l:"Periplasmic space",i:"ช่องว่างระหว่าง outer membrane กับ cytoplasmic membrane ของแกรมลบ "+EX,s:13},
+  {id:"cm",l:"Cytoplasmic membrane",i:"เยื่อหุ้มเซลล์ชั้นในสุด มีทั้งแกรมบวกและแกรมลบ",s:13}
+];
+function wallSVG(){
+  const lipid=(x,y,n)=>Array.from({length:n},(_,k)=>`<circle cx="${x+k*12}" cy="${y}" r="4.2" fill="#f0b84a" stroke="#b07a1a"/>`).join("");
+  return `<svg viewBox="0 0 560 250" role="img" aria-label="ผนังเซลล์แกรมบวกและแกรมลบ">
+  <text x="130" y="20" text-anchor="middle" font-size="18" font-weight="700" fill="#6a3fb5">แกรมบวก</text><text x="420" y="20" text-anchor="middle" font-size="18" font-weight="700" fill="#c2364b">แกรมลบ</text>
+  <g data-part="pg"><rect x="20" y="40" width="220" height="110" rx="6" fill="#d9cdee" stroke="#6a3fb5" stroke-width="1.5"/>${[52,70,88,106,124].map(y=>`<path d="M24 ${y} H236" stroke="#6a3fb5" stroke-width="1.4" stroke-dasharray="8 5"/>`).join("")}<rect x="310" y="104" width="220" height="22" rx="4" fill="#d9cdee" stroke="#6a3fb5" stroke-width="1.5"/><path d="M314 115 H526" stroke="#6a3fb5" stroke-width="1.4" stroke-dasharray="8 5"/></g>
+  <g data-part="om"><rect x="310" y="44" width="220" height="30" rx="4" fill="#fde4c4" stroke="#b07a1a" stroke-width="1.2"/>${lipid(318,51,18)}${lipid(318,67,18)}${[330,370,410,450,490].map(x=>`<path d="M${x} 44 v-14 m0 0 l-6 -6 m6 6 l6 -6" stroke="#2f8a3a" stroke-width="2" fill="none"/>`).join("")}</g>
+  <g data-part="ps"><rect x="310" y="76" width="220" height="26" fill="#fff6f0" stroke="#e2c9b8" stroke-dasharray="3 3"/></g>
+  <g data-part="cm"><rect x="20" y="156" width="220" height="30" rx="4" fill="#fde4c4" stroke="#b07a1a" stroke-width="1.2"/>${lipid(28,163,18)}${lipid(28,179,18)}<rect x="310" y="132" width="220" height="30" rx="4" fill="#fde4c4" stroke="#b07a1a" stroke-width="1.2"/>${lipid(318,139,18)}${lipid(318,155,18)}</g>
+  <text x="130" y="214" text-anchor="middle" font-size="16" fill="var(--muted)">peptidoglycan หนา</text><text x="420" y="192" text-anchor="middle" font-size="16" fill="var(--muted)">บาง + มี LPS</text>
+  <text x="130" y="240" text-anchor="middle" font-size="16" fill="#6a3fb5" font-weight="700">ติดสีม่วง</text><text x="420" y="218" text-anchor="middle" font-size="16" fill="#c2364b" font-weight="700">ติดสีแดง</text></svg>`;
+}
+BUILD.gram=el=>{
+  el.innerHTML=vh("รูปร่าง & การย้อมสีแกรม",`แบคทีเรียแยกได้ 2 แบบ คือตาม<b>รูปร่าง</b> และตาม<b>การติดสีแกรม</b> ${SL("12–13")}`)+
+  `<div class="card"><h3>3 รูปร่างของแบคทีเรีย ${SL(12)}</h3><p class="small muted">coccus = ทรงกลม · bacillus = ทรงกระบอก (ท่อน) · spirillum = เกลียว</p><div id="shSeg" style="margin-top:8px"></div><div class="habw" style="margin-top:12px"><div id="shPic"></div><div class="info" id="shInfo" aria-live="polite"></div></div>
+   <p class="small muted" style="margin-top:8px">คำนำหน้า: <b>diplo-</b> = คู่ · <b>strepto-</b> = สายโซ่ · <b>staphylo-</b> = กลุ่มพวงองุ่น ${SL(12)}</p></div>
+  <div class="card"><h3>จำลองการย้อมสีแกรม (Gram stain)</h3><p class="small muted">กด ▶ เล่น หรือกดเลขขั้น · เอกสารพูดถึง crystal violet กับ safranin O ส่วน iodine และ alcohol เป็น${EX}</p>
+   <div id="gsPic" style="margin-top:10px"></div><div class="info" id="gsInfo" aria-live="polite" style="margin-top:8px"></div><div id="gsCtl" style="margin-top:10px"></div></div>`+
+  diagramCard("ผนังเซลล์แกรมบวก vs แกรมลบ "+SL(13),"แตะชั้นต่างๆ เพื่ออ่าน",wallSVG(),"wall")+
+  `<div class="card"><h3>วิธีจำ ${EX}</h3><p>แกรม<b>บวก</b> = ผนัง peptidoglycan <b>หนา</b>เหมือน “เสื้อกันหนาวหนา” อมสีม่วงไว้ไม่หลุด · แกรม<b>ลบ</b> = ผนังบาง มี “เสื้อกันฝน” ไขมัน (LPS) ข้างนอก โดน alcohol ละลาย สีม่วงหลุด จึงต้องย้อมแดงทับ</p></div>`;
+  seg($("#shSeg",el),SHAPES.map(x=>({id:x.id,l:x.l})),id=>{const x=SHAPES.find(s=>s.id===id);$("#shPic",el).innerHTML=shapeSVG(id);$("#shInfo",el).innerHTML=`<h3 style="font-size:18px">${x.l}</h3><p class="small">${x.th}</p><p class="small muted" style="margin-top:6px">กลุ่ม: ${x.g} ${SL(12)}</p>`;});
+  stepper($("#gsCtl",el),GSTEP.length,i=>{const g=GSTEP[i];$("#gsPic",el).innerHTML=gramCells(g.gp,g.gn,i);$("#gsInfo",el).innerHTML=`<b>${g.h}</b> ${g.d} ${g.s?SL(g.s):""}`;},{ms:2800});
+  wireParts($("#wallChips",el).closest(".dg").querySelector("svg"),$("#wallChips",el),$("#wallInfo",el),WALL);
+};
+
+/* =========================== 4 · Eubacteria & Cyanobacteria =========================== */
+const BSORT=[
+  {t:"<i>Staphylococcus aureus</i>",short:"S. aureus",a:0,w:"แกรมบวก โทษ: สิว หนอง อักเสบ",s:14},
+  {t:"<i>Lactobacillus</i> sp.",short:"Lactobacillus",a:0,w:"แกรมบวก ประโยชน์: อุตสาหกรรมหมัก",s:14},
+  {t:"<i>Streptomyces</i> sp.",short:"Streptomyces",a:0,w:"แกรมบวก ประโยชน์: ผลิตยาปฏิชีวนะ streptomycin",s:14},
+  {t:"<i>Clostridium botulinum</i>",short:"C. botulinum",a:0,w:"แกรมบวก โทษ: สร้างพิษ",s:14},
+  {t:"<i>Bacillus cereus</i>",short:"B. cereus",a:0,w:"แกรมบวก โทษ: อาหารเป็นพิษ",s:14},
+  {t:"<i>Bacillus subtilis</i>",short:"B. subtilis",a:0,w:"แกรมบวก โทษ: ปนเปื้อนในขนมปัง ขนมอบ (แต่สายพันธุ์ natto ใช้ทำถั่วหมัก)",s:"14, 33"},
+  {t:"<i>Escherichia coli</i>",short:"E. coli",a:1,w:"แกรมลบ โทษ: อาหารเป็นพิษ ท้องเสีย",s:15},
+  {t:"<i>Rhizobium</i> sp.",short:"Rhizobium",a:1,w:"แกรมลบ ประโยชน์: ตรึงไนโตรเจนในอากาศ อยู่ในปมรากถั่ว",s:15},
+  {t:"Spirochete (<i>Leptospira</i> sp.)",short:"Spirochete",a:1,w:"แกรมลบ โทษ: โรคฉี่หนู และโรคซิฟิลิส (Treponema)",s:15},
+  {t:"<i>Chlamydia</i>",short:"Chlamydia",a:1,w:"แกรมลบ โทษ: โรคติดต่อทางเพศสัมพันธ์ (ดูข้อควรรู้ด้านล่าง)",s:15},
+  {t:"<i>Salmonella</i> sp.",short:"Salmonella",a:1,w:"แกรมลบ โทษ: อาหารเป็นพิษ (เอกสารใส่ไว้ในตารางแกรมบวก ดูข้อควรรู้)",s:"14, 18"},
+  {t:"<i>Nostoc</i>",short:"Nostoc",a:2,w:"ไซยาโนแบคทีเรีย ตรึงไนโตรเจนด้วย heterocyst",s:16},
+  {t:"<i>Spirulina</i>",short:"Spirulina",a:2,w:"ไซยาโนแบคทีเรีย แหล่งโปรตีน",s:16},
+  {t:"<i>Anabaena</i>",short:"Anabaena",a:2,w:"ไซยาโนแบคทีเรีย ตรึงไนโตรเจน แต่บางสายพันธุ์สร้าง cyanotoxin",s:16},
+  {t:"<i>Oscillatoria</i>",short:"Oscillatoria",a:2,w:"ไซยาโนแบคทีเรีย เป็นสายยาว",s:16}
+];
+const CYAN=[
+  {id:"veg",l:"เซลล์ปกติ (vegetative)",i:"สังเคราะห์ด้วยแสง มีคลอโรฟิลล์เอ แคโรทีน แซนโทฟิลล์ และไฟโคบิลิน (ไฟโคไซยานิน + ไฟโคอิริทริน) ปล่อย O₂",s:"16–17"},
+  {id:"het",l:"heterocyst",i:"เซลล์ผนังหนา ทำหน้าที่<b>ตรึงไนโตรเจน</b> (N₂) ในอากาศ เช่นใน <i>Nostoc</i>, <i>Anabaena</i>",s:16},
+  {id:"aki",l:"akinete",i:"เซลล์ผนังหนา มีอาหารสะสม <b>ทนต่อสภาพแวดล้อม</b> ใช้สืบพันธุ์",s:16},
+  {id:"frg",l:"การหักเป็นท่อน",i:"สายเซลล์หักเป็นท่อน (fragmentation) แต่ละท่อนเจริญเป็นสายใหม่ อีกวิธีคือแบ่งตัว (binary fission)",s:16}
+];
+function cyanoSVG(){
+  const cells=[];let x=30;
+  for(let k=0;k<13;k++){
+    const het=k===4||k===10,aki=k===7,w=het?40:aki?44:32,cx=x+w/2;
+    const part=het?"het":aki?"aki":k===12?"frg":"veg";
+    cells.push(`<g data-part="${part}"><ellipse cx="${cx}" cy="95" rx="${w/2}" ry="${het?20:aki?24:17}" fill="${het?"#fff6cf":aki?"#d7c48a":"#7cc06d"}" stroke="${het?"#c9a227":aki?"#7a6230":"#2f7a3a"}" stroke-width="${het||aki?4:2}"/>${!het&&!aki?`<circle cx="${cx}" cy="95" r="4" fill="#2f6a2a" opacity=".5"/>`:""}</g>`);
+    x+=w+(k===11?18:2);
+  }
+  const n2=[0,1,2,3].map(k=>`<g><text font-size="17" font-weight="700" fill="#3b6fd6">N₂<animateMotion dur="3.2s" begin="-${k*.8}s" repeatCount="indefinite" path="M${160+((k%2)?40:-40)} 30 L188 88"/></text></g>`).join("");
+  return `<svg viewBox="0 0 600 170" role="img" aria-label="สาย Nostoc">${cells.join("")}${n2}
+  <text x="188" y="152" text-anchor="middle" font-size="18" font-weight="700" fill="#9a7a10">heterocyst</text><text x="327" y="152" text-anchor="middle" font-size="18" font-weight="700" fill="#7a6230">akinete</text><text x="70" y="152" text-anchor="middle" font-size="18" font-weight="700" fill="#2f7a3a">vegetative</text>
+  <text x="592" y="26" text-anchor="end" font-size="17" fill="var(--muted)">N₂ → NH₃</text></svg>`;
+}
+BUILD.bact=el=>{
+  el.innerHTML=vh("Eubacteria & Cyanobacteria",`Eubacteria แบ่งเป็น 3 กลุ่มตามตารางที่ 1 คือ <b>แกรมบวก</b> <b>แกรมลบ</b> และ <b>Cyanophyta</b> ${SL("11, 14–16")}`)+
+  `<div class="grid3">
+   <div class="card"><h3 style="color:#6a3fb5">แกรมบวก ${SL(14)}</h3><p class="small">รูปร่าง 3 แบบ ผนัง peptidoglycan ติด crystal violet สืบพันธุ์โดยสร้าง<b>สปอร์ (endospore)</b> ทนต่อสภาพแวดล้อม หรือแบ่งตัว (binary fission)</p></div>
+   <div class="card"><h3 style="color:#c2364b">แกรมลบ ${SL(15)}</h3><p class="small">รูปร่าง 3 แบบ ผนัง peptidoglycan และมีชั้น lipopolysaccharides หุ้ม ติด safranin O สืบพันธุ์โดยแบ่งตัว (binary fission)</p></div>
+   <div class="card"><h3 style="color:#2f8a3a">Cyanophyta ${SL(16)}</h3><p class="small">เซลล์เดี่ยว กลุ่ม หรือสาย ผนังเซลลูโลส เพคติน เจลาติน สังเคราะห์แสงได้ สืบพันธุ์โดยแบ่งตัว หักเป็นท่อน และสร้าง akinete</p></div></div>
+  <div class="card"><h3>เกม: จัดกลุ่มแบคทีเรีย</h3><p class="small muted">อ่านชื่อแล้วเลือกกลุ่ม ดูเฉลยพร้อมประโยชน์หรือโทษ</p><div id="bSort" style="margin-top:10px"></div>
+   ${WARN("1) เอกสารเขียนว่า Chlamydia คือ “เชื้อโกโนเรีย” ที่ถูกคือ โรคหนองใน (gonorrhea) เกิดจาก <i>Neisseria gonorrhoeae</i> ส่วน <i>Chlamydia trachomatis</i> ทำให้เกิดหนองในเทียม · 2) <i>Salmonella</i> เป็น<b>แกรมลบ</b> แม้เอกสารจะใส่ไว้ในตารางแกรมบวก "+EX)}</div>`+
+  diagramCard("Cyanobacteria: สายของ <i>Nostoc</i> "+SL("16–17"),"แตะเซลล์แต่ละแบบ · จุด N₂ วิ่งเข้า heterocyst",cyanoSVG(),"cy")+
+  `<div class="grid2"><div class="card"><h3>ต่างจากแบคทีเรียทั่วไปตรงไหน ${SL(17)}</h3><ul class="pts small"><li>สังเคราะห์ด้วยแสงได้ มี<b>คลอโรฟิลล์เอ</b></li><li><b>ปล่อย O₂</b> ออกสู่สิ่งแวดล้อม ซึ่งไม่พบในแบคทีเรียอื่น</li><li>ไม่มีเยื่อหุ้มนิวเคลียส เหมือนแบคทีเรีย</li><li>บางชนิดตรึงไนโตรเจนได้</li></ul></div>
+  <div class="card"><h3>ประโยชน์ vs โทษ ${SL(16)}</h3><p class="small"><b style="color:var(--ok)">ประโยชน์</b> ผลิตอาหารและ O₂ · แหล่งโปรตีน (<i>Spirulina</i>) · ตรึงไนโตรเจน (<i>Nostoc</i>, <i>Anabaena</i>)</p><p class="small" style="margin-top:6px"><b style="color:var(--bad)">โทษ</b> Cyanobacteria bloom ทำให้น้ำใสกลายเป็นขุ่นและเน่าเสีย บางชนิดสร้าง<b>cyanotoxin</b> เช่น <i>Microcystis</i>, <i>Anabaena</i>, <i>Oscillatoria</i></p></div></div>
+  <div class="card"><h3>จำลอง Cyanobacteria bloom ${EX}</h3><p class="small muted">เลื่อนเพิ่มสารอาหาร (เช่น ปุ๋ยไหลลงน้ำ) แล้วดูน้ำเปลี่ยน</p><input type="range" class="range" id="blR" min="0" max="10" value="1" aria-label="ปริมาณสารอาหาร"><div class="habw" style="margin-top:8px"><div id="blPic"></div><div class="info" id="blInfo" aria-live="polite"></div></div></div>`;
+  sortGame($("#bSort",el),BSORT,["แกรมบวก","แกรมลบ","Cyanobacteria"]);
+  wireParts($("#cyChips",el).closest(".dg").querySelector("svg"),$("#cyChips",el),$("#cyInfo",el),CYAN);
+  const upd=()=>{const v=+$("#blR",el).value,dots=Math.round(4+v*9),clr=`hsl(${195-v*9} ${45+v*3}% ${78-v*4}%)`;
+    let d="";for(let k=0;k<dots;k++){const x=(k*53)%340+10,y=40+((k*37)%110);d+=`<circle cx="${x}" cy="${y}" r="${2.5+v*.25}" fill="#2f8a3a" opacity=".8"><animate attributeName="cy" values="${y};${y-6};${y}" dur="${3+k%4}s" repeatCount="indefinite"/></circle>`;}
+    $("#blPic",el).innerHTML=`<svg viewBox="0 0 360 170" role="img" aria-label="แหล่งน้ำ" style="width:100%;height:auto;border-radius:12px;background:${clr}">${v>6?`<rect x="0" y="0" width="360" height="22" fill="#4c8a2e" opacity="${(v-6)/6}"/>`:""}${d}</svg>`;
+    $("#blInfo",el).innerHTML=v<4?"<b>น้ำใส</b> ไซยาโนแบคทีเรียมีน้อย ยังสมดุล":v<7?"<b>เริ่มขุ่นเขียว</b> สารอาหารมากขึ้น ไซยาโนแบคทีเรียเพิ่มจำนวนเร็ว":`<b>Bloom</b> น้ำขุ่น ผิวน้ำเป็นฝ้าเขียว แสงลงไม่ถึง สุดท้ายน้ำเน่าเสีย บางชนิดปล่อย cyanotoxin ${SL(16)}`;};
+  $("#blR",el).oninput=upd;upd();
+};
+
+/* =========================== 5 · Food pathogens =========================== */
+const PATH=[
+  {id:"sa",l:"Staphylococcus aureus",c:"#d9a400",f:["สร้างสารพิษที่ทนความร้อน","พบตามผิวหนัง มือ จมูก","ปนเปื้อนจากผู้ปรุงอาหารโดยตรง","อาหารกลุ่มผลิตภัณฑ์นม ครีม สลัด"],ic:"hand"},
+  {id:"sal",l:"Salmonella spp.",c:"#d9467a",f:["facultative anaerobe","เจริญที่ 7–45 °C ดีที่สุดที่ 37 °C","พบในลำไส้ของคนและสัตว์ ดิน น้ำ","อาหาร: เนื้อดิบ สัตว์ปีก ไข่ นม อาหารทะเล","ทำให้ลำไส้อักเสบ"],ic:"egg"},
+  {id:"cb",l:"Clostridium botulinum",c:"#2f8ac4",f:["สร้างพิษ botulinum ทำลายระบบประสาท","พบทั่วไปในดิน","เจริญในภาวะไม่มีออกซิเจน","มักพบในอาหารกระป๋อง หน่อไม้ปี๊บ"],ic:"can"},
+  {id:"ec",l:"E. coli",c:"#7c5cc4",f:["facultative anaerobe อยู่ในกลุ่มโคลิฟอร์ม (fecal coliform)","ไม่ทนความร้อน","พบในลำไส้คนและสัตว์เลือดอุ่น","ปนเปื้อนจากน้ำ ผักผลไม้ ที่ไม่สะอาด","ใช้เป็นดัชนีบ่งชี้สุขลักษณะของอาหารและน้ำ"],ic:"water"}
+];
+const PCASE=[
+  {q:"งานเลี้ยงมีขนมครีมที่ผู้ปรุงใช้มือเปล่าบีบครีม แล้ววางไว้นอกตู้เย็นหลายชั่วโมง ผู้กินหลายคนอาเจียนภายในไม่กี่ชั่วโมง เชื้อใดน่าสงสัยที่สุด",a:"sa",w:"S. aureus อยู่บนผิวหนังและมือ ปนเปื้อนจากผู้ปรุงโดยตรง และพิษทนความร้อน"},
+  {q:"กินไข่ลวกไม่สุกและไก่ย่างที่ปิ้งไม่สุกดี หนึ่งวันต่อมามีไข้ ท้องเสีย ปวดท้อง เชื้อใดน่าสงสัยที่สุด",a:"sal",w:"Salmonella พบในเนื้อดิบ สัตว์ปีก และไข่ ทำให้ลำไส้อักเสบ"},
+  {q:"กินหน่อไม้ปี๊บที่ทำเองและเก็บไว้นาน ต่อมามีหนังตาตก กลืนลำบาก กล้ามเนื้ออ่อนแรง เชื้อใดน่าสงสัยที่สุด",a:"cb",w:"C. botulinum เจริญในภาวะไร้ออกซิเจน เช่น อาหารกระป๋อง สร้างพิษต่อระบบประสาท"},
+  {q:"ตรวจน้ำดื่มของโรงอาหารแล้วพบเชื้อในกลุ่ม fecal coliform แสดงว่าน้ำมีโอกาสปนเปื้อนอุจจาระ เชื้อที่ใช้เป็นดัชนีนี้คือ",a:"ec",w:"E. coli อยู่ในลำไส้ของคนและสัตว์เลือดอุ่น จึงใช้บ่งชี้สุขลักษณะของอาหารและน้ำ"}
+];
+function pIcon(t,c){
+  const I={hand:`<path d="M30 70 V38 a5 5 0 0 1 10 0 V30 a5 5 0 0 1 10 0 V32 a5 5 0 0 1 10 0 V40 a5 5 0 0 1 10 0 V66 q0 18 -20 18 h-6 q-14 0 -24 -14" fill="none" stroke="${c}" stroke-width="3" stroke-linejoin="round"/>`,
+    egg:`<path d="M50 20 C 30 20, 22 50, 22 62 a28 24 0 0 0 56 0 C 78 50, 70 20, 50 20Z" fill="none" stroke="${c}" stroke-width="3"/>`,
+    can:`<rect x="26" y="26" width="48" height="56" rx="6" fill="none" stroke="${c}" stroke-width="3"/><path d="M26 38 H74 M26 70 H74" stroke="${c}" stroke-width="2"/><path d="M40 52 q10 -8 20 0" stroke="${c}" stroke-width="2.4" fill="none"/>`,
+    water:`<path d="M50 18 C 40 36, 28 48, 28 62 a22 22 0 0 0 44 0 C 72 48, 60 36, 50 18Z" fill="none" stroke="${c}" stroke-width="3"/>`};
+  return `<svg viewBox="0 0 100 100" width="56" height="56" aria-hidden="true">${I[t]}</svg>`;
+}
+BUILD.path=el=>{
+  el.innerHTML=vh("จุลินทรีย์ก่อโรคในอาหาร",`จุลินทรีย์ เช่น แบคทีเรีย เชื้อรา ไวรัส พยาธิ และโปรโตซัว ก่อโรคในคนผ่านทาง<b>อาหารหรือน้ำ</b>เป็นหลัก ทำให้คลื่นไส้ อาเจียน ท้องเสีย หรือมีผลต่อระบบประสาท ${SL(18)}`)+
+  `<div class="pgrid">${PATH.map(p=>`<div class="card pcard" style="--pc:${p.c}"><div class="row" style="gap:12px;align-items:center;flex-wrap:nowrap">${pIcon(p.ic,p.c)}<h3 style="margin:0"><i>${p.l}</i></h3></div><ul class="pts small">${p.f.map(x=>`<li>${x}</li>`).join("")}</ul></div>`).join("")}</div>
+  <p class="small muted">เชื้ออื่นที่พบปนเปื้อนอาหารได้ เช่น <i>Listeria monocytogenes</i>, <i>Vibrio parahaemolyticus</i>, <i>Bacillus cereus</i> ${SL(18)}</p>
+  <div class="card"><h3>ฝึกวินิจฉัย: เชื้อตัวไหน</h3><p class="small muted">อ่านสถานการณ์แล้วเลือกเชื้อ · อาการบางอย่างเป็น${EX}</p><div id="pCase" style="margin-top:10px"></div></div>
+  <div class="card"><h3>เกี่ยวกับงานเภสัช ${EX}</h3><p class="small">ผู้ป่วยท้องเสียจากอาหารส่วนใหญ่ต้องการ<b>สารละลายเกลือแร่ (ORS)</b> ทดแทนน้ำก่อน ส่วนอาการหนังตาตก กลืนลำบากหลังกินอาหารกระป๋องต้อง<b>ส่งโรงพยาบาลทันที</b> เพราะ botulism อันตรายถึงชีวิต</p></div>`;
+  let k=0;const box=$("#pCase",el);
+  const draw=()=>{const c=PCASE[k%PCASE.length];
+    box.innerHTML=`<p class="qtxt" style="font-weight:600">${c.q}</p><div class="choices" style="margin-top:8px">${PATH.map(p=>`<button type="button" data-p="${p.id}"><i>${p.l}</i></button>`).join("")}</div><div id="pFb" aria-live="polite"></div>`;
+    $$("button",box).forEach(b=>b.onclick=()=>{const ok=b.dataset.p===c.a;$$("button",box).forEach(x=>{x.disabled=true;if(x.dataset.p===c.a)x.classList.add("ok");else if(x===b)x.classList.add("ng");});
+      $("#pFb",box).innerHTML=`<p class="fb ${ok?"ok":"ng"}" style="margin-top:8px"><b>${ok?"ถูกต้อง":"ยังไม่ใช่"}</b> ${c.w} ${SL(18)}</p><div class="row" style="margin-top:8px"><button class="btn pri" type="button" data-n>สถานการณ์ต่อไป →</button></div>`;$("[data-n]",box).onclick=()=>{k++;draw();};});};
+  draw();
+};
+
+/* =========================== 6 · Fungi =========================== */
+const DIV=[
+  {id:"zy",l:"Zygomycota",sp:"sporangiospore ใน sporangium (ไม่อาศัยเพศ) · zygospore (อาศัยเพศ)",hy:"ไม่มีผนังกั้น",good:"<i>Rhizopus oryzae</i> อาหารหมัก ผลิต α-amylase · <i>R. oligosporus</i> ทำเทมเป้ · <i>R. nigricans</i> ผลิตกรดฟูมาริก",bad:"<i>Rhizopus stolonifer</i> ราขนมปัง (bread mold)",s:20,st:"spor"},
+  {id:"de",l:"Deuteromycota",sp:"conidia (ไม่อาศัยเพศ)",hy:"มีผนังกั้น",good:"<i>Penicillium</i> sp. ผลิตยา · <i>Aspergillus oryzae</i> โคจิ สาเก มิโซะ ซอสถั่วเหลือง",bad:"<i>Aspergillus flavus</i> สร้าง aflatoxin ก่อมะเร็งตับ พบในถั่วลิสง ถั่วเหลือง ธัญพืชแห้ง",s:20,st:"coni"},
+  {id:"as",l:"Ascomycota",sp:"ascospore ในถุง ascus (อาศัยเพศ) · conidia และแตกหน่อ (ไม่อาศัยเพศ)",hy:"มีผนังกั้น หรือเซลล์เดียว (ยีสต์) อยู่บนบก",good:"<i>Saccharomyces cerevisiae</i> แอลกอฮอล์ ไวน์ เบียร์ สุรา ขนมปัง · <i>Monascus purpureus</i> อังคัก สีแดงในเต้าหู้ยี้",bad:"<i>Candida albicans</i> ติดเชื้อทางเดินอาหาร ผิวหนัง ช่องคลอด · <i>Cryptococcus</i> เชื้อฉวยโอกาส ติดเชื้อในกระแสเลือด เยื่อหุ้มสมองอักเสบ",s:21,st:"asc"},
+  {id:"ba",l:"Basidiomycota",sp:"basidiospore บน basidium",hy:"มีผนังกั้น อัดกันแน่นเป็นดอกเห็ด",good:"เห็ดกินได้ เช่น เห็ดโคน เห็ดหอม เห็ดฟาง เห็ดนางฟ้า",bad:"เห็ดพิษ เช่น เห็ดระโงกหิน เห็ดระโงกเหลืองก้านตัน · โรคราสนิมในพืช",s:21,st:"bas"}
+];
+function sporeSVG(t){
+  const sp=(x,y,k)=>`<circle cx="${x}" cy="${y}" r="4.5" fill="#8a6a3a"><animate attributeName="cy" values="${y};${y-30-k*4}" dur="2.4s" begin="${1+k*.2}s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0" dur="2.4s" begin="${1+k*.2}s" repeatCount="indefinite"/></circle>`;
+  let g="";
+  if(t==="spor")g=`<path d="M100 160 V70" stroke="#8a6a3a" stroke-width="4"/><circle cx="100" cy="52" r="26" fill="#5a4a3a"/>${[0,1,2,3,4].map(k=>sp(84+k*8,40+(k%2)*10,k)).join("")}<text x="140" y="56" font-size="13" fill="var(--ink)">sporangium</text>`;
+  if(t==="coni")g=`<path d="M100 160 V80" stroke="#2f7a3a" stroke-width="4"/><circle cx="100" cy="74" r="10" fill="#4c9a4a"/>${[-30,-15,0,15,30].map((a,k)=>`<g transform="rotate(${a} 100 74)">${[0,1,2,3].map(j=>`<circle cx="100" cy="${58-j*11}" r="5" fill="#6dbf5f" stroke="#2f7a3a"${j===3?` ><animate attributeName="opacity" values="1;0;1" dur="3s" begin="${k*.3}s" repeatCount="indefinite"/></circle>`:"/>"}`).join("")}</g>`).join("")}<text x="140" y="56" font-size="13" fill="var(--ink)">conidia เรียงเป็นสาย</text>`;
+  if(t==="asc")g=`<path d="M100 160 C 98 120, 102 100, 100 96" stroke="#7a5a2a" stroke-width="3" fill="none"/><path d="M82 96 C 80 60, 90 26, 100 22 C 110 26, 120 60, 118 96 Z" fill="#fdf1da" stroke="#b5851d" stroke-width="2.4"/>${[0,1,2,3,4,5,6,7].map(k=>`<ellipse cx="100" cy="${34+k*8}" rx="6" ry="3.6" fill="#b5851d" class="popin" style="animation-delay:${k*.12}s"/>`).join("")}<text x="132" y="56" font-size="13" fill="var(--ink)">ascus มี ascospore 8 อัน</text>`;
+  if(t==="bas")g=`<path d="M86 160 C 84 120, 84 80, 88 66 L 112 66 C 116 80, 116 120, 114 160Z" fill="#fdf1da" stroke="#b5851d" stroke-width="2.4"/>${[-1,-.35,.35,1].map((d,k)=>`<path d="M${100+d*10} 66 l ${d*8} -16" stroke="#b5851d" stroke-width="2"/><circle cx="${100+d*18}" cy="46" r="5.5" fill="#8a6a3a"><animate attributeName="cy" values="46;20" dur="2.6s" begin="${1+k*.25}s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0" dur="2.6s" begin="${1+k*.25}s" repeatCount="indefinite"/></circle>`).join("")}<text x="132" y="56" font-size="13" fill="var(--ink)">basidium มี basidiospore 4 อัน</text>`;
+  return `<svg viewBox="0 0 340 170" role="img" aria-label="โครงสร้างสร้างสปอร์" style="width:100%;height:auto;background:#fbf8f2;border-radius:12px">${g}</svg>`;
+}
+const MUSH=[
+  {id:"cap",l:"Cap",i:"หมวกเห็ด ส่วนบนสุด",s:"22–23"},
+  {id:"gill",l:"Gills",i:"ครีบใต้หมวก เป็นที่อยู่ของ basidium ที่สร้าง basidiospore",s:"21–23"},
+  {id:"ring",l:"Annulus ring",i:"วงแหวนรอบก้าน (เอกสารแสดงในภาพเห็ดพิษ)",s:23},
+  {id:"stalk",l:"Stalk",i:"ก้านดอก",s:"22–23"},
+  {id:"volva",l:"Volva",i:"ถ้วยหุ้มที่โคนก้าน",s:22}
+];
+function mushSVG(){
+  return `<svg viewBox="0 0 360 270" role="img" aria-label="ส่วนต่างๆ ของเห็ด">
+  <g data-part="cap"><path d="M60 110 C 70 40, 290 40, 300 110 Z" fill="#c8813a" stroke="#7a4a1a" stroke-width="2.5"/>${[[120,72],[170,60],[230,70],[200,88],[140,92]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="9" ry="6" fill="#f4e3c8" opacity=".9"/>`).join("")}</g>
+  <g data-part="gill"><path d="M66 110 L294 110 L270 126 L90 126Z" fill="#f2dfc0" stroke="#a77a3a" stroke-width="1.5"/>${Array.from({length:16},(_,k)=>`<path d="M${84+k*12.5} 112 L${92+k*11.5} 125" stroke="#a77a3a" stroke-width="1.2"/>`).join("")}</g>
+  <g data-part="stalk"><path d="M160 126 C 156 170, 154 210, 152 228 L 208 228 C 206 210, 204 170, 200 126Z" fill="#f7ecd8" stroke="#a77a3a" stroke-width="2"/></g>
+  <g data-part="ring"><path d="M156 150 C 140 158, 140 166, 152 168 L 208 168 C 220 166, 220 158, 204 150 Z" fill="#fff" stroke="#a77a3a" stroke-width="2"/></g>
+  <g data-part="volva"><path d="M140 250 C 132 226, 146 214, 152 214 L 208 214 C 214 214, 228 226, 220 250 Z" fill="#efe2c8" stroke="#8a6a3a" stroke-width="2.2"/></g>
+  <path d="M30 252 H330" stroke="#b99a6a" stroke-width="3"/></svg>`;
+}
+BUILD.fungi=el=>{
+  el.innerHTML=vh("Kingdom Fungi",`Fungi เป็น <b>eukaryote</b> ไม่มี chloroplast ดำรงชีวิตอิสระหรือเป็นผู้ย่อยสลาย ผนังเซลล์เป็น<b>ไคติน (chitin)</b> มีทั้งเซลล์เดียว (ยีสต์) และเส้นใย ส่วนใหญ่สืบพันธุ์โดยสร้างสปอร์ (รา) และแตกหน่อ (ยีสต์) ${SL(19)}`)+
+  `<div class="card"><h3>เส้นใยรา (hypha) 2 ชนิด ${SL(19)}</h3><p class="small muted">เส้นใยรวมกลุ่มกันเรียกว่า <b>ขยุ้มรา (mycelium)</b></p><div id="hySeg" style="margin-top:8px"></div><div class="habw" style="margin-top:10px"><div id="hyPic"></div><div class="info" id="hyInfo" aria-live="polite"></div></div></div>
+  <div class="card"><h3>4 Division ของ Fungi ${SL("20–21")}</h3><p class="small muted">แตะ division เพื่อดูวิธีสร้างสปอร์ ประโยชน์ และโทษ</p><div id="dvSeg" style="margin-top:8px"></div><div class="habw" style="margin-top:12px"><div id="dvPic"></div><div class="info" id="dvInfo" aria-live="polite"></div></div>
+   ${WARN("เอกสารใส่ <i>Plasmopara viticola</i> (ราน้ำค้างในองุ่น) ไว้ใน Zygomycota แต่ปัจจุบันจัดเป็น oomycete ซึ่งไม่ใช่ fungi แท้ "+EX)}</div>`+
+  diagramCard("ส่วนต่างๆ ของเห็ด (club fungi) "+SL("22–23"),"แตะส่วนของเห็ด",mushSVG(),"mu")+
+  `<div class="card"><h3>เห็ดกิน vs เห็ดพิษ ${SL("21–23")}</h3><p class="small"><b style="color:var(--ok)">กินได้</b> เห็ดโคน เห็ดหอม เห็ดฟาง เห็ดนางฟ้า · <b style="color:var(--bad)">พิษ</b> เห็ดระโงกหิน เห็ดระโงกเหลืองก้านตัน เห็ดกระโดงตีนต่ำ เห็ดขี้ควาย ฯลฯ</p>
+   ${WARN("เห็ดกินได้บางชนิด เช่น เห็ดฟาง ก็มีถ้วยที่โคน (volva) เหมือนเห็ดพิษ จึง<b>ห้ามใช้รูปร่างภายนอกตัดสิน</b>ว่าเห็ดป่ากินได้ "+EX)}</div>
+  <div class="card"><h3>จับคู่: ราตัวไหนทำอะไร</h3><div id="fMatch" style="margin-top:10px"></div></div>`;
+  const HY={sep:{l:"มีผนังกั้น (septate)",i:"มีผนังกั้น (septum) มองเห็นเป็นห้องๆ แต่ละห้องมีนิวเคลียส ผนังกั้นมีรู (pore) ให้สารผ่านได้"},non:{l:"ไม่มีผนังกั้น (nonseptate)",i:"ไม่มีผนังกั้น เห็นหลายนิวเคลียสกระจายอยู่ในเส้นใยเดียว เช่น Zygomycota"}};
+  seg($("#hySeg",el),[{id:"sep",l:HY.sep.l},{id:"non",l:HY.non.l}],id=>{const sep=id==="sep";
+    $("#hyPic",el).innerHTML=`<svg viewBox="0 0 360 120" role="img" aria-label="hypha" style="width:100%;height:auto"><rect x="16" y="40" width="328" height="40" rx="20" fill="#fbf1dc" stroke="#a77a3a" stroke-width="2.4"/>${sep?[96,176,256].map(x=>`<path d="M${x} 42 V56 M${x} 64 V78" stroke="#a77a3a" stroke-width="3"/>`).join("")+[56,136,216,300].map(x=>`<circle cx="${x}" cy="60" r="7" fill="#7a5aa6" class="popin"/>`).join(""):[44,78,108,150,182,220,250,290,318].map((x,k)=>`<circle cx="${x}" cy="${54+(k%3)*6}" r="6" fill="#7a5aa6" class="popin" style="animation-delay:${k*.06}s"/>`).join("")}${[0,1,2].map(k=>`<circle r="3" fill="#2f8a3a" opacity=".8"><animateMotion dur="4s" begin="-${k*1.3}s" repeatCount="indefinite" path="M30 66 H330"/></circle>`).join("")}<text x="180" y="104" text-anchor="middle" font-size="12.5" fill="var(--muted)">${sep?"septum = ผนังกั้น":"นิวเคลียสหลายอันในเส้นใยเดียว"}</text></svg>`;
+    $("#hyInfo",el).innerHTML=`<b>${HY[id].l}</b> ${HY[id].i} ${SL(19)}`;});
+  seg($("#dvSeg",el),DIV.map(d=>({id:d.id,l:d.l})),id=>{const d=DIV.find(x=>x.id===id);$("#dvPic",el).innerHTML=sporeSVG(d.st);
+    $("#dvInfo",el).innerHTML=`<h3 style="font-size:18px">${d.l}</h3><p class="small"><b>เส้นใย</b> ${d.hy}</p><p class="small" style="margin-top:4px"><b>สปอร์</b> ${d.sp}</p><p class="small" style="margin-top:4px"><b style="color:var(--ok)">ประโยชน์</b> ${d.good}</p><p class="small" style="margin-top:4px"><b style="color:var(--bad)">โทษ</b> ${d.bad} ${SL(d.s)}</p>`;});
+  wireParts($("#muChips",el).closest(".dg").querySelector("svg"),$("#muChips",el),$("#muInfo",el),MUSH);
+  matchGame($("#fMatch",el),[
+    {l:"<i>Aspergillus flavus</i>",r:"aflatoxin ก่อมะเร็งตับ",w:"มักเจริญในถั่วลิสง ถั่วเหลือง ธัญพืชแห้ง",s:"20, 35"},
+    {l:"<i>Penicillium</i> sp.",r:"ผลิตยา penicillin",w:"Deuteromycota สร้าง conidia",s:"20, 46"},
+    {l:"<i>Rhizopus stolonifer</i>",r:"ราขนมปัง",w:"Zygomycota เส้นใยไม่มีผนังกั้น",s:20},
+    {l:"<i>Saccharomyces cerevisiae</i>",r:"ขนมปัง ไวน์ เบียร์",w:"ยีสต์ใน Ascomycota",s:"21, 41"},
+    {l:"<i>Candida albicans</i>",r:"ติดเชื้อช่องคลอด ผิวหนัง",w:"Ascomycota ก่อโรคในคน",s:21},
+    {l:"<i>Monascus purpureus</i>",r:"อังคัก สีแดงในเต้าหู้ยี้",w:"ข้าวแดงหมัก ใช้เป็นสีผสมอาหาร",s:"21, 43"}
+  ],"เชื้อรา","สิ่งที่เกี่ยวข้อง");
+};
+
+/* =========================== 7 · Protista =========================== */
+const PZ=[
+  {id:"sar",l:"Sarcodina",th:"ขาเทียม (pseudopodium)",ex:"Amoeba, Heliozoans",i:"ไม่มีอวัยวะเคลื่อนที่ แต่ยื่นขาเทียมออกไป ใช้กินอาหารแบบ phagocytosis",s:25},
+  {id:"fla",l:"Flagellata",th:"แส้ (flagella)",ex:"ปรสิตในทางเดินอาหารปลวก ปรสิตในช่องคลอด, Trypanosoma (โรคเหงาหลับ)",i:"ใช้แส้ตีน้ำเพื่อเคลื่อนที่",s:25},
+  {id:"cil",l:"Ciliata",th:"ขน (cilia)",ex:"Paramecium, Vorticella, Trichodina",i:"ขนเส้นเล็กจำนวนมากโบกพร้อมกันเป็นจังหวะ",s:26},
+  {id:"spo",l:"Sporozoa",th:"ไม่มีอวัยวะเคลื่อนที่",ex:"Plasmodium (มาลาเรีย)",i:"สร้างสปอร์ แพร่พันธุ์โดยอาศัยพาหะและโฮสต์ (host)",s:26}
+];
+function pzSVG(id){
+  let g="";
+  if(id==="sar")g=`<path fill="#f6dcc8" stroke="#b5651d" stroke-width="2.5"><animate attributeName="d" dur="4s" repeatCount="indefinite" values="M120 90 C120 50,180 40,210 60 C250 50,270 90,240 110 C250 140,190 150,170 130 C130 150,100 120,120 90Z;M110 90 C100 40,170 50,200 66 C270 40,300 96,250 112 C260 150,180 160,160 136 C120 160,90 120,110 90Z;M120 90 C120 50,180 40,210 60 C250 50,270 90,240 110 C250 140,190 150,170 130 C130 150,100 120,120 90Z"/></path><circle cx="180" cy="96" r="12" fill="#b5651d" opacity=".55"/><circle cx="214" cy="80" r="5" fill="#fff" stroke="#b5651d"/><text x="300" y="60" font-size="12.5" fill="var(--ink)">ขาเทียม</text><path d="M296 62 L262 80" stroke="var(--muted)" stroke-width="1.4"/>`;
+  if(id==="fla")g=`<g><animateTransform attributeName="transform" type="translate" values="0 0;-14 0;0 0" dur="2s" repeatCount="indefinite"/><ellipse cx="190" cy="90" rx="46" ry="20" fill="#e2ecfa" stroke="#3b6fd6" stroke-width="2.5"/><circle cx="196" cy="90" r="7" fill="#3b6fd6" opacity=".6"/><path stroke="#3b6fd6" stroke-width="2.4" fill="none"><animate attributeName="d" dur=".7s" repeatCount="indefinite" values="M144 90 q -20 -16 -40 0 t -40 0;M144 90 q -20 16 -40 0 t -40 0;M144 90 q -20 -16 -40 0 t -40 0"/></path></g><text x="40" y="60" font-size="12.5" fill="var(--ink)">แส้ (flagellum)</text>`;
+  if(id==="cil")g=`<ellipse cx="180" cy="90" rx="90" ry="34" fill="#eaf5e4" stroke="#2f8a3a" stroke-width="2.5"/>${Array.from({length:26},(_,k)=>{const a=k/26*Math.PI*2,x=180+Math.cos(a)*90,y=90+Math.sin(a)*34,x2=180+Math.cos(a)*102,y2=90+Math.sin(a)*44;return `<line x1="${x}" y1="${y}" x2="${x2}" y2="${y2}" stroke="#2f8a3a" stroke-width="1.6"><animateTransform attributeName="transform" type="rotate" values="0 ${x} ${y};18 ${x} ${y};0 ${x} ${y}" dur=".9s" begin="${(k%6)*.12}s" repeatCount="indefinite"/></line>`;}).join("")}<circle cx="170" cy="90" r="12" fill="#2f8a3a" opacity=".4"/><text x="290" y="40" font-size="12.5" fill="var(--ink)">ขน (cilia)</text>`;
+  if(id==="spo")g=`${[0,1,2,3,4,5].map(k=>`<circle cx="${80+k*42}" cy="${90+(k%2)*16}" r="17" fill="#fbe0e1" stroke="#c9343a" stroke-width="2"/><circle cx="${80+k*42}" cy="${90+(k%2)*16}" r="5" fill="#7a2a6a" class="popin" style="animation-delay:${k*.2}s"/>`).join("")}<text x="180" y="150" text-anchor="middle" font-size="12.5" fill="var(--muted)">เซลล์เม็ดเลือดแดงที่มี Plasmodium อยู่ข้างใน</text><text x="180" y="40" text-anchor="middle" font-size="12.5" fill="var(--ink)">ไม่มีอวัยวะเคลื่อนที่ · อาศัยยุงเป็นพาหะ</text>`;
+  return `<svg viewBox="0 0 360 170" role="img" aria-label="protozoa" style="width:100%;height:auto;background:#f7fbff;border-radius:12px">${g}</svg>`;
+}
+const ALG=[
+  {id:"chl",l:"Chlorophyta",th:"สาหร่ายสีเขียว",pig:["คลอโรฟิลล์เอ","บี","เบตาแคโรทีน","แซนโทฟิลล์บางชนิด"],food:"แป้งในเม็ดไพรีนอยด์ในคลอโรพลาสต์",wall:"เซลลูโลส",fl:"1–หลายเส้น อยู่ด้านหน้า",ex:"Spirogyra (สาหร่ายเทา/ไก), สาหร่ายพวงองุ่น",c:"#2f8a3a",s:27},
+  {id:"eug",l:"Euglenophyta",th:"ยูกลีนา (อาจจัดเป็นโปรโตซัวกลุ่ม Flagellata)",pig:["คลอโรฟิลล์เอ","บี","เบตาแคโรทีน","แซนโทฟิลล์บางชนิด"],food:"พารามัยลัม (β-1,3-glycopyranoside)",wall:"ไม่มีผนังเซลล์ (มี pellicle) "+EX,fl:"1–3 เส้น อยู่ปลายเซลล์",ex:"Euglena",c:"#4aa36a",s:27},
+  {id:"chr",l:"Chrysophyta",th:"สาหร่ายสีน้ำตาลแกมทอง ไดอะตอม",pig:["คลอโรฟิลล์เอ","ซี","เบตาแคโรทีน","แซนโทฟิลล์บางชนิด"],food:"น้ำมัน และคริโซลามินาริน (คาร์โบไฮเดรต)",wall:"เซลลูโลส ไดอะตอมมีซิลิกาด้วย",fl:"1–2 เส้น อยู่ปลายเซลล์",ex:"Diatom",c:"#b5851d",s:28},
+  {id:"pyr",l:"Pyrrophyta",th:"ไดโนแฟลเจลเลต",pig:["คลอโรฟิลล์เอ","ซี","เบตาแคโรทีน","แซนโทฟิลล์บางชนิด"],food:"แป้ง",wall:"เซลลูโลส",fl:"2 เส้น",ex:"Dinoflagellates · ปรากฏการณ์<b>ขี้ปลาวาฬ (red tide)</b> เพิ่มจำนวนอย่างรวดเร็วจนน้ำทะเลเปลี่ยนสี",c:"#c9343a",s:28},
+  {id:"pha",l:"Phaeophyta",th:"สาหร่ายสีน้ำตาล",pig:["คลอโรฟิลล์เอ","ซี","เบตาแคโรทีน","ฟูโคแซนทิน (สีน้ำตาล)"],food:"ลามินาริน แมนนิทอล",wall:"เซลลูโลส และกรดแอลจินิก",fl:"zoospore มี 2 เส้นอยู่ด้านข้าง",ex:"Macrocystis, Laminaria · ให้ alginate (gelling agent)",c:"#8a5a2a",s:29},
+  {id:"rho",l:"Rhodophyta",th:"สาหร่ายสีแดง",pig:["คลอโรฟิลล์เอ","ดี","ไฟโคไซยานิน","ไฟโคอิริทริน","แอลฟา/เบตาแคโรทีน"],food:"floridean starch",wall:"เซลลูโลส ไซแลน และเพกติน",fl:"ไม่มีแส้",ex:"สาหร่ายผมนาง (Gracilaria) · สไลด์ยก Haematococcus pluvialis (มี astaxanthin) ไว้ที่กลุ่มนี้ แต่จริงเป็นสาหร่ายสีเขียว (Chlorophyta) ที่สะสม astaxanthin จนเซลล์เป็นสีแดง",c:"#c2364b",s:29}
+];
+BUILD.prot=el=>{
+  el.innerHTML=vh("Kingdom Protista",`แบ่งเป็น 2 กลุ่มใหญ่ คือ <b>Protozoa</b> (เช่น Paramecium, Amoeba, Euglena) และ <b>Algae</b> (เช่น Spirogyra, Volvox, Diatom, Scenedesmus) ${SL(24)}`)+
+  `<div class="card"><h3>Protozoa: 4 กลุ่มตามอวัยวะที่ใช้เคลื่อนที่ ${SL("24–26")}</h3><p class="small muted">ไม่มีอวัยวะหรือเนื้อเยื่อที่ทำหน้าที่เฉพาะ หากินอิสระในน้ำ อยู่เดี่ยวหรือเป็นกลุ่ม</p><div id="pzSeg" style="margin-top:8px"></div><div class="habw" style="margin-top:12px"><div id="pzPic"></div><div class="info" id="pzInfo" aria-live="polite"></div></div>
+   <p class="small muted" style="margin-top:8px">วิธีจำ: <b>ขา–แส้–ขน–ไม่มี</b> = Sarcodina, Flagellata, Ciliata, Sporozoa ${EX}</p></div>
+  <div class="card"><h3>Algae: 6 ไฟลัม ${SL("27–29")}</h3><p class="small muted">มีคลอโรฟิลล์เอและรงควัตถุอื่น สังเคราะห์แสงได้ · ดูรงควัตถุ อาหารสะสม ผนังเซลล์ และแฟลกเจลลา</p><div id="alSeg" style="margin-top:8px"></div><div id="alCard" style="margin-top:12px"></div></div>
+  <div class="card"><h3>ไฮโดรคอลลอยด์จากสาหร่าย ${SL(30)}</h3><p class="small">โพลีแซคคาไรด์หรือโปรตีนโมเลกุลใหญ่ ไม่ละลายน้ำแต่แขวนลอยและจับน้ำได้ดี ใช้เป็นวัตถุเจือปนอาหาร ทำให้ข้น คงตัว หรือเกิดเจล</p>
+   <div class="grid3" style="margin-top:10px">${[["Alginate","INS 400","สาหร่ายสีน้ำตาล <i>Macrocystis pyrifera</i>, <i>Laminaria</i> · เกลือ Ca, K ของกรดแอลจินิก","สารทำให้เกิดเจล","#8a5a2a"],["Agar (วุ้น)","INS 406","สาหร่าย <i>Gracilaria</i>","เจลแข็ง คงตัว","#c2364b"],["Carrageenan","INS 407","สาหร่ายสีแดง สาหร่ายผมนาง <i>Gracilaria fisheri</i>","เจลนุ่มเหนียวหนึบ ทำให้ข้นหนืด","#d9467a"]].map(([n,ins,src,use,c])=>`<div class="hcol" style="--hc:${c}"><b>${n}</b><span class="ins">${ins}</span><p class="small">${src}</p><p class="small" style="margin-top:4px"><b>ใช้</b> ${use}</p></div>`).join("")}</div>
+   <p class="small muted" style="margin-top:8px">วิธีจำเลข INS: 400 แอล<b>จิเนต</b>มาก่อน · 406 <b>วุ้น</b>แข็ง · 407 คา<b>ราจีแนน</b>นุ่ม (เรียงตามตัวอักษร A–C) ${EX}</p></div>
+  <div class="card"><h3>จับคู่: สาหร่ายกับรงควัตถุเด่น</h3><div id="alMatch" style="margin-top:10px"></div></div>`;
+  seg($("#pzSeg",el),PZ.map(p=>({id:p.id,l:p.l})),id=>{const p=PZ.find(x=>x.id===id);$("#pzPic",el).innerHTML=pzSVG(id);$("#pzInfo",el).innerHTML=`<h3 style="font-size:18px">${p.l}</h3><p class="small"><b>เคลื่อนที่ด้วย</b> ${p.th}</p><p class="small" style="margin-top:4px">${p.i}</p><p class="small" style="margin-top:4px"><b>ตัวอย่าง</b> ${p.ex} ${SL(p.s)}</p>`;});
+  seg($("#alSeg",el),ALG.map(a=>({id:a.id,l:a.l})),id=>{const a=ALG.find(x=>x.id===id);
+    $("#alCard",el).innerHTML=`<div class="algc fxin" style="--ac:${a.c}"><div class="algh"><span class="dot"></span><div><h3 style="font-size:19px;margin:0">${a.l}</h3><p class="small muted">${a.th}</p></div></div>
+     <div class="readout"><div><span>รงควัตถุ</span>${a.pig.map(p=>`<em class="pg">${p}</em>`).join("")}</div><div><span>อาหารสะสม</span>${a.food}</div><div><span>ผนังเซลล์</span>${a.wall}</div><div><span>แฟลกเจลลา</span>${a.fl}</div></div><p class="small" style="margin-top:8px"><b>ตัวอย่าง</b> ${a.ex} ${SL(a.s)}</p></div>`;});
+  matchGame($("#alMatch",el),[
+    {l:"Phaeophyta",r:"ฟูโคแซนทิน (สีน้ำตาล)",w:"สาหร่ายสีน้ำตาลได้สีจากฟูโคแซนทิน",s:29},
+    {l:"Rhodophyta",r:"ไฟโคอิริทริน + คลอโรฟิลล์ดี",w:"สาหร่ายสีแดง มีไฟโคบิลินและคลอโรฟิลล์ดี",s:29},
+    {l:"Chlorophyta",r:"คลอโรฟิลล์เอ + บี",w:"สาหร่ายสีเขียวมีคลอโรฟิลล์เอและบีเหมือนพืช",s:27},
+    {l:"Chrysophyta",r:"คลอโรฟิลล์เอ + ซี ผนังมีซิลิกา",w:"ไดอะตอมมีผนังซิลิกา",s:28}
+  ],"ไฟลัม","ลักษณะเด่น");
+};
+
+/* =========================== 8 · Fermented foods =========================== */
+const FERM=[
+  {id:"lab",l:"แบคทีเรียกรดแลกติก",m:"Lactic acid bacteria",sub:"glucose",pro:["lactic acid","H₂O₂ หรือ diacetyl (กลิ่นรส)"],food:"ไส้กรอกเปรี้ยว ซาลามี แหนม ไส้กรอกอีสาน กิมจิ ซาวเคราท์ นมเปรี้ยว โยเกิร์ต เนยแข็ง",note:"จัดเป็น <b>GRAS</b> (generally recognized as safe)",s:31,c:"#3b6fd6",k:"bac"},
+  {id:"yog",l:"โยเกิร์ต",m:"Streptococcus thermophilus + Lactobacillus bulgaricus",sub:"lactose (น้ำตาลนม)",pro:["lactic acid มากกว่า 90%","acetaldehyde (กลิ่นรสเฉพาะ)"],food:"โยเกิร์ต",note:"2 เชื้อทำงานร่วมกัน ผลิตกรดได้เร็ว",s:32,c:"#5a7fd6",k:"bac"},
+  {id:"nat",l:"นัตโตะ / ถั่วเน่า",m:"Bacillus subtilis var. natto",sub:"น้ำตาลในถั่วเหลืองต้ม",pro:["เมือกเหนียว กลิ่นฉุนเฉพาะ","โปรตีน โปรไบโอติก ใยอาหาร วิตามิน"],food:"นัตโตะ (ห่อถั่วต้มด้วยฟางข้าว เชื้ออยู่บนฟางตามธรรมชาติ)",note:"",s:33,c:"#8a6a3a",k:"bac"},
+  {id:"ace",l:"แบคทีเรียกรดอะซิติก",m:"Acetobacter, Gluconobacter",sub:"ethyl alcohol",pro:["acetic acid (น้ำส้มสายชู)"],food:"น้ำส้มสายชู · <i>Acetobacter xylinum</i> หมักน้ำมะพร้าว สร้างเส้นใยเซลลูโลสเป็น<b>วุ้นมะพร้าว</b>",note:"เป็นแกรมลบ รูปท่อน ทำปฏิกิริยา oxidation",s:34,c:"#b5851d",k:"bac"},
+  {id:"koj",l:"โคจิ (koji)",m:"Aspergillus oryzae",sub:"ข้าวสุก / ถั่วเหลือง",pro:["amylase, amyloglucosidase: starch → glucose","protease: protein → amino acid"],food:"กล้าเชื้อ (starter) ของสาเก ซีอิ๊วหมัก เต้าเจี้ยว มิโซะ",note:"ราสร้างเส้นใยและสปอร์สีเขียวคลุมเมล็ดข้าว ควบคุมอุณหภูมิและความชื้น",s:36,c:"#2f8a3a",k:"mold"},
+  {id:"soy",l:"ซีอิ๊ว (soy sauce)",m:"Aspergillus oryzae + แบคทีเรียแลกติก + Bacillus subtilis",sub:"ถั่วเหลือง + ก้อนโคจิ",pro:["proteinase, amylase ย่อยวัตถุดิบ","แบคทีเรียแลกติกช่วยกันเน่าเสีย","B. subtilis ช่วยให้ไม่ขุ่น"],food:"ซีอิ๊วหมักแบบธรรมชาติ (ต่างจากซอสปรุงรสที่ใช้สารเคมี)",note:"",s:"37–38",c:"#6b3a1a",k:"mold",warn:"เอกสารเขียนว่าแบคทีเรียแลกติกสร้าง <b>กรดโคจิก (kojic acid)</b> ที่ถูกคือกรดโคจิกสร้างโดยรา <i>Aspergillus oryzae</i> "+EX},
+  {id:"tem",l:"เทมเป้ (tempeh)",m:"Rhizopus oligosporus, R. oryzae, R. stolonifer",sub:"ถั่วเหลืองทั้งเมล็ด",pro:["เส้นใยสีขาวยึดถั่วเป็นก้อน","โปรตีนสูง ทดแทนเนื้อสัตว์"],food:"เทมเป้ อาหารพื้นเมืองอินโดนีเซีย หมัก 2–3 วัน",note:"อาจพบแบคทีเรียแลกติกเจริญร่วมด้วย",s:39,c:"#7a7a7a",k:"mold"},
+  {id:"yea",l:"ยีสต์ (ขนมปัง สุรา ไวน์)",m:"Saccharomyces cerevisiae",sub:"น้ำตาล (ไม่มี O₂)",pro:["CO₂","ethyl alcohol"],food:"ขนมปัง (CO₂ ทำให้โดขึ้นฟู) · สุรา วิสกี้ บรั่นดี · ไวน์ แอลกอฮอล์ประมาณ 10–15%",note:"",s:"41–42",c:"#c2410c",k:"yeast"},
+  {id:"mon",l:"ข้าวแดง (อังคัก)",m:"Monascus spp.",sub:"ข้าว",pro:["สารสีแดง"],food:"anka / ang-khak ใช้เป็นสีผสมอาหาร เช่น เต้าหู้ยี้ น้ำปลา ไวน์แดงจากข้าว",note:"",s:43,c:"#c2364b",k:"mold"}
+];
+function microbe(k,c){
+  if(k==="bac")return `<g><rect x="-26" y="-11" width="52" height="22" rx="11" fill="#fff" stroke="${c}" stroke-width="3"/><circle cx="-6" cy="0" r="3" fill="${c}"/><circle cx="8" cy="-2" r="2.4" fill="${c}"/></g>`;
+  if(k==="yeast")return `<g><ellipse rx="22" ry="18" fill="#fff" stroke="${c}" stroke-width="3"/><ellipse cx="22" cy="-14" rx="9" ry="8" fill="#fff" stroke="${c}" stroke-width="3"/></g>`;
+  return `<g><path d="M-30 14 C -10 -4, 10 20, 30 -6" fill="none" stroke="${c}" stroke-width="4"/><circle cx="30" cy="-10" r="8" fill="${c}" fill-opacity=".3" stroke="${c}" stroke-width="2.4"/><circle cx="-30" cy="12" r="6" fill="${c}" fill-opacity=".3" stroke="${c}" stroke-width="2"/></g>`;
+}
+function fermSVG(f){
+  const who=f.k==="bac"?"แบคทีเรีย":f.k==="yeast"?"ยีสต์":"รา";
+  return `<div class="fflow fxin" style="--fc:${f.c}"><div class="fbox"><span>สารตั้งต้น</span><b>${f.sub}</b></div><div class="farr"><i></i><i></i><i></i></div>
+  <div class="fmic"><svg viewBox="-40 -30 80 60" width="92" height="70" aria-hidden="true"><g class="bob">${microbe(f.k,f.c)}</g></svg><span>${who}</span></div><div class="farr"><i></i><i></i><i></i></div>
+  <div class="fprods">${f.pro.map(p=>`<div class="fbox p"><span>ได้</span><b>${p}</b></div>`).join("")}</div></div>`;
+}
+const SOY=[
+  {n:"ถั่วเน่า",flag:"ไทย",from:"ถั่ว + เกลือ พริกป่น",t:"หมักทิ้งไว้ 2–3 วัน",p:43.9,na:794,use:"ปรุงน้ำเงี้ยว แกงต่างๆ ซูเปอร์โปรตีนต้นทุนต่ำ"},
+  {n:"นัตโตะ",flag:"ญี่ปุ่น",from:"ถั่ว + Bacillus spp.",t:"หมักที่ 40 °C 20 ชม.",p:18,na:7,use:"โปรไบโอติก มีวิตามิน B12"},
+  {n:"เทมเป้",flag:"อินโดนีเซีย",from:"ถั่ว + Rhizopus spp.",t:"หมักทิ้งไว้ 48 ชม.",p:20.29,na:9,use:"นิยมในกลุ่มมังสวิรัติ มีพรีไบโอติกและโปรไบโอติก"},
+  {n:"ทวนจัง",flag:"เกาหลี",from:"ถั่ว + พริก น้ำผึ้ง เกลือ ถ่านไม้",t:"หมักทิ้งไว้ 1 ปี",p:13.3,na:3833,use:"หัวเชื้อซอสอื่นๆ มีกรดอะมิโนจำเป็น"}
+];
+BUILD.ferm=el=>{
+  el.innerHTML=vh("จุลินทรีย์กับอาหารหมัก",`ใช้จุลินทรีย์เปลี่ยนอาหารเป็นผลิตภัณฑ์มูลค่าสูง รสชาติเป็นเอกลักษณ์ ยืดอายุการเก็บ หรือเพิ่มคุณค่าทางโภชนาการ ${SL("31–43")}`)+
+  `<div class="card"><h3>ห้องทดลองการหมัก</h3><p class="small muted">เลือกเชื้อ แล้วดูว่าเปลี่ยนสารตั้งต้นเป็นอะไร</p><div id="fmSeg" style="margin-top:8px"></div><div id="fmPic" style="margin-top:10px"></div><div class="info" id="fmInfo" aria-live="polite" style="margin-top:8px"></div></div>
+  <div class="card"><h3>ยีสต์ทำให้ขนมปังขึ้นฟูได้อย่างไร ${SL(41)}</h3><div class="habw" style="margin-top:10px"><div id="brPic"></div><div class="info" id="brInfo" aria-live="polite"></div></div><div id="brCtl" style="margin-top:10px"></div></div>
+  <div class="card"><h3>ถั่วเหลืองหมัก 4 ประเทศ ${SL(40)}</h3><p class="small muted">คุณค่าทางโภชนาการต่อ 100 g · เลือกดูโปรตีนหรือโซเดียม</p><div id="soySeg" style="margin-top:8px"></div><div id="soyChart" style="margin-top:12px"></div></div>
+  <div class="card"><h3>ซีอิ๊วขาว vs ซอสปรุงรส ${SL(38)}</h3><div class="tblwrap"><table class="rt plain"><thead><tr><th></th><th>ซีอิ๊วขาว</th><th>ซอสปรุงรส</th></tr></thead><tbody>
+   <tr><th>สี</th><td>น้ำตาลเข้ม ใส</td><td>น้ำตาลเกือบดำ ข้นกว่า</td></tr><tr><th>รสชาติ</th><td>เค็มหวานตาม กลิ่นอ่อน</td><td>เค็ม เข้มข้น แต่งกลิ่น</td></tr><tr><th>วิธีผลิต</th><td>หมักโดยวิธีธรรมชาติ</td><td>หมักโดยใช้สารเคมี</td></tr><tr><th>สูตร</th><td>มาจากจีน</td><td>มาจากตะวันตก</td></tr><tr><th>โซเดียม</th><td>1,360 mg (ขวด 600 mL)</td><td>1,210 mg (ขวด 500 mL)</td></tr></tbody></table></div>
+   <p class="small muted" style="margin-top:8px">“ซีอิ๊วขาว” ไม่ได้หมายถึงสี แต่หมายถึงการหมักที่ไม่เติมสีและรส ${SL(38)}</p></div>
+  <div class="card"><h3>เกม: อาหารนี้ใช้เชื้ออะไร</h3><div id="fmSort" style="margin-top:10px"></div></div>`;
+  const ex=FERM.find(f=>f.warn);
+  seg($("#fmSeg",el),FERM.map(f=>({id:f.id,l:f.l})),id=>{const f=FERM.find(x=>x.id===id);$("#fmPic",el).innerHTML=fermSVG(f);
+    $("#fmInfo",el).innerHTML=`<p class="small"><b>เชื้อ</b> <i>${f.m}</i></p><p class="small" style="margin-top:4px"><b>ผลิตภัณฑ์</b> ${f.pro.join(" · ")}</p><p class="small" style="margin-top:4px"><b>อาหาร</b> ${f.food}</p>${f.note?`<p class="small muted" style="margin-top:4px">${f.note}</p>`:""} ${SL(f.s)}${f.warn?WARN(f.warn):""}`;});
+  const BR=[{h:"1 · ผสมแป้ง น้ำตาล ยีสต์",d:"ยีสต์ <i>S. cerevisiae</i> กระจายอยู่ในเนื้อแป้ง"},{h:"2 · ยีสต์หมักน้ำตาล",d:"ในภาวะไม่มี O₂ ยีสต์เปลี่ยนน้ำตาลเป็น <b>CO₂</b> และ <b>ethyl alcohol</b>"},{h:"3 · CO₂ แทรกในเนื้อแป้ง",d:"ฟองก๊าซทำให้แป้งขยายตัว ขึ้นฟูเป็นก้อนโด (dough)"},{h:"4 · อบ",d:"แอลกอฮอล์ระเหยไประหว่างอบ เหลือโพรงอากาศจาก CO₂ ทำให้ขนมปังนุ่ม"}];
+  stepper($("#brCtl",el),4,i=>{const sc=[1,1.08,1.35,1.4][i],bub=[0,6,16,14][i];let b="";for(let k=0;k<bub;k++)b+=`<circle cx="${120+((k*47)%130)}" cy="${92+((k*29)%40)-(sc-1)*30}" r="${3+k%3}" fill="#fff" stroke="#d9b27a"><animate attributeName="r" values="${2+k%3};${4+k%3};${2+k%3}" dur="${1.6+k%3*.4}s" repeatCount="indefinite"/></circle>`;
+    $("#brPic",el).innerHTML=`<svg viewBox="0 0 360 170" role="img" aria-label="โดขนมปัง" style="width:100%;height:auto"><path d="M70 150 H290 L280 160 H80Z" fill="#cfcfcf"/><ellipse cx="180" cy="${150-36*sc}" rx="${92*Math.min(sc,1.2)}" ry="${38*sc}" fill="${i===3?"#d99a4e":"#f3dcb4"}" stroke="#b5853d" stroke-width="2.4" style="transition:all .8s"/>${b}${i>=1&&i<3?`<text x="300" y="40" font-size="13" font-weight="700" fill="#c2410c">CO₂ ↑<animate attributeName="y" values="60;30" dur="1.6s" repeatCount="indefinite"/></text>`:""}${i===3?`<text x="300" y="40" font-size="13" fill="var(--muted)">alcohol ระเหย<animate attributeName="opacity" values="1;0" dur="2s" repeatCount="indefinite"/></text>`:""}</svg>`;
+    $("#brInfo",el).innerHTML=`<b>${BR[i].h}</b> ${BR[i].d} ${SL(41)}`;},{ms:2600});
+  const chart=key=>{const mx=Math.max(...SOY.map(x=>x[key])),unit=key==="p"?"g":"mg";
+    $("#soyChart",el).innerHTML=`<div class="bars">${SOY.map(x=>`<div class="bar"><div class="bl"><b>${x.n}</b><span>${x.flag} · ${x.t}</span></div><div class="bt"><i style="width:${Math.max(2,x[key]/mx*100)}%;background:${key==="p"?"var(--hema)":"var(--eosin)"}"></i></div><span class="bv">${x[key].toLocaleString()} ${unit}</span></div>`).join("")}</div>
+     <p class="small muted" style="margin-top:8px">${key==="p"?"ถั่วเน่าของไทยมีโปรตีนสูงสุด (43.9 g)":"ทวนจังโซเดียมสูงมาก (3,833 mg) เพราะหมักกับเกลือนาน 1 ปี ส่วนนัตโตะและเทมเป้มีโซเดียมต่ำมาก"} ${SL(40)}</p>
+     <div class="grid2" style="margin-top:8px">${SOY.map(x=>`<p class="small"><b>${x.n}</b> เกิดจาก ${x.from} · ${x.use}</p>`).join("")}</div>`;};
+  seg($("#soySeg",el),[{id:"p",l:"โปรตีน"},{id:"na",l:"โซเดียม"}],chart,"p");
+  sortGame($("#fmSort",el),[
+    {t:"โยเกิร์ต",a:0,w:"S. thermophilus + L. bulgaricus",s:32},{t:"แหนม / กิมจิ",a:0,w:"แบคทีเรียกรดแลกติก",s:31},{t:"น้ำส้มสายชู / วุ้นมะพร้าว",a:0,w:"Acetobacter (แบคทีเรียกรดอะซิติก)",s:34},{t:"นัตโตะ",a:0,w:"Bacillus subtilis var. natto",s:33},
+    {t:"สาเก / มิโซะ (โคจิ)",a:1,w:"รา Aspergillus oryzae",s:36},{t:"เทมเป้",a:1,w:"รา Rhizopus oligosporus",s:39},{t:"อังคัก / เต้าหู้ยี้",a:1,w:"รา Monascus spp.",s:43},
+    {t:"ขนมปัง",a:2,w:"ยีสต์ Saccharomyces cerevisiae สร้าง CO₂",s:41},{t:"ไวน์",a:2,w:"ยีสต์ S. cerevisiae หมักน้ำองุ่น ได้แอลกอฮอล์ 10–15%",s:42}
+  ],["แบคทีเรีย","รา","ยีสต์"]);
+};
+
+/* =========================== 9 · Agriculture, environment, medicine =========================== */
+const NST=[
+  {h:"1 · N₂ ในอากาศ",d:"พืชใช้แก๊สไนโตรเจน (N₂) ในอากาศโดยตรงไม่ได้"},
+  {h:"2 · ตรึงไนโตรเจน",d:"<i>Rhizobium</i> ในปมรากถั่ว, <i>Azotobacter</i>, <i>Azospirillum</i> และไซยาโนแบคทีเรีย เช่น <i>Nostoc</i>, <i>Anabaena</i> เปลี่ยน N₂ เป็น <b>แอมโมเนีย (NH₃)</b>"},
+  {h:"3 · เปลี่ยนรูปในดิน",d:"จุลินทรีย์กลุ่มอื่นในดินเปลี่ยนเป็น<b>ไนไทรต์ (NO₂⁻)</b> และ<b>ไนเทรต (NO₃⁻)</b>"},
+  {h:"4 · พืชนำไปใช้",d:"รากพืชดูดไนเทรตไปสร้างโปรตีน ช่วยลดการใช้ปุ๋ยเคมี "+EX}
+];
+function nSVG(i){
+  const on=k=>i>=k?1:.25;
+  return `<svg viewBox="0 0 560 210" role="img" aria-label="การตรึงไนโตรเจน" style="width:100%;height:auto">
+  <rect x="0" y="0" width="560" height="96" fill="#eef6fb"/><rect x="0" y="96" width="560" height="114" fill="#efe2cc"/>
+  <g opacity="${on(0)}">${[60,120,180].map((x,k)=>`<text x="${x}" y="${34+k%2*16}" font-size="22" font-weight="700" fill="#3b6fd6">N₂<animate attributeName="y" values="${34+k%2*16};${44+k%2*16};${34+k%2*16}" dur="${3+k*.5}s" repeatCount="indefinite"/></text>`).join("")}</g>
+  <path d="M300 96 V150 M300 120 C 270 130, 250 150, 236 170 M300 128 C 330 140, 350 156, 362 176" stroke="#8a6a3a" stroke-width="4" fill="none"/>
+  <path d="M300 96 V40 M300 60 q -30 -20 -50 -6 q 24 14 50 6 M300 50 q 30 -20 50 -6 q -24 14 -50 6" stroke="#4f7a2e" stroke-width="3" fill="#8cc46a"/>
+  <g opacity="${on(1)}">${[[262,150],[338,160],[244,168]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="10" fill="#f2c9a0" stroke="#b5651d" stroke-width="2"/>`).join("")}<text x="110" y="150" font-size="22" font-weight="700" fill="#b5651d">NH₃</text>${i===1?`<circle r="5" fill="#3b6fd6"><animateMotion dur="2s" repeatCount="indefinite" path="M120 40 C 180 60, 230 110, 262 150"/></circle>`:""}</g>
+  <g opacity="${on(2)}"><text x="400" y="140" font-size="22" font-weight="700" fill="#2f8a3a">NO₂⁻</text><text x="470" y="176" font-size="22" font-weight="700" fill="#2f8a3a">NO₃⁻</text>${i===2?`<path d="M150 146 C 250 120, 360 130, 404 136" fill="none" stroke="#2f8a3a" stroke-dasharray="5 4" stroke-width="2"><animate attributeName="stroke-dashoffset" values="18;0" dur="1s" repeatCount="indefinite"/></path>`:""}</g>
+  <g opacity="${on(3)}">${i===3?[0,1,2].map(k=>`<circle r="4.5" fill="#2f8a3a"><animateMotion dur="2.2s" begin="-${k*.7}s" repeatCount="indefinite" path="M480 166 C 420 170, 380 176, 362 176"/></circle>`).join(""):""}</g>
+  <text x="300" y="202" text-anchor="middle" font-size="16" fill="var(--muted)">ปมรากถั่ว</text></svg>`;
+}
+const GE=[
+  {h:"1 · ตัดด้วย restriction enzyme",d:"ใช้<b>เอนไซม์ตัดจำเพาะ</b> ตัดยีนที่ต้องการ (เช่น ยีนอินซูลินจากเซลล์มนุษย์) และตัดพลาสมิด (ดีเอ็นเอวงแหวน) ของแบคทีเรีย"},
+  {h:"2 · เชื่อมต่อ (recombination)",d:"เชื่อมยีนเข้ากับพลาสมิด ได้<b>ดีเอ็นเอลูกผสม (recombinant DNA)</b>"},
+  {h:"3 · ส่งเข้าเซลล์ (transformation)",d:"นำพลาสมิดลูกผสมเข้าสู่จุลินทรีย์ตัวกลาง (host) เช่น แบคทีเรีย"},
+  {h:"4 · เพิ่มจำนวนและแสดงออก",d:"แบคทีเรียแบ่งตัว ทุกเซลล์มียีนอินซูลิน และสร้าง<b>อินซูลิน</b>ออกมา นำไปทำให้บริสุทธิ์ใช้เป็นยา"}
+];
+function geSVG(i){
+  const plasmid=(cx,cy,gap,ins)=>`<circle cx="${cx}" cy="${cy}" r="34" fill="none" stroke="#3b6fd6" stroke-width="6" stroke-dasharray="${gap?"190 24":"0"}" transform="rotate(-80 ${cx} ${cy})"/>${ins?`<path d="M${cx+8} ${cy-34} a34 34 0 0 1 22 12" stroke="#c2410c" stroke-width="7" fill="none" class="popin"/>`:""}`;
+  let g="";
+  if(i===0)g=`${plasmid(120,90,true,false)}<text x="120" y="150" text-anchor="middle" font-size="18" fill="var(--ink)">พลาสมิดถูกตัด</text><rect x="300" y="82" width="140" height="16" rx="4" fill="#f4e3d8" stroke="#999"/><rect x="345" y="82" width="46" height="16" fill="#c2410c" class="popin"/><text x="370" y="130" text-anchor="middle" font-size="18" fill="var(--ink)">ยีนอินซูลิน</text><path d="M344 60 l-8 -12 m8 12 l8 -12 M392 60 l-8 -12 m8 12 l8 -12" stroke="#555" stroke-width="2"/><text x="370" y="44" text-anchor="middle" font-size="17" fill="var(--muted)">✂ restriction enzyme</text>`;
+  if(i===1)g=`${plasmid(250,90,false,true)}<text x="250" y="150" text-anchor="middle" font-size="18" fill="var(--ink)">recombinant plasmid</text>`;
+  if(i===2)g=`<rect x="160" y="40" width="180" height="96" rx="48" fill="#e7f3ec" stroke="#16735f" stroke-width="3"/><g><circle cx="250" cy="88" r="20" fill="none" stroke="#3b6fd6" stroke-width="4"/><path d="M256 68 a20 20 0 0 1 13 7" stroke="#c2410c" stroke-width="5" fill="none"/><animateTransform attributeName="transform" type="translate" values="-160 0;0 0" dur="1.4s" fill="freeze"/></g><text x="250" y="160" text-anchor="middle" font-size="18" fill="var(--ink)">แบคทีเรีย host</text>`;
+  if(i===3)g=[0,1,2,3,4,5].map(k=>{const x=70+(k%3)*130,y=50+Math.floor(k/3)*70;return `<g class="popin" style="animation-delay:${k*.15}s"><rect x="${x}" y="${y}" width="96" height="44" rx="22" fill="#e7f3ec" stroke="#16735f" stroke-width="2.4"/><circle cx="${x+48}" cy="${y+22}" r="10" fill="none" stroke="#3b6fd6" stroke-width="3"/>${[0,1].map(j=>`<circle cx="${x+48}" cy="${y+22}" r="3.5" fill="#c2410c"><animateMotion dur="2s" begin="-${j+k*.2}s" repeatCount="indefinite" path="M0 0 C 30 -10, 50 -20, 70 -30"/></circle>`).join("")}</g>`}).join("")+`<text x="280" y="196" text-anchor="middle" font-size="17" fill="#c2410c" font-weight="700">● = อินซูลิน</text>`;
+  return `<svg viewBox="0 0 520 205" role="img" aria-label="พันธุวิศวกรรม" style="width:100%;height:auto">${g}</svg>`;
+}
+BUILD.use=el=>{
+  el.innerHTML=vh("จุลินทรีย์กับเกษตร สิ่งแวดล้อม และการแพทย์",SL("44–47"))+
+  `<div class="card"><h3>การตรึงไนโตรเจน ${SL(44)}</h3><div id="nPic" style="margin-top:8px"></div><div class="info" id="nInfo" aria-live="polite" style="margin-top:8px"></div><div id="nCtl" style="margin-top:10px"></div>
+   <p class="small" style="margin-top:10px"><b>จุลินทรีย์ละลายฟอสเฟต</b> (phosphate solubilizing microorganism, PSM) พบรอบรากพืช เพิ่มฟอสฟอรัสในรูป<b>ฟอสเฟต (PO₄³⁻)</b> ให้พืช ${SL(44)}</p></div>
+  <div class="card"><h3>บำบัดน้ำเสีย ${SL(45)}</h3><div class="wwflow"><div class="ww aer"><b>บ่อเติมอากาศ (Aerobic)</b><p class="small">ย่อยสารอินทรีย์เป็นคาร์บอเนต ไนเทรต แอมโมเนีย ฟอสเฟต ซัลเฟต</p><p class="small muted">แบคทีเรีย <i>Pseudomonas</i>, <i>Zoogloea</i> (heterotroph) · รา <i>Fusarium</i>, <i>Ascoidea</i>, <i>Trichosporon</i></p><div class="bub">${[0,1,2,3,4].map(k=>`<i style="left:${12+k*18}%;animation-delay:${k*.4}s"></i>`).join("")}</div></div><div class="arr">→ ตะกอนที่เหลือ →</div><div class="ww ana"><b>บ่อไร้อากาศ (Anaerobic)</b><p class="small">ไม่ใช้ O₂ ย่อยตะกอนที่เหลือจากกลุ่ม aerobic</p><p class="small muted">acid-forming bacteria, methanogen → ได้ CH₄</p></div></div>
+   <p class="small" style="margin-top:10px"><b>จุลินทรีย์ก้อน (EM Ball)</b> มีจุลินทรีย์ที่ผลิตกรดแลกติก ยีสต์ และจุลินทรีย์สังเคราะห์แสง ${SL(45)}</p></div>
+  <div class="grid2"><div class="card"><h3>Probiotics ${SL(46)}</h3><p class="small">จุลินทรีย์โพรไบโอติกช่วยเพิ่มภูมิคุ้มกัน และปรับสมดุลกรดด่างบริเวณทางเดินอาหารส่วนปลาย</p></div>
+   <div class="card"><h3>ยาปฏิชีวนะ ${SL(46)}</h3><p class="small"><i>Streptomyces</i> sp. → <b>streptomycin</b> · <i>Penicillium</i> sp. → <b>penicillin</b></p></div></div>
+  <div class="card"><h3>พันธุวิศวกรรม: ผลิตอินซูลินด้วยแบคทีเรีย ${SL("46–47")}</h3><div id="gePic" style="margin-top:8px"></div><div class="info" id="geInfo" aria-live="polite" style="margin-top:8px"></div><div id="geCtl" style="margin-top:10px"></div>
+   <p class="small muted" style="margin-top:8px">วิธีจำ 3 ขั้นในเอกสาร: <b>ตัด → ต่อ → ใส่</b> (cut → recombine → transform) ${EX}</p></div>`;
+  stepper($("#nCtl",el),NST.length,i=>{$("#nPic",el).innerHTML=nSVG(i);$("#nInfo",el).innerHTML=`<b>${NST[i].h}</b> ${NST[i].d} ${SL(44)}`;},{ms:2800});
+  stepper($("#geCtl",el),GE.length,i=>{$("#gePic",el).innerHTML=geSVG(i);$("#geInfo",el).innerHTML=`<b>${GE[i].h}</b> ${GE[i].d} ${SL("46–47")}`;},{ms:3000});
+};
+
+/* ===================== MOTION LAYER ===================== */
+const RMQ=window.matchMedia?matchMedia("(prefers-reduced-motion: reduce)").matches:false;
+let MOTION=store.get("m13-motion",!RMQ);
+function pauseSVGs(root){(root.tagName==="svg"?[root]:$$("svg",root)).forEach(s=>{try{MOTION?s.unpauseAnimations():s.pauseAnimations();}catch(e){}});}
+function applyMotion(){document.documentElement.classList.toggle("calm",!MOTION);pauseSVGs(document.body);}
+const motionBox=$("#motionOn"),rmNote=$("#rmNote");
+function setMotion(v){MOTION=v;store.set("m13-motion",v);if(motionBox)motionBox.checked=v;if(rmNote)rmNote.hidden=v||!RMQ;applyMotion();}
+if(motionBox){motionBox.checked=MOTION;motionBox.onchange=()=>setMotion(motionBox.checked);}
+if(rmNote){rmNote.hidden=MOTION||!RMQ;$("#rmOn").onclick=()=>setMotion(true);}
+window.M12.motion=()=>MOTION;
+function restart(el,cls){if(!el||!MOTION)return;el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls);}
+new MutationObserver(ms=>{const seen=new Set();ms.forEach(m=>{const t=m.target.nodeType===1?m.target:m.target.parentElement;
+  if(!MOTION)m.addedNodes.forEach(n=>{if(n.nodeType===1)pauseSVGs(n);});
+  if(!t||seen.has(t))return;seen.add(t);
+  if(t.classList&&t.classList.contains("info")){const now=performance.now();if(!t._fl||now-t._fl>600){t._fl=now;restart(t,"flash");}}
+  if(t.id==="sortq"||t.id==="tMain"&&t.firstElementChild)restart(t.id==="tMain"?t.firstElementChild:t,"fxin");
+});}).observe(document.body,{childList:true,subtree:true});
+const IO=("IntersectionObserver" in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");IO.unobserve(e.target);}}),{rootMargin:"0px 0px -6% 0px",threshold:.04}):null;
+const _show=showLab,revealed=new Set();
+window.M12.showLab=function(id){_show(id);const el=built[labCur];if(!el)return;restart(el,"fxin");
+  if(!revealed.has(labCur)&&IO&&MOTION){revealed.add(labCur);[...el.children].forEach((c,i)=>{if(i===0)return;c.classList.add("reveal");c.style.transitionDelay=Math.min(i,4)*40+"ms";IO.observe(c);});}
+  if(!MOTION)pauseSVGs(el);};
+applyMotion();
+
+/* ---------------- router ---------------- */
+let mode="lab";
+window.M12.mode=()=>mode;
+window.M12.examBusy=()=>document.body.classList.contains("xk-lock");
+function setMode(m){
+  mode=m;
+  $$(".modebar [data-mode-go]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.modeGo===m)));
+  $("#labView").hidden=m!=="lab";$("#tutorView").hidden=m!=="tutor";$("#examView").hidden=m!=="exam";
+  $("#labNav").hidden=m!=="lab";
+  window.M12.fabVis&&window.M12.fabVis();
+}
+function route(){
+  if(window.M12.examBusy()){if(location.hash!=="#exam")history.replaceState(null,"","#exam");return;}
+  const h=location.hash.slice(1);
+  if(h==="tutor"){setMode("tutor");window.M12.renderTutor&&window.M12.renderTutor();}
+  else if(h==="exam"){setMode("exam");}
+  else{setMode("lab");window.M12.showLab(h.startsWith("lab-")?h.slice(4):null);}
+  window.scrollTo(0,0);
+}
+$$(".modebar [data-mode-go]").forEach(b=>b.addEventListener("click",()=>{
+  if(window.M12.examBusy())return;
+  const m=b.dataset.modeGo;const target=m==="lab"?"lab-"+(window.M12.labCur()||"intro"):m;
+  if(location.hash==="#"+target)route();else location.hash=target;
+}));
+window.addEventListener("hashchange",route);
+window.M12.route=route;
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",route);else setTimeout(route,0);
+})();
+
+</script>
+<script>
+(function(){
+"use strict";
+const {$,$$,esc,store,SL,EX}=window.M12;
+const LET=["ก","ข","ค","ง"];
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const plain=s=>String(s).replace(/<[^>]+>/g,"");
+window.M12.LET=LET;window.M12.shuffle=shuffle;window.M12.plain=plain;
+
+/* ---------------- lessons ---------------- */
+const CH=["จุลินทรีย์และ Monera","Fungi และ Protista","จุลินทรีย์กับการประยุกต์ใช้"];
+const L=[
+ {k:"1.1",c:0,title:"จุลินทรีย์คืออะไร และการตั้งชื่อ",sub:"6 กลุ่ม, taxonomy, binomial",steps:[
+  {t:"ex",h:"จุลินทรีย์ (microorganism)",s:"2",p:["สิ่งมีชีวิตเล็กๆ ส่วนมาก<b>มองไม่เห็นด้วยตาเปล่า</b> พบทุกที่ ทั้งในร่างกายคน สัตว์ พืช ดิน น้ำ อากาศ มีทั้งประโยชน์และโทษ","จำแนกได้เป็น <b>แบคทีเรีย ริคเกตเซีย ไวรัส สาหร่าย เชื้อรา และโปรโตซัว</b> ริคเกตเซียมีขนาดเล็กกว่าแบคทีเรียแต่ใหญ่กว่าไวรัส"]},
+  {t:"ex",h:"ลำดับการจัดหมวดหมู่และชื่อวิทยาศาสตร์",s:"3–4",p:["Kingdom → Phylum/Division → Class → Order → Family → Genus → Species แยกจากกลุ่มใหญ่ลงไปกลุ่มเล็ก","<b>ชื่อสามัญ</b> ต่างกันตามภาษาและท้องถิ่น เช่น มะละกอ บักหุ่ง ลอกอ ส่วน<b>ชื่อวิทยาศาสตร์</b>เป็นสากล ใช้<b>ระบบทวินาม (binomial nomenclature)</b> ของ Carolus Linnaeus เขียน <i>Genus species</i> ตัวแรกของ Genus เป็นตัวพิมพ์ใหญ่ เว้นวรรค 2 คำ เช่น <i>Bacillus subtilis</i>"]},
+  {t:"q",q:"ข้อใดเขียนชื่อวิทยาศาสตร์ถูกต้องตามระบบทวินาม",o:["<i>Carica papaya</i>","<i>carica Papaya</i>","<i>Carica Papaya</i>","<i>CaricaPapaya</i>"],a:0,hint:"ตัวพิมพ์ใหญ่มีได้ที่ตำแหน่งเดียว และต้องเว้นวรรค",why:"Genus ขึ้นต้นตัวพิมพ์ใหญ่ species ตัวพิมพ์เล็ก และเว้นวรรคระหว่าง 2 คำ",s:"4"},
+  {t:"q",q:"เรียงลำดับขั้น taxonomy จากกลุ่มใหญ่ไปเล็กได้ถูกต้อง ข้อใด",o:["Phylum → Class → Order → Family","Class → Phylum → Family → Order","Order → Class → Family → Genus","Family → Order → Genus → Class"],a:0,hint:"Kingdom อยู่บนสุด Species อยู่ล่างสุด",why:"ลำดับคือ Kingdom → Phylum → Class → Order → Family → Genus → Species",s:"3"},
+  {t:"sum",pts:["จุลินทรีย์ 6 กลุ่ม: แบคทีเรีย ริคเกตเซีย ไวรัส สาหร่าย เชื้อรา โปรโตซัว","K → P → C → O → F → G → S","ชื่อวิทยาศาสตร์: <i>Genus species</i> (Linnaeus)"]}]},
+ {k:"1.2",c:0,title:"5 อาณาจักร และ Archaea",sub:"Whittaker, archaea 4 กลุ่ม",steps:[
+  {t:"ex",h:"5 อาณาจักรของ Whittaker (1969)",s:"5–6",p:["Monera, Protista, Fungi, Plantae, Animalia จุลินทรีย์อยู่ใน 3 อาณาจักรแรก","<b>Monera</b> เป็น prokaryote แบ่งเป็น <b>Archaebacteria</b> (Euryarchaeota: ทนเกลือ สร้าง CH₄ · Crenarchaeota: ทนร้อน ทนกรด) และ <b>Eubacteria</b> (แกรมบวก แกรมลบ cyanobacteria)"]},
+  {t:"ex",h:"Archaea ต่างจากแบคทีเรียอย่างไร",s:"7–10",p:["ผนังเซลล์<b>ไม่มี peptidoglycan</b> (เป็น pseudopeptidoglycan) <b>ไม่ไวต่อยาปฏิชีวนะ</b> rRNA ต่างจากแบคทีเรียและ eukaryote RNA polymerase มี 10 หน่วยย่อย (แบคทีเรียมี 4)","4 กลุ่มตามที่อยู่: ทนเค็มจัด (<i>Halobacterium</i>) · methanogen สร้างมีเทนในที่ไร้ O₂ รวมถึงทางเดินอาหารคน · ทนร้อนจัด &gt;100 °C (<i>Pyrolobus fumarii</i>) · ชอบกรด pH 1–2 (<i>Sulfolobus acidocaldarius</i>)"]},
+  {t:"q",q:"เหตุใดยาปฏิชีวนะที่ออกฤทธิ์ต่อผนังเซลล์แบคทีเรียจึงไม่ได้ผลกับ archaea",o:["archaea มี pseudopeptidoglycan ไม่มี peptidoglycan","archaea ไม่มีผนังเซลล์และเยื่อหุ้มเซลล์","archaea เป็น eukaryote ที่มีนิวเคลียส","archaea อาศัยอยู่ในเซลล์โฮสต์เท่านั้น"],a:0,hint:"ดูแถวผนังเซลล์ในตารางเปรียบเทียบ",why:"ผนังเซลล์ของ archaea เป็น pseudopeptidoglycan เป้าหมายของยาจึงไม่มี ยาจึงไม่ยับยั้งการเจริญ",s:"7, 10"},
+  {t:"q",q:"methanogen พบได้ในที่ใดตามเอกสาร",o:["โคลนก้นบ่อและทางเดินอาหารของสัตว์","บ่อน้ำพุร้อนเกิน 100 °C เท่านั้น","ผิวน้ำที่มีออกซิเจนสูง","น้ำทิ้งจากเหมืองที่ pH 1–2"],a:0,hint:"methanogen ต้องการที่ไร้ออกซิเจน",why:"methanogen สร้างมีเทนในที่ไร้ออกซิเจน เช่น น้ำลึก โคลน ดินก้นบ่อ และทางเดินอาหารของสัตว์รวมทั้งมนุษย์",s:"8"},
+  {t:"sum",pts:["Monera = Archaebacteria + Eubacteria","Archaea: pseudopeptidoglycan, ไม่ไวต่อ antibiotic","4 กลุ่ม: เค็ม · มีเทน · ร้อน · กรด","ใช้ประโยชน์: เอนไซม์ทนร้อน/ทนเค็ม, ผลิตมีเทน"]}]},
+ {k:"1.3",c:0,title:"รูปร่างและการย้อมแกรม",sub:"coccus bacillus spirillum, Gram +/−",steps:[
+  {t:"ex",h:"3 รูปร่าง",s:"12",p:["<b>coccus</b> ทรงกลม อยู่เดี่ยว คู่ (diplo-) สายโซ่ (strepto-) หรือกลุ่ม (staphylo-) · <b>bacillus</b> ทรงกระบอก ท่อนสั้นหรือยาว · <b>spirillum</b> เกลียว ท่อนโค้งงอ"]},
+  {t:"ex",h:"แกรมบวก vs แกรมลบ",s:"13",p:["<b>แกรมบวก</b> ผนัง peptidoglycan ไม่มีชั้น lipopolysaccharides หุ้ม ย้อมติด <b>crystal violet (ม่วง)</b>","<b>แกรมลบ</b> ผนัง peptidoglycan และมีชั้น lipopolysaccharides (LPS) หุ้มภายนอก ย้อมไม่ติด crystal violet แต่ติด <b>safranin O (แดง)</b>"]},
+  {t:"q",q:"แบคทีเรียที่ผนังมีชั้น lipopolysaccharides หุ้มภายนอก เมื่อย้อมแกรมจะเห็นเป็นสีใด",o:["แดง เพราะติด safranin O","ม่วง เพราะติด crystal violet","เขียว เพราะติดคลอโรฟิลล์","ไม่ติดสีใดเลยทั้งสองสี"],a:0,hint:"LPS เป็นลักษณะของแกรมลบ",why:"แกรมลบมีชั้น LPS ย้อมไม่ติด crystal violet แต่ติด safranin O จึงเป็นสีแดง",s:"13"},
+  {t:"q",q:"Staphylococcus มีรูปร่างและการเรียงตัวแบบใด",o:["กลม อยู่เป็นกลุ่มคล้ายพวงองุ่น","กลม ต่อกันเป็นสายโซ่ยาว","ท่อน ต่อกันเป็นสาย","เกลียว ท่อนโค้งงอ"],a:0,hint:"staphylo- แปลว่าพวง",why:"staphylo- คือการอยู่เป็นกลุ่ม ส่วน strepto- คือสายโซ่",s:"12"},
+  {t:"sum",pts:["coccus กลม · bacillus ท่อน · spirillum เกลียว","diplo = คู่ · strepto = โซ่ · staphylo = พวง","Gram + ม่วง (crystal violet) · Gram − แดง (safranin O) มี LPS"]}]},
+ {k:"1.4",c:0,title:"Eubacteria และ Cyanobacteria",sub:"ประโยชน์ โทษ heterocyst",steps:[
+  {t:"ex",h:"แกรมบวกและแกรมลบที่ควรรู้",s:"14–15",p:["<b>แกรมบวก</b> สร้าง endospore ทนสภาพแวดล้อม ประโยชน์: <i>Streptomyces</i> (streptomycin), <i>Lactobacillus</i> (หมัก) · โทษ: <i>S. aureus</i> (สิว หนอง), <i>C. botulinum</i> (พิษ), <i>B. cereus</i> (อาหารเป็นพิษ)","<b>แกรมลบ</b> ประโยชน์: <i>Rhizobium</i> ตรึงไนโตรเจน · โทษ: <i>E. coli</i> ท้องเสีย, spirochete โรคฉี่หนู ซิฟิลิส, <i>Salmonella</i> อาหารเป็นพิษ"]},
+  {t:"ex",h:"Cyanobacteria (Cyanophyta)",s:"16–17",p:["แบคทีเรียที่สังเคราะห์ด้วยแสงได้ มี<b>คลอโรฟิลล์เอ</b> และ<b>ปล่อย O₂</b> ไม่มีเยื่อหุ้มนิวเคลียส รงควัตถุมี แคโรทีน แซนโทฟิลล์ ไฟโคบิลิน (ไฟโคไซยานิน + ไฟโคอิริทริน)","<b>heterocyst</b> ตรึงไนโตรเจน (<i>Nostoc</i>, <i>Anabaena</i>) · <b>akinete</b> ผนังหนา สะสมอาหาร ทนสภาพแวดล้อม · ประโยชน์: O₂ อาหาร โปรตีน (<i>Spirulina</i>) · โทษ: bloom ทำให้น้ำเสีย และ cyanotoxin"]},
+  {t:"q",q:"เซลล์พิเศษใดของ Nostoc ทำหน้าที่ตรึงไนโตรเจนในอากาศ",o:["heterocyst","akinete","endospore","sporangium"],a:0,hint:"akinete ใช้ทนสภาพแวดล้อม",why:"heterocyst ตรึงไนโตรเจน ส่วน akinete เป็นเซลล์ผนังหนาสะสมอาหาร ทนสภาพแวดล้อม",s:"16"},
+  {t:"q",q:"ลักษณะใดของ cyanobacteria ที่เอกสารระบุว่า<b>ไม่พบ</b>ในแบคทีเรียอื่น",o:["ปล่อยออกซิเจนจากการสังเคราะห์แสง","ไม่มีเยื่อหุ้มนิวเคลียส","สืบพันธุ์โดยแบ่งตัวแบบ binary fission","มีผนังเซลล์หุ้มอยู่ภายนอก"],a:0,hint:"ข้อที่เหลือเป็นลักษณะทั่วไปของแบคทีเรีย",why:"cyanobacteria มีคลอโรฟิลล์เอและปล่อย O₂ สู่สิ่งแวดล้อม ซึ่งไม่พบในแบคทีเรียทั่วไป",s:"17"},
+  {t:"sum",pts:["Gram +: endospore · Streptomyces, Lactobacillus, S. aureus, C. botulinum","Gram −: Rhizobium, E. coli, spirochete, Salmonella","Cyanobacteria: chlorophyll a + ปล่อย O₂ · heterocyst ตรึง N · akinete ทน"]}]},
+ {k:"1.5",c:0,title:"จุลินทรีย์ก่อโรคในอาหาร",sub:"S. aureus, Salmonella, C. botulinum, E. coli",steps:[
+  {t:"ex",h:"4 เชื้อหลัก",s:"18",p:["<b><i>S. aureus</i></b> อยู่บนผิวหนัง มือ จมูก ปนเปื้อนจากผู้ปรุงโดยตรง สร้างสารพิษที่<b>ทนความร้อน</b>","<b><i>Salmonella</i></b> เจริญ 7–45 °C ดีสุดที่ 37 °C พบในเนื้อดิบ สัตว์ปีก ไข่ นม อาหารทะเล ทำให้ลำไส้อักเสบ","<b><i>C. botulinum</i></b> อยู่ในดิน เจริญที่<b>ไม่มีออกซิเจน</b> เช่น อาหารกระป๋อง พิษทำลายระบบประสาท · <b><i>E. coli</i></b> กลุ่ม fecal coliform ใช้เป็นดัชนีสุขลักษณะของอาหารและน้ำ"]},
+  {t:"q",q:"เชื้อใดเหมาะเป็นดัชนีบ่งชี้ว่าน้ำดื่มปนเปื้อนอุจจาระ",o:["E. coli","Clostridium botulinum","Staphylococcus aureus","Lactobacillus casei"],a:0,hint:"นึกถึงเชื้อในลำไส้ที่อยู่ในกลุ่มโคลิฟอร์ม",why:"E. coli อยู่ในกลุ่ม fecal coliform พบในลำไส้คนและสัตว์เลือดอุ่น จึงใช้บ่งชี้สุขลักษณะ",s:"18"},
+  {t:"q",q:"ทำไมการอุ่นอาหารที่ปนเปื้อน S. aureus มานานแล้วจึงอาจยังทำให้ป่วยได้",o:["สารพิษของเชื้อทนความร้อน","เชื้อสร้าง endospore ในอาหาร","เชื้อเจริญได้ดีขึ้นเมื่อร้อน","ความร้อนทำให้เชื้อเปลี่ยนเป็นไวรัส"],a:0,hint:"เอกสารพูดถึงคุณสมบัติของสารพิษ",why:"S. aureus สร้างสารพิษที่ทนความร้อน แม้เชื้อตายแล้ว สารพิษยังอยู่",s:"18"},
+  {t:"sum",pts:["S. aureus: มือผู้ปรุง · พิษทนร้อน","Salmonella: ไข่ สัตว์ปีก · 37 °C","C. botulinum: กระป๋อง ไร้ O₂ · พิษประสาท","E. coli: fecal coliform · ดัชนีสุขลักษณะ"]}]},
+ {k:"2.1",c:1,title:"Fungi: ลักษณะและ hypha",sub:"chitin, septate, mycelium",steps:[
+  {t:"ex",h:"ลักษณะสำคัญของ Fungi",s:"19",p:["เป็น <b>eukaryote</b> ไม่มี chloroplast ดำรงชีวิตอิสระหรือเป็นผู้ย่อยสลาย ผนังเซลล์เป็น<b>ไคติน (chitin)</b>","มีทั้งเซลล์เดียว (<b>ยีสต์</b>) และเส้นใย (<b>hypha</b>) เส้นใยรวมกันเรียกว่า <b>mycelium</b> hypha มี 2 แบบ คือ<b>มีผนังกั้น</b> (เป็นห้องๆ) และ<b>ไม่มีผนังกั้น</b> (เห็นหลายนิวเคลียส) ส่วนใหญ่สืบพันธุ์ด้วยสปอร์ (รา) และแตกหน่อ (ยีสต์)"]},
+  {t:"q",q:"ผนังเซลล์ของ fungi เป็นสารใด",o:["chitin","peptidoglycan","cellulose","silica"],a:0,hint:"สารเดียวกับเปลือกแมลง",why:"ผนังเซลล์ของ fungi เป็นไคติน ส่วน peptidoglycan เป็นของแบคทีเรีย",s:"19"},
+  {t:"q",q:"เส้นใยราที่ไม่มีผนังกั้น จะเห็นลักษณะใด",o:["หลายนิวเคลียสอยู่ในเส้นใยเดียวกัน","แบ่งเป็นห้องๆ ห้องละนิวเคลียส","เป็นเซลล์เดี่ยวแตกหน่อ","มีคลอโรพลาสต์เรียงเป็นแถว"],a:0,hint:"ไม่มีผนังมาแบ่งห้อง",why:"hypha ที่ไม่มีผนังกั้นจะเห็นหลายนิวเคลียสในเส้นใยเดียว",s:"19"},
+  {t:"sum",pts:["eukaryote · ไม่มี chloroplast · ผนัง chitin","ยีสต์ = เซลล์เดียว · รา = hypha → mycelium","hypha: มีผนังกั้น / ไม่มีผนังกั้น (หลายนิวเคลียส)"]}]},
+ {k:"2.2",c:1,title:"4 Division ของ Fungi และเห็ด",sub:"Zygo Deutero Asco Basidio",steps:[
+  {t:"ex",h:"สปอร์บอก division",s:"20–21",p:["<b>Zygomycota</b> ไม่มีผนังกั้น sporangiospore ใน sporangium · <i>Rhizopus</i> (เทมเป้ ราขนมปัง)","<b>Deuteromycota</b> มีผนังกั้น สร้าง <b>conidia</b> · <i>Penicillium</i> (ยา), <i>Aspergillus oryzae</i> (โคจิ), <i>A. flavus</i> (aflatoxin)","<b>Ascomycota</b> สร้าง <b>ascospore ในถุง ascus</b> · ยีสต์ <i>Saccharomyces</i>, <i>Monascus</i>, <i>Candida albicans</i> · <b>Basidiomycota</b> สร้าง <b>basidiospore บน basidium</b> · เห็ด และราสนิม"]},
+  {t:"q",q:"ราที่สร้างสปอร์อยู่ในถุงที่เรียกว่า ascus อยู่ใน division ใด",o:["Ascomycota","Basidiomycota","Zygomycota","Deuteromycota"],a:0,hint:"ชื่อ division มาจากชื่อถุง",why:"Ascomycota สร้าง ascospore ใน ascus เช่น ยีสต์ Saccharomyces cerevisiae",s:"21"},
+  {t:"q",q:"Aspergillus flavus เป็นอันตรายเพราะเหตุใด",o:["สร้าง aflatoxin ก่อมะเร็งตับ","ทำให้ขนมปังขึ้นฟูผิดปกติ","สร้างพิษทำลายระบบประสาท","ทำให้เกิดโรคราน้ำค้างในองุ่น"],a:0,hint:"มักพบในถั่วลิสงแห้ง",why:"A. flavus สร้าง aflatoxin ก่อมะเร็งตับ มักพบในถั่วลิสง ถั่วเหลือง ธัญพืชแห้ง",s:"20, 35"},
+  {t:"sum",pts:["Zygo: sporangiospore · Rhizopus","Deutero: conidia · Penicillium, Aspergillus","Asco: ascus · ยีสต์ Candida Monascus","Basidio: basidium · เห็ด (cap gills stalk annulus volva)"]}]},
+ {k:"2.3",c:1,title:"Protozoa",sub:"ขา แส้ ขน ไม่มี",steps:[
+  {t:"ex",h:"แบ่งตามอวัยวะที่ใช้เคลื่อนที่",s:"24–26",p:["Protozoa ไม่มีอวัยวะหรือเนื้อเยื่อที่ทำหน้าที่เฉพาะ หากินอิสระในน้ำ","<b>Sarcodina</b> ขาเทียม (pseudopodium) กินแบบ phagocytosis: Amoeba · <b>Flagellata</b> แส้: Trypanosoma (โรคเหงาหลับ) · <b>Ciliata</b> ขน: Paramecium, Vorticella · <b>Sporozoa</b> ไม่มีอวัยวะเคลื่อนที่ สร้างสปอร์ อาศัยพาหะและโฮสต์: Plasmodium (มาลาเรีย)"]},
+  {t:"q",q:"เชื้อก่อโรคมาลาเรียจัดอยู่ในกลุ่มใด",o:["Sporozoa","Ciliata","Sarcodina","Flagellata"],a:0,hint:"กลุ่มที่ไม่มีอวัยวะเคลื่อนที่และอาศัยพาหะ",why:"Plasmodium อยู่ใน Sporozoa สร้างสปอร์ และแพร่พันธุ์โดยอาศัยพาหะและโฮสต์",s:"26"},
+  {t:"q",q:"Amoeba ใช้โครงสร้างใดทั้งเคลื่อนที่และกินอาหาร",o:["pseudopodium","flagella","cilia","heterocyst"],a:0,hint:"ยื่นส่วนของเซลล์ออกไปโอบอาหาร",why:"Amoeba ใช้ขาเทียม (pseudopodium) และกินอาหารแบบ phagocytosis",s:"25"},
+  {t:"sum",pts:["Sarcodina: ขาเทียม · Amoeba","Flagellata: แส้ · Trypanosoma","Ciliata: ขน · Paramecium","Sporozoa: ไม่มี · Plasmodium (มาลาเรีย)"]}]},
+ {k:"2.4",c:1,title:"Algae และไฮโดรคอลลอยด์",sub:"6 ไฟลัม, alginate agar carrageenan",steps:[
+  {t:"ex",h:"แยกสาหร่ายจากรงควัตถุ",s:"27–29",p:["<b>Chlorophyta</b> (เขียว) คลอโรฟิลล์เอ บี · <b>Euglenophyta</b> พารามัยลัม · <b>Chrysophyta</b> (ไดอะตอม) คลอโรฟิลล์เอ ซี ผนังมีซิลิกา · <b>Pyrrophyta</b> (ไดโนแฟลเจลเลต) ทำให้เกิด red tide","<b>Phaeophyta</b> (น้ำตาล) ฟูโคแซนทิน ผนังมีกรดแอลจินิก · <b>Rhodophyta</b> (แดง) คลอโรฟิลล์เอ ดี ไฟโคอิริทริน ไม่มีแส้"]},
+  {t:"ex",h:"ไฮโดรคอลลอยด์ในอาหาร",s:"30",p:["โมเลกุลใหญ่ ไม่ละลายน้ำ แต่แขวนลอยและจับน้ำได้ดี ใช้ทำให้ข้น คงตัว เกิดเจล","<b>alginate INS 400</b> จากสาหร่ายสีน้ำตาล · <b>agar (วุ้น) INS 406</b> จาก Gracilaria เจลแข็ง · <b>carrageenan INS 407</b> จากสาหร่ายสีแดง เจลนุ่มเหนียวหนึบ"]},
+  {t:"q",q:"ปรากฏการณ์น้ำทะเลเปลี่ยนสี (red tide) เกิดจากสาหร่ายกลุ่มใดเพิ่มจำนวนอย่างรวดเร็ว",o:["Pyrrophyta (ไดโนแฟลเจลเลต)","Rhodophyta (สาหร่ายสีแดง)","Phaeophyta (สาหร่ายสีน้ำตาล)","Chlorophyta (สาหร่ายสีเขียว)"],a:0,hint:"ชื่อไม่ได้เกี่ยวกับสีแดงของสาหร่ายเอง",why:"red tide เกิดจาก dinoflagellates ใน Pyrrophyta เพิ่มจำนวนจนหนาแน่นมาก",s:"28"},
+  {t:"q",q:"วัตถุเจือปนอาหาร INS 400 สกัดมาจากสาหร่ายกลุ่มใด",o:["สาหร่ายสีน้ำตาล","สาหร่ายสีแดง","สาหร่ายสีเขียว","ไดอะตอม"],a:0,hint:"INS 400 คือ alginate",why:"alginate (INS 400) มาจากกรดแอลจินิกของสาหร่ายสีน้ำตาล เช่น Macrocystis, Laminaria",s:"30"},
+  {t:"sum",pts:["เขียว a+b · น้ำตาลแกมทอง a+c silica · ไดโนฯ red tide","น้ำตาล fucoxanthin alginate · แดง a+d phycoerythrin","INS 400 alginate · 406 agar · 407 carrageenan"]}]},
+ {k:"3.1",c:2,title:"แบคทีเรียกับอาหารหมัก",sub:"LAB, โยเกิร์ต, นัตโตะ, Acetobacter",steps:[
+  {t:"ex",h:"แบคทีเรียกรดแลกติกและกรดอะซิติก",s:"31–34",p:["<b>แบคทีเรียกรดแลกติก</b> หมัก glucose เป็น lactic acid อาจได้ H₂O₂ หรือ diacetyl ให้กลิ่นรส เช่น แหนม กิมจิ ซาวเคราท์ โยเกิร์ต เนยแข็ง จัดเป็น <b>GRAS</b>","<b>โยเกิร์ต</b> ใช้ <i>S. thermophilus</i> + <i>L. bulgaricus</i> เปลี่ยน lactose เป็น lactic acid มากกว่า 90% และได้ acetaldehyde เป็นกลิ่นรส · <b>นัตโตะ</b> ใช้ <i>B. subtilis</i> var. natto · <b>Acetobacter</b> oxidize ethanol เป็น acetic acid (น้ำส้มสายชู) <i>A. xylinum</i> ทำวุ้นมะพร้าว"]},
+  {t:"q",q:"สารใดในโยเกิร์ตที่เอกสารระบุว่าให้กลิ่นรสเฉพาะตัวที่ระเหยได้",o:["acetaldehyde","acetic acid","ethyl alcohol","aflatoxin"],a:0,hint:"เกิดหลัง lactic acid ในแผนภาพสไลด์ 32",why:"Lactobacillus เปลี่ยนต่อเป็น acetaldehyde ซึ่งเป็นกลิ่นรสที่ระเหยได้",s:"32"},
+  {t:"q",q:"วุ้นมะพร้าว (nata de coco) เกิดจากเชื้อใด",o:["Acetobacter xylinum","Lactobacillus bulgaricus","Aspergillus oryzae","Saccharomyces cerevisiae"],a:0,hint:"เชื้อนี้อยู่ในกลุ่มที่ทำน้ำส้มสายชู",why:"A. xylinum หมักน้ำมะพร้าวและสร้างเส้นใยเซลลูโลสเป็นแผ่นวุ้นแข็ง",s:"34"},
+  {t:"sum",pts:["LAB: glucose → lactic acid · GRAS","โยเกิร์ต: S. thermophilus + L. bulgaricus → acetaldehyde","Acetobacter: ethanol → acetic acid · A. xylinum วุ้นมะพร้าว"]}]},
+ {k:"3.2",c:2,title:"ราและยีสต์กับอาหารหมัก",sub:"โคจิ ซีอิ๊ว เทมเป้ ขนมปัง ไวน์ อังคัก",steps:[
+  {t:"ex",h:"รา",s:"35–39, 43",p:["<b>โคจิ</b> = กล้าเชื้อ ใช้ <i>Aspergillus oryzae</i> บนข้าวสุก สร้าง amylase, amyloglucosidase (แป้ง → glucose) และ protease (โปรตีน → กรดอะมิโน) ใช้ทำสาเก ซีอิ๊ว เต้าเจี้ยว มิโซะ","<b>เทมเป้</b> ใช้ <i>Rhizopus oligosporus</i> เส้นใยขาวยึดถั่ว หมัก 2–3 วัน · <b>อังคัก</b> ใช้ <i>Monascus</i> ให้สีแดง"]},
+  {t:"ex",h:"ยีสต์",s:"41–42",p:["<i>Saccharomyces cerevisiae</i> หมักน้ำตาลในภาวะ<b>ไม่มี O₂</b> ได้ <b>CO₂ + ethyl alcohol</b>","ขนมปัง: CO₂ แทรกในแป้งทำให้โดขึ้นฟู แอลกอฮอล์ระเหยตอนอบ · ไวน์: หมักน้ำองุ่น แอลกอฮอล์ประมาณ 10–15%"]},
+  {t:"q",q:"ในการทำโคจิ เอนไซม์ใดของ Aspergillus oryzae ย่อยโปรตีนเป็นกรดอะมิโน",o:["protease","amylase","amyloglucosidase","cellulase"],a:0,hint:"amylase ย่อยแป้ง",why:"protease ย่อยโปรตีนเป็นกรดอะมิโน ส่วน amylase และ amyloglucosidase ย่อยแป้งเป็น glucose",s:"36"},
+  {t:"q",q:"ขนมปังขึ้นฟูเพราะผลิตภัณฑ์ใดของยีสต์",o:["CO₂","ethyl alcohol","lactic acid","acetaldehyde"],a:0,hint:"สิ่งที่เหลืออยู่ในเนื้อแป้งหลังอบ",why:"CO₂ แทรกระหว่างเนื้อแป้งทำให้ขยายตัว ส่วนแอลกอฮอล์ระเหยไประหว่างอบ",s:"41"},
+  {t:"sum",pts:["A. oryzae → โคจิ: amylase + protease","Rhizopus → เทมเป้ · Monascus → อังคัก","S. cerevisiae: น้ำตาล → CO₂ + ethanol (ขนมปัง ไวน์ 10–15%)"]}]},
+ {k:"3.3",c:2,title:"เกษตร สิ่งแวดล้อม การแพทย์",sub:"ตรึง N, บำบัดน้ำ, probiotic, GE",steps:[
+  {t:"ex",h:"เกษตรและสิ่งแวดล้อม",s:"44–45",p:["<i>Rhizobium</i>, <i>Azotobacter</i>, ไซยาโนแบคทีเรีย ตรึง N₂ เป็น NH₃ แล้วจุลินทรีย์อื่นเปลี่ยนเป็น NO₂⁻ และ NO₃⁻ ให้พืชใช้ · PSM เพิ่มฟอสเฟต (PO₄³⁻)","บำบัดน้ำเสีย: กลุ่ม <b>aerobic</b> (<i>Pseudomonas</i>, <i>Zoogloea</i>) ย่อยสารอินทรีย์ แล้วกลุ่ม <b>anaerobic</b> (acid-forming, methanogen) ย่อยตะกอนที่เหลือ · EM ball"]},
+  {t:"ex",h:"การแพทย์",s:"46–47",p:["<b>probiotics</b> เพิ่มภูมิคุ้มกัน ปรับสมดุลกรดด่างในทางเดินอาหารส่วนปลาย · ยาปฏิชีวนะ: <i>Streptomyces</i> → streptomycin, <i>Penicillium</i> → penicillin","<b>พันธุวิศวกรรม</b>: ตัดยีนด้วย restriction enzyme → เชื่อมต่อ (recombination) → ส่งเข้า (transformation) จุลินทรีย์ตัวกลาง (host) ให้ยีนแสดงออก เช่น ผลิตอินซูลิน"]},
+  {t:"q",q:"เรียงขั้นตอนพันธุวิศวกรรมตามเอกสารได้ถูกต้อง ข้อใด",o:["ตัดยีน → เชื่อมต่อยีน → transformation","transformation → ตัดยีน → เชื่อมต่อยีน","เชื่อมต่อยีน → transformation → ตัดยีน","ตัดยีน → transformation → เชื่อมต่อยีน"],a:0,hint:"ต้องได้ยีนลูกผสมก่อนจึงส่งเข้าเซลล์ได้",why:"ตัดด้วย restriction enzyme → recombination ได้ยีนลูกผสม → transformation เข้า host",s:"46"},
+  {t:"q",q:"ในบ่อบำบัดน้ำเสีย จุลินทรีย์กลุ่มใดย่อยตะกอนที่เหลือจากกลุ่ม aerobic",o:["anaerobic เช่น methanogen","aerobic เช่น Pseudomonas","Rhizobium ในปมรากถั่ว","ยีสต์ Saccharomyces"],a:0,hint:"ตะกอนก้นบ่อมีออกซิเจนน้อย",why:"กลุ่ม anaerobic เช่น acid-forming bacteria และ methanogen ย่อยตะกอนที่เหลือ",s:"45"},
+  {t:"sum",pts:["N₂ → NH₃ → NO₂⁻ → NO₃⁻ · PSM → PO₄³⁻","น้ำเสีย: aerobic ก่อน แล้ว anaerobic","Streptomyces → streptomycin · Penicillium → penicillin","GE: ตัด → ต่อ → ใส่ host"]}]}
+];
+
+window.M12.LESSONS=L;window.M12.CH=CH;
+
+/* ---------------- AI tutor (sample capability) ---------------- */
+let sample=null,ctl=null;const turns=[];
+const HIDE=["not_granted","unavailable","unsupported","not_served"];
+function errMsg(c){return c==="rate_limited"?"ติวเตอร์ตอบไม่ทันตอนนี้ รอสักครู่แล้วลองใหม่":c==="not_granted"?"ยังไม่ได้อนุญาตให้ใช้ติวเตอร์":c==="cancelled"?"หยุดแล้ว":"ติวเตอร์ตอบไม่สำเร็จ ลองอีกครั้ง";}
+const RULES=`คุณคือติวเตอร์ชีววิทยาของนักศึกษาเภสัชศาสตร์ปี 1 มหาวิทยาลัยสยาม หัวข้อ Slide 13 "ความหลากหลายของจุลินทรีย์" (Diversity of Microorganisms)
+กติกา: ตอบภาษาไทย ใช้ศัพท์เฉพาะเป็นภาษาอังกฤษ กระชับ ไม่เกิน 150 คำเว้นแต่ผู้เรียนขอยาว ใช้ markdown ง่ายๆ (**ตัวหนา**, - รายการ) ยึดเนื้อหาเอกสาร ถ้าเกินจากเอกสารให้บอกว่า "ข้อมูลเสริม" และถ้าเอกสารผิดให้บอกตรงๆ
+เนื้อหาเอกสาร: จุลินทรีย์ 6 กลุ่ม (แบคทีเรีย ริคเกตเซีย ไวรัส สาหร่าย เชื้อรา โปรโตซัว) · taxonomy K→P→C→O→F→G→S · ชื่อสามัญ (มะละกอ บักหุ่ง บะก้วยเต้ด ลอกอ) ชื่อวิทยาศาสตร์ binomial Linnaeus Genus species · Whittaker 1969 5 kingdoms · Monera: Archaebacteria (Euryarchaeota ทนเกลือ สร้าง CH4; Crenarchaeota ทนร้อน ทนกรด) Eubacteria (Gram+ ม่วง, Gram− แดง, cyanobacteria) · archaea: ไม่มี peptidoglycan (pseudopeptidoglycan: N-acetylglucosamine + N-acetyltalosaminuronic acid), ไม่ไวต่อ antibiotic, rRNA ต่าง, RNA pol 10 หน่วย; halophile Halobacterium Halococcus; methanogen Methanococcus Methanobacterium formicicum; thermophile >100°C Pyrolobus fumarii; acidophile pH1-2 Sulfolobus acidocaldarius ARMAN; ใช้ cellulase ทนร้อนสิ่งทอ, protease lipase amylase น้ำเสีย, protease ทนเค็มน้ำปลา ซีอิ๊ว, มีเทนเชื้อเพลิง · รูปร่าง coccus bacillus spirillum · Gram+: peptidoglycan ไม่มี LPS crystal violet; Gram−: peptidoglycan + LPS safranin O · ตาราง Gram+: endospore, Streptomyces streptomycin, Lactobacillus, S. aureus, C. botulinum, B. cereus, B. subtilis; Gram−: Rhizobium, E. coli, Chlamydia, spirochete ฉี่หนู ซิฟิลิส · Cyanophyta: chlorophyll a, carotene, xanthophyll, phycobilin, heterocyst ตรึง N (Nostoc Anabaena), akinete, fragmentation, Spirulina โปรตีน, bloom, cyanotoxin (Microcystis Anabaena Oscillatoria), ปล่อย O2 · food pathogens: S. aureus (ผิวหนัง มือ พิษทนร้อน), Salmonella (7–45°C, 37°C, สัตว์ปีก ไข่ ลำไส้อักเสบ), C. botulinum (ดิน ไร้ O2 กระป๋อง พิษประสาท), E. coli (fecal coliform ดัชนี) · Fungi: eukaryote ไม่มี chloroplast chitin ยีสต์/hypha mycelium septate/nonseptate; Zygomycota sporangiospore Rhizopus; Deuteromycota conidia Penicillium Aspergillus oryzae A. flavus aflatoxin; Ascomycota ascus ascospore Saccharomyces Monascus Candida Cryptococcus; Basidiomycota basidiospore เห็ด ราสนิม; เห็ด cap gills stalk annulus volva · Protista: protozoa Sarcodina pseudopodium Amoeba, Flagellata Trypanosoma, Ciliata Paramecium Vorticella, Sporozoa Plasmodium; algae Chlorophyta a b Spirogyra, Euglenophyta paramylon, Chrysophyta a c silica diatom, Pyrrophyta red tide, Phaeophyta fucoxanthin alginic acid, Rhodophyta a d phycoerythrin floridean starch; hydrocolloid alginate INS400, agar INS406, carrageenan INS407 · อาหารหมัก: LAB lactic acid GRAS แหนม กิมจิ; โยเกิร์ต S. thermophilus + L. bulgaricus lactose→lactic acid >90% acetaldehyde; นัตโตะ B. subtilis var. natto; Acetobacter ethanol→acetic acid, A. xylinum วุ้นมะพร้าว; โคจิ A. oryzae amylase amyloglucosidase protease สาเก ซีอิ๊ว มิโซะ; ซีอิ๊ว vs ซอสปรุงรส; เทมเป้ Rhizopus 2–3 วัน; ถั่วเหลืองหมัก 4 ประเทศ (ถั่วเน่า โปรตีน 43.9 g Na 794 mg; นัตโตะ 18 g 7 mg 40°C 20 ชม.; เทมเป้ 20.29 g 9 mg 48 ชม.; ทวนจัง 13.3 g 3,833 mg 1 ปี); ยีสต์ S. cerevisiae CO2 + ethanol ขนมปัง ไวน์ 10–15%; อังคัก Monascus · เกษตร: Rhizobium Azotobacter cyanobacteria N2→NH3→NO2−→NO3−, PSM ฟอสเฟต · น้ำเสีย aerobic Pseudomonas Zoogloea, anaerobic acid-forming methanogen, EM ball · การแพทย์ probiotics, Streptomyces streptomycin, Penicillium penicillin, GE: restriction enzyme → recombination → transformation (insulin)
+จุดที่เอกสารผิด: Chlamydia ไม่ใช่เชื้อโกโนเรีย (gonorrhea = Neisseria gonorrhoeae); Salmonella เป็นแกรมลบ; Linnaeus 1707–1778; kojic acid สร้างโดย Aspergillus oryzae; Plasmopara viticola เป็น oomycete; Rickettsia เป็นแบคทีเรีย`;
+function md(s){
+  const lines=esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").split(/\n/);let h="",inl=false;
+  lines.forEach(l=>{const m=l.match(/^\s*[-•*]\s+(.*)/);if(m){if(!inl){h+="<ul>";inl=true;}h+=`<li>${m[1]}</li>`;}else{if(inl){h+="</ul>";inl=false;}if(l.trim())h+=`<p>${l}</p>`;}});
+  if(inl)h+="</ul>";return h||"<p></p>";
+}
+const THINK=`<span class="thinking"><i></i><i></i><i></i></span>`;
+function ctxText(){
+  const m=window.M12.mode&&window.M12.mode();
+  if(m==="lab"){const id=window.M12.labCur(),l=window.M12.LABS.find(x=>x.id===id);const info=document.querySelector(`[data-lab="${id}"] .stinfo`)||[...document.querySelectorAll(`[data-lab="${id}"] [aria-live]`)].find(n=>n.textContent.trim().length>20);return `Lab: ${l?l.t:""}${info?" · บนจอ: "+info.textContent.slice(0,400):""}`;}
+  if(m==="tutor"&&tcur!==null){const st=L[tcur].steps[si];return `Tutor บท ${L[tcur].k} ${L[tcur].title} · ${st.t==="q"?"คำถาม: "+plain(st.q):st.t==="ex"?plain(st.h+" "+st.p.join(" ")).slice(0,500):"สรุป"}`;}
+  return "หน้าแรกของ Tutor";
+}
+function addMsg(cls,html){const m=document.createElement("div");m.className="m "+cls;m.innerHTML=html;$("#msgs").appendChild(m);$("#msgs").scrollTop=1e9;return m;}
+function openChat(){$("#chat").hidden=false;$("#fab").hidden=true;$("#chatCtx").textContent=ctxText().slice(0,60);if(!$("#msgs").children.length)addMsg("a",md("ถามอะไรก็ได้เกี่ยวกับ Slide 13 ผมเห็นว่าคุณกำลังดูหน้าไหนอยู่ด้วย เช่น \"แกรมบวกต่างจากแกรมลบยังไง\" หรือ \"ขอวิธีจำ 4 division ของ fungi\""));setTimeout(()=>$("#chatIn").focus(),50);}
+function closeChat(){$("#chat").hidden=true;fabVis();if(ctl)ctl.abort();}
+function fabVis(){const m=window.M12.mode&&window.M12.mode();$("#fab").hidden=!sample||!$("#chat").hidden||m==="exam";}
+window.M12.fabVis=fabVis;
+$("#fab").onclick=openChat;$("#chatClose").onclick=closeChat;
+const QCH=["อธิบายหน้านี้ให้ง่ายกว่านี้","ขอวิธีจำไม่ให้สับสน","ขอโจทย์ฝึก 1 ข้อ","เกี่ยวกับงานเภสัชยังไง"];
+$("#qchips").innerHTML=QCH.map(c=>`<button type="button">${c}</button>`).join("");
+$("#qchips").onclick=e=>{const b=e.target.closest("button");if(b)ask(b.textContent);};
+$("#compose").onsubmit=e=>{e.preventDefault();const v=$("#chatIn").value.trim();if(v){$("#chatIn").value="";ask(v);}};
+$("#chatIn").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();$("#compose").requestSubmit();}});
+async function ask(q){
+  if(!sample)return;if(ctl)ctl.abort();
+  addMsg("u",esc(q));$("#chatCtx").textContent=ctxText().slice(0,60);
+  turns.push({role:"user",content:`[สิ่งที่ผู้เรียนดูอยู่: ${ctxText()}]\n\nคำถาม: ${q}`});
+  const m=addMsg("a",THINK),sb=$("#sendBtn");sb.textContent="หยุด";sb.type="button";
+  ctl=new AbortController();const my=ctl;sb.onclick=()=>my.abort();
+  try{const{text}=await sample([{role:"user",content:RULES},{role:"assistant",content:"รับทราบครับ"},...turns.slice(-10)],{cache:false,signal:my.signal,onText:({text})=>{m.innerHTML=md(text);$("#msgs").scrollTop=1e9;}});
+    m.innerHTML=md(text);turns.push({role:"assistant",content:text});}
+  catch(e){turns.pop();
+    if(e&&e.code==="cancelled")m.innerHTML=e.text?md(e.text):"<i>หยุดแล้ว</i>";
+    else if(e&&HIDE.includes(e.code)){m.remove();addMsg("note",esc(errMsg(e.code)));if(e.code!=="not_granted"){sample=null;fabVis();}}
+    else m.innerHTML=(e&&e.text?md(e.text):"")+`<p><i>${esc(errMsg(e&&e.code))}</i></p>`;}
+  finally{if(ctl===my)ctl=null;sb.textContent="ส่ง";sb.type="submit";sb.onclick=null;}
+}
+async function explainAgain(box,st,picked){
+  const b=$("button",box),out=$(".ans",box);b.disabled=true;out.hidden=false;out.innerHTML=THINK;
+  const prompt=`${RULES}\n\nผู้เรียนตอบคำถามนี้ผิด ช่วยอธิบายอีกแบบที่ต่างจากเฉลยเดิม ใช้การเปรียบเทียบหรือคิดทีละขั้น ไม่เกิน 120 คำ และชี้ว่าคำตอบที่เลือกผิดตรงไหน\n\nคำถาม: ${plain(st.q)}\nตัวเลือก: ${st.o.map(plain).join(" | ")}\nผู้เรียนเลือก: ${picked.map(i=>plain(st.o[i])).join(", ")}\nคำตอบที่ถูก: ${plain(st.o[st.a])}\nเฉลยเดิม: ${plain(st.why)}`;
+  try{const{text}=await sample(prompt,{onText:({text})=>{out.innerHTML=md(text);}});out.innerHTML=md(text);b.remove();}
+  catch(e){if(e&&HIDE.includes(e.code)){box.remove();if(e.code!=="not_granted"){sample=null;fabVis();}return;}out.innerHTML=esc(errMsg(e&&e.code));b.disabled=false;}
+}
+if(window.claude&&window.claude.use){window.claude.use("sample").then(s=>{if(!s)return;sample=s;fabVis();if(tcur!==null)renderStep();}).catch(()=>{});}
+
+/* ---------------- tutor engine ---------------- */
+const tv=$("#tutorView");
+const prog=store.get("m13-tutor",{done:{},last:null});
+let tcur=null,si=0,qs=null;
+function saveP(){store.set("m13-tutor",prog);}
+function doneCount(c){return L.filter(l=>l.c===c&&prog.done[l.k]).length;}
+function renderTutor(){
+  const total=L.filter(l=>prog.done[l.k]).length;
+  tv.innerHTML=`<div class="row" style="justify-content:space-between"><div class="vh"><p class="lede">ผ่านแล้ว ${total} / ${L.length} บท</p></div></div>
+  <div class="tlayout"><aside class="index" id="tIndex" aria-label="สารบัญ">
+    <button type="button" data-k="home" ${tcur===null?'aria-current="true"':""}><span class="dot" style="border-color:var(--hema);color:var(--hema)">⌂</span><span><span class="ti">หน้าแรก Tutor</span><span class="ts">ภาพรวมและวิธีเรียน</span></span></button>
+    ${CH.map((c,ci)=>`<h4>บทที่ ${ci+1} · ${esc(c)}</h4>`+L.filter(l=>l.c===ci).map(l=>`<button type="button" data-k="${l.k}" ${tcur!==null&&L[tcur].k===l.k?'aria-current="true"':""}><span class="dot ${prog.done[l.k]?"done":""}">${prog.done[l.k]?"✓":""}</span><span><span class="ti">${l.k} ${esc(l.title)}</span><span class="ts">${esc(l.sub)}</span></span></button>`).join("")).join("")}
+  </aside><div id="tMain"></div></div>`;
+  $("#tIndex").onclick=e=>{const b=e.target.closest("[data-k]");if(!b)return;if(b.dataset.k==="home"){tcur=null;}else{tcur=L.findIndex(l=>l.k===b.dataset.k);si=0;}renderTutor();window.scrollTo({top:0});};
+  if(tcur===null)renderHome();else renderStep();
+}
+function renderHome(){
+  const nx=L.findIndex(l=>!prog.done[l.k]);
+  $("#tMain").innerHTML=`<div class="player"><div class="phead"><span class="k">เริ่มที่นี่</span><h3>ติวเตอร์ ความหลากหลายของจุลินทรีย์</h3></div><div class="pbody">
+    <div class="tutorline"><div class="av" aria-hidden="true">✦</div><div class="bubble"><p>สวัสดีครับ ผมจะพาเรียน Slide 13 ทีละบท ตั้งแต่การจัดหมวดหมู่ Monera Fungi Protista ไปจนถึงการใช้จุลินทรีย์ทำอาหารหมัก เกษตร และยา</p></div></div>
+    
+    <div class="row"><button class="btn pri" type="button" id="tStart">${nx<0?"ทบทวนตั้งแต่บทแรก":"เริ่ม "+L[nx].k+" "+esc(L[nx].title)} →</button>${Object.keys(prog.done).length?`<button class="btn" type="button" id="tReset">ล้างความคืบหน้า</button>`:""}</div>
+    <div class="chcards">${CH.map((c,ci)=>{const n=L.filter(l=>l.c===ci).length,d=doneCount(ci);return `<button type="button" data-c="${ci}"><span class="n">${ci+1}</span><b>${esc(c)}</b><span class="small muted">${d}/${n} บท</span><span class="bar"><i style="width:${d/n*100}%"></i></span></button>`;}).join("")}</div>
+  </div></div>`;
+  $("#tStart").onclick=()=>{tcur=nx<0?0:nx;si=0;renderTutor();};
+  const r=$("#tReset");if(r)r.onclick=()=>{prog.done={};saveP();renderTutor();};
+  $(".chcards").onclick=e=>{const b=e.target.closest("[data-c]");if(!b)return;tcur=L.findIndex(l=>l.c===+b.dataset.c);si=0;renderTutor();};
+}
+function renderStep(){
+  const les=L[tcur],st=les.steps[si],n=les.steps.length;
+  let body="";
+  if(st.t==="ex"){body=`<h3 style="font-size:20px">${st.h} ${SL(st.s)}</h3>${st.p.map(p=>`<p>${p}</p>`).join("")}`;}
+  else if(st.t==="sum"){body=`<div class="tutorline"><div class="av" aria-hidden="true">✓</div><div class="bubble"><b>สรุปบท ${les.k}</b><ul class="pts">${st.pts.map(p=>`<li>${p}</li>`).join("")}</ul></div></div>`;}
+  else{
+    if(!qs||qs.k!==les.k+"-"+si){qs={k:les.k+"-"+si,ord:shuffle([...st.o.keys()]),wrong:[],done:false};}
+    body=`<p class="qtxt">${st.q}</p><div class="opts" id="opts">${qs.ord.map((oi,j)=>`<button type="button" data-o="${oi}" class="${qs.done&&oi===st.a?"ok":qs.wrong.includes(oi)?"ng":""}" ${qs.done||qs.wrong.includes(oi)?"disabled":""}><span class="L">${LET[j]}</span><span>${st.o[oi]}</span></button>`).join("")}</div><div id="qfb" aria-live="polite"></div>`;
+  }
+  $("#tMain").innerHTML=`<div class="player"><div class="phead"><span class="k">บท ${les.k} · ขั้น ${si+1}/${n}</span><h3>${esc(les.title)}</h3><div class="pbar"><i style="width:${(si+1)/n*100}%"></i></div></div>
+  <div class="pbody">${body}</div>
+  <div class="pfoot"><button class="btn" type="button" id="tPrev" ${si===0?"disabled":""}>← ย้อน</button><button class="btn pri" type="button" id="tNext">${si===n-1?(tcur===L.length-1?"จบ Tutor ✓":"บทถัดไป →"):"ถัดไป →"}</button></div></div>`;
+  if(st.t==="q")wireQ(st);
+  $("#tPrev").onclick=()=>{si--;qs=null;renderStep();};
+  $("#tNext").onclick=()=>{
+    if(si<n-1){si++;qs=null;renderStep();return;}
+    prog.done[les.k]=true;prog.last=les.k;saveP();
+    if(tcur<L.length-1){tcur++;si=0;}else{tcur=null;}
+    qs=null;renderTutor();window.scrollTo({top:0});
+  };
+  const nb=$("#tNext");if(st.t==="q"&&!qs.done)nb.disabled=true;
+}
+function wireQ(st){
+  const fb=$("#qfb");
+  if(qs.done)fb.innerHTML=`<p class="fb ok"><b>${qs.wrong.length===0?"ถูกต้อง":qs.wrong.length>=2?"เฉลย":"ถูกแล้ว"}</b> ${st.why} ${SL(st.s)}</p>`;
+  else if(qs.wrong.length===1)fb.innerHTML=`<p class="fb hint"><b>คำใบ้</b> ${st.hint}</p>`;
+  $$("#opts button").forEach(b=>b.onclick=()=>{
+    const oi=+b.dataset.o;
+    if(oi===st.a){qs.done=true;}
+    else{qs.wrong.push(oi);if(qs.wrong.length>=2)qs.done=true;}
+    renderStep();
+    if(qs.done&&qs.wrong.length&&sample){const box=document.createElement("div");box.className="aiask";box.innerHTML=`<button class="btn" type="button">ให้ติวเตอร์อธิบายอีกแบบ</button><div class="ans" hidden></div>`;$("#qfb").appendChild(box);$("button",box).onclick=()=>explainAgain(box,st,qs.wrong);}
+  });
+}
+window.M12.renderTutor=()=>{renderTutor();fabVis();};
+})();
+
+</script>
+<style id="hub-embed">html.embedded .modebar{display:none!important}html.embedded .tabs:has(#labNav[hidden]){display:none}html.embedded aside.index{top:calc(env(safe-area-inset-top,0px) + 12px);max-height:calc(100vh - 24px)}</style>
+<script src="xk3-bank-s13.js"></script><script src="exam-kit-6.js"></script>
+<script>(function(){function go(){if(!window.XK||!window.XK_BANK)return;XK.mount({host:"#examView",id:"s13",title:"Diversity of Microorganisms",bank:window.XK_BANK,accent:"#16735F",hide:[".tabs", "#fab", "#chat", ".hero"]});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",go);else go();})();</script>
+<script>window.HLK={"en": ["microorganism", "taxonomy", "binomial nomenclature", "Monera", "Protista", "Archaebacteria", "Eubacteria", "Euryarchaeota", "Crenarchaeota", "archaea", "peptidoglycan", "pseudopeptidoglycan", "lipopolysaccharides", "LPS", "crystal violet", "safranin O", "coccus", "bacillus", "spirillum", "endospore", "binary fission", "heterocyst", "akinete", "cyanobacteria", "Cyanophyta", "cyanotoxin", "phycobilin", "methanogen", "halophiles", "thermophiles", "acidophilic", "fecal coliform", "facultative anaerobe", "chitin", "hypha", "mycelium", "septate", "sporangium", "sporangiospore", "conidia", "ascus", "ascospore", "basidium", "basidiospore", "Zygomycota", "Deuteromycota", "Ascomycota", "Basidiomycota", "aflatoxin", "annulus", "volva", "pseudopodium", "phagocytosis", "flagella", "cilia", "Sarcodina", "Flagellata", "Ciliata", "Sporozoa", "Chlorophyta", "Euglenophyta", "Chrysophyta", "Pyrrophyta", "Phaeophyta", "Rhodophyta", "red tide", "fucoxanthin", "hydrocolloid", "alginate", "carrageenan", "lactic acid", "acetic acid", "acetaldehyde", "GRAS", "koji", "amylase", "protease", "probiotics", "streptomycin", "penicillin", "restriction enzyme", "recombination", "transformation"], "th": ["จุลินทรีย์", "ไซยาโนแบคทีเรีย", "ไคติน", "ขาเทียม", "โคจิ", "เทมเป้", "ไฮโดรคอลลอยด์"], "css": ".slide{background:none!important;color:var(--muted)!important;opacity:.7;font:500 11px/1.5 var(--font-mono)!important;padding:0!important;margin-left:6px!important}\nheader.hero > .eyebrow,header.hero > h1,header.hero > .sub,header.hero .keyline > span{display:none!important}\nhtml.hub-exam header.hero{display:none!important}\nhtml.hub-exam footer,html.hub-exam .foot{display:none!important}"};</script><script src="hl-kit-3.js"></script>
+</body>
+</html>
