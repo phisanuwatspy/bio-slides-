@@ -418,7 +418,7 @@ function b2(){
   cell(870,160,62,5);cell(870,310,62,5,150);g=G(5,300);xchr(g,858,160,60,MA,{side:1,col:PA_});xchr(g,886,160,36,PA_);xchr(g,858,310,60,PA_,{side:-1,col:MA});xchr(g,886,310,36,MA);
   C.forEach(([x,t,sub],i)=>N('c'+i,x,i%2?578:420,t,{s:i===0?1:i+2,sub}));
   E('c0','c1','cause','เรียงคู่',3);E('c1','c2','cause','แยก homolog',4);E('c2','c3','cause','แบ่ง 2 เซลล์',5);
-  T(120,345,'lepto → zygo → pachy → diplo → diakinesis','cap',1,{d:300});
+  T(16,345,'lepto → zygo → pachy → diplo → diakinesis','cap',1,{d:300,anchor:'start'});
   const lg=G(1,0,L.lab);[['ได้จากแม่',MA,40],['ได้จากพ่อ',PA_,170]].forEach(([t,c,x])=>{S('rect',{x,y:604,width:16,height:16,rx:4,style:`fill:${c}`},lg);const tt=S('text',{x:x+24,y:613,class:'cap','dominant-baseline':'central'},lg);tt.textContent=t;});
 }
 /* ch3 meiosis II and variation */
@@ -663,4 +663,4 @@ window.__pcheck2=()=>{const out=[];const vis=[...svg.querySelectorAll('.node.on'
  svg.querySelectorAll('.pill.on').forEach(p=>out.push('PILL '+p.textContent.slice(0,24)));
  return [...new Set(out)];};
 </script>
-<script>document.addEventListener("keydown",e=>{if(e.key==="Escape"||e.key==="f"||e.key==="F")e.stopImmediatePropagation();},true);try{setFull(true);document.getElementById("fs").style.display="none";}catch(e){}</script><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&display=swap"><link rel="stylesheet" href="theme.css?v=2"><script>document.documentElement.dataset.theme="light"</script></body></html>
+<script>document.addEventListener("keydown",e=>{if(e.key==="Escape"||e.key==="f"||e.key==="F")e.stopImmediatePropagation();},true);try{setFull(true);document.getElementById("fs").style.display="none";}catch(e){}</script><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&display=swap"><link rel="stylesheet" href="theme.css?v=3"><script>document.documentElement.dataset.theme="light"</script></body></html>

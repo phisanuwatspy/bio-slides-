@@ -11,6 +11,8 @@
   --fb:"IBM Plex Sans Thai Looped","IBM Plex Sans Thai",system-ui,sans-serif;
   color-scheme:light!important;
 }
+/* diagrams keep the fonts they were measured and laid out with, so labels never outgrow their boxes */
+.stage svg,#svg,#g3{--fd:"Anuphan","IBM Plex Sans Thai",system-ui,sans-serif;--fb:"IBM Plex Sans Thai",system-ui,sans-serif}
 body{background:var(--bg)!important;-webkit-font-smoothing:antialiased}
 .wrap{gap:12px!important;padding-top:12px!important}
 .top{display:none!important}
@@ -65,3 +67,4 @@ body{background:var(--bg)!important;-webkit-font-smoothing:antialiased}
 .badge circle{stroke-width:1.6!important}
 mark.kw{border:0!important;background:var(--hlk)!important;padding:1px 4px!important}
 @media (max-width:600px){.sbar .legend{display:none!important}.sbar{justify-content:flex-end!important}}
+.pbar .pl{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;line-height:1.3}

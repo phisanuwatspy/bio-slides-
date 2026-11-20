@@ -389,7 +389,7 @@ let helix=null,raf=0,phase=0;
 function band(x,y,w,h,label,s,cls){const g=G(s,0,L.edge);S('rect',{x,y,width:w,height:h,rx:22,class:'band '+(cls||'')},g);if(label){const t=S('text',{x:x+16,y:y+24,class:'bandl'},g);t.textContent=label;}return g;}
 /* ch1 overview */
 function b1(){
-  band(300,22,680,445,'MITOCHONDRIA',2,'mito');
+  band(388,22,592,445,'MITOCHONDRIA',2,'mito');
   const t=S('text',{x:24,y:40,class:'bandl rv','data-s':1},L.edge);t.textContent='CYTOPLASM';
   N('glc',130,75,'Glucose',{s:1,kind:'key',sub:'6C'});
   N('gly',130,235,'Glycolysis',{s:1,sub:'ไม่ใช้ O2'});
@@ -428,7 +428,7 @@ function b3(){
   N('suc',500,545,'Succinyl CoA',{s:3,sub:'4C'});E('akg','suc','cause','เสีย 1C',3,{bend:-30});
   N('p3',850,545,'CO2 + NADH',{s:3,d:300});E('akg','p3','cause','ปล่อย',3,{d:450});
   E('suc','oaa','cause','สร้างคืน',4,{bend:-30});
-  N('p4',150,545,'GTP · FADH2 · NADH',{s:4,d:300});E('suc','p4','cause','ได้',4,{d:450});
+  N('p4',170,545,'GTP · FADH2 · NADH',{s:4,d:300});E('suc','p4','cause','ได้',4,{d:450});
   N('sum',500,330,'ต่อ 1 รอบ',{s:5,kind:'key',sub:'3 NADH · 1 FADH2 · 1 GTP · 2 CO2',sub2:'กลูโคส 1 โมเลกุล = 2 รอบ'});
   E('p2','sum','cause','นับรวม',5);E('p3','sum','cause','นับรวม',5,{d:150});E('p4','sum','cause','นับรวม',5,{d:300,lx:30,ly:20});
 }
@@ -654,4 +654,4 @@ window.__pcheck2=()=>{const out=[];const vis=[...svg.querySelectorAll('.node.on'
  svg.querySelectorAll('.pill.on').forEach(p=>out.push('PILL '+p.textContent.slice(0,24)));
  return [...new Set(out)];};
 </script>
-<script>document.addEventListener("keydown",e=>{if(e.key==="Escape"||e.key==="f"||e.key==="F")e.stopImmediatePropagation();},true);try{setFull(true);document.getElementById("fs").style.display="none";}catch(e){}</script><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&display=swap"><link rel="stylesheet" href="theme.css?v=2"><script>document.documentElement.dataset.theme="light"</script></body></html>
+<script>document.addEventListener("keydown",e=>{if(e.key==="Escape"||e.key==="f"||e.key==="F")e.stopImmediatePropagation();},true);try{setFull(true);document.getElementById("fs").style.display="none";}catch(e){}</script><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&display=swap"><link rel="stylesheet" href="theme.css?v=3"><script>document.documentElement.dataset.theme="light"</script></body></html>
