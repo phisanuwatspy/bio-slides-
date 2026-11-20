@@ -1,0 +1,67 @@
+/* Warm, quiet skin for the TPAT1 map pages so they sit inside the Bio 07–13 app.
+   Loaded last in every map page; only overrides look, never layout logic. */
+:root,:root[data-theme],:root:not([data-theme="light"]){
+  --bg:#F7F2EA; --surface:#FFFDF9; --ink:#2A2420; --muted:#7A6E64; --line:#ECE4D8; --grid:transparent;
+  --cause:#2F6B8A; --part:#A39484; --inhib:#C2364B; --pair:#3F8C6A;
+  --keyFill:#FBF1E6; --ok:#4F8A3A; --bad:#C2364B; --okBg:#EEF5E6; --badBg:#FBEAEA;
+  --hlk:rgba(232,170,90,.22); --hlb:#D69A4C;
+  --brand:#B85A2E;
+  --cyto:#FBF3EA; --nuc:#F4E3D3; --g2:#9A8C80; --agar:#F6E7C4;
+  --fd:"IBM Plex Sans Thai Looped","IBM Plex Sans Thai",system-ui,sans-serif;
+  --fb:"IBM Plex Sans Thai Looped","IBM Plex Sans Thai",system-ui,sans-serif;
+  color-scheme:light!important;
+}
+body{background:var(--bg)!important;-webkit-font-smoothing:antialiased}
+.wrap{gap:12px!important;padding-top:12px!important}
+.top{display:none!important}
+
+/* one quiet row of topic pills that scrolls sideways instead of wrapping */
+.bar{align-items:center!important;gap:8px!important}
+.tabs,.chips,.crow{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;padding:2px;mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}
+.tabs::-webkit-scrollbar,.chips::-webkit-scrollbar,.crow::-webkit-scrollbar{display:none}
+.chips.chap{flex-direction:column!important;overflow:visible;mask-image:none}
+.tab,.cch,.chip{scroll-snap-align:start;border:0!important;background:transparent!important;color:var(--muted)!important;border-radius:999px!important;padding:7px 13px!important;font-weight:500!important;font-size:15px!important;box-shadow:none!important;white-space:nowrap;transition:background .2s,color .2s!important}
+.tab:hover,.cch:hover,.chip:hover{color:var(--ink)!important;background:rgba(42,36,32,.05)!important}
+.tab .n,.cch .cno{font-family:var(--fb)!important;font-weight:600!important;background:transparent!important;color:inherit!important;opacity:.55;padding:0!important}
+.tab[aria-current="true"],.cch[aria-pressed="true"],.chip[aria-pressed="true"]{background:var(--surface)!important;color:var(--ink)!important;font-weight:600!important;box-shadow:0 1px 3px rgba(42,36,32,.12)!important}
+.tab[aria-current="true"] .n,.cch[aria-pressed="true"] .cno{color:var(--brand)!important;opacity:1}
+.cch .cring,.cch .cdots{display:none}
+#d3,#mo{display:none!important}
+.fsb{border:0!important;background:transparent!important;color:var(--muted)!important;padding:8px!important}
+.fsb span{display:none}
+
+/* surfaces: no borders, no graph paper, soft depth */
+.stage{background-image:none!important;background-color:var(--surface)!important;border:0!important;border-radius:22px!important;box-shadow:0 1px 2px rgba(42,36,32,.05),0 12px 32px -22px rgba(42,36,32,.28)}
+.panel{border:0!important;border-radius:22px!important;box-shadow:0 1px 2px rgba(42,36,32,.05),0 12px 32px -22px rgba(42,36,32,.28)}
+.sbar{border-top:1px solid var(--line)!important;background:transparent!important}
+.item,.prog,.ask,.howd,.qcard,.rl,.pth,.rx,.sn,.fb{border-color:var(--line)!important}
+.prog,.ask,.qcard,.rl,.pth,.rx{background:#FBF6EF!important}
+.kicker,.kick{font-family:var(--fb)!important;letter-spacing:0!important;color:var(--brand)!important}
+.panel h2,#pane h2{font-weight:600!important;letter-spacing:-.01em}
+
+/* buttons */
+.btn{border-color:var(--line)!important;border-radius:12px!important;font-weight:600!important}
+.btn.primary,.swb.on,.dot.on,.pdots i.on{background:var(--brand)!important;border-color:var(--brand)!important;color:#fff!important}
+.pdots i.on,.dot.on{background:var(--brand)!important}
+.seg{background:#F3ECE2!important;border-radius:14px!important}
+.seg button[aria-selected="true"]{color:var(--ink)!important}
+.zoom button{border:0!important;background:#F3ECE2!important;border-radius:12px!important}
+.legend .lg{border-width:1px!important;border-color:var(--line)!important;background:transparent!important;font-size:14px!important;padding:4px 11px 4px 8px!important}
+.search input{border-color:var(--line)!important;background:#FBF6EF!important;border-radius:12px!important}
+
+/* map nodes: tinted, borderless-looking pills; lighter lines */
+.nd .bg{fill:color-mix(in srgb,var(--tc,var(--part)) 7%,var(--surface))!important;stroke:color-mix(in srgb,var(--tc,var(--part)) 45%,transparent)!important;stroke-width:1.2px!important;rx:14px;ry:14px}
+.nd.key .bg{fill:color-mix(in srgb,var(--tc,var(--part)) 15%,var(--surface))!important;stroke:color-mix(in srgb,var(--tc,var(--part)) 70%,transparent)!important;stroke-width:1.6px!important}
+.nd.sel .bg{stroke:var(--brand)!important;stroke-width:2.6px!important}
+.nl{font-weight:600!important}
+.ns{fill:var(--muted)!important}
+.eg path{stroke-opacity:.42!important}
+.eg.show path,.eg.cur path{stroke-opacity:.95!important}
+.eg.cause path{stroke-width:1.8!important}
+.eg.inhib path{stroke-width:1.8!important}
+.eg.part path,.eg.pair path{stroke-width:1.5!important}
+.zone{opacity:.045!important}
+.elab rect{stroke:var(--line)!important;stroke-width:1!important}
+.badge circle{stroke-width:1.6!important}
+mark.kw{border:0!important;background:var(--hlk)!important;padding:1px 4px!important}
+@media (max-width:600px){.sbar .legend{display:none!important}.sbar{justify-content:flex-end!important}}

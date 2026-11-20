@@ -1,5 +1,5 @@
 // Offline cache for Bio 07–13 (combined app). Bump VERSION whenever any file changes.
-const VERSION = "bioslide-v5";
+const VERSION = "bioslide-v6";
 const FILES = [
    "./",
    "index.html",
@@ -27,6 +27,7 @@ const FILES = [
    "learn/xk2-bank-s12.js",
    "learn/xk2-bank-s13.js",
    "map/p0.html",
+   "map/theme.css",
    "map/p1.html",
    "map/p2.html",
    "map/p3.html",
