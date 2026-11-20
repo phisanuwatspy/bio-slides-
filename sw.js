@@ -1,12 +1,40 @@
-// Offline cache for Bio Slide 07–13. Bump VERSION whenever any file changes.
-const VERSION = "bioslide-v4";
+// Offline cache for Bio 07–13 (combined app). Bump VERSION whenever any file changes.
+const VERSION = "bioslide-v5";
 const FILES = [
-  "./", "index.html", "manifest.webmanifest",
-  "bio13-icon-192.png", "bio13-icon-512.png", "bio13-maskable-512.png", "bio13-touch-180.png",
-  "exam-kit-6.js", "hl-kit-3.js", "pager-1.js",
-  "s07-x8.html", "s08-x8.html", "s09-x8.html", "s10-x8.html", "s11-x9.html", "s12-x8.html", "s13-x9.html",
-  "xk2-bank-s07.js", "xk2-bank-s08.js", "xk2-bank-s09.js", "xk2-bank-s10.js", "xk2-bank-s11.js", "xk2-bank-s12.js", "xk3-bank-s13.js"
-];
+   "./",
+   "index.html",
+   "watch.html",
+   "manifest.webmanifest",
+   "bio13-icon-192.png",
+   "bio13-icon-512.png",
+   "bio13-maskable-512.png",
+   "bio13-touch-180.png",
+   "learn/exam-kit-6.js",
+   "learn/hl-kit-3.js",
+   "learn/pager-1.js",
+   "learn/s07.html",
+   "learn/s08.html",
+   "learn/s09.html",
+   "learn/s10.html",
+   "learn/s11.html",
+   "learn/s12.html",
+   "learn/s13.html",
+   "learn/xk2-bank-s07.js",
+   "learn/xk2-bank-s08.js",
+   "learn/xk2-bank-s09.js",
+   "learn/xk2-bank-s10.js",
+   "learn/xk2-bank-s11.js",
+   "learn/xk2-bank-s12.js",
+   "learn/xk2-bank-s13.js",
+   "map/p0.html",
+   "map/p1.html",
+   "map/p2.html",
+   "map/p3.html",
+   "map/p4.html",
+   "map/p5.html",
+   "map/p6.html",
+   "map/p7.html"
+  ];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
 });

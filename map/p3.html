@@ -1,0 +1,658 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}.back{display:none!important}</style></head><body><style>.top .back{display:none!important}.wrap{padding-block:10px 24px!important}</style><title>การควบคุม gene และ chromosome · TPAT1 เชื่อมโยง</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: lab-notebook graph-paper stage where a TPAT1-style concept map builds step by step; narration + relation chain in a side panel. Base colors follow Sanger chromatogram convention (A green, C blue, G black, T red). */
+:root{
+  --bg:#E8EDF0; --surface:#FBFCFD; --ink:#13212C; --muted:#56687A; --line:#C3CFD8; --grid:#E2E9EE;
+  --cause:#1E4F8F; --part:#6A7C8B; --inhib:#C7372F; --pair:#0B807C;
+  --keyFill:#E1EAF5; --ok:#1C7F46; --bad:#C2372E; --okBg:#E3F3E9; --badBg:#FBE6E4;
+  --bA:#178A3E; --bC:#2158C4; --bG:#1B1B1B; --bT:#D02B23; --bU:#8B3FC0;
+  --sS:#2158C4; --sR:#B5730C; --agar:#F2E2B0; --dead:#F5D6E1; --new:#0B807C;
+  --fd:"Anuphan","IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
+  --fb:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
+  --fm:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C141B; --surface:#131E27; --ink:#E3EBF1; --muted:#93A6B5; --line:#2B3B48; --grid:#17242E;
+  --cause:#86B6F2; --part:#8FA1AF; --inhib:#FF7A70; --pair:#4AC9C1;
+  --keyFill:#1A2D41; --ok:#5ED18E; --bad:#FF7D73; --okBg:#123224; --badBg:#3A1A1A;
+  --bA:#52D686; --bC:#78AAFF; --bG:#E4E8EC; --bT:#FF716A; --bU:#C78EF8;
+  --sS:#78AAFF; --sR:#F0B44C; --agar:#4A3F22; --dead:#4C2335; --new:#4AC9C1; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C141B; --surface:#131E27; --ink:#E3EBF1; --muted:#93A6B5; --line:#2B3B48; --grid:#17242E;
+  --cause:#86B6F2; --part:#8FA1AF; --inhib:#FF7A70; --pair:#4AC9C1;
+  --keyFill:#1A2D41; --ok:#5ED18E; --bad:#FF7D73; --okBg:#123224; --badBg:#3A1A1A;
+  --bA:#52D686; --bC:#78AAFF; --bG:#E4E8EC; --bT:#FF716A; --bU:#C78EF8;
+  --sS:#78AAFF; --sR:#F0B44C; --agar:#4A3F22; --dead:#4C2335; --new:#4AC9C1; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6}
+.wrap{max-width:1360px;margin:0 auto;padding-block:16px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:14px}
+
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+.eyebrow{margin:0;font:500 13px var(--fm);letter-spacing:.06em;color:var(--muted)}
+h1{margin:2px 0 0;font:700 32px/1.15 var(--fd);text-wrap:balance}
+h1 em{font-style:normal;color:var(--cause)}
+.legend{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px}
+.legend li{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--muted)}
+.legend b{color:var(--ink);font-weight:600}
+.legend svg{width:46px;height:16px;flex:none;overflow:visible}
+
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{flex:none;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:8px 14px;font:500 16px var(--fb);cursor:pointer}
+.tab .n{font:600 13px var(--fm);color:var(--muted)}
+.tab[aria-current="true"]{background:var(--cause);border-color:var(--cause);color:var(--surface)}
+.tab[aria-current="true"] .n{color:var(--surface);opacity:.75}
+.tab:focus-visible,.btn:focus-visible,.opt:focus-visible,.rel:focus-visible{outline:3px solid var(--pair);outline-offset:2px}
+
+.player{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}
+@media (max-width:980px){.player{grid-template-columns:minmax(0,1fr)}}
+.stage{min-width:0;background-color:var(--surface);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:25px 25px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+#svg{display:block;width:100%;height:auto}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+@media (min-width:981px){.panel{position:sticky;top:12px;min-height:420px}}
+.kicker{margin:0;font:600 13px var(--fm);letter-spacing:.05em;color:var(--cause)}
+.panel h2{margin:0;font:700 25px/1.3 var(--fd);text-wrap:balance}
+.stext{margin:0;font-size:17.5px;line-height:1.75}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.chain:empty{display:none}
+.chain .lbl{width:100%;font:600 12px var(--fm);letter-spacing:.06em;color:var(--muted)}
+.tok{border:1px solid var(--line);border-radius:8px;padding:3px 10px;font-size:15px;background:var(--bg)}
+.sym{font:700 20px var(--fd);line-height:1}
+.sym.cause{color:var(--cause)}.sym.part{color:var(--part)}.sym.inhib{color:var(--inhib)}.sym.pair{color:var(--pair)}.sym.sep{color:var(--muted);font-size:16px}
+.controls{margin-top:auto;display:flex;align-items:center;gap:10px}
+.dots{flex:1;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--line);border:0;padding:0;cursor:pointer}
+.dot.on{background:var(--cause)}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:10px 16px;font:600 16px var(--fb);cursor:pointer}
+.btn.primary{background:var(--cause);border-color:var(--cause);color:var(--surface)}
+.btn.ghost{background:transparent;color:var(--muted);font-weight:500}
+.btn:disabled{opacity:.4;cursor:default}
+.score{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.score div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
+.score b{display:block;font:700 28px var(--fd);font-variant-numeric:tabular-nums}
+.score span{font-size:14px;color:var(--muted)}
+
+/* ---------- SVG ---------- */
+.bA{--c:var(--bA)}.bC{--c:var(--bC)}.bG{--c:var(--bG)}.bT{--c:var(--bT)}.bU{--c:var(--bU)}
+.cS{--c:var(--sS)}.cR{--c:var(--sR)}.cX{--c:var(--cause)}
+.rv{opacity:0;transform:translateY(10px);transform-box:fill-box;transform-origin:center;transition:opacity .5s ease,transform .5s ease}
+.rv.on{opacity:1;transform:none}
+.nl{font:600 22px var(--fd);fill:var(--ink)}
+.nl.big{font-size:30px;font-weight:700}
+.ns{font:400 15px var(--fb);fill:var(--muted)}
+.ny{font:500 13px var(--fm);fill:var(--cause)}
+.node rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.node.key rect{fill:var(--keyFill);stroke:var(--cause);stroke-width:2}
+.node.now:not(.base):not(.chip) rect{stroke:var(--cause);stroke-width:3}
+.node.base rect,.node.chip rect{stroke:var(--c);stroke-width:2.5}
+.node.base .nl,.node.chip .nl{fill:var(--c)}
+.e path{fill:none;stroke-linecap:round}
+.e.cause path{stroke:var(--cause);stroke-width:2.5}
+.e.part path{stroke:var(--part);stroke-width:2;stroke-dasharray:6 6}
+.e.inhib path{stroke:var(--inhib);stroke-width:2.5}
+.e.pair path{stroke:var(--pair);stroke-width:2}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s ease}
+.on .draw{stroke-dashoffset:0}
+.e.done.cause .main{marker-end:url(#m-cause)}
+.e.done.part .main{marker-end:url(#m-part)}
+.e.done.inhib .main{marker-end:url(#m-inhib)}
+.mk-cause{fill:var(--cause)}.mk-part{fill:var(--surface);stroke:var(--part);stroke-width:1.6}.mk-inhib{fill:var(--inhib)}
+.elab rect{fill:var(--surface);stroke:var(--line);stroke-width:1}
+.el{font:500 14.5px var(--fb);fill:var(--ink)}
+.elab.cause .el{fill:var(--cause)}.elab.inhib .el{fill:var(--inhib)}.elab.pair .el{fill:var(--pair)}.elab.part .el{fill:var(--muted)}.elab.warn .el{fill:var(--inhib)}
+.prop{font:500 15px var(--fb);fill:var(--muted)}
+.pill rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.pill.d rect{stroke:var(--cause)}.pill.r rect{stroke:var(--pair)}
+.pt{font:500 18px var(--fb);fill:var(--ink)}
+.tb{font:700 19px var(--fm);fill:var(--c)}.sep{fill:var(--muted)}
+.rowline{stroke:var(--grid);stroke-width:1.5}
+.guide{stroke:var(--line);stroke-width:2;stroke-dasharray:3 6;fill:none}
+.cap{font:500 15px var(--fb);fill:var(--muted)}
+.cap.strong{fill:var(--ink);font-weight:600}
+.mono{font:600 15px var(--fm);fill:var(--ink)}
+.bb1{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round}
+.bb2{fill:none;stroke:var(--muted);stroke-width:4;stroke-linecap:round}
+.nt1{fill:var(--ink)}.nt2{fill:var(--muted)}
+.rung{stroke:var(--c);stroke-width:5;stroke-linecap:round}
+.bracket{fill:none;stroke:var(--cause);stroke-width:1.8}
+.band{fill:var(--bg);stroke:var(--line);stroke-width:1.2;stroke-dasharray:4 4}
+.mouse .body{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+.mouse.dead .body{fill:var(--dead)}
+.mouse .tail,.mouse .feet{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.mouse .ear{fill:var(--dead);stroke:var(--ink);stroke-width:2}
+.mouse .eye,.mouse .nose{fill:var(--ink)}
+.mouse .xeye{stroke:var(--inhib);stroke-width:2.6;stroke-linecap:round}
+.dish{fill:var(--surface);stroke:var(--line);stroke-width:2}
+.agar{fill:var(--agar)}
+.colS{fill:var(--sS)}.colR{fill:var(--sR)}
+.old{stroke:var(--ink);stroke-width:5;stroke-linecap:round;fill:none}
+.new{stroke:var(--new);stroke-width:5;stroke-linecap:round;fill:none}
+.arrowtxt{font:600 26px var(--fd);fill:var(--muted)}
+.tile rect{fill:var(--surface);stroke:var(--c);stroke-width:2.2}
+.tile.anti rect{stroke-dasharray:5 4;fill:var(--bg)}
+.tile text{font:600 24px var(--fm);fill:var(--c)}
+.rowl{font:600 19px var(--fd);fill:var(--ink)}
+.rows{font:400 14px var(--fb);fill:var(--muted)}
+.codon{fill:none;stroke:var(--cause);stroke-width:2}
+.pep{stroke:var(--cause);stroke-width:3;stroke-linecap:round}
+
+/* ---------- quiz ---------- */
+.quiz{padding:22px clamp(16px,3vw,32px) 32px;background:var(--surface);display:flex;flex-direction:column;gap:22px}
+.quiz h3{margin:0;font:700 22px var(--fd)}
+.quiz .lead{margin:4px 0 0;color:var(--muted)}
+.codes{display:flex;flex-wrap:wrap;gap:6px 14px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.codes span{font-size:15px}
+.qa{display:flex;flex-direction:column;gap:10px}
+.item{border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:var(--surface)}
+.pairq{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:17.5px}
+.pairq .no{font:600 14px var(--fm);color:var(--muted);min-width:22px}
+.pairq .t{border:1px solid var(--line);border-radius:8px;padding:2px 10px;background:var(--bg)}
+.pairq .q{font:700 20px var(--fd);color:var(--muted)}
+.rels{display:flex;flex-wrap:wrap;gap:6px}
+.rel{min-width:64px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:6px 10px;font:600 17px var(--fb);cursor:pointer;display:flex;align-items:center;gap:6px;justify-content:center}
+.rel .s{font:700 19px var(--fd)}
+.rel.cause .s{color:var(--cause)}.rel.part .s{color:var(--part)}.rel.inhib .s{color:var(--inhib)}.rel.pair .s{color:var(--pair)}.rel.none .s{color:var(--muted)}
+.qtext{font-size:17.5px;line-height:1.65;margin:0}
+.qtext .no{font:600 14px var(--fm);color:var(--muted);margin-right:6px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:8px}
+.opt{text-align:left;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:10px 12px;font:400 16.5px/1.5 var(--fb);cursor:pointer;display:flex;gap:8px}
+.opt .k{font-weight:600;color:var(--muted)}
+.right{border-color:var(--ok)!important;background:var(--okBg)!important}
+.wrong{border-color:var(--bad)!important;background:var(--badBg)!important}
+.rel:disabled,.opt:disabled{cursor:default}
+.fb{margin:0;font-size:15.5px;line-height:1.65;padding:8px 12px;border-radius:10px;background:var(--bg);border-left:3px solid var(--cause)}
+.fb b{font-weight:600}
+.fb.ok b{color:var(--ok)}.fb.no b{color:var(--bad)}
+
+
+/* ---------- motion ---------- */
+.rv{transform:translateY(12px) scale(.92);transition:opacity .55s ease,transform .65s cubic-bezier(.34,1.56,.64,1)}
+.flowg{opacity:0;transition:opacity .4s}
+.e.done .flowg{opacity:1}
+.flow{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.e.cause .flow{stroke:var(--cause)}.e.inhib .flow{stroke:var(--inhib)}
+@keyframes march{to{stroke-dashoffset:-12}}
+.e.part.done .main{animation:march .9s linear infinite}
+@keyframes pairPulse{50%{opacity:.3}}
+.e.pair.on path{animation:pairPulse 1.8s ease-in-out infinite}
+@keyframes nowPulse{0%,100%{stroke-opacity:1}50%{stroke-opacity:.3}}
+.node.now rect{animation:nowPulse 1.6s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.07)}}
+.breathe{animation:breathe 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes shrinkp{50%{transform:scale(.88)}}
+.shrinkp{animation:shrinkp 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes squish{50%{transform:scaleX(.86)}}
+.squish{animation:squish 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+.spin{animation:spin 4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes drift{0%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--dx),var(--dy));opacity:0}}
+.drift{animation:drift 2.4s ease-out infinite}
+@keyframes blink{50%{opacity:.2}}
+.blink{animation:blink 1.4s ease-in-out infinite}
+@keyframes floaty{50%{transform:translateY(-6px)}}
+.floaty{animation:floaty 2.8s ease-in-out infinite}
+.mouse:not(.dead) .body{animation:breathe 1.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+
+/* ---------- fullscreen ---------- */
+.app{display:flex;flex-direction:column;gap:14px;min-width:0}
+.bar{display:flex;align-items:flex-start;gap:10px;min-width:0}
+.bar .tabs{flex:1;min-width:0}
+.fsb{flex:none;display:flex;align-items:center;gap:6px;padding:8px 14px}
+.fsb svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app.full{position:fixed;inset:0;z-index:50;background:var(--bg);overflow:auto;gap:10px;
+  padding-block:max(10px,env(safe-area-inset-top,0px)) max(10px,env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.app.full .player{flex:1;min-height:0;grid-template-columns:minmax(0,1fr) 330px;align-items:stretch}
+.app.full .stage{overflow:auto;display:flex;flex-direction:column;justify-content:center}
+.app.full #svg{flex:1;height:100%;min-height:0}
+.app.full .quiz{flex:none}
+.app.full .stage:has(.quiz:not([hidden])){justify-content:flex-start}
+.app.full .panel{position:static;overflow:auto;min-height:0}
+@media (max-width:980px){
+  .app.full .player{flex:none;grid-template-columns:minmax(0,1fr)}
+  .app.full #svg{flex:none;height:auto}
+}
+
+/* ---------- transitions (on by default, toggle adds .still) ---------- */
+.rv{transform:translateY(26px) scale(.82);transition:opacity .6s ease,transform .85s cubic-bezier(.34,1.56,.64,1)}
+.draw{transition:stroke-dashoffset 1.1s cubic-bezier(.65,0,.35,1)}
+@keyframes stageIn{from{opacity:0;transform:translateX(56px) scale(.96)}}
+#svg.in,#quiz.in{animation:stageIn .65s cubic-bezier(.22,1,.36,1)}
+.swap{display:flex;flex-direction:column;gap:12px}
+@keyframes textIn{from{opacity:0;transform:translateY(16px)}}
+.swap.in>*{animation:textIn .55s cubic-bezier(.22,1,.36,1) both}
+.swap.in>*:nth-child(2){animation-delay:.07s}.swap.in>*:nth-child(3){animation-delay:.14s}.swap.in>*:nth-child(4){animation-delay:.21s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.node.now.on{animation:bob 2.4s ease-in-out 1.1s infinite}
+.elab.now.on rect{animation:nowPulse 1.6s ease-in-out infinite}
+.dot{transition:background .3s,transform .3s}
+.still .rv,.still .draw,.still .ph rect,.still .ph text{transition:none!important}
+.still *,.still *::before{animation:none!important}
+.still .flowg{display:none}
+
+/* ---------- relation icons ---------- */
+.ico{width:1.25em;height:1.25em;flex:none;vertical-align:-.27em;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.ico.cause{color:var(--cause)}.ico.part{color:var(--part)}.ico.inhib{color:var(--inhib)}.ico.pair{color:var(--pair)}.ico.none{color:var(--muted)}
+.legend .lg{display:flex;align-items:center;gap:7px;padding:5px 13px 5px 9px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);font-size:15.5px;color:var(--ink)}
+.legend .lg b{font-weight:600}
+.legend .lg svg.ico{width:22px;height:22px;overflow:visible}
+.legend .lg.cause{border-color:var(--cause)}.legend .lg.part{border-color:var(--part)}.legend .lg.inhib{border-color:var(--inhib)}.legend .lg.pair{border-color:var(--pair)}
+.mk-cause{fill:var(--cause)}
+.mk-part{fill:var(--part);stroke:var(--surface);stroke-width:1.6}
+.ico.part path{fill:currentColor}
+.mk-inhib{fill:var(--surface);stroke:var(--inhib);stroke-width:2.4;stroke-linecap:round}
+
+/* ---------- touch: no double-tap-zoom delay, clear press feedback ---------- */
+button,.chip,.tab,.rel,.opt,.rl,.pth,.nd,.eb{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:active,.chip:active,.tab:active{filter:brightness(.9)}
+button,.chip,.tab{transition:filter .12s,background .25s,border-color .25s,color .25s}
+.back{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font:500 14px var(--fb);color:var(--cause);text-decoration:none}.back:hover{text-decoration:underline}
+
+.band{fill:color-mix(in srgb,var(--bg) 70%,transparent);stroke:var(--line);stroke-width:1.5;stroke-dasharray:5 7}
+.band.mito{fill:color-mix(in srgb,var(--sR) 7%,transparent);stroke:color-mix(in srgb,var(--sR) 55%,var(--line))}
+.band.mem{fill:color-mix(in srgb,var(--sR) 20%,transparent);stroke:var(--sR);stroke-dasharray:none;stroke-width:2}
+.bandl{font:600 13px var(--fm);letter-spacing:.06em;fill:var(--muted)}
+.cell{fill:color-mix(in srgb,var(--keyFill) 55%,var(--surface));stroke:var(--line);stroke-width:2}
+.spin{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 5;fill:none;opacity:.6}
+.plate{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:2 4}
+.cd{stroke:color-mix(in srgb,var(--ink) 25%,transparent);stroke-width:1}
+.cen{fill:var(--ink)}
+.chi{font:700 18px var(--fd);fill:var(--inhib)}
+.xbig{font:700 34px var(--fd);fill:var(--muted)}
+.pc rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}.pc text{font:600 20px var(--fm);fill:var(--ink)}
+.pc.hd rect{fill:var(--bg)}.pc.hd text{fill:var(--muted)}
+.pc.k1 rect{fill:color-mix(in srgb,var(--cause) 16%,var(--surface));stroke:var(--cause)}
+.pc.k2 rect{fill:color-mix(in srgb,var(--pair) 16%,var(--surface));stroke:var(--pair)}
+.pc.k3 rect{fill:color-mix(in srgb,var(--sR) 18%,var(--surface));stroke:var(--sR)}
+.pc.k4 rect{fill:color-mix(in srgb,var(--inhib) 14%,var(--surface));stroke:var(--inhib)}
+.hor{fill:none;stroke-width:3.5;stroke-linecap:round}
+.axis{stroke:var(--line);stroke-width:1.5}
+.back{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font:500 14px var(--fb);color:var(--cause);text-decoration:none}
+.back:hover{text-decoration:underline}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <p class="eyebrow">Slide 09 · Gene regulation · Chromosome และความผิดปกติ</p>
+      <h1>การควบคุม gene และ chromosome <em>TPAT1 เชื่อมโยง</em></h1>
+    </div>
+    <ul class="legend" aria-label="ความหมายของสัญลักษณ์"><li class="lg cause"><svg class="ico cause" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg><b>ทำให้เกิด</b></li><li class="lg part"><svg class="ico part" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h3.5M8 12h3.5M17.5 12m-3.6 0a3.6 3.6 0 1 0 7.2 0a3.6 3.6 0 1 0-7.2 0"/></svg><b>ประกอบด้วย</b></li><li class="lg inhib"><svg class="ico inhib" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M4.9 4.9l14.2 14.2"/></svg><b>ยับยั้ง</b></li><li class="lg pair"><svg class="ico pair" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><b>จับคู่กับ</b></li></ul>
+  </header>
+
+  <div class="app" id="app">
+  <div class="bar"><nav class="tabs" id="tabs" aria-label="บทเรียน"></nav><button class="btn fsb" id="mo" aria-pressed="true"></button><button class="btn fsb" id="fs" aria-pressed="false" title="เต็มจอ (กด F)"></button></div>
+  <main class="player">
+    <section class="stage">
+      <svg id="svg" viewBox="0 0 1000 640" role="img" aria-label="แผนผังเชื่อมโยงแบบเคลื่อนไหว"></svg>
+      <div id="quiz" class="quiz" hidden></div>
+    </section>
+    <aside class="panel" aria-live="polite">
+      <div class="swap" id="swap"><p class="kicker" id="kicker"></p>
+      <h2 id="stitle"></h2>
+      <p class="stext" id="stext"></p>
+      <div class="chain" id="chain"></div></div>
+      <div class="score" id="score" hidden></div>
+      <div class="controls" id="controls">
+        <button class="btn" id="prev" aria-label="ขั้นก่อนหน้า">←</button>
+        <div class="dots" id="dots"></div>
+        <button class="btn primary" id="next">ถัดไป →</button>
+      </div>
+      <button class="btn ghost" id="auto">▶ เล่นอัตโนมัติ</button>
+    </aside>
+  </main>
+  </div>
+</div>
+
+<script>
+const ICON={"cause": "M5 12h14M12 5l7 7-7 7", "part": "M2 12h3.5M8 12h3.5M17.5 12m-3.6 0a3.6 3.6 0 1 0 7.2 0a3.6 3.6 0 1 0-7.2 0", "inhib": "M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M4.9 4.9l14.2 14.2", "pair": "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71", "none": "M5 9h14M5 15h14M19 5L5 19"};
+const ic=(t,rev)=>`<svg class="ico ${t}" viewBox="0 0 24 24" aria-hidden="true"${rev?' style="transform:scaleX(-1)"':''}><path d="${ICON[t]}"/></svg>`;
+const RW={cause:'ทำให้เกิด',part:'ประกอบด้วย',inhib:'ยับยั้ง',pair:'จับคู่กับ',none:'ไม่เกี่ยวกัน'};
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('svg');
+let reduce=(()=>{try{return localStorage.getItem('motion')==='off'}catch(e){return false}})();
+document.documentElement.classList.toggle('still',reduce);
+function retrig(el){el.classList.remove('in');void el.getBoundingClientRect();el.classList.add('in');}
+function S(tag,a,p){const e=document.createElementNS(NS,tag);if(a)for(const k in a){if(a[k]!=null)e.setAttribute(k,a[k]);}if(p)p.appendChild(e);return e;}
+let L={},nodes={};let _mc=null;
+function tw(t){let w=0;try{w=t.getComputedTextLength();}catch(e){}if(w>0||!t.textContent)return w;if(!_mc)_mc=document.createElement('canvas').getContext('2d');const s=getComputedStyle(t);_mc.font=`${s.fontWeight||400} ${s.fontSize||'16px'} ${s.fontFamily||'sans-serif'}`;return _mc.measureText(t.textContent).width*1.03;}
+
+function delay(el,d){if(d){el.style.transitionDelay=d+'ms';}}
+
+function flow(g,d,type,len){
+  if(reduce||(type!=='cause'&&type!=='inhib'))return;
+  const fg=S('g',{class:'flowg'},g);const dv=Math.max(1.3,len/120),dur=dv.toFixed(2)+'s',b0=Math.random()*3;
+  [0,1].forEach(k=>{const c=S('path',{class:'flow',d:'M-5 -5L1.5 0L-5 5'},fg),b=(-(b0+k*dv/2)).toFixed(2)+'s';
+    S('animateMotion',{path:d,dur,begin:b,repeatCount:'indefinite',rotate:'auto'},c);
+    S('animate',{attributeName:'opacity',values:'0;1;1;0',keyTimes:'0;0.15;0.8;1',dur,begin:b,repeatCount:'indefinite'},c);});
+}
+/* ---------- primitives ---------- */
+function N(id,x,y,label,o={}){
+  const outer=S('g',{transform:`translate(${x},${y})`},L.node);
+  const g=S('g',{class:'rv node '+(o.kind||''),'data-s':o.s||1,'data-id':id},outer);delay(g,o.d);
+  const rect=S('rect',null,g);
+  const lines=[];
+  if(o.tag)lines.push(['ny',o.tag,18]);
+  lines.push([o.big?'nl big':'nl',label,o.big?36:28]);
+  if(o.sub)lines.push(['ns',o.sub,21]);
+  if(o.sub2)lines.push(['ns',o.sub2,21]);
+  const total=lines.reduce((a,l)=>a+l[2],0);
+  let yy=-total/2,w=0;
+  lines.forEach(([c,t,h])=>{const tx=S('text',{class:c,x:0,y:yy+h/2+1,'text-anchor':'middle','dominant-baseline':'central'},g);tx.textContent=t;yy+=h;w=Math.max(w,tw(tx));});
+  w=Math.max(w+(o.padX||34),o.minW||0);const h=total+16;
+  rect.setAttribute('x',-w/2);rect.setAttribute('y',-h/2);rect.setAttribute('width',w);rect.setAttribute('height',h);rect.setAttribute('rx',12);
+  nodes[id]={x,y,w,h};return g;
+}
+function clip(n,dx,dy,pad){const hw=n.w/2+pad,hh=n.h/2+pad;let t=Infinity;if(Math.abs(dx)>1e-6)t=Math.min(t,hw/Math.abs(dx));if(Math.abs(dy)>1e-6)t=Math.min(t,hh/Math.abs(dy));return[n.x+dx*t,n.y+dy*t];}
+function E(a,b,type,label,s,o={}){if(!label&&type==='part')label='ประกอบด้วย';if(!label&&type==='pair')label='คู่กับ';
+  if(type==='part'){[a,b]=[b,a];o=Object.assign({},o,{bend:-(o.bend||0),pa:o.pb,pb:o.pa});}
+  const A=nodes[a],B=nodes[b];const dx=B.x-A.x,dy=B.y-A.y,len=Math.hypot(dx,dy);
+  const px=dy/len,py=-dx/len;const bend=o.bend||0;
+  const cx=(A.x+B.x)/2+px*bend,cy=(A.y+B.y)/2+py*bend;
+  const st=clip(A,cx-A.x,cy-A.y,o.pa??6),en=clip(B,cx-B.x,cy-B.y,o.pb??8);
+  const g=S('g',{class:'rv e '+type,'data-s':s},L.edge);g.__i={a,b,type,label,st,en};delay(g,o.d);
+  const f=v=>v.toFixed(1);
+  if(type==='pair'){
+    const n=o.n||2;for(let k=0;k<n;k++){const off=(k-(n-1)/2)*5;const p=S('path',{d:`M${f(st[0]+px*off)} ${f(st[1]+py*off)}L${f(en[0]+px*off)} ${f(en[1]+py*off)}`,class:'draw',pathLength:1},g);delay(p,o.d);}
+  }else{
+    const d=bend?`M${f(st[0])} ${f(st[1])}Q${f(cx)} ${f(cy)} ${f(en[0])} ${f(en[1])}`:`M${f(st[0])} ${f(st[1])}L${f(en[0])} ${f(en[1])}`;
+    const p=S('path',{d,class:type==='part'?'main':'main draw',pathLength:type==='part'?null:1},g);delay(p,o.d);flow(g,d,type,len);
+  }
+  if(label){
+    let lx,ly;if(bend){lx=.25*st[0]+.5*cx+.25*en[0];ly=.25*st[1]+.5*cy+.25*en[1];}else{lx=(st[0]+en[0])/2;ly=(st[1]+en[1])/2;}
+    lx+=o.lx||0;ly+=o.ly||0;
+    const og=S('g',{transform:`translate(${f(lx)},${f(ly)})`},L.lab);
+    const lg=S('g',{class:'rv elab '+type+' '+(o.lcls||''),'data-s':s},og);g.__lab=lg;delay(lg,(o.d||0)+350);
+    const r=S('rect',null,lg);const t=S('text',{class:'el',x:0,y:1,'text-anchor':'middle','dominant-baseline':'central'},lg);t.textContent=label;
+    const w=tw(t)+18;r.setAttribute('x',-w/2);r.setAttribute('y',-14);r.setAttribute('width',w);r.setAttribute('height',28);r.setAttribute('rx',14);
+  }
+  return g;
+}
+function T(x,y,txt,cls,s,o={}){const t=S('text',{x,y,class:'rv '+cls,'data-s':s,'text-anchor':o.anchor||'middle','dominant-baseline':'central'},o.layer||L.node);delay(t,o.d);t.textContent=txt;return t;}
+function G(s,d,layer){const g=S('g',{class:'rv','data-s':s},layer||L.node);delay(g,d);return g;}
+function pill(x,y,text,s,d,cls){
+  const o=S('g',{transform:`translate(${x},${y})`},L.node);const g=S('g',{class:'rv pill '+(cls||''),'data-s':s},o);delay(g,d);
+  const r=S('rect',null,g);const t=S('text',{x:0,y:1,'text-anchor':'middle','dominant-baseline':'central',class:'pt'},g);
+  if(/^[ATCGU]( · [ATCGU])+$/.test(text)){text.split(' · ').forEach((b,i)=>{if(i){const sp=S('tspan',{class:'sep'},t);sp.textContent=' · ';}const sp=S('tspan',{class:'tb b'+b},t);sp.textContent=b;});}
+  else t.textContent=text;
+  const w=tw(t)+30;r.setAttribute('x',-w/2);r.setAttribute('y',-18);r.setAttribute('width',w);r.setAttribute('height',36);r.setAttribute('rx',18);
+}
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+
+/*META title=การควบคุม gene และ chromosome · TPAT1 เชื่อมโยง|eyebrow=Slide 09 · Gene regulation · Chromosome และความผิดปกติ|h1=การควบคุม gene และ chromosome|n=5*/
+let helix=null,raf=0,phase=0;
+function band(x,y,w,h,label,s,cls){const g=G(s,0,L.edge);S('rect',{x,y,width:w,height:h,rx:22,class:'band '+(cls||'')},g);if(label){const t=S('text',{x:x+16,y:y+24,class:'bandl'},g);t.textContent=label;}return g;}
+function strand(y,x0,x1,s){const g=G(s,0,L.edge);S('line',{x1:x0,x2:x1,y1:y,y2:y,class:'axis',style:'stroke-width:6;stroke-linecap:round'},g);}
+/* chromosome by centromere position: f = fraction of length above centromere */
+function chromo(x,y,f,s,d,lab){const g=G(s,d);const H=150,top=y-H/2;const cy=top+H*f;
+  [-9,9].forEach(o=>{const up=H*f-6,dn=H*(1-f)-6;if(up>4)S('rect',{x:x+o-7,y:top,width:14,height:up,rx:7,class:'cd',style:'fill:var(--sS)'},g);S('rect',{x:x+o-7,y:cy+6,width:14,height:dn,rx:7,class:'cd',style:'fill:var(--sS)'},g);});
+  S('circle',{cx:x,cy,r:6,class:'cen'},g);const t=S('text',{x,y:y+H/2+24,class:'cap strong','text-anchor':'middle'},g);t.textContent=lab;return g;}
+/* ch1 three kinds */
+function b1(){
+  N('gc',500,70,'การควบคุมการแสดงออกของ gene',{kind:'key'});
+  N('con',180,240,'Constitutive',{s:1,sub:'เปิดตลอดเวลา'});E('con','gc','part','แบบหนึ่งคือ',1,{d:200});
+  N('e1',180,420,'Enzyme ของ glycolysis',{s:1,sub:'จำเป็นตลอด'});E('e1','con','part','ตัวอย่าง',1,{d:400});
+  N('ind',500,240,'Inducible',{s:2,sub:'ปกติปิด · เปิดเมื่อมีสาร'});E('ind','gc','part','แบบหนึ่งคือ',2,{d:200});
+  N('e2',500,420,'β-galactosidase',{s:2,sub:'lac operon'});E('e2','ind','part','ตัวอย่าง',2,{d:400});
+  N('rep',820,240,'Repressible',{s:3,sub:'ปกติเปิด · ปิดเมื่อมีสาร'});E('rep','gc','part','แบบหนึ่งคือ',3,{d:200});
+  N('e3',820,420,'การสร้าง tryptophan',{s:3,sub:'trp operon'});E('e3','rep','part','ตัวอย่าง',3,{d:400});
+  N('jm',500,575,'Jacob & Monod 1961',{s:4,sub:'เสนอแบบจำลอง operon'});E('jm','e2','cause','อธิบายกลไกของ',4);
+}
+/* ch2 lac operon: negative control */
+function b2(){
+  strand(330,40,960,1);
+  N('lacI',110,330,'lacI',{s:1,sub:'regulator gene'});N('pro',300,330,'Promoter',{s:1,d:100});N('opr',460,330,'Operator',{s:1,d:200,sub:'สวิตช์'});
+  N('z',610,330,'lacZ',{s:1,d:300});N('y',750,330,'lacY',{s:1,d:350});N('a',890,330,'lacA',{s:1,d:400});
+  N('sg',750,180,'Structural gene',{s:1,d:500,sub:'ถูกถอดรหัสพร้อมกัน'});
+  E('z','sg','part','มี',1,{d:600});E('y','sg','part','มี',1,{d:650});E('a','sg','part','มี',1,{d:700});
+  N('rp',110,190,'Repressor',{s:2,kind:'key',sub:'โปรตีนตัวกด'});E('lacI','rp','cause','สร้าง',2);E('rp','opr','inhib','จับขวางที่',2,{d:400});
+  N('pol',300,470,'RNA polymerase',{s:3});E('pol','pro','cause','เกาะที่',3);
+  N('off',690,510,'ยีนปิด',{s:3,sub:'ไม่มีแลคโตส'});E('opr','off','cause','ถูกขวางจึง',3,{d:300});
+  N('al',430,60,'Allolactose',{s:4,kind:'key',sub:'inducer จากแลคโตส'});E('al','rp','inhib','ดึงให้หลุด',4);
+  N('mr',300,605,'mRNA → enzyme',{s:4,sub:'ย่อยแลคโตส'});E('pol','mr','cause','ถอดรหัสได้',4,{d:400});
+  N('ip',110,50,'IPTG',{s:5,sub:'ไม่ถูกย่อย'});E('ip','rp','inhib','จับแทน',5);
+}
+/* ch3 positive control */
+function b3(){
+  N('glc',150,90,'กลูโคสต่ำ',{s:1,kind:'key'});
+  N('camp',150,250,'cAMP สูง',{s:1,d:200});E('glc','camp','cause','ทำให้',1,{d:200});
+  N('cap',150,420,'CAP',{s:2,sub:'catabolite activator protein'});
+  N('cc',500,330,'CAP–cAMP',{s:2,kind:'key'});E('camp','cc','cause','จับ CAP เป็น',2);E('cap','cc','part','ประกอบด้วย',2,{d:200});
+  N('site',850,330,'CAP site',{s:3,sub:'หน้า promoter'});E('cc','site','cause','จับที่',3);
+  N('tx',850,480,'ถอดรหัสสูงมาก',{s:3,kind:'key',sub:'RNA polymerase เกาะแน่น'});E('site','tx','cause','ทำให้',3,{d:300});
+  const rows=[['ไม่มีแลคโตส','ยีนปิด'],['มีแลคโตส · กลูโคสต่ำ','เปิดเต็มที่'],['มีแลคโตส · กลูโคสสูง','เปิดน้อยมาก']];
+  rows.forEach((r,i)=>{const y=50+i*72;N('q'+i,500,y,r[0],{s:4,d:i*150});N('w'+i,850,y,r[1],{s:4,d:i*150+80,kind:i===1?'key':''});E('q'+i,'w'+i,'cause','ผลคือ',4,{d:i*150+160});});
+  N('neg',150,590,'ปล่อยเบรก',{s:5,sub:'repressor หลุด · แบบลบ'});
+  N('pos',500,590,'เหยียบคันเร่ง',{s:5,d:150,sub:'CAP–cAMP · แบบบวก'});
+  E('neg','pos','pair','พร้อมกับ',5,{d:300});E('pos','tx','cause','ทำให้',5,{d:450});
+}
+/* ch4 chromosome and karyotype */
+function b4(){
+  chromo(80,170,.5,1,0,'Metacentric');chromo(220,170,.36,1,150,'Submetacentric');chromo(360,170,.14,1,300,'Acrocentric');chromo(490,170,.02,1,450,'Telocentric');
+  T(285,40,'ชนิดตามตำแหน่ง centromere','cap',1);
+  N('ly',630,60,'Lymphocyte',{s:2,sub:'เลี้ยงให้แบ่งตัว'});
+  N('co',900,60,'Colchicine',{s:2,sub:'ทำลาย spindle'});E('ly','co','cause','แล้วใส่',2,{d:200});
+  N('me',900,230,'Metaphase',{s:2,sub:'chromosome หดสั้นสุด'});E('co','me','cause','จึงค้างที่',2,{d:400});
+  N('gi',900,400,'Giemsa',{s:3,sub:'ย้อมสีหลังทำให้เซลล์บวม'});E('me','gi','cause','ย้อมด้วย',3);
+  N('ka',900,570,'Karyotype',{s:3,kind:'key',sub:'23 คู่ · กลุ่ม A–G'});E('gi','ka','cause','จัดเรียงได้',3,{d:300});
+  N('sd',300,335,'การกำหนดเพศ',{s:4,kind:'key'});
+  N('xy',110,470,'XX · XY',{s:4,d:150,sub:'Y กำหนดเพศชาย'});N('xo',300,470,'XX · XO',{s:4,d:250,sub:'ตัวผู้มี X เดียว'});N('zw',490,470,'ZZ · ZW',{s:4,d:350,sub:'ตัวเมียเป็น ZW'});
+  E('xy','sd','part','คน',4,{d:400});E('xo','sd','part','ตั๊กแตน',4,{d:450});E('zw','sd','part','นก',4,{d:500});
+  N('h46',300,590,'คน 46 แท่ง',{s:5,sub:'autosome 22 คู่ + XX หรือ XY'});E('ka','h46','cause','ของคนแสดง',5);
+}
+/* ch5 abnormalities */
+function b5(){
+  N('nd',500,60,'Nondisjunction',{kind:'key',sub:'chromosome แยกไม่ออก'});
+  N('gm',500,205,'เซลล์สืบพันธุ์ n+1 · n−1',{s:1});E('nd','gm','cause','ทำให้ได้',1);
+  N('tri',220,370,'Trisomy',{s:2,sub:'47 แท่ง'});E('gm','tri','cause','ผสมกับ n ปกติได้',2);
+  N('dn',80,530,'Down',{s:2,d:200,sub:'หน้ากลมแบน'});N('pt',220,530,'Patau',{s:2,d:300,sub:'ปากแหว่ง'});N('ed',360,530,'Edwards',{s:2,d:400,sub:'ข้อมือบิด'});
+  [['dn','+21'],['pt','+13'],['ed','+18']].forEach(([k,l],i)=>E(k,'tri','part',l,2,{d:500+i*100}));
+  N('sx',780,370,'Sex chromosome ผิดจำนวน',{s:3});E('gm','sx','cause','ถ้าเป็น X หรือ Y',3);
+  N('kl',630,530,'Klinefelter',{s:3,d:200,sub:'ชาย · ตัวสูง หมัน'});N('tu',780,530,'Turner',{s:3,d:300,sub:'หญิง · ตัวเตี้ย'});N('xx',925,530,'XXX · XYY',{s:3,d:400,sub:'มีบุตรได้'});
+  [['kl','XXY'],['tu','45,X'],['xx','47']].forEach(([k,l],i)=>E(k,'sx','part',l,3,{d:500+i*100}));
+  N('del',150,60,'Deletion',{s:4,sub:'ผิดที่โครงสร้าง'});
+  N('cri',150,215,'Cri-du-chat',{s:4,d:200,sub:'จำนวนยัง 46 · ร้องคล้ายแมว'});E('del','cri','cause','chr 5 แขนสั้นหาย',4,{d:300});
+  N('age',850,60,'แม่อายุมาก',{s:5,sub:'ไข่ค้างใน prophase I นาน'});E('age','nd','cause','เพิ่มโอกาส',5);
+}
+const CH=[
+ {tab:'3 แบบ',kick:'บทที่ 1 · การควบคุมการแสดงออกของ gene',build:b1,steps:[
+  {t:'Constitutive gene',p:'ยีนที่จำเป็นต่อชีวิตถูกแสดงออกตลอดเวลาโดยไม่ต้องรอสัญญาณ เช่น ยีนของ enzyme ใน glycolysis และ Krebs cycle',c:['การควบคุม gene','◇','Constitutive']},
+  {t:'Inducible gene',p:'ปกติปิดอยู่ จะเปิดเมื่อมีสารเหนี่ยวนำ เช่น ยีนของ β-galactosidase ที่ย่อยแลคโตส ใน lac operon',c:['แลคโตส','→','เปิดยีน lac']},
+  {t:'Repressible gene',p:'ปกติเปิดอยู่ จะปิดเมื่อมีสารบางอย่างมากพอ เช่น ยีนสร้าง tryptophan จะปิดเมื่อ tryptophan สูง',c:['Tryptophan สูง','⊣','ยีน trp']},
+  {t:'แบบจำลอง operon',p:'Jacob และ Monod (1961) อธิบายการควบคุมยีนใน E. coli ด้วย operon ซึ่งเป็นกลุ่มยีนที่มีสวิตช์ร่วมกัน',c:['Jacob & Monod','→','Operon']}]},
+ {tab:'Lac operon',kick:'บทที่ 2 · Lac operon · การควบคุมแบบลบ',build:b2,steps:[
+  {t:'ส่วนประกอบของ operon',p:'operon ประกอบด้วย promoter (ที่ RNA polymerase เกาะ), operator (สวิตช์) และ structural gene lacZ, lacY, lacA ส่วน regulator gene lacI อยู่ด้านหน้า',c:['Operon','◇','Promoter','+','Operator','+','Structural gene']},
+  {t:'Repressor ปิดสวิตช์',p:'lacI สร้างโปรตีน repressor ไปจับ operator ซึ่งซ้อนกับ promoter อยู่',c:['lacI','→','Repressor','⊣','Operator']},
+  {t:'ไม่มีแลคโตส ยีนปิด',p:'RNA polymerase เกาะ promoter แต่เดินผ่าน operator ที่ถูก repressor ขวางไม่ได้ จึงไม่มีการถอดรหัส',c:['Repressor','⊣','การถอดรหัส']},
+  {t:'มีแลคโตส ยีนเปิด',p:'แลคโตสบางส่วนเปลี่ยนเป็น allolactose ซึ่งจับ repressor จนเปลี่ยนรูปและหลุดออก RNA polymerase จึงถอดรหัสได้ mRNA ของ enzyme ย่อยแลคโตส',c:['Allolactose','⊣','Repressor','→','ถอดรหัสได้']},
+  {t:'IPTG',p:'IPTG เลียนแบบ allolactose จับ repressor ได้แต่ถูกย่อยไม่ได้ ระดับจึงคงที่ ใช้ในห้องปฏิบัติการเพื่อเปิดยีนให้แบคทีเรียสร้างโปรตีนที่ต้องการ',c:['IPTG','⊣','Repressor']}]},
+ {tab:'CAP–cAMP',kick:'บทที่ 3 · การควบคุมแบบบวก (glucose effect)',build:b3,steps:[
+  {t:'กลูโคสต่ำ cAMP สูง',p:'เมื่อกลูโคสต่ำ ระดับ cAMP ในเซลล์จะสูงขึ้น',c:['กลูโคสต่ำ','→','cAMP สูง']},
+  {t:'cAMP จับ CAP',p:'cAMP จับกับโปรตีน CAP กลายเป็น CAP–cAMP ที่ทำงานได้',c:['cAMP','+','CAP','→','CAP–cAMP']},
+  {t:'คันเร่งของการถอดรหัส',p:'CAP–cAMP จับที่ CAP site หน้า promoter ช่วยให้ RNA polymerase เกาะแน่น การถอดรหัสจึงสูงมาก',c:['CAP–cAMP','→','CAP site','→','ถอดรหัสสูง']},
+  {t:'3 สถานการณ์',p:'ไม่มีแลคโตส ยีนปิดเสมอ · มีแลคโตสและกลูโคสต่ำ เปิดเต็มที่ · มีแลคโตสแต่กลูโคสสูง เปิดน้อยมากเพราะ cAMP ต่ำ เรียกว่า catabolite repression',c:['กลูโคสสูง','⊣','cAMP','⊣','CAP–cAMP']},
+  {t:'เบรกกับคันเร่ง',p:'repressor คือการควบคุมแบบลบ (เบรก) ส่วน CAP–cAMP คือการควบคุมแบบบวก (คันเร่ง) ยีนเปิดเต็มที่เมื่อปล่อยเบรกและเหยียบคันเร่งพร้อมกัน',c:['ปล่อยเบรก','+','เหยียบคันเร่ง','→','เปิดเต็มที่']}]},
+ {tab:'Karyotype',kick:'บทที่ 4 · Chromosome และ karyotype',build:b4,steps:[
+  {t:'4 ชนิดตามตำแหน่ง centromere',p:'metacentric อยู่กลาง แขนยาวเท่ากัน · submetacentric ค่อนไปทางหนึ่ง · acrocentric ใกล้ปลาย แขนข้างหนึ่งสั้นมาก · telocentric อยู่ที่ปลาย (ไม่พบในคน)',c:['ตำแหน่ง centromere','→','ชนิด chromosome']},
+  {t:'เตรียมเซลล์',p:'เลี้ยงเซลล์เม็ดเลือดขาว lymphocyte ให้แบ่งตัว แล้วใส่ colchicine ทำลาย spindle เซลล์จึงค้างที่ metaphase ซึ่ง chromosome หดสั้นที่สุด',c:['Colchicine','⊣','Spindle','→','ค้างที่ metaphase']},
+  {t:'ย้อมและจัดเรียง',p:'ใส่สารให้เซลล์บวมจน chromosome กระจาย ย้อมด้วย giemsa ถ่ายภาพ แล้วจัดเรียงเป็นคู่ตามขนาดและตำแหน่ง centromere แบ่งเป็นกลุ่ม A–G ในทารกใช้เซลล์จากน้ำคร่ำ',c:['Giemsa','→','Karyotype']},
+  {t:'การกำหนดเพศ',p:'คนใช้ระบบ XY โดย Y กำหนดความเป็นเพศชาย ตั๊กแตนใช้ XO (ตัวผู้มี X เดียว) ส่วนนกใช้ ZW (ตัวเมียเป็น ZW ตัวผู้ ZZ)',c:['Chromosome Y','→','เพศชาย']},
+  {t:'46 แท่ง',p:'คนมี autosome 22 คู่และ sex chromosome 1 คู่ เซลล์สืบพันธุ์มี 22+X หรือ 22+Y ไข่มี X เสมอ เพศลูกจึงขึ้นกับอสุจิ',c:['22 คู่','+','XX/XY','=','46']}]},
+ {tab:'ความผิดปกติ',kick:'บทที่ 5 · ความผิดปกติของ chromosome',build:b5,steps:[
+  {t:'Nondisjunction',p:'chromosome ไม่แยกจากกันระหว่าง anaphase ของการสร้างเซลล์สืบพันธุ์ ได้เซลล์ที่มี chromosome เกิน (n+1) หรือขาด (n−1)',c:['Nondisjunction','→','n+1 · n−1']},
+  {t:'Trisomy ของ autosome',p:'เซลล์ n+1 ผสมกับเซลล์ปกติได้ 47 แท่ง Down (+21) ตัวเตี้ย หน้ากลมแบน หัวใจพิการ · Patau (+13) ปากแหว่งเพดานโหว่ นิ้วเกิน · Edwards (+18) ใบหูต่ำ คางสั้น ข้อมือบิด',c:['n+1','+','n','→','Trisomy']},
+  {t:'Sex chromosome ผิดจำนวน',p:'Klinefelter (47,XXY) เป็นชาย ตัวสูง หน้าอกโต เป็นหมัน · Turner (45,X) เป็นหญิง ตัวเตี้ย คอสั้น รังไข่ไม่พัฒนา · XXX มีบุตรได้ · XYY ตัวสูงกว่าปกติ',c:['Nondisjunction','→','XXY · X · XXX · XYY']},
+  {t:'ผิดที่โครงสร้าง',p:'cri-du-chat เกิดจากแขนสั้นของ chromosome 5 ขาดหาย จำนวนยังเป็น 46 ศีรษะเล็ก หน้ากลม ตาห่าง ปัญญาอ่อน เสียงร้องแหลมคล้ายแมว',c:['Deletion','→','Cri-du-chat']},
+  {t:'อายุแม่',p:'ไข่ค้างอยู่ใน prophase I นานหลายสิบปี nondisjunction จึงพบมากขึ้นในแม่อายุมาก เป็นเหตุผลของการตรวจคัดกรองโครโมโซมทารกในครรภ์',c:['อายุแม่มาก','→','Nondisjunction','→','Down']}]},
+ {tab:'แบบฝึก TPAT1',kick:'บทที่ 6 · แบบฝึก',quiz:true}
+];
+
+/* ---------- player ---------- */
+const st={ch:0,step:1,built:-1,auto:null};
+const $=id=>document.getElementById(id);
+const tabs=$('tabs');
+CH.forEach((c,i)=>{const b=document.createElement('button');b.className='tab';b.innerHTML=`<span class="n">${i+1}</span>${c.tab}`;b.onclick=()=>{stopAuto();go(i,1);};tabs.appendChild(b);});
+
+function build(){
+  svg.innerHTML='';nodes={};
+  const defs=S('defs',null,svg);
+  const m1=S('marker',{id:'m-cause',viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:12,markerHeight:12,markerUnits:'userSpaceOnUse',orient:'auto'},defs);S('path',{d:'M0 0L10 5L0 10z',class:'mk-cause'},m1);
+  const m2=S('marker',{id:'m-part',viewBox:'0 0 14 14',refX:7,refY:7,markerWidth:15,markerHeight:15,markerUnits:'userSpaceOnUse',orient:'auto'},defs);S('circle',{cx:7,cy:7,r:5,class:'mk-part'},m2);
+  const m3=S('marker',{id:'m-inhib',viewBox:'0 0 22 22',refX:20,refY:11,markerWidth:24,markerHeight:24,markerUnits:'userSpaceOnUse',orient:'auto'},defs);S('circle',{cx:11,cy:11,r:8.5,class:'mk-inhib'},m3);S('path',{d:'M5 5L17 17',class:'mk-inhib'},m3);
+  L.edge=S('g',null,svg);L.node=S('g',null,svg);L.lab=S('g',null,svg);
+  helix=null;
+  CH[st.ch].build();
+  st.built=st.ch;
+}
+function reveal(){
+  svg.querySelectorAll('[data-s]').forEach(e=>{const s=+e.dataset.s;const on=s<=st.step;
+    if(on&&!e.classList.contains('on')){e.classList.add('on');
+      if(e.classList.contains('e')){const d=reduce?0:900+(parseFloat(e.style.transitionDelay)||0);clearTimeout(e._t);e._t=setTimeout(()=>e.classList.add('done'),d);}}
+    else if(!on){e.classList.remove('on','done');clearTimeout(e._t);}
+    e.classList.toggle('now',s===st.step&&st.step>0);});
+}
+const SYM={'→':'cause','←':'cause','⊣':'inhib','◇':'part','═':'pair','≡':'pair','◆':'sep'};
+function renderChain(c){
+  const el=$('chain');el.innerHTML='';if(!c)return;
+  const l=document.createElement('span');l.className='lbl';l.textContent='ลูกโซ่ความสัมพันธ์';el.appendChild(l);
+  c.forEach(t=>{const s=document.createElement('span');if(SYM[t]){s.className='sym '+SYM[t];if(t==='◆')s.textContent='·';else s.innerHTML=ic(SYM[t],t==='←');}else{s.className='tok';s.textContent=t;}el.appendChild(s);});
+}
+function go(ch,step){
+  st.ch=ch;st.step=step;const c=CH[ch];
+  [...tabs.children].forEach((b,i)=>b.setAttribute('aria-current',i===ch?'true':'false'));
+  tabs.children[ch].scrollIntoView({block:'nearest',inline:'nearest'});
+  $('kicker').textContent=c.kick;
+  if(c.quiz){svg.hidden=true;$('quiz').hidden=false;retrig($('quiz'));retrig($('swap'));$('controls').hidden=true;$('auto').hidden=true;$('score').hidden=false;
+    $('stitle').textContent='แบบฝึก TPAT1 เชื่อมโยง';
+    $('stext').textContent='ส่วน ก ระบุรหัสความสัมพันธ์ของคำซ้ายไปหาคำขวา ส่วน ข เลือกคำตอบที่ถูกที่สุด ทุกข้อเฉลยทันทีพร้อมเหตุผล';
+    renderChain(null);stopHelix();updateScore();return;}
+  svg.hidden=false;$('quiz').hidden=true;$('controls').hidden=false;$('auto').hidden=false;$('score').hidden=true;
+  if(st.built!==ch){build();retrig(svg);}
+  void svg.getBoundingClientRect();
+  reveal();
+  const s=c.steps[step-1];
+  $('stitle').textContent=s.t;$('stext').textContent=s.p;renderChain(s.c);retrig($('swap'));
+  const dots=$('dots');dots.innerHTML='';
+  c.steps.forEach((_,i)=>{const d=document.createElement('button');d.className='dot'+(i<step?' on':'');d.setAttribute('aria-label','ขั้นที่ '+(i+1));d.onclick=()=>{stopAuto();go(ch,i+1);};dots.appendChild(d);});
+  $('prev').disabled=(ch===0&&step===1);
+  $('next').textContent=step<c.steps.length?'ถัดไป →':'บทถัดไป →';
+  if(helix)startHelix();else stopHelix();
+}
+function next(){const c=CH[st.ch];if(c.quiz)return;if(st.step<c.steps.length)go(st.ch,st.step+1);else go(st.ch+1,1);}
+function prev(){if(st.step>1)go(st.ch,st.step-1);else if(st.ch>0){const p=CH[st.ch-1];go(st.ch-1,p.quiz?1:p.steps.length);}}
+$('next').onclick=()=>{stopAuto();next();};
+$('prev').onclick=()=>{stopAuto();prev();};
+function stopAuto(){if(st.auto){clearInterval(st.auto);st.auto=null;$('auto').textContent='▶ เล่นอัตโนมัติ';}}
+$('auto').onclick=()=>{if(st.auto){stopAuto();return;}$('auto').textContent='❚❚ หยุดเล่น';st.auto=setInterval(()=>{if(CH[st.ch+1]&&CH[st.ch+1].quiz&&st.step>=CH[st.ch].steps.length){stopAuto();return;}next();},5200);};
+document.addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('.quiz'))return;if(e.key==='ArrowRight'){stopAuto();next();}else if(e.key==='ArrowLeft'){stopAuto();prev();}});
+
+function startHelix(){if(reduce||raf)return;let last=performance.now();const loop=t=>{if(!helix||document.hidden){raf=0;return;}phase+=(t-last)*0.0009;last=t;helix(phase);raf=requestAnimationFrame(loop);};raf=requestAnimationFrame(loop);}
+function stopHelix(){if(raf){cancelAnimationFrame(raf);raf=0;}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&helix)startHelix();});
+
+/* ---------- fullscreen ---------- */
+const app=$('app'),fsBtn=$('fs');
+const ICON_IN='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+const ICON_OUT='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+let savedY=null;function setFull(on){if(on&&savedY===null){savedY=window.scrollY||0;window.scrollTo(0,0);}else if(!on&&savedY!==null){const y=savedY;savedY=null;requestAnimationFrame(()=>window.scrollTo(0,y));}app.classList.toggle('full',on);if(on)app.scrollTop=0;document.documentElement.style.overflow=on?'hidden':'';
+  fsBtn.innerHTML=(on?ICON_OUT+'ย่อหน้าจอ':ICON_IN+'เต็มจอ');fsBtn.setAttribute('aria-pressed',on?'true':'false');}
+const fsEl=()=>document.fullscreenElement||document.webkitFullscreenElement;
+async function toggleFull(){
+  if(app.classList.contains('full')){
+    if(fsEl()){try{await (document.exitFullscreen||document.webkitExitFullscreen).call(document);}catch(e){}}
+    setFull(false);return;}
+  setFull(true);
+  const req=app.requestFullscreen||app.webkitRequestFullscreen;
+  if(req){try{await req.call(app);}catch(e){}}
+}
+fsBtn.onclick=toggleFull;
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{if(!fsEl()&&app.classList.contains('full'))setFull(false);}));
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&app.classList.contains('full')&&!fsEl())setFull(false);
+  else if((e.key==='f'||e.key==='F')&&!e.metaKey&&!e.ctrlKey&&!e.altKey)toggleFull();});
+setFull(false);
+const moBtn=$('mo');
+function setMoLabel(){moBtn.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>'+(reduce?'เคลื่อนไหว: ปิด':'เคลื่อนไหว: เปิด');moBtn.setAttribute('aria-pressed',reduce?'false':'true');}
+moBtn.onclick=()=>{reduce=!reduce;try{localStorage.setItem('motion',reduce?'off':'on');}catch(e){}
+  document.documentElement.classList.toggle('still',reduce);setMoLabel();stopHelix();
+  if(!CH[st.ch].quiz){st.built=-1;go(st.ch,st.step);}};
+setMoLabel();
+
+/* ---------- quiz ---------- */
+const REL=[{k:'ก',s:'→',t:'ทำให้เกิด / นำไปสู่',c:'cause'},{k:'ข',s:'◇',t:'ประกอบด้วย / มีชนิดย่อยคือ',c:'part'},{k:'ค',s:'⊣',t:'ยับยั้ง / ทำลาย / ป้องกัน',c:'inhib'},{k:'ง',s:'═',t:'จับคู่สมกัน',c:'pair'},{k:'จ',s:'✕',t:'ไม่สัมพันธ์โดยตรง',c:'none'}];
+const PA=[
+ ['Allolactose','Repressor',2,'allolactose จับ repressor จนหลุดออกจาก operator'],
+ ['Repressor','การถอดรหัส lac operon',2,'repressor จับ operator ขวาง RNA polymerase'],
+ ['กลูโคสต่ำ','cAMP',0,'กลูโคสต่ำทำให้ระดับ cAMP สูงขึ้น'],
+ ['Operator','Lac operon',1,'operator เป็นส่วนหนึ่งของ operon'],
+ ['Colchicine','Spindle fiber',2,'colchicine ยับยั้งการสร้าง microtubule spindle จึงสลาย'],
+ ['Nondisjunction','Down syndrome',0,'chromosome 21 ไม่แยก ทำให้ได้ 3 แท่ง'],
+ ['Chromosome Y','ความเป็นเพศชาย',0,'ยีนบน Y กำหนดความเป็นเพศชาย'],
+ ['Cri-du-chat','จำนวน chromosome ที่เพิ่มขึ้น',4,'cri-du-chat เกิดจากชิ้นส่วนขาดหาย จำนวนยังเป็น 46'],
+ ['Klinefelter syndrome','ความผิดปกติของ sex chromosome',1,'Klinefelter (47,XXY) เป็นชนิดหนึ่งของความผิดปกติของ sex chromosome'],
+ ['CAP–cAMP','RNA polymerase เกาะ promoter',0,'CAP–cAMP ช่วยให้ RNA polymerase เกาะได้แน่น']];
+const PB=[
+ ['ถ้า E. coli อยู่ในอาหารที่มีทั้งกลูโคสและแลคโตสสูง การถอดรหัสยีนย่อยแลคโตสเป็นอย่างไร',['สูงมาก เพราะมีแลคโตส','ต่ำมาก เพราะ cAMP ต่ำ CAP จึงไม่ช่วย','ไม่เกิดเลย เพราะ repressor จับ operator','สูงปานกลาง เพราะกลูโคสถูกใช้หมดก่อน'],1,'แลคโตสดึง repressor ออกแล้ว แต่กลูโคสสูงทำให้ cAMP ต่ำ CAP–cAMP จึงไม่เกิด การถอดรหัสอยู่แค่ระดับพื้นฐาน'],
+ ['mutation ทำให้ repressor จับ allolactose ไม่ได้ แต่ยังจับ operator ได้ ผลคือข้อใด',['ยีนเปิดตลอดเวลา','ยีนปิดตลอดแม้มีแลคโตส','ยีนเปิดเฉพาะเมื่อกลูโคสสูง','ไม่มีผลใด ๆ'],1,'inducer ดึง repressor ออกไม่ได้ repressor จึงจับ operator ค้างไว้'],
+ ['ทำไมต้องใส่ colchicine ในการเตรียม karyotype',['ย้อมสี chromosome ให้เห็นแถบได้ชัดเจนขึ้น','ให้เซลล์ค้างที่ metaphase ซึ่ง chromosome หดสั้นที่สุด','กระตุ้นให้ lymphocyte แบ่งตัวเร็วขึ้นหลายเท่า','ทำให้เซลล์บวมจน chromosome กระจาย'],1,'colchicine ทำลาย spindle เซลล์จึงค้างที่ metaphase จำนวนมาก'],
+ ['คนที่มี karyotype 47,XXY มีลักษณะตรงข้อใด',['เพศหญิง ตัวเตี้ย รังไข่ไม่พัฒนา','เพศชาย ตัวสูง เป็นหมัน','เพศหญิง มีบุตรได้ปกติ','เพศชาย ลักษณะปกติทุกประการ'],1,'มี Y จึงเป็นชาย X ที่เกินทำให้เป็น Klinefelter'],
+ ['ข้อใดเป็นความผิดปกติทางโครงสร้างของ chromosome',['Down syndrome','Turner syndrome','Cri-du-chat syndrome','Klinefelter syndrome'],2,'cri-du-chat เกิดจาก deletion ส่วนข้ออื่นผิดที่จำนวน'],
+ ['chromosome ที่ centromere อยู่ใกล้ปลาย แขนข้างหนึ่งสั้นมาก เรียกว่าอะไร',['Metacentric','Submetacentric','Acrocentric','Telocentric'],2,'acrocentric อยู่ใกล้ปลาย ส่วน telocentric อยู่ที่ปลายพอดี'],
+ ['ในนก ตัวเมียมี sex chromosome แบบใด',['XX','XY','ZZ','ZW'],3,'นกใช้ระบบ ZW ตัวเมียเป็น ZW ตัวผู้เป็น ZZ']];
+const KEY=['ก','ข','ค','ง'];PA.forEach(q=>{if(q[2]===1)[q[0],q[1]]=[q[1],q[0]];});
+const sc={a:0,an:0,b:0,bn:0};
+function buildQuiz(){
+  const q=$('quiz');
+  q.innerHTML=`<div><h3>ส่วน ก · รหัสความสัมพันธ์</h3><p class="lead">อ่านจากคำซ้ายไปหาคำขวา แล้วเลือกรหัสที่ตรงที่สุด</p></div>
+  <div class="codes">${REL.map(r=>`<span>${ic(r.c)} ${r.k} = ${r.t}</span>`).join('')}</div>
+  <div class="qa" id="qa"></div>
+  <div><h3>ส่วน ข · เลือกคำตอบ</h3><p class="lead">คิดเป็นลูกโซ่เหตุและผลจากเนื้อหาทั้ง 5 บท</p></div>
+  <div class="qa" id="qb"></div>
+  <div><button class="btn" id="reset">เริ่มทำใหม่</button></div>`;
+  const qa=$('qa');
+  PA.forEach((it,i)=>{const d=document.createElement('div');d.className='item';
+    d.innerHTML=`<div class="pairq"><span class="no">${String(i+1).padStart(2,'0')}</span><span class="t">${it[0]}</span><span class="q">?</span><span class="t">${it[1]}</span></div><div class="rels"></div>`;
+    const rels=d.querySelector('.rels');
+    REL.forEach((r,j)=>{const b=document.createElement('button');b.className='rel '+r.c;b.innerHTML=`<span class="s">${ic(r.c)}</span>${r.k} ${RW[r.c]}`;b.setAttribute('aria-label',r.k+' '+r.t);
+      b.onclick=()=>{rels.querySelectorAll('button').forEach((x,k)=>{x.disabled=true;if(k===it[2])x.classList.add('right');});
+        const ok=j===it[2];if(!ok)b.classList.add('wrong');sc.an++;if(ok)sc.a++;
+        const f=document.createElement('p');f.className='fb '+(ok?'ok':'no');const R=REL[it[2]];
+        f.innerHTML=`<b>${ok?'ถูกต้อง':'ยังไม่ใช่'}</b> · คำตอบ ${R.k} ${ic(R.c)} ${RW[R.c]} · ${it[3]}`;d.appendChild(f);updateScore();};
+      rels.appendChild(b);});
+    qa.appendChild(d);});
+  const qb=$('qb');
+  PB.forEach((it,i)=>{const d=document.createElement('div');d.className='item';
+    d.innerHTML=`<p class="qtext"><span class="no">${String(i+1).padStart(2,'0')}</span>${it[0]}</p><div class="opts"></div>`;
+    const ops=d.querySelector('.opts');
+    it[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span class="k">${KEY[j]}.</span><span>${o}</span>`;
+      b.onclick=()=>{ops.querySelectorAll('button').forEach((x,k)=>{x.disabled=true;if(k===it[2])x.classList.add('right');});
+        const ok=j===it[2];if(!ok)b.classList.add('wrong');sc.bn++;if(ok)sc.b++;
+        const f=document.createElement('p');f.className='fb '+(ok?'ok':'no');f.innerHTML=`<b>${ok?'ถูกต้อง':'ยังไม่ใช่'}</b> · ตอบ ${KEY[it[2]]}. ${it[3]}`;d.appendChild(f);updateScore();};
+      ops.appendChild(b);});
+    qb.appendChild(d);});
+  $('reset').onclick=()=>{sc.a=sc.an=sc.b=sc.bn=0;buildQuiz();updateScore();$('quiz').scrollIntoView({block:'start'});};
+}
+function updateScore(){$('score').innerHTML=`<div><b>${sc.a}/${PA.length}</b><span>ส่วน ก · ตอบแล้ว ${sc.an}</span></div><div><b>${sc.b}/${PB.length}</b><span>ส่วน ข · ตอบแล้ว ${sc.bn}</span></div>`;}
+buildQuiz();
+
+window.__pcheck=()=>{const out=[];const R=[];svg.querySelectorAll('.node.on rect,.pill.on rect,.elab.on rect').forEach(r=>{const b=r.getBoundingClientRect();if(b.width)R.push([b,r.parentNode.textContent.slice(0,24)]);});
+ for(let i=0;i<R.length;i++)for(let j=i+1;j<R.length;j++){const a=R[i][0],c=R[j][0];if(a.left<c.right-2&&c.left<a.right-2&&a.top<c.bottom-2&&c.top<a.bottom-2)out.push(R[i][1]+' × '+R[j][1]);}
+ const sb=svg.getBoundingClientRect();R.forEach(([b,t])=>{if(b.left<sb.left-1||b.right>sb.right+1||b.top<sb.top-1||b.bottom>sb.bottom+1)out.push('OUT '+t);});return out;};
+go(0,1);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(!CH[st.ch].quiz){st.built=-1;go(st.ch,st.step);}});
+
+window.__pcheck2=()=>{const out=[];const vis=[...svg.querySelectorAll('.node.on')].map(g=>({id:g.getAttribute('data-id'),r:g.querySelector('rect').getBoundingClientRect(),t:g.textContent.slice(0,22)}));
+ const es=[...svg.querySelectorAll('.e.on')].filter(g=>g.__i);const deg={};es.forEach(g=>{deg[g.__i.a]=1;deg[g.__i.b]=1;});
+ vis.forEach(n=>{if(!deg[n.id])out.push('ISO '+n.t);});
+ es.forEach(g=>{const i=g.__i;if(!i.label)out.push('NOLAB '+i.a+'>'+i.b);
+  const p=g.querySelector('path');if(p){const Ln=p.getTotalLength(),m=p.getScreenCTM();for(let k=1;k<24;k++){const q=p.getPointAtLength(Ln*k/24);const x=q.x*m.a+q.y*m.c+m.e,y=q.x*m.b+q.y*m.d+m.f;vis.forEach(n=>{if(n.id===i.a||n.id===i.b)return;const r=n.r;if(x>r.left+1&&x<r.right-1&&y>r.top+1&&y<r.bottom-1)out.push('CROSS '+i.a+'>'+i.b+' over '+n.t);});}}
+  if(i.label&&g.__lab){const dx=i.en[0]-i.st[0],dy=i.en[1]-i.st[1],len=Math.hypot(dx,dy);const bb=g.__lab.getBBox();const ext=Math.abs(bb.width*dx/len)+Math.abs(bb.height*dy/len);if(len<ext+16)out.push('SHORT '+i.a+'>'+i.b+' '+Math.round(len)+'<'+Math.round(ext+16));}});
+ svg.querySelectorAll('.pill.on').forEach(p=>out.push('PILL '+p.textContent.slice(0,24)));
+ return [...new Set(out)];};
+</script>
+<script>document.addEventListener("keydown",e=>{if(e.key==="Escape"||e.key==="f"||e.key==="F")e.stopImmediatePropagation();},true);try{setFull(true);document.getElementById("fs").style.display="none";}catch(e){}</script></body></html>

@@ -1,0 +1,657 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}.back{display:none!important}</style></head><body><style>.top .back{display:none!important}.wrap{padding-block:10px 24px!important}</style><title>การหายใจระดับเซลล์ · TPAT1 เชื่อมโยง</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: lab-notebook graph-paper stage where a TPAT1-style concept map builds step by step; narration + relation chain in a side panel. Base colors follow Sanger chromatogram convention (A green, C blue, G black, T red). */
+:root{
+  --bg:#E8EDF0; --surface:#FBFCFD; --ink:#13212C; --muted:#56687A; --line:#C3CFD8; --grid:#E2E9EE;
+  --cause:#1E4F8F; --part:#6A7C8B; --inhib:#C7372F; --pair:#0B807C;
+  --keyFill:#E1EAF5; --ok:#1C7F46; --bad:#C2372E; --okBg:#E3F3E9; --badBg:#FBE6E4;
+  --bA:#178A3E; --bC:#2158C4; --bG:#1B1B1B; --bT:#D02B23; --bU:#8B3FC0;
+  --sS:#2158C4; --sR:#B5730C; --agar:#F2E2B0; --dead:#F5D6E1; --new:#0B807C;
+  --fd:"Anuphan","IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
+  --fb:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
+  --fm:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C141B; --surface:#131E27; --ink:#E3EBF1; --muted:#93A6B5; --line:#2B3B48; --grid:#17242E;
+  --cause:#86B6F2; --part:#8FA1AF; --inhib:#FF7A70; --pair:#4AC9C1;
+  --keyFill:#1A2D41; --ok:#5ED18E; --bad:#FF7D73; --okBg:#123224; --badBg:#3A1A1A;
+  --bA:#52D686; --bC:#78AAFF; --bG:#E4E8EC; --bT:#FF716A; --bU:#C78EF8;
+  --sS:#78AAFF; --sR:#F0B44C; --agar:#4A3F22; --dead:#4C2335; --new:#4AC9C1; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C141B; --surface:#131E27; --ink:#E3EBF1; --muted:#93A6B5; --line:#2B3B48; --grid:#17242E;
+  --cause:#86B6F2; --part:#8FA1AF; --inhib:#FF7A70; --pair:#4AC9C1;
+  --keyFill:#1A2D41; --ok:#5ED18E; --bad:#FF7D73; --okBg:#123224; --badBg:#3A1A1A;
+  --bA:#52D686; --bC:#78AAFF; --bG:#E4E8EC; --bT:#FF716A; --bU:#C78EF8;
+  --sS:#78AAFF; --sR:#F0B44C; --agar:#4A3F22; --dead:#4C2335; --new:#4AC9C1; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6}
+.wrap{max-width:1360px;margin:0 auto;padding-block:16px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:14px}
+
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+.eyebrow{margin:0;font:500 13px var(--fm);letter-spacing:.06em;color:var(--muted)}
+h1{margin:2px 0 0;font:700 32px/1.15 var(--fd);text-wrap:balance}
+h1 em{font-style:normal;color:var(--cause)}
+.legend{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px}
+.legend li{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--muted)}
+.legend b{color:var(--ink);font-weight:600}
+.legend svg{width:46px;height:16px;flex:none;overflow:visible}
+
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{flex:none;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:8px 14px;font:500 16px var(--fb);cursor:pointer}
+.tab .n{font:600 13px var(--fm);color:var(--muted)}
+.tab[aria-current="true"]{background:var(--cause);border-color:var(--cause);color:var(--surface)}
+.tab[aria-current="true"] .n{color:var(--surface);opacity:.75}
+.tab:focus-visible,.btn:focus-visible,.opt:focus-visible,.rel:focus-visible{outline:3px solid var(--pair);outline-offset:2px}
+
+.player{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}
+@media (max-width:980px){.player{grid-template-columns:minmax(0,1fr)}}
+.stage{min-width:0;background-color:var(--surface);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:25px 25px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+#svg{display:block;width:100%;height:auto}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+@media (min-width:981px){.panel{position:sticky;top:12px;min-height:420px}}
+.kicker{margin:0;font:600 13px var(--fm);letter-spacing:.05em;color:var(--cause)}
+.panel h2{margin:0;font:700 25px/1.3 var(--fd);text-wrap:balance}
+.stext{margin:0;font-size:17.5px;line-height:1.75}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.chain:empty{display:none}
+.chain .lbl{width:100%;font:600 12px var(--fm);letter-spacing:.06em;color:var(--muted)}
+.tok{border:1px solid var(--line);border-radius:8px;padding:3px 10px;font-size:15px;background:var(--bg)}
+.sym{font:700 20px var(--fd);line-height:1}
+.sym.cause{color:var(--cause)}.sym.part{color:var(--part)}.sym.inhib{color:var(--inhib)}.sym.pair{color:var(--pair)}.sym.sep{color:var(--muted);font-size:16px}
+.controls{margin-top:auto;display:flex;align-items:center;gap:10px}
+.dots{flex:1;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--line);border:0;padding:0;cursor:pointer}
+.dot.on{background:var(--cause)}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:10px 16px;font:600 16px var(--fb);cursor:pointer}
+.btn.primary{background:var(--cause);border-color:var(--cause);color:var(--surface)}
+.btn.ghost{background:transparent;color:var(--muted);font-weight:500}
+.btn:disabled{opacity:.4;cursor:default}
+.score{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.score div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
+.score b{display:block;font:700 28px var(--fd);font-variant-numeric:tabular-nums}
+.score span{font-size:14px;color:var(--muted)}
+
+/* ---------- SVG ---------- */
+.bA{--c:var(--bA)}.bC{--c:var(--bC)}.bG{--c:var(--bG)}.bT{--c:var(--bT)}.bU{--c:var(--bU)}
+.cS{--c:var(--sS)}.cR{--c:var(--sR)}.cX{--c:var(--cause)}
+.rv{opacity:0;transform:translateY(10px);transform-box:fill-box;transform-origin:center;transition:opacity .5s ease,transform .5s ease}
+.rv.on{opacity:1;transform:none}
+.nl{font:600 22px var(--fd);fill:var(--ink)}
+.nl.big{font-size:30px;font-weight:700}
+.ns{font:400 15px var(--fb);fill:var(--muted)}
+.ny{font:500 13px var(--fm);fill:var(--cause)}
+.node rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.node.key rect{fill:var(--keyFill);stroke:var(--cause);stroke-width:2}
+.node.now:not(.base):not(.chip) rect{stroke:var(--cause);stroke-width:3}
+.node.base rect,.node.chip rect{stroke:var(--c);stroke-width:2.5}
+.node.base .nl,.node.chip .nl{fill:var(--c)}
+.e path{fill:none;stroke-linecap:round}
+.e.cause path{stroke:var(--cause);stroke-width:2.5}
+.e.part path{stroke:var(--part);stroke-width:2;stroke-dasharray:6 6}
+.e.inhib path{stroke:var(--inhib);stroke-width:2.5}
+.e.pair path{stroke:var(--pair);stroke-width:2}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s ease}
+.on .draw{stroke-dashoffset:0}
+.e.done.cause .main{marker-end:url(#m-cause)}
+.e.done.part .main{marker-end:url(#m-part)}
+.e.done.inhib .main{marker-end:url(#m-inhib)}
+.mk-cause{fill:var(--cause)}.mk-part{fill:var(--surface);stroke:var(--part);stroke-width:1.6}.mk-inhib{fill:var(--inhib)}
+.elab rect{fill:var(--surface);stroke:var(--line);stroke-width:1}
+.el{font:500 14.5px var(--fb);fill:var(--ink)}
+.elab.cause .el{fill:var(--cause)}.elab.inhib .el{fill:var(--inhib)}.elab.pair .el{fill:var(--pair)}.elab.part .el{fill:var(--muted)}.elab.warn .el{fill:var(--inhib)}
+.prop{font:500 15px var(--fb);fill:var(--muted)}
+.pill rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.pill.d rect{stroke:var(--cause)}.pill.r rect{stroke:var(--pair)}
+.pt{font:500 18px var(--fb);fill:var(--ink)}
+.tb{font:700 19px var(--fm);fill:var(--c)}.sep{fill:var(--muted)}
+.rowline{stroke:var(--grid);stroke-width:1.5}
+.guide{stroke:var(--line);stroke-width:2;stroke-dasharray:3 6;fill:none}
+.cap{font:500 15px var(--fb);fill:var(--muted)}
+.cap.strong{fill:var(--ink);font-weight:600}
+.mono{font:600 15px var(--fm);fill:var(--ink)}
+.bb1{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round}
+.bb2{fill:none;stroke:var(--muted);stroke-width:4;stroke-linecap:round}
+.nt1{fill:var(--ink)}.nt2{fill:var(--muted)}
+.rung{stroke:var(--c);stroke-width:5;stroke-linecap:round}
+.bracket{fill:none;stroke:var(--cause);stroke-width:1.8}
+.band{fill:var(--bg);stroke:var(--line);stroke-width:1.2;stroke-dasharray:4 4}
+.mouse .body{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+.mouse.dead .body{fill:var(--dead)}
+.mouse .tail,.mouse .feet{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.mouse .ear{fill:var(--dead);stroke:var(--ink);stroke-width:2}
+.mouse .eye,.mouse .nose{fill:var(--ink)}
+.mouse .xeye{stroke:var(--inhib);stroke-width:2.6;stroke-linecap:round}
+.dish{fill:var(--surface);stroke:var(--line);stroke-width:2}
+.agar{fill:var(--agar)}
+.colS{fill:var(--sS)}.colR{fill:var(--sR)}
+.old{stroke:var(--ink);stroke-width:5;stroke-linecap:round;fill:none}
+.new{stroke:var(--new);stroke-width:5;stroke-linecap:round;fill:none}
+.arrowtxt{font:600 26px var(--fd);fill:var(--muted)}
+.tile rect{fill:var(--surface);stroke:var(--c);stroke-width:2.2}
+.tile.anti rect{stroke-dasharray:5 4;fill:var(--bg)}
+.tile text{font:600 24px var(--fm);fill:var(--c)}
+.rowl{font:600 19px var(--fd);fill:var(--ink)}
+.rows{font:400 14px var(--fb);fill:var(--muted)}
+.codon{fill:none;stroke:var(--cause);stroke-width:2}
+.pep{stroke:var(--cause);stroke-width:3;stroke-linecap:round}
+
+/* ---------- quiz ---------- */
+.quiz{padding:22px clamp(16px,3vw,32px) 32px;background:var(--surface);display:flex;flex-direction:column;gap:22px}
+.quiz h3{margin:0;font:700 22px var(--fd)}
+.quiz .lead{margin:4px 0 0;color:var(--muted)}
+.codes{display:flex;flex-wrap:wrap;gap:6px 14px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.codes span{font-size:15px}
+.qa{display:flex;flex-direction:column;gap:10px}
+.item{border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:var(--surface)}
+.pairq{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:17.5px}
+.pairq .no{font:600 14px var(--fm);color:var(--muted);min-width:22px}
+.pairq .t{border:1px solid var(--line);border-radius:8px;padding:2px 10px;background:var(--bg)}
+.pairq .q{font:700 20px var(--fd);color:var(--muted)}
+.rels{display:flex;flex-wrap:wrap;gap:6px}
+.rel{min-width:64px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:6px 10px;font:600 17px var(--fb);cursor:pointer;display:flex;align-items:center;gap:6px;justify-content:center}
+.rel .s{font:700 19px var(--fd)}
+.rel.cause .s{color:var(--cause)}.rel.part .s{color:var(--part)}.rel.inhib .s{color:var(--inhib)}.rel.pair .s{color:var(--pair)}.rel.none .s{color:var(--muted)}
+.qtext{font-size:17.5px;line-height:1.65;margin:0}
+.qtext .no{font:600 14px var(--fm);color:var(--muted);margin-right:6px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:8px}
+.opt{text-align:left;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:10px 12px;font:400 16.5px/1.5 var(--fb);cursor:pointer;display:flex;gap:8px}
+.opt .k{font-weight:600;color:var(--muted)}
+.right{border-color:var(--ok)!important;background:var(--okBg)!important}
+.wrong{border-color:var(--bad)!important;background:var(--badBg)!important}
+.rel:disabled,.opt:disabled{cursor:default}
+.fb{margin:0;font-size:15.5px;line-height:1.65;padding:8px 12px;border-radius:10px;background:var(--bg);border-left:3px solid var(--cause)}
+.fb b{font-weight:600}
+.fb.ok b{color:var(--ok)}.fb.no b{color:var(--bad)}
+
+
+/* ---------- motion ---------- */
+.rv{transform:translateY(12px) scale(.92);transition:opacity .55s ease,transform .65s cubic-bezier(.34,1.56,.64,1)}
+.flowg{opacity:0;transition:opacity .4s}
+.e.done .flowg{opacity:1}
+.flow{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.e.cause .flow{stroke:var(--cause)}.e.inhib .flow{stroke:var(--inhib)}
+@keyframes march{to{stroke-dashoffset:-12}}
+.e.part.done .main{animation:march .9s linear infinite}
+@keyframes pairPulse{50%{opacity:.3}}
+.e.pair.on path{animation:pairPulse 1.8s ease-in-out infinite}
+@keyframes nowPulse{0%,100%{stroke-opacity:1}50%{stroke-opacity:.3}}
+.node.now rect{animation:nowPulse 1.6s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.07)}}
+.breathe{animation:breathe 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes shrinkp{50%{transform:scale(.88)}}
+.shrinkp{animation:shrinkp 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes squish{50%{transform:scaleX(.86)}}
+.squish{animation:squish 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+.spin{animation:spin 4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes drift{0%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--dx),var(--dy));opacity:0}}
+.drift{animation:drift 2.4s ease-out infinite}
+@keyframes blink{50%{opacity:.2}}
+.blink{animation:blink 1.4s ease-in-out infinite}
+@keyframes floaty{50%{transform:translateY(-6px)}}
+.floaty{animation:floaty 2.8s ease-in-out infinite}
+.mouse:not(.dead) .body{animation:breathe 1.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+
+/* ---------- fullscreen ---------- */
+.app{display:flex;flex-direction:column;gap:14px;min-width:0}
+.bar{display:flex;align-items:flex-start;gap:10px;min-width:0}
+.bar .tabs{flex:1;min-width:0}
+.fsb{flex:none;display:flex;align-items:center;gap:6px;padding:8px 14px}
+.fsb svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app.full{position:fixed;inset:0;z-index:50;background:var(--bg);overflow:auto;gap:10px;
+  padding-block:max(10px,env(safe-area-inset-top,0px)) max(10px,env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.app.full .player{flex:1;min-height:0;grid-template-columns:minmax(0,1fr) 330px;align-items:stretch}
+.app.full .stage{overflow:auto;display:flex;flex-direction:column;justify-content:center}
+.app.full #svg{flex:1;height:100%;min-height:0}
+.app.full .quiz{flex:none}
+.app.full .stage:has(.quiz:not([hidden])){justify-content:flex-start}
+.app.full .panel{position:static;overflow:auto;min-height:0}
+@media (max-width:980px){
+  .app.full .player{flex:none;grid-template-columns:minmax(0,1fr)}
+  .app.full #svg{flex:none;height:auto}
+}
+
+/* ---------- transitions (on by default, toggle adds .still) ---------- */
+.rv{transform:translateY(26px) scale(.82);transition:opacity .6s ease,transform .85s cubic-bezier(.34,1.56,.64,1)}
+.draw{transition:stroke-dashoffset 1.1s cubic-bezier(.65,0,.35,1)}
+@keyframes stageIn{from{opacity:0;transform:translateX(56px) scale(.96)}}
+#svg.in,#quiz.in{animation:stageIn .65s cubic-bezier(.22,1,.36,1)}
+.swap{display:flex;flex-direction:column;gap:12px}
+@keyframes textIn{from{opacity:0;transform:translateY(16px)}}
+.swap.in>*{animation:textIn .55s cubic-bezier(.22,1,.36,1) both}
+.swap.in>*:nth-child(2){animation-delay:.07s}.swap.in>*:nth-child(3){animation-delay:.14s}.swap.in>*:nth-child(4){animation-delay:.21s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.node.now.on{animation:bob 2.4s ease-in-out 1.1s infinite}
+.elab.now.on rect{animation:nowPulse 1.6s ease-in-out infinite}
+.dot{transition:background .3s,transform .3s}
+.still .rv,.still .draw,.still .ph rect,.still .ph text{transition:none!important}
+.still *,.still *::before{animation:none!important}
+.still .flowg{display:none}
+
+/* ---------- relation icons ---------- */
+.ico{width:1.25em;height:1.25em;flex:none;vertical-align:-.27em;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.ico.cause{color:var(--cause)}.ico.part{color:var(--part)}.ico.inhib{color:var(--inhib)}.ico.pair{color:var(--pair)}.ico.none{color:var(--muted)}
+.legend .lg{display:flex;align-items:center;gap:7px;padding:5px 13px 5px 9px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);font-size:15.5px;color:var(--ink)}
+.legend .lg b{font-weight:600}
+.legend .lg svg.ico{width:22px;height:22px;overflow:visible}
+.legend .lg.cause{border-color:var(--cause)}.legend .lg.part{border-color:var(--part)}.legend .lg.inhib{border-color:var(--inhib)}.legend .lg.pair{border-color:var(--pair)}
+.mk-cause{fill:var(--cause)}
+.mk-part{fill:var(--part);stroke:var(--surface);stroke-width:1.6}
+.ico.part path{fill:currentColor}
+.mk-inhib{fill:var(--surface);stroke:var(--inhib);stroke-width:2.4;stroke-linecap:round}
+
+/* ---------- touch: no double-tap-zoom delay, clear press feedback ---------- */
+button,.chip,.tab,.rel,.opt,.rl,.pth,.nd,.eb{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:active,.chip:active,.tab:active{filter:brightness(.9)}
+button,.chip,.tab{transition:filter .12s,background .25s,border-color .25s,color .25s}
+.back{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font:500 14px var(--fb);color:var(--cause);text-decoration:none}.back:hover{text-decoration:underline}
+
+.band{fill:color-mix(in srgb,var(--bg) 70%,transparent);stroke:var(--line);stroke-width:1.5;stroke-dasharray:5 7}
+.band.mito{fill:color-mix(in srgb,var(--sR) 7%,transparent);stroke:color-mix(in srgb,var(--sR) 55%,var(--line))}
+.band.mem{fill:color-mix(in srgb,var(--sR) 20%,transparent);stroke:var(--sR);stroke-dasharray:none;stroke-width:2}
+.bandl{font:600 13px var(--fm);letter-spacing:.06em;fill:var(--muted)}
+.cell{fill:color-mix(in srgb,var(--keyFill) 55%,var(--surface));stroke:var(--line);stroke-width:2}
+.spin{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 5;fill:none;opacity:.6}
+.plate{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:2 4}
+.cd{stroke:color-mix(in srgb,var(--ink) 25%,transparent);stroke-width:1}
+.cen{fill:var(--ink)}
+.chi{font:700 18px var(--fd);fill:var(--inhib)}
+.xbig{font:700 34px var(--fd);fill:var(--muted)}
+.pc rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}.pc text{font:600 20px var(--fm);fill:var(--ink)}
+.pc.hd rect{fill:var(--bg)}.pc.hd text{fill:var(--muted)}
+.pc.k1 rect{fill:color-mix(in srgb,var(--cause) 16%,var(--surface));stroke:var(--cause)}
+.pc.k2 rect{fill:color-mix(in srgb,var(--pair) 16%,var(--surface));stroke:var(--pair)}
+.pc.k3 rect{fill:color-mix(in srgb,var(--sR) 18%,var(--surface));stroke:var(--sR)}
+.pc.k4 rect{fill:color-mix(in srgb,var(--inhib) 14%,var(--surface));stroke:var(--inhib)}
+.hor{fill:none;stroke-width:3.5;stroke-linecap:round}
+.axis{stroke:var(--line);stroke-width:1.5}
+.back{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font:500 14px var(--fb);color:var(--cause);text-decoration:none}
+.back:hover{text-decoration:underline}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <p class="eyebrow">Slide 07 · Cell respiration · จากกลูโคสสู่ ATP</p>
+      <h1>การหายใจระดับเซลล์ <em>TPAT1 เชื่อมโยง</em></h1>
+    </div>
+    <ul class="legend" aria-label="ความหมายของสัญลักษณ์"><li class="lg cause"><svg class="ico cause" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg><b>ทำให้เกิด</b></li><li class="lg part"><svg class="ico part" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h3.5M8 12h3.5M17.5 12m-3.6 0a3.6 3.6 0 1 0 7.2 0a3.6 3.6 0 1 0-7.2 0"/></svg><b>ประกอบด้วย</b></li><li class="lg inhib"><svg class="ico inhib" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M4.9 4.9l14.2 14.2"/></svg><b>ยับยั้ง</b></li><li class="lg pair"><svg class="ico pair" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><b>จับคู่กับ</b></li></ul>
+  </header>
+
+  <div class="app" id="app">
+  <div class="bar"><nav class="tabs" id="tabs" aria-label="บทเรียน"></nav><button class="btn fsb" id="mo" aria-pressed="true"></button><button class="btn fsb" id="fs" aria-pressed="false" title="เต็มจอ (กด F)"></button></div>
+  <main class="player">
+    <section class="stage">
+      <svg id="svg" viewBox="0 0 1000 640" role="img" aria-label="แผนผังเชื่อมโยงแบบเคลื่อนไหว"></svg>
+      <div id="quiz" class="quiz" hidden></div>
+    </section>
+    <aside class="panel" aria-live="polite">
+      <div class="swap" id="swap"><p class="kicker" id="kicker"></p>
+      <h2 id="stitle"></h2>
+      <p class="stext" id="stext"></p>
+      <div class="chain" id="chain"></div></div>
+      <div class="score" id="score" hidden></div>
+      <div class="controls" id="controls">
+        <button class="btn" id="prev" aria-label="ขั้นก่อนหน้า">←</button>
+        <div class="dots" id="dots"></div>
+        <button class="btn primary" id="next">ถัดไป →</button>
+      </div>
+      <button class="btn ghost" id="auto">▶ เล่นอัตโนมัติ</button>
+    </aside>
+  </main>
+  </div>
+</div>
+
+<script>
+const ICON={"cause": "M5 12h14M12 5l7 7-7 7", "part": "M2 12h3.5M8 12h3.5M17.5 12m-3.6 0a3.6 3.6 0 1 0 7.2 0a3.6 3.6 0 1 0-7.2 0", "inhib": "M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M4.9 4.9l14.2 14.2", "pair": "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71", "none": "M5 9h14M5 15h14M19 5L5 19"};
+const ic=(t,rev)=>`<svg class="ico ${t}" viewBox="0 0 24 24" aria-hidden="true"${rev?' style="transform:scaleX(-1)"':''}><path d="${ICON[t]}"/></svg>`;
+const RW={cause:'ทำให้เกิด',part:'ประกอบด้วย',inhib:'ยับยั้ง',pair:'จับคู่กับ',none:'ไม่เกี่ยวกัน'};
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('svg');
+let reduce=(()=>{try{return localStorage.getItem('motion')==='off'}catch(e){return false}})();
+document.documentElement.classList.toggle('still',reduce);
+function retrig(el){el.classList.remove('in');void el.getBoundingClientRect();el.classList.add('in');}
+function S(tag,a,p){const e=document.createElementNS(NS,tag);if(a)for(const k in a){if(a[k]!=null)e.setAttribute(k,a[k]);}if(p)p.appendChild(e);return e;}
+let L={},nodes={};let _mc=null;
+function tw(t){let w=0;try{w=t.getComputedTextLength();}catch(e){}if(w>0||!t.textContent)return w;if(!_mc)_mc=document.createElement('canvas').getContext('2d');const s=getComputedStyle(t);_mc.font=`${s.fontWeight||400} ${s.fontSize||'16px'} ${s.fontFamily||'sans-serif'}`;return _mc.measureText(t.textContent).width*1.03;}
+
+function delay(el,d){if(d){el.style.transitionDelay=d+'ms';}}
+
+function flow(g,d,type,len){
+  if(reduce||(type!=='cause'&&type!=='inhib'))return;
+  const fg=S('g',{class:'flowg'},g);const dv=Math.max(1.3,len/120),dur=dv.toFixed(2)+'s',b0=Math.random()*3;
+  [0,1].forEach(k=>{const c=S('path',{class:'flow',d:'M-5 -5L1.5 0L-5 5'},fg),b=(-(b0+k*dv/2)).toFixed(2)+'s';
+    S('animateMotion',{path:d,dur,begin:b,repeatCount:'indefinite',rotate:'auto'},c);
+    S('animate',{attributeName:'opacity',values:'0;1;1;0',keyTimes:'0;0.15;0.8;1',dur,begin:b,repeatCount:'indefinite'},c);});
+}
+/* ---------- primitives ---------- */
+function N(id,x,y,label,o={}){
+  const outer=S('g',{transform:`translate(${x},${y})`},L.node);
+  const g=S('g',{class:'rv node '+(o.kind||''),'data-s':o.s||1,'data-id':id},outer);delay(g,o.d);
+  const rect=S('rect',null,g);
+  const lines=[];
+  if(o.tag)lines.push(['ny',o.tag,18]);
+  lines.push([o.big?'nl big':'nl',label,o.big?36:28]);
+  if(o.sub)lines.push(['ns',o.sub,21]);
+  if(o.sub2)lines.push(['ns',o.sub2,21]);
+  const total=lines.reduce((a,l)=>a+l[2],0);
+  let yy=-total/2,w=0;
+  lines.forEach(([c,t,h])=>{const tx=S('text',{class:c,x:0,y:yy+h/2+1,'text-anchor':'middle','dominant-baseline':'central'},g);tx.textContent=t;yy+=h;w=Math.max(w,tw(tx));});
+  w=Math.max(w+(o.padX||34),o.minW||0);const h=total+16;
+  rect.setAttribute('x',-w/2);rect.setAttribute('y',-h/2);rect.setAttribute('width',w);rect.setAttribute('height',h);rect.setAttribute('rx',12);
+  nodes[id]={x,y,w,h};return g;
+}
+function clip(n,dx,dy,pad){const hw=n.w/2+pad,hh=n.h/2+pad;let t=Infinity;if(Math.abs(dx)>1e-6)t=Math.min(t,hw/Math.abs(dx));if(Math.abs(dy)>1e-6)t=Math.min(t,hh/Math.abs(dy));return[n.x+dx*t,n.y+dy*t];}
+function E(a,b,type,label,s,o={}){if(!label&&type==='part')label='ประกอบด้วย';if(!label&&type==='pair')label='คู่กับ';
+  if(type==='part'){[a,b]=[b,a];o=Object.assign({},o,{bend:-(o.bend||0),pa:o.pb,pb:o.pa});}
+  const A=nodes[a],B=nodes[b];const dx=B.x-A.x,dy=B.y-A.y,len=Math.hypot(dx,dy);
+  const px=dy/len,py=-dx/len;const bend=o.bend||0;
+  const cx=(A.x+B.x)/2+px*bend,cy=(A.y+B.y)/2+py*bend;
+  const st=clip(A,cx-A.x,cy-A.y,o.pa??6),en=clip(B,cx-B.x,cy-B.y,o.pb??8);
+  const g=S('g',{class:'rv e '+type,'data-s':s},L.edge);g.__i={a,b,type,label,st,en};delay(g,o.d);
+  const f=v=>v.toFixed(1);
+  if(type==='pair'){
+    const n=o.n||2;for(let k=0;k<n;k++){const off=(k-(n-1)/2)*5;const p=S('path',{d:`M${f(st[0]+px*off)} ${f(st[1]+py*off)}L${f(en[0]+px*off)} ${f(en[1]+py*off)}`,class:'draw',pathLength:1},g);delay(p,o.d);}
+  }else{
+    const d=bend?`M${f(st[0])} ${f(st[1])}Q${f(cx)} ${f(cy)} ${f(en[0])} ${f(en[1])}`:`M${f(st[0])} ${f(st[1])}L${f(en[0])} ${f(en[1])}`;
+    const p=S('path',{d,class:type==='part'?'main':'main draw',pathLength:type==='part'?null:1},g);delay(p,o.d);flow(g,d,type,len);
+  }
+  if(label){
+    let lx,ly;if(bend){lx=.25*st[0]+.5*cx+.25*en[0];ly=.25*st[1]+.5*cy+.25*en[1];}else{lx=(st[0]+en[0])/2;ly=(st[1]+en[1])/2;}
+    lx+=o.lx||0;ly+=o.ly||0;
+    const og=S('g',{transform:`translate(${f(lx)},${f(ly)})`},L.lab);
+    const lg=S('g',{class:'rv elab '+type+' '+(o.lcls||''),'data-s':s},og);g.__lab=lg;delay(lg,(o.d||0)+350);
+    const r=S('rect',null,lg);const t=S('text',{class:'el',x:0,y:1,'text-anchor':'middle','dominant-baseline':'central'},lg);t.textContent=label;
+    const w=tw(t)+18;r.setAttribute('x',-w/2);r.setAttribute('y',-14);r.setAttribute('width',w);r.setAttribute('height',28);r.setAttribute('rx',14);
+  }
+  return g;
+}
+function T(x,y,txt,cls,s,o={}){const t=S('text',{x,y,class:'rv '+cls,'data-s':s,'text-anchor':o.anchor||'middle','dominant-baseline':'central'},o.layer||L.node);delay(t,o.d);t.textContent=txt;return t;}
+function G(s,d,layer){const g=S('g',{class:'rv','data-s':s},layer||L.node);delay(g,d);return g;}
+function pill(x,y,text,s,d,cls){
+  const o=S('g',{transform:`translate(${x},${y})`},L.node);const g=S('g',{class:'rv pill '+(cls||''),'data-s':s},o);delay(g,d);
+  const r=S('rect',null,g);const t=S('text',{x:0,y:1,'text-anchor':'middle','dominant-baseline':'central',class:'pt'},g);
+  if(/^[ATCGU]( · [ATCGU])+$/.test(text)){text.split(' · ').forEach((b,i)=>{if(i){const sp=S('tspan',{class:'sep'},t);sp.textContent=' · ';}const sp=S('tspan',{class:'tb b'+b},t);sp.textContent=b;});}
+  else t.textContent=text;
+  const w=tw(t)+30;r.setAttribute('x',-w/2);r.setAttribute('y',-18);r.setAttribute('width',w);r.setAttribute('height',36);r.setAttribute('rx',18);
+}
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+
+/*META title=การหายใจระดับเซลล์ · TPAT1 เชื่อมโยง|eyebrow=Slide 07 · Cell respiration · จากกลูโคสสู่ ATP|h1=การหายใจระดับเซลล์|n=5*/
+let helix=null,raf=0,phase=0;
+function band(x,y,w,h,label,s,cls){const g=G(s,0,L.edge);S('rect',{x,y,width:w,height:h,rx:22,class:'band '+(cls||'')},g);if(label){const t=S('text',{x:x+16,y:y+24,class:'bandl'},g);t.textContent=label;}return g;}
+/* ch1 overview */
+function b1(){
+  band(300,22,680,445,'MITOCHONDRIA',2,'mito');
+  const t=S('text',{x:24,y:40,class:'bandl rv','data-s':1},L.edge);t.textContent='CYTOPLASM';
+  N('glc',130,75,'Glucose',{s:1,kind:'key',sub:'6C'});
+  N('gly',130,235,'Glycolysis',{s:1,sub:'ไม่ใช้ O2'});
+  N('pyr',130,395,'2 Pyruvate',{s:1,sub:'3C × 2'});
+  E('glc','gly','cause','เข้าสู่',1,{d:200});E('gly','pyr','cause','สลายได้',1,{d:400});
+  N('aco',480,395,'Acetyl CoA',{s:2,sub:'2C · ปล่อย CO2'});E('pyr','aco','cause','มี O2 จึงเปลี่ยนเป็น',2,{d:200});
+  N('kre',830,395,'Krebs cycle',{s:2,sub:'ใน matrix'});E('aco','kre','cause','เข้าสู่',2,{d:500});
+  N('nad',830,235,'NADH · FADH2',{s:3,sub:'ตัวพาอิเล็กตรอน'});E('kre','nad','cause','สร้าง',3);
+  N('etc',480,235,'ETC',{s:3,sub:'เยื่อหุ้มชั้นใน'});E('nad','etc','cause','ส่ง e- ให้',3,{d:300});
+  N('o2',480,80,'O2 → H2O',{s:3,sub:'ตัวรับ e- ตัวสุดท้าย'});E('etc','o2','cause','ส่ง e- ให้',3,{d:500});
+  N('atp',830,80,'ATP',{s:4,kind:'key',big:true,sub:'รวม 36/38 · ใหม่ 30/32'});E('etc','atp','cause','สร้าง ATP ส่วนใหญ่',4);
+  N('fer',130,560,'Fermentation',{s:5,sub:'ได้เพียง 2 ATP'});E('pyr','fer','cause','ถ้าขาด O2',5);
+  N('lp',480,560,'Lactic acid · Ethanol + CO2',{s:5,sub:'กล้ามเนื้อ · ยีสต์'});E('fer','lp','cause','ได้',5,{d:300});
+}
+/* ch2 glycolysis */
+function b2(){
+  band(30,30,940,580,'CYTOPLASM · ไม่ใช้ O2',1);
+  N('g0',130,110,'Glucose',{s:1,kind:'key',sub:'6C'});
+  N('g1',510,110,'G6P',{s:1,sub:'glucose-6-phosphate'});E('g0','g1','cause','Hexokinase · ใช้ 1 ATP',1,{d:200});
+  N('g2',850,110,'F-1,6-BP',{s:2,sub:'fructose-1,6-BP'});E('g1','g2','cause','PFK · ใช้ 1 ATP',2,{d:200});
+  N('g3',850,280,'2 G3P',{s:3,sub:'3C × 2'});E('g2','g3','cause','แยกเป็น 2 ชิ้น',3,{d:200});
+  N('nh',500,280,'2 NADH',{s:3});E('g3','nh','cause','ได้',3,{d:450});
+  N('g5',850,450,'2 Pyruvate',{s:4,kind:'key',sub:'3C × 2'});E('g3','g5','cause','Pyruvate kinase',4,{d:200});
+  N('a4',500,450,'4 ATP',{s:4,sub:'substrate-level'});E('g5','a4','cause','ขั้นนี้สร้าง',4,{d:450});
+  N('net',150,450,'สุทธิ 2 ATP',{s:5,kind:'key',big:true,sub:'+ 2 NADH'});
+  E('a4','net','cause','หักที่ใช้ 2 เหลือ',5);E('nh','net','cause','ได้เพิ่มอีก',5,{d:250});
+}
+/* ch3 Krebs */
+function b3(){
+  band(30,25,940,590,'MITOCHONDRIA · MATRIX',1,'mito');
+  N('ac',170,95,'Acetyl CoA',{s:1,kind:'key',sub:'2C'});
+  N('cit',500,110,'Citrate',{s:1,sub:'6C'});E('ac','cit','cause','รวมเป็น',1,{d:300});
+  N('oaa',200,330,'Oxaloacetate',{s:1,sub:'4C'});E('oaa','cit','cause','รวมเป็น',1,{d:500,bend:-30});
+  N('akg',800,330,'α-ketoglutarate',{s:2,sub:'5C'});E('cit','akg','cause','เสีย 1C',2,{bend:-30});
+  N('p2',850,110,'CO2 + NADH',{s:2,d:300});E('cit','p2','cause','ปล่อย',2,{d:450});
+  N('suc',500,545,'Succinyl CoA',{s:3,sub:'4C'});E('akg','suc','cause','เสีย 1C',3,{bend:-30});
+  N('p3',850,545,'CO2 + NADH',{s:3,d:300});E('akg','p3','cause','ปล่อย',3,{d:450});
+  E('suc','oaa','cause','สร้างคืน',4,{bend:-30});
+  N('p4',150,545,'GTP · FADH2 · NADH',{s:4,d:300});E('suc','p4','cause','ได้',4,{d:450});
+  N('sum',500,330,'ต่อ 1 รอบ',{s:5,kind:'key',sub:'3 NADH · 1 FADH2 · 1 GTP · 2 CO2',sub2:'กลูโคส 1 โมเลกุล = 2 รอบ'});
+  E('p2','sum','cause','นับรวม',5);E('p3','sum','cause','นับรวม',5,{d:150});E('p4','sum','cause','นับรวม',5,{d:300,lx:30,ly:20});
+}
+/* ch4 ETC */
+function b4(){
+  const t1=S('text',{x:40,y:60,class:'bandl rv','data-s':1},L.edge);t1.textContent='INTERMEMBRANE SPACE';
+  const t2=S('text',{x:40,y:615,class:'bandl rv','data-s':1},L.edge);t2.textContent='MATRIX';
+  band(30,290,940,80,'',1,'mem');
+  N('coq',160,330,'CoQ',{s:1});N('cb',345,330,'Cyt b',{s:2});N('cc',530,330,'Cyt c',{s:2,d:150});N('ca',725,330,'Cyt a+a3',{s:2,d:300});
+  N('nadh',150,510,'NADH',{s:1,kind:'key',sub:'≈ 3 ATP (ใหม่ 2.5)'});E('nadh','coq','cause','ส่ง e-',1,{d:300});
+  N('fad',400,510,'FADH2',{s:2,kind:'key',sub:'≈ 2 ATP (ใหม่ 1.5)'});E('fad','coq','cause','ส่ง e-',2);
+  E('coq','cb','cause','e-',2,{d:200});E('cb','cc','cause','e-',2,{d:350});E('cc','ca','cause','e-',2,{d:500});
+  N('o2',725,510,'O2 → H2O',{s:3,sub:'ตัวรับ e- ตัวสุดท้าย'});E('ca','o2','cause','ส่ง e- ให้',3);
+  N('hp',530,140,'H+ สะสม',{s:3,sub:'ถูกปั๊มออกมา'});E('cc','hp','cause','พลังงาน e- ปั๊ม',3,{d:300});
+  N('syn',900,330,'ATP synthase',{s:4,kind:'key'});E('hp','syn','cause','ไหลกลับผ่าน',4,{d:200});
+  N('atp',900,510,'ATP',{s:4,kind:'key',big:true,sub:'ADP + Pi'});E('syn','atp','cause','สร้าง',4,{d:400});
+}
+/* ch5 fermentation & probiotics */
+function b5(){
+  N('pyr',150,110,'Pyruvate',{s:1,kind:'key',sub:'จาก glycolysis'});
+  N('lac',500,110,'Lactic acid',{s:1,sub:'กล้ามเนื้อเมื่อยล้า · แบคทีเรีย'});E('pyr','lac','cause','LDH เปลี่ยนเป็น',1,{d:200});
+  N('eth',150,300,'Ethanol + CO2',{s:2,sub:'ยีสต์'});E('pyr','eth','cause','ยีสต์เปลี่ยนเป็น',2);
+  N('nad',500,300,'คืน NAD+',{s:2,kind:'key',sub:'glycolysis เดินต่อ · 2 ATP'});E('lac','nad','cause','ได้',2,{d:300});E('eth','nad','cause','ได้',2,{d:450});
+  N('lab',860,110,'Lactic acid bacteria',{s:3,sub:'GRAS · bacteriocin'});E('lab','lac','cause','หมักได้',3);
+  N('pro',860,300,'Probiotics',{s:3,kind:'key',sub:'จุลินทรีย์มีชีวิต'});E('lab','pro','part','ส่วนใหญ่คือ',3,{d:300});
+  N('pre',500,470,'Prebiotics',{s:4,sub:'inulin · FOS · xylitol'});E('pre','pro','cause','เป็นอาหารของ',4);
+  N('syn',860,560,'Synbiotic',{s:5,kind:'key',sub:'pro + pre ร่วมกัน'});E('pro','syn','part','',5);E('pre','syn','part','',5,{d:200});
+}
+const CH=[
+ {tab:'ภาพรวม',kick:'บทที่ 1 · ภาพรวม',build:b1,steps:[
+  {t:'เริ่มที่ cytoplasm',p:'กลูโคส (6C) เข้าสู่ glycolysis ใน cytoplasm ถูกสลายเป็น pyruvate (3C) 2 โมเลกุล ขั้นนี้ไม่ใช้ O2',c:['Glucose','→','Glycolysis','→','2 Pyruvate']},
+  {t:'มี O2 จึงเข้า mitochondria',p:'pyruvate เข้า mitochondria แล้วถูกเปลี่ยนเป็น acetyl CoA (2C) ปล่อย CO2 ออก จากนั้นเข้าสู่ Krebs cycle ใน matrix',c:['Pyruvate','→','Acetyl CoA','→','Krebs cycle']},
+  {t:'อิเล็กตรอนพลังงานสูง',p:'Krebs cycle สร้าง NADH และ FADH2 จำนวนมาก ซึ่งส่งอิเล็กตรอนเข้าสู่ electron transport chain ที่เยื่อหุ้มชั้นใน โดยมี O2 เป็นตัวรับอิเล็กตรอนตัวสุดท้าย',c:['NADH · FADH2','→','ETC','◇','O2']},
+  {t:'ATP ส่วนใหญ่มาจาก ETC',p:'glycolysis ได้ 2 ATP, Krebs ได้ 2 GTP ส่วน ETC สร้าง ATP ที่เหลือเกือบทั้งหมด รวมเป็น 36/38 ATP ต่อกลูโคส (หรือ 30/32 ตามการคำนวณใหม่)',c:['ETC','→','ATP ส่วนใหญ่']},
+  {t:'ถ้าขาด O2',p:'ETC หยุด pyruvate จึงไม่เข้า mitochondria แต่ถูกหมัก (fermentation) เป็น lactic acid หรือ ethanol + CO2 ได้เพียง 2 ATP จาก glycolysis',c:['ขาด O2','→','Fermentation','→','2 ATP']}]},
+ {tab:'Glycolysis',kick:'บทที่ 2 · Glycolysis',build:b2,steps:[
+  {t:'Hexokinase ติดป้าย',p:'hexokinase ย้าย phosphate จาก ATP ไปที่กลูโคส ได้ glucose-6-phosphate ซึ่งออกจากเซลล์ไม่ได้ ใช้ไป 1 ATP',c:['Hexokinase','→','Glucose-6-P']},
+  {t:'PFK จุดควบคุมหลัก',p:'phosphofructokinase (PFK) เติม phosphate อีกตัว ใช้ ATP อีก 1 โมเลกุล เป็น enzyme ที่ควบคุมความเร็วของ glycolysis',c:['PFK','→','Fructose-1,6-BP']},
+  {t:'แยก 6C เป็น 3C สองชิ้น',p:'fructose-1,6-bisphosphate แยกเป็น G3P (3C) 2 โมเลกุล แล้ว G3P ถูกออกซิไดซ์ ได้ NADH 2 โมเลกุล',c:['6C','→','3C × 2','→','2 NADH']},
+  {t:'Pyruvate kinase สร้าง ATP',p:'ขั้นท้าย ๆ สร้าง ATP จาก substrate โดยตรง (substrate-level phosphorylation) 3C ละ 2 ATP รวม 4 ATP โดย pyruvate kinase เป็น enzyme ขั้นสุดท้าย',c:['Pyruvate kinase','→','4 ATP','→','2 Pyruvate']},
+  {t:'บัญชีสุดท้าย',p:'ใช้ 2 ATP สร้าง 4 ATP ได้สุทธิ 2 ATP และ 2 NADH เกิดใน cytoplasm และไม่ใช้ O2 จึงเกิดได้ทั้งมีและไม่มี O2',c:['4 − 2','→','สุทธิ 2 ATP']}]},
+ {tab:'Krebs cycle',kick:'บทที่ 3 · Krebs cycle',build:b3,steps:[
+  {t:'2C + 4C = 6C',p:'acetyl CoA (2C) รวมกับ oxaloacetate (4C) ได้ citrate (6C) เป็นจุดเริ่มของวงจร',c:['Acetyl CoA','+','Oxaloacetate','→','Citrate']},
+  {t:'ดึง CO2 ครั้งแรก',p:'citrate ถูกปรับรูปแล้วดึง CO2 ออก 1 โมเลกุลเหลือ 5C (α-ketoglutarate) ได้ NADH',c:['6C','→','5C','+','CO2 + NADH']},
+  {t:'ดึง CO2 ครั้งที่สอง',p:'ดึง CO2 อีก 1 โมเลกุลเหลือ 4C (succinyl CoA) ได้ NADH อีก',c:['5C','→','4C','+','CO2 + NADH']},
+  {t:'สร้าง oxaloacetate คืน',p:'4C ถูกปรับรูปกลับเป็น oxaloacetate เพื่อรับ acetyl CoA ตัวใหม่ ระหว่างทางได้ GTP 1, FADH2 1 และ NADH อีก 1',c:['Succinyl CoA','→','Oxaloacetate','+','GTP · FADH2 · NADH']},
+  {t:'สรุปต่อรอบ',p:'1 รอบได้ 3 NADH · 1 FADH2 · 1 GTP · 2 CO2 กลูโคส 1 โมเลกุลให้ acetyl CoA 2 ตัว จึงวน 2 รอบ ไขมันและ amino acid ก็เข้าวงจรนี้ได้',c:['1 กลูโคส','→','2 รอบ']}]},
+ {tab:'ETC',kick:'บทที่ 4 · Electron transport chain',build:b4,steps:[
+  {t:'NADH ส่งอิเล็กตรอน',p:'NADH ส่งอิเล็กตรอนเข้าสู่ ETC ที่เยื่อหุ้มชั้นในของ mitochondria โดยผ่าน CoQ เป็นด่านแรก',c:['NADH','→','CoQ']},
+  {t:'ส่งต่อเป็นทอด ๆ',p:'อิเล็กตรอนส่งต่อจาก CoQ ไป cytochrome b, c และ a+a3 ตามลำดับ ส่วน FADH2 เข้าทีหลัง NADH จึงได้ ATP น้อยกว่า',c:['CoQ','→','Cyt b','→','Cyt c','→','Cyt a+a3']},
+  {t:'O2 รับปลายทาง',p:'O2 รับอิเล็กตรอนตัวสุดท้ายแล้วรวมกับ H+ เป็นน้ำ ระหว่างทางพลังงานถูกใช้ปั๊ม H+ ออกไปสะสมใน intermembrane space',c:['Cyt a+a3','→','O2 → H2O']},
+  {t:'Chemiosmosis',p:'H+ ไหลกลับเข้า matrix ผ่าน ATP synthase เหมือนน้ำไหลผ่านกังหัน ขับให้ ADP รวมกับ Pi เป็น ATP เรียกว่า oxidative phosphorylation',c:['H+ ไหลกลับ','→','ATP synthase','→','ATP']},
+  {t:'นับ ATP',p:'NADH 1 โมเลกุลได้ราว 3 ATP และ FADH2 ได้ราว 2 ATP (ค่าใหม่ 2.5 และ 1.5) ไซยาไนด์ยับยั้ง cytochrome a+a3 ทำให้การสร้าง ATP หยุดทันที',c:['ไซยาไนด์','⊣','Cyt a+a3']}]},
+ {tab:'การหมัก',kick:'บทที่ 5 · Fermentation และ probiotics',build:b5,steps:[
+  {t:'กล้ามเนื้อขาด O2',p:'lactate dehydrogenase (LDH) เปลี่ยน pyruvate เป็น lactic acid ในกล้ามเนื้อลายที่ทำงานหนักจนขาด O2',c:['Pyruvate','→','Lactic acid']},
+  {t:'ยีสต์ และเป้าหมายจริง',p:'ยีสต์หมัก pyruvate เป็น ethanol + CO2 ทั้งสองทางมีเป้าหมายเดียวกันคือคืน NAD+ ให้ glycolysis เดินต่อได้ แม้ได้แค่ 2 ATP',c:['Fermentation','→','NAD+ กลับคืน','→','Glycolysis เดินต่อ']},
+  {t:'แบคทีเรียกรดแลกติก',p:'Lactobacillus และพวกพ้องหมักน้ำตาลเป็น lactic acid ปลอดภัย (GRAS) สร้าง bacteriocin ยับยั้งเชื้ออื่น จึงใช้เป็น probiotics',c:['Probiotics','◇','Lactic acid bacteria']},
+  {t:'Prebiotics คืออาหาร',p:'prebiotics เช่น inulin, FOS ร่างกายย่อยไม่ได้ แต่เป็นอาหารของจุลินทรีย์ดีในลำไส้ใหญ่ ต่างจาก probiotics ที่เป็นตัวจุลินทรีย์',c:['Prebiotics','→','Probiotics']},
+  {t:'ใช้ร่วมกัน = Synbiotic',p:'ผลิตภัณฑ์ที่ใส่ทั้ง probiotics และ prebiotics เรียก synbiotic ส่วนอาการเมื่อยหลังออกกำลังกายหนักเกี่ยวกับ lactic acid ที่สะสมในกล้ามเนื้อ',c:['Synbiotic','◇','Probiotics','+','Prebiotics']}]},
+ {tab:'แบบฝึก TPAT1',kick:'บทที่ 6 · แบบฝึก',quiz:true}
+];
+
+/* ---------- player ---------- */
+const st={ch:0,step:1,built:-1,auto:null};
+const $=id=>document.getElementById(id);
+const tabs=$('tabs');
+CH.forEach((c,i)=>{const b=document.createElement('button');b.className='tab';b.innerHTML=`<span class="n">${i+1}</span>${c.tab}`;b.onclick=()=>{stopAuto();go(i,1);};tabs.appendChild(b);});
+
+function build(){
+  svg.innerHTML='';nodes={};
+  const defs=S('defs',null,svg);
+  const m1=S('marker',{id:'m-cause',viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:12,markerHeight:12,markerUnits:'userSpaceOnUse',orient:'auto'},defs);S('path',{d:'M0 0L10 5L0 10z',class:'mk-cause'},m1);
+  const m2=S('marker',{id:'m-part',viewBox:'0 0 14 14',refX:7,refY:7,markerWidth:15,markerHeight:15,markerUnits:'userSpaceOnUse',orient:'auto'},defs);S('circle',{cx:7,cy:7,r:5,class:'mk-part'},m2);
+  const m3=S('marker',{id:'m-inhib',viewBox:'0 0 22 22',refX:20,refY:11,markerWidth:24,markerHeight:24,markerUnits:'userSpaceOnUse',orient:'auto'},defs);S('circle',{cx:11,cy:11,r:8.5,class:'mk-inhib'},m3);S('path',{d:'M5 5L17 17',class:'mk-inhib'},m3);
+  L.edge=S('g',null,svg);L.node=S('g',null,svg);L.lab=S('g',null,svg);
+  helix=null;
+  CH[st.ch].build();
+  st.built=st.ch;
+}
+function reveal(){
+  svg.querySelectorAll('[data-s]').forEach(e=>{const s=+e.dataset.s;const on=s<=st.step;
+    if(on&&!e.classList.contains('on')){e.classList.add('on');
+      if(e.classList.contains('e')){const d=reduce?0:900+(parseFloat(e.style.transitionDelay)||0);clearTimeout(e._t);e._t=setTimeout(()=>e.classList.add('done'),d);}}
+    else if(!on){e.classList.remove('on','done');clearTimeout(e._t);}
+    e.classList.toggle('now',s===st.step&&st.step>0);});
+}
+const SYM={'→':'cause','←':'cause','⊣':'inhib','◇':'part','═':'pair','≡':'pair','◆':'sep'};
+function renderChain(c){
+  const el=$('chain');el.innerHTML='';if(!c)return;
+  const l=document.createElement('span');l.className='lbl';l.textContent='ลูกโซ่ความสัมพันธ์';el.appendChild(l);
+  c.forEach(t=>{const s=document.createElement('span');if(SYM[t]){s.className='sym '+SYM[t];if(t==='◆')s.textContent='·';else s.innerHTML=ic(SYM[t],t==='←');}else{s.className='tok';s.textContent=t;}el.appendChild(s);});
+}
+function go(ch,step){
+  st.ch=ch;st.step=step;const c=CH[ch];
+  [...tabs.children].forEach((b,i)=>b.setAttribute('aria-current',i===ch?'true':'false'));
+  tabs.children[ch].scrollIntoView({block:'nearest',inline:'nearest'});
+  $('kicker').textContent=c.kick;
+  if(c.quiz){svg.hidden=true;$('quiz').hidden=false;retrig($('quiz'));retrig($('swap'));$('controls').hidden=true;$('auto').hidden=true;$('score').hidden=false;
+    $('stitle').textContent='แบบฝึก TPAT1 เชื่อมโยง';
+    $('stext').textContent='ส่วน ก ระบุรหัสความสัมพันธ์ของคำซ้ายไปหาคำขวา ส่วน ข เลือกคำตอบที่ถูกที่สุด ทุกข้อเฉลยทันทีพร้อมเหตุผล';
+    renderChain(null);stopHelix();updateScore();return;}
+  svg.hidden=false;$('quiz').hidden=true;$('controls').hidden=false;$('auto').hidden=false;$('score').hidden=true;
+  if(st.built!==ch){build();retrig(svg);}
+  void svg.getBoundingClientRect();
+  reveal();
+  const s=c.steps[step-1];
+  $('stitle').textContent=s.t;$('stext').textContent=s.p;renderChain(s.c);retrig($('swap'));
+  const dots=$('dots');dots.innerHTML='';
+  c.steps.forEach((_,i)=>{const d=document.createElement('button');d.className='dot'+(i<step?' on':'');d.setAttribute('aria-label','ขั้นที่ '+(i+1));d.onclick=()=>{stopAuto();go(ch,i+1);};dots.appendChild(d);});
+  $('prev').disabled=(ch===0&&step===1);
+  $('next').textContent=step<c.steps.length?'ถัดไป →':'บทถัดไป →';
+  if(helix)startHelix();else stopHelix();
+}
+function next(){const c=CH[st.ch];if(c.quiz)return;if(st.step<c.steps.length)go(st.ch,st.step+1);else go(st.ch+1,1);}
+function prev(){if(st.step>1)go(st.ch,st.step-1);else if(st.ch>0){const p=CH[st.ch-1];go(st.ch-1,p.quiz?1:p.steps.length);}}
+$('next').onclick=()=>{stopAuto();next();};
+$('prev').onclick=()=>{stopAuto();prev();};
+function stopAuto(){if(st.auto){clearInterval(st.auto);st.auto=null;$('auto').textContent='▶ เล่นอัตโนมัติ';}}
+$('auto').onclick=()=>{if(st.auto){stopAuto();return;}$('auto').textContent='❚❚ หยุดเล่น';st.auto=setInterval(()=>{if(CH[st.ch+1]&&CH[st.ch+1].quiz&&st.step>=CH[st.ch].steps.length){stopAuto();return;}next();},5200);};
+document.addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('.quiz'))return;if(e.key==='ArrowRight'){stopAuto();next();}else if(e.key==='ArrowLeft'){stopAuto();prev();}});
+
+function startHelix(){if(reduce||raf)return;let last=performance.now();const loop=t=>{if(!helix||document.hidden){raf=0;return;}phase+=(t-last)*0.0009;last=t;helix(phase);raf=requestAnimationFrame(loop);};raf=requestAnimationFrame(loop);}
+function stopHelix(){if(raf){cancelAnimationFrame(raf);raf=0;}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&helix)startHelix();});
+
+/* ---------- fullscreen ---------- */
+const app=$('app'),fsBtn=$('fs');
+const ICON_IN='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+const ICON_OUT='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+let savedY=null;function setFull(on){if(on&&savedY===null){savedY=window.scrollY||0;window.scrollTo(0,0);}else if(!on&&savedY!==null){const y=savedY;savedY=null;requestAnimationFrame(()=>window.scrollTo(0,y));}app.classList.toggle('full',on);if(on)app.scrollTop=0;document.documentElement.style.overflow=on?'hidden':'';
+  fsBtn.innerHTML=(on?ICON_OUT+'ย่อหน้าจอ':ICON_IN+'เต็มจอ');fsBtn.setAttribute('aria-pressed',on?'true':'false');}
+const fsEl=()=>document.fullscreenElement||document.webkitFullscreenElement;
+async function toggleFull(){
+  if(app.classList.contains('full')){
+    if(fsEl()){try{await (document.exitFullscreen||document.webkitExitFullscreen).call(document);}catch(e){}}
+    setFull(false);return;}
+  setFull(true);
+  const req=app.requestFullscreen||app.webkitRequestFullscreen;
+  if(req){try{await req.call(app);}catch(e){}}
+}
+fsBtn.onclick=toggleFull;
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{if(!fsEl()&&app.classList.contains('full'))setFull(false);}));
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&app.classList.contains('full')&&!fsEl())setFull(false);
+  else if((e.key==='f'||e.key==='F')&&!e.metaKey&&!e.ctrlKey&&!e.altKey)toggleFull();});
+setFull(false);
+const moBtn=$('mo');
+function setMoLabel(){moBtn.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>'+(reduce?'เคลื่อนไหว: ปิด':'เคลื่อนไหว: เปิด');moBtn.setAttribute('aria-pressed',reduce?'false':'true');}
+moBtn.onclick=()=>{reduce=!reduce;try{localStorage.setItem('motion',reduce?'off':'on');}catch(e){}
+  document.documentElement.classList.toggle('still',reduce);setMoLabel();stopHelix();
+  if(!CH[st.ch].quiz){st.built=-1;go(st.ch,st.step);}};
+setMoLabel();
+
+/* ---------- quiz ---------- */
+const REL=[{k:'ก',s:'→',t:'ทำให้เกิด / นำไปสู่',c:'cause'},{k:'ข',s:'◇',t:'ประกอบด้วย / มีชนิดย่อยคือ',c:'part'},{k:'ค',s:'⊣',t:'ยับยั้ง / ทำลาย / ป้องกัน',c:'inhib'},{k:'ง',s:'═',t:'จับคู่สมกัน',c:'pair'},{k:'จ',s:'✕',t:'ไม่สัมพันธ์โดยตรง',c:'none'}];
+const PA=[
+ ['Glycolysis','Pyruvate',0,'glycolysis สลายกลูโคสได้ pyruvate 2 โมเลกุล'],
+ ['Niacin · vitamin B3','NAD+',1,'NAD+ สร้างจาก niacin ซึ่งเป็นส่วนประกอบของ coenzyme นี้'],
+ ['การขาด O2','Krebs cycle',2,'ไม่มี O2 ETC หยุด NAD+ ไม่ถูกสร้างคืน Krebs cycle จึงหยุดตาม'],
+ ['ไซยาไนด์','Cytochrome a+a3',2,'ไซยาไนด์ยับยั้ง cytochrome a+a3 อิเล็กตรอนจึงส่งไปถึง O2 ไม่ได้'],
+ ['ATP synthase','ATP',0,'H+ ไหลผ่าน ATP synthase ขับให้ ADP รวมกับ Pi เป็น ATP'],
+ ['Krebs cycle','Mitochondria',1,'Krebs cycle เกิดใน matrix ของ mitochondria'],
+ ['Prebiotics','Probiotics',0,'prebiotics เป็นอาหารที่ส่งเสริมการเติบโตของ probiotics'],
+ ['Glycolysis','O2',4,'glycolysis ไม่ใช้ O2 จึงเกิดได้ทั้งมีและไม่มี O2'],
+ ['Lactate dehydrogenase','Lactic acid',0,'LDH เปลี่ยน pyruvate เป็น lactic acid'],
+ ['Lactobacillus','Probiotics',1,'Lactobacillus เป็นจุลินทรีย์ชนิดหนึ่งที่ใช้เป็น probiotics']];
+const PB=[
+ ['กลูโคส 1 โมเลกุลผ่าน glycolysis ได้ ATP สุทธิกี่โมเลกุล',['1','2','4','36'],1,'ใช้ไป 2 สร้าง 4 ได้สุทธิ 2 ATP พร้อม 2 NADH'],
+ ['Krebs cycle 1 รอบให้ผลผลิตใดครบถ้วนที่สุด',['2 NADH และ 1 ATP','3 NADH, 1 FADH2 และ 1 GTP','1 NADH และ 2 FADH2','6 CO2 และ 2 ATP'],1,'ต่อรอบได้ 3 NADH, 1 FADH2, 1 GTP และ CO2 2 โมเลกุล'],
+ ['ถ้าเติมสารที่ยับยั้ง cytochrome a+a3 ข้อใดเกิดขึ้นเป็นลำดับแรก',['NADH สะสมเพราะไม่ถูกเปลี่ยนกลับเป็น NAD+','ATP จาก ETC เพิ่มขึ้นเพราะอิเล็กตรอนสะสม','เซลล์ใช้ O2 มากขึ้นเพื่อชดเชยพลังงาน','glycolysis หยุดทันทีเพราะไม่มี O2 ในเซลล์'],0,'อิเล็กตรอนส่งต่อไม่ได้ NADH จึงคั่งค้าง ตามด้วย Krebs cycle และการสร้าง ATP หยุด'],
+ ['NADH 1 โมเลกุลที่เข้าสู่ ETC ให้ ATP ประมาณเท่าใดตามค่าดั้งเดิม',['1','2','3','4'],2,'NADH ≈ 3 ATP ส่วน FADH2 ≈ 2 ATP เพราะเข้าระบบที่ขั้นต่ำกว่า'],
+ ['เหตุใดกล้ามเนื้อที่ขาด O2 จึงเปลี่ยน pyruvate เป็น lactic acid',['เพื่อสร้าง ATP เพิ่มผ่าน ETC','เพื่อคืน NAD+ ให้ glycolysis เดินต่อได้','เพื่อเก็บพลังงานไว้ใน lactic acid','เพื่อขับ CO2 ออกจากเซลล์'],1,'การหมักไม่ได้ ATP เพิ่ม แต่คืน NAD+ ให้ glycolysis สร้าง ATP 2 โมเลกุลต่อไปได้'],
+ ['ข้อใดเป็น prebiotics',['Lactobacillus','Saccharomyces boulardii','Inulin','Bifidobacterium'],2,'inulin เป็นอาหารที่ร่างกายย่อยไม่ได้ ส่วนตัวเลือกอื่นเป็นจุลินทรีย์ จึงเป็น probiotics'],
+ ['ATP 36 กับ 38 โมเลกุลต่อกลูโคสต่างกันเพราะเหตุใด',['ชนิดของ shuttle ที่ขน NADH เข้า mitochondria','จำนวนรอบของ Krebs cycle ที่เกิดขึ้นต่อกลูโคส','ปริมาณ O2 ที่ไปถึง cytochrome a+a3','ชนิดของน้ำตาลที่เซลล์นำมาสลายเป็นพลังงาน'],0,'glycerol phosphate shuttle ได้ 2 ATP ต่อ NADH ส่วน malate–aspartate shuttle ได้ 3 ATP']];
+const KEY=['ก','ข','ค','ง'];PA.forEach(q=>{if(q[2]===1)[q[0],q[1]]=[q[1],q[0]];});
+const sc={a:0,an:0,b:0,bn:0};
+function buildQuiz(){
+  const q=$('quiz');
+  q.innerHTML=`<div><h3>ส่วน ก · รหัสความสัมพันธ์</h3><p class="lead">อ่านจากคำซ้ายไปหาคำขวา แล้วเลือกรหัสที่ตรงที่สุด</p></div>
+  <div class="codes">${REL.map(r=>`<span>${ic(r.c)} ${r.k} = ${r.t}</span>`).join('')}</div>
+  <div class="qa" id="qa"></div>
+  <div><h3>ส่วน ข · เลือกคำตอบ</h3><p class="lead">คิดเป็นลูกโซ่เหตุและผลจากเนื้อหาทั้ง 5 บท</p></div>
+  <div class="qa" id="qb"></div>
+  <div><button class="btn" id="reset">เริ่มทำใหม่</button></div>`;
+  const qa=$('qa');
+  PA.forEach((it,i)=>{const d=document.createElement('div');d.className='item';
+    d.innerHTML=`<div class="pairq"><span class="no">${String(i+1).padStart(2,'0')}</span><span class="t">${it[0]}</span><span class="q">?</span><span class="t">${it[1]}</span></div><div class="rels"></div>`;
+    const rels=d.querySelector('.rels');
+    REL.forEach((r,j)=>{const b=document.createElement('button');b.className='rel '+r.c;b.innerHTML=`<span class="s">${ic(r.c)}</span>${r.k} ${RW[r.c]}`;b.setAttribute('aria-label',r.k+' '+r.t);
+      b.onclick=()=>{rels.querySelectorAll('button').forEach((x,k)=>{x.disabled=true;if(k===it[2])x.classList.add('right');});
+        const ok=j===it[2];if(!ok)b.classList.add('wrong');sc.an++;if(ok)sc.a++;
+        const f=document.createElement('p');f.className='fb '+(ok?'ok':'no');const R=REL[it[2]];
+        f.innerHTML=`<b>${ok?'ถูกต้อง':'ยังไม่ใช่'}</b> · คำตอบ ${R.k} ${ic(R.c)} ${RW[R.c]} · ${it[3]}`;d.appendChild(f);updateScore();};
+      rels.appendChild(b);});
+    qa.appendChild(d);});
+  const qb=$('qb');
+  PB.forEach((it,i)=>{const d=document.createElement('div');d.className='item';
+    d.innerHTML=`<p class="qtext"><span class="no">${String(i+1).padStart(2,'0')}</span>${it[0]}</p><div class="opts"></div>`;
+    const ops=d.querySelector('.opts');
+    it[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span class="k">${KEY[j]}.</span><span>${o}</span>`;
+      b.onclick=()=>{ops.querySelectorAll('button').forEach((x,k)=>{x.disabled=true;if(k===it[2])x.classList.add('right');});
+        const ok=j===it[2];if(!ok)b.classList.add('wrong');sc.bn++;if(ok)sc.b++;
+        const f=document.createElement('p');f.className='fb '+(ok?'ok':'no');f.innerHTML=`<b>${ok?'ถูกต้อง':'ยังไม่ใช่'}</b> · ตอบ ${KEY[it[2]]}. ${it[3]}`;d.appendChild(f);updateScore();};
+      ops.appendChild(b);});
+    qb.appendChild(d);});
+  $('reset').onclick=()=>{sc.a=sc.an=sc.b=sc.bn=0;buildQuiz();updateScore();$('quiz').scrollIntoView({block:'start'});};
+}
+function updateScore(){$('score').innerHTML=`<div><b>${sc.a}/${PA.length}</b><span>ส่วน ก · ตอบแล้ว ${sc.an}</span></div><div><b>${sc.b}/${PB.length}</b><span>ส่วน ข · ตอบแล้ว ${sc.bn}</span></div>`;}
+buildQuiz();
+
+window.__pcheck=()=>{const out=[];const R=[];svg.querySelectorAll('.node.on rect,.pill.on rect,.elab.on rect').forEach(r=>{const b=r.getBoundingClientRect();if(b.width)R.push([b,r.parentNode.textContent.slice(0,24)]);});
+ for(let i=0;i<R.length;i++)for(let j=i+1;j<R.length;j++){const a=R[i][0],c=R[j][0];if(a.left<c.right-2&&c.left<a.right-2&&a.top<c.bottom-2&&c.top<a.bottom-2)out.push(R[i][1]+' × '+R[j][1]);}
+ const sb=svg.getBoundingClientRect();R.forEach(([b,t])=>{if(b.left<sb.left-1||b.right>sb.right+1||b.top<sb.top-1||b.bottom>sb.bottom+1)out.push('OUT '+t);});return out;};
+go(0,1);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(!CH[st.ch].quiz){st.built=-1;go(st.ch,st.step);}});
+
+window.__pcheck2=()=>{const out=[];const vis=[...svg.querySelectorAll('.node.on')].map(g=>({id:g.getAttribute('data-id'),r:g.querySelector('rect').getBoundingClientRect(),t:g.textContent.slice(0,22)}));
+ const es=[...svg.querySelectorAll('.e.on')].filter(g=>g.__i);const deg={};es.forEach(g=>{deg[g.__i.a]=1;deg[g.__i.b]=1;});
+ vis.forEach(n=>{if(!deg[n.id])out.push('ISO '+n.t);});
+ es.forEach(g=>{const i=g.__i;if(!i.label)out.push('NOLAB '+i.a+'>'+i.b);
+  const p=g.querySelector('path');if(p){const Ln=p.getTotalLength(),m=p.getScreenCTM();for(let k=1;k<24;k++){const q=p.getPointAtLength(Ln*k/24);const x=q.x*m.a+q.y*m.c+m.e,y=q.x*m.b+q.y*m.d+m.f;vis.forEach(n=>{if(n.id===i.a||n.id===i.b)return;const r=n.r;if(x>r.left+1&&x<r.right-1&&y>r.top+1&&y<r.bottom-1)out.push('CROSS '+i.a+'>'+i.b+' over '+n.t);});}}
+  if(i.label&&g.__lab){const dx=i.en[0]-i.st[0],dy=i.en[1]-i.st[1],len=Math.hypot(dx,dy);const bb=g.__lab.getBBox();const ext=Math.abs(bb.width*dx/len)+Math.abs(bb.height*dy/len);if(len<ext+16)out.push('SHORT '+i.a+'>'+i.b+' '+Math.round(len)+'<'+Math.round(ext+16));}});
+ svg.querySelectorAll('.pill.on').forEach(p=>out.push('PILL '+p.textContent.slice(0,24)));
+ return [...new Set(out)];};
+</script>
+<script>document.addEventListener("keydown",e=>{if(e.key==="Escape"||e.key==="f"||e.key==="F")e.stopImmediatePropagation();},true);try{setFull(true);document.getElementById("fs").style.display="none";}catch(e){}</script></body></html>

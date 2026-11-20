@@ -1,0 +1,755 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}.back{display:none!important}</style></head><body><style>.top .back{display:none!important}.wrap{padding-block:10px 24px!important}</style><title>DNA · TPAT1 เชื่อมโยง</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: lab-notebook graph-paper stage where a TPAT1-style concept map builds step by step; narration + relation chain in a side panel. Base colors follow Sanger chromatogram convention (A green, C blue, G black, T red). */
+:root{
+  --bg:#E8EDF0; --surface:#FBFCFD; --ink:#13212C; --muted:#56687A; --line:#C3CFD8; --grid:#E2E9EE;
+  --cause:#1E4F8F; --part:#6A7C8B; --inhib:#C7372F; --pair:#0B807C;
+  --keyFill:#E1EAF5; --ok:#1C7F46; --bad:#C2372E; --okBg:#E3F3E9; --badBg:#FBE6E4;
+  --bA:#178A3E; --bC:#2158C4; --bG:#1B1B1B; --bT:#D02B23; --bU:#8B3FC0;
+  --sS:#2158C4; --sR:#B5730C; --agar:#F2E2B0; --dead:#F5D6E1; --new:#0B807C;
+  --fd:"Anuphan","IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
+  --fb:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
+  --fm:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C141B; --surface:#131E27; --ink:#E3EBF1; --muted:#93A6B5; --line:#2B3B48; --grid:#17242E;
+  --cause:#86B6F2; --part:#8FA1AF; --inhib:#FF7A70; --pair:#4AC9C1;
+  --keyFill:#1A2D41; --ok:#5ED18E; --bad:#FF7D73; --okBg:#123224; --badBg:#3A1A1A;
+  --bA:#52D686; --bC:#78AAFF; --bG:#E4E8EC; --bT:#FF716A; --bU:#C78EF8;
+  --sS:#78AAFF; --sR:#F0B44C; --agar:#4A3F22; --dead:#4C2335; --new:#4AC9C1; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C141B; --surface:#131E27; --ink:#E3EBF1; --muted:#93A6B5; --line:#2B3B48; --grid:#17242E;
+  --cause:#86B6F2; --part:#8FA1AF; --inhib:#FF7A70; --pair:#4AC9C1;
+  --keyFill:#1A2D41; --ok:#5ED18E; --bad:#FF7D73; --okBg:#123224; --badBg:#3A1A1A;
+  --bA:#52D686; --bC:#78AAFF; --bG:#E4E8EC; --bT:#FF716A; --bU:#C78EF8;
+  --sS:#78AAFF; --sR:#F0B44C; --agar:#4A3F22; --dead:#4C2335; --new:#4AC9C1; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6}
+.wrap{max-width:1360px;margin:0 auto;padding-block:16px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:14px}
+
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+.eyebrow{margin:0;font:500 13px var(--fm);letter-spacing:.06em;color:var(--muted)}
+h1{margin:2px 0 0;font:700 32px/1.15 var(--fd);text-wrap:balance}
+h1 em{font-style:normal;color:var(--cause)}
+.legend{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px}
+.legend li{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--muted)}
+.legend b{color:var(--ink);font-weight:600}
+.legend svg{width:46px;height:16px;flex:none;overflow:visible}
+
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{flex:none;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:8px 14px;font:500 16px var(--fb);cursor:pointer}
+.tab .n{font:600 13px var(--fm);color:var(--muted)}
+.tab[aria-current="true"]{background:var(--cause);border-color:var(--cause);color:var(--surface)}
+.tab[aria-current="true"] .n{color:var(--surface);opacity:.75}
+.tab:focus-visible,.btn:focus-visible,.opt:focus-visible,.rel:focus-visible{outline:3px solid var(--pair);outline-offset:2px}
+
+.player{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}
+@media (max-width:980px){.player{grid-template-columns:minmax(0,1fr)}}
+.stage{min-width:0;background-color:var(--surface);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:25px 25px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+#svg{display:block;width:100%;height:auto}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+@media (min-width:981px){.panel{position:sticky;top:12px;min-height:420px}}
+.kicker{margin:0;font:600 13px var(--fm);letter-spacing:.05em;color:var(--cause)}
+.panel h2{margin:0;font:700 25px/1.3 var(--fd);text-wrap:balance}
+.stext{margin:0;font-size:17.5px;line-height:1.75}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.chain:empty{display:none}
+.chain .lbl{width:100%;font:600 12px var(--fm);letter-spacing:.06em;color:var(--muted)}
+.tok{border:1px solid var(--line);border-radius:8px;padding:3px 10px;font-size:15px;background:var(--bg)}
+.sym{font:700 20px var(--fd);line-height:1}
+.sym.cause{color:var(--cause)}.sym.part{color:var(--part)}.sym.inhib{color:var(--inhib)}.sym.pair{color:var(--pair)}.sym.sep{color:var(--muted);font-size:16px}
+.controls{margin-top:auto;display:flex;align-items:center;gap:10px}
+.dots{flex:1;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--line);border:0;padding:0;cursor:pointer}
+.dot.on{background:var(--cause)}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:10px 16px;font:600 16px var(--fb);cursor:pointer}
+.btn.primary{background:var(--cause);border-color:var(--cause);color:var(--surface)}
+.btn.ghost{background:transparent;color:var(--muted);font-weight:500}
+.btn:disabled{opacity:.4;cursor:default}
+.score{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.score div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
+.score b{display:block;font:700 28px var(--fd);font-variant-numeric:tabular-nums}
+.score span{font-size:14px;color:var(--muted)}
+
+/* ---------- SVG ---------- */
+.bA{--c:var(--bA)}.bC{--c:var(--bC)}.bG{--c:var(--bG)}.bT{--c:var(--bT)}.bU{--c:var(--bU)}
+.cS{--c:var(--sS)}.cR{--c:var(--sR)}.cX{--c:var(--cause)}
+.rv{opacity:0;transform:translateY(10px);transform-box:fill-box;transform-origin:center;transition:opacity .5s ease,transform .5s ease}
+.rv.on{opacity:1;transform:none}
+.nl{font:600 22px var(--fd);fill:var(--ink)}
+.nl.big{font-size:30px;font-weight:700}
+.ns{font:400 15px var(--fb);fill:var(--muted)}
+.ny{font:500 13px var(--fm);fill:var(--cause)}
+.node rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.node.key rect{fill:var(--keyFill);stroke:var(--cause);stroke-width:2}
+.node.now:not(.base):not(.chip) rect{stroke:var(--cause);stroke-width:3}
+.node.base rect,.node.chip rect{stroke:var(--c);stroke-width:2.5}
+.node.base .nl,.node.chip .nl{fill:var(--c)}
+.e path{fill:none;stroke-linecap:round}
+.e.cause path{stroke:var(--cause);stroke-width:2.5}
+.e.part path{stroke:var(--part);stroke-width:2;stroke-dasharray:6 6}
+.e.inhib path{stroke:var(--inhib);stroke-width:2.5}
+.e.pair path{stroke:var(--pair);stroke-width:2}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s ease}
+.on .draw{stroke-dashoffset:0}
+.e.done.cause .main{marker-end:url(#m-cause)}
+.e.done.part .main{marker-end:url(#m-part)}
+.e.done.inhib .main{marker-end:url(#m-inhib)}
+.mk-cause{fill:var(--cause)}.mk-part{fill:var(--surface);stroke:var(--part);stroke-width:1.6}.mk-inhib{fill:var(--inhib)}
+.elab rect{fill:var(--surface);stroke:var(--line);stroke-width:1}
+.el{font:500 14.5px var(--fb);fill:var(--ink)}
+.elab.cause .el{fill:var(--cause)}.elab.inhib .el{fill:var(--inhib)}.elab.pair .el{fill:var(--pair)}.elab.part .el{fill:var(--muted)}.elab.warn .el{fill:var(--inhib)}
+.prop{font:500 15px var(--fb);fill:var(--muted)}
+.pill rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.pill.d rect{stroke:var(--cause)}.pill.r rect{stroke:var(--pair)}
+.pt{font:500 18px var(--fb);fill:var(--ink)}
+.tb{font:700 19px var(--fm);fill:var(--c)}.sep{fill:var(--muted)}
+.rowline{stroke:var(--grid);stroke-width:1.5}
+.guide{stroke:var(--line);stroke-width:2;stroke-dasharray:3 6;fill:none}
+.cap{font:500 15px var(--fb);fill:var(--muted)}
+.cap.strong{fill:var(--ink);font-weight:600}
+.mono{font:600 15px var(--fm);fill:var(--ink)}
+.bb1{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round}
+.bb2{fill:none;stroke:var(--muted);stroke-width:4;stroke-linecap:round}
+.nt1{fill:var(--ink)}.nt2{fill:var(--muted)}
+.rung{stroke:var(--c);stroke-width:5;stroke-linecap:round}
+.bracket{fill:none;stroke:var(--cause);stroke-width:1.8}
+.band{fill:var(--bg);stroke:var(--line);stroke-width:1.2;stroke-dasharray:4 4}
+.mouse .body{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+.mouse.dead .body{fill:var(--dead)}
+.mouse .tail,.mouse .feet{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.mouse .ear{fill:var(--dead);stroke:var(--ink);stroke-width:2}
+.mouse .eye,.mouse .nose{fill:var(--ink)}
+.mouse .xeye{stroke:var(--inhib);stroke-width:2.6;stroke-linecap:round}
+.dish{fill:var(--surface);stroke:var(--line);stroke-width:2}
+.agar{fill:var(--agar)}
+.colS{fill:var(--sS)}.colR{fill:var(--sR)}
+.old{stroke:var(--ink);stroke-width:5;stroke-linecap:round;fill:none}
+.new{stroke:var(--new);stroke-width:5;stroke-linecap:round;fill:none}
+.arrowtxt{font:600 26px var(--fd);fill:var(--muted)}
+.tile rect{fill:var(--surface);stroke:var(--c);stroke-width:2.2}
+.tile.anti rect{stroke-dasharray:5 4;fill:var(--bg)}
+.tile text{font:600 24px var(--fm);fill:var(--c)}
+.rowl{font:600 19px var(--fd);fill:var(--ink)}
+.rows{font:400 14px var(--fb);fill:var(--muted)}
+.codon{fill:none;stroke:var(--cause);stroke-width:2}
+.pep{stroke:var(--cause);stroke-width:3;stroke-linecap:round}
+
+/* ---------- quiz ---------- */
+.quiz{padding:22px clamp(16px,3vw,32px) 32px;background:var(--surface);display:flex;flex-direction:column;gap:22px}
+.quiz h3{margin:0;font:700 22px var(--fd)}
+.quiz .lead{margin:4px 0 0;color:var(--muted)}
+.codes{display:flex;flex-wrap:wrap;gap:6px 14px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.codes span{font-size:15px}
+.qa{display:flex;flex-direction:column;gap:10px}
+.item{border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:var(--surface)}
+.pairq{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:17.5px}
+.pairq .no{font:600 14px var(--fm);color:var(--muted);min-width:22px}
+.pairq .t{border:1px solid var(--line);border-radius:8px;padding:2px 10px;background:var(--bg)}
+.pairq .q{font:700 20px var(--fd);color:var(--muted)}
+.rels{display:flex;flex-wrap:wrap;gap:6px}
+.rel{min-width:64px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:6px 10px;font:600 17px var(--fb);cursor:pointer;display:flex;align-items:center;gap:6px;justify-content:center}
+.rel .s{font:700 19px var(--fd)}
+.rel.cause .s{color:var(--cause)}.rel.part .s{color:var(--part)}.rel.inhib .s{color:var(--inhib)}.rel.pair .s{color:var(--pair)}.rel.none .s{color:var(--muted)}
+.qtext{font-size:17.5px;line-height:1.65;margin:0}
+.qtext .no{font:600 14px var(--fm);color:var(--muted);margin-right:6px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:8px}
+.opt{text-align:left;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:10px 12px;font:400 16.5px/1.5 var(--fb);cursor:pointer;display:flex;gap:8px}
+.opt .k{font-weight:600;color:var(--muted)}
+.right{border-color:var(--ok)!important;background:var(--okBg)!important}
+.wrong{border-color:var(--bad)!important;background:var(--badBg)!important}
+.rel:disabled,.opt:disabled{cursor:default}
+.fb{margin:0;font-size:15.5px;line-height:1.65;padding:8px 12px;border-radius:10px;background:var(--bg);border-left:3px solid var(--cause)}
+.fb b{font-weight:600}
+.fb.ok b{color:var(--ok)}.fb.no b{color:var(--bad)}
+
+
+/* ---------- motion ---------- */
+.rv{transform:translateY(12px) scale(.92);transition:opacity .55s ease,transform .65s cubic-bezier(.34,1.56,.64,1)}
+.flowg{opacity:0;transition:opacity .4s}
+.e.done .flowg{opacity:1}
+.flow{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.e.cause .flow{stroke:var(--cause)}.e.inhib .flow{stroke:var(--inhib)}
+@keyframes march{to{stroke-dashoffset:-12}}
+.e.part.done .main{animation:march .9s linear infinite}
+@keyframes pairPulse{50%{opacity:.3}}
+.e.pair.on path{animation:pairPulse 1.8s ease-in-out infinite}
+@keyframes nowPulse{0%,100%{stroke-opacity:1}50%{stroke-opacity:.3}}
+.node.now rect{animation:nowPulse 1.6s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.07)}}
+.breathe{animation:breathe 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes shrinkp{50%{transform:scale(.88)}}
+.shrinkp{animation:shrinkp 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes squish{50%{transform:scaleX(.86)}}
+.squish{animation:squish 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+.spin{animation:spin 4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes drift{0%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--dx),var(--dy));opacity:0}}
+.drift{animation:drift 2.4s ease-out infinite}
+@keyframes blink{50%{opacity:.2}}
+.blink{animation:blink 1.4s ease-in-out infinite}
+@keyframes floaty{50%{transform:translateY(-6px)}}
+.floaty{animation:floaty 2.8s ease-in-out infinite}
+.mouse:not(.dead) .body{animation:breathe 1.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+
+/* ---------- fullscreen ---------- */
+.app{display:flex;flex-direction:column;gap:14px;min-width:0}
+.bar{display:flex;align-items:flex-start;gap:10px;min-width:0}
+.bar .tabs{flex:1;min-width:0}
+.fsb{flex:none;display:flex;align-items:center;gap:6px;padding:8px 14px}
+.fsb svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app.full{position:fixed;inset:0;z-index:50;background:var(--bg);overflow:auto;gap:10px;
+  padding-block:max(10px,env(safe-area-inset-top,0px)) max(10px,env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.app.full .player{flex:1;min-height:0;grid-template-columns:minmax(0,1fr) 330px;align-items:stretch}
+.app.full .stage{overflow:auto;display:flex;flex-direction:column;justify-content:center}
+.app.full #svg{flex:1;height:100%;min-height:0}
+.app.full .quiz{flex:none}
+.app.full .stage:has(.quiz:not([hidden])){justify-content:flex-start}
+.app.full .panel{position:static;overflow:auto;min-height:0}
+@media (max-width:980px){
+  .app.full .player{flex:none;grid-template-columns:minmax(0,1fr)}
+  .app.full #svg{flex:none;height:auto}
+}
+
+/* ---------- transitions (on by default, toggle adds .still) ---------- */
+.rv{transform:translateY(26px) scale(.82);transition:opacity .6s ease,transform .85s cubic-bezier(.34,1.56,.64,1)}
+.draw{transition:stroke-dashoffset 1.1s cubic-bezier(.65,0,.35,1)}
+@keyframes stageIn{from{opacity:0;transform:translateX(56px) scale(.96)}}
+#svg.in,#quiz.in{animation:stageIn .65s cubic-bezier(.22,1,.36,1)}
+.swap{display:flex;flex-direction:column;gap:12px}
+@keyframes textIn{from{opacity:0;transform:translateY(16px)}}
+.swap.in>*{animation:textIn .55s cubic-bezier(.22,1,.36,1) both}
+.swap.in>*:nth-child(2){animation-delay:.07s}.swap.in>*:nth-child(3){animation-delay:.14s}.swap.in>*:nth-child(4){animation-delay:.21s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.node.now.on{animation:bob 2.4s ease-in-out 1.1s infinite}
+.elab.now.on rect{animation:nowPulse 1.6s ease-in-out infinite}
+.dot{transition:background .3s,transform .3s}
+.still .rv,.still .draw,.still .ph rect,.still .ph text{transition:none!important}
+.still *,.still *::before{animation:none!important}
+.still .flowg{display:none}
+
+/* ---------- relation icons ---------- */
+.ico{width:1.25em;height:1.25em;flex:none;vertical-align:-.27em;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.ico.cause{color:var(--cause)}.ico.part{color:var(--part)}.ico.inhib{color:var(--inhib)}.ico.pair{color:var(--pair)}.ico.none{color:var(--muted)}
+.legend .lg{display:flex;align-items:center;gap:7px;padding:5px 13px 5px 9px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);font-size:15.5px;color:var(--ink)}
+.legend .lg b{font-weight:600}
+.legend .lg svg.ico{width:22px;height:22px;overflow:visible}
+.legend .lg.cause{border-color:var(--cause)}.legend .lg.part{border-color:var(--part)}.legend .lg.inhib{border-color:var(--inhib)}.legend .lg.pair{border-color:var(--pair)}
+.mk-cause{fill:var(--cause)}
+.mk-part{fill:var(--part);stroke:var(--surface);stroke-width:1.6}
+.ico.part path{fill:currentColor}
+.mk-inhib{fill:var(--surface);stroke:var(--inhib);stroke-width:2.4;stroke-linecap:round}
+
+/* ---------- touch: no double-tap-zoom delay, clear press feedback ---------- */
+button,.chip,.tab,.rel,.opt,.rl,.pth,.nd,.eb{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:active,.chip:active,.tab:active{filter:brightness(.9)}
+button,.chip,.tab{transition:filter .12s,background .25s,border-color .25s,color .25s}
+.back{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font:500 14px var(--fb);color:var(--cause);text-decoration:none}.back:hover{text-decoration:underline}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <p class="eyebrow">สารพันธุกรรม · โครงสร้าง หน้าที่ และการทำงาน</p>
+      <h1>DNA <em>TPAT1 เชื่อมโยง</em></h1>
+    </div>
+    <ul class="legend" aria-label="ความหมายของสัญลักษณ์"><li class="lg cause"><svg class="ico cause" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg><b>ทำให้เกิด</b></li><li class="lg part"><svg class="ico part" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h3.5M8 12h3.5M17.5 12m-3.6 0a3.6 3.6 0 1 0 7.2 0a3.6 3.6 0 1 0-7.2 0"/></svg><b>ประกอบด้วย</b></li><li class="lg inhib"><svg class="ico inhib" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M4.9 4.9l14.2 14.2"/></svg><b>ยับยั้ง</b></li><li class="lg pair"><svg class="ico pair" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><b>จับคู่กับ</b></li></ul>
+  </header>
+
+  <div class="app" id="app">
+  <div class="bar"><nav class="tabs" id="tabs" aria-label="บทเรียน"></nav><button class="btn fsb" id="mo" aria-pressed="true"></button><button class="btn fsb" id="fs" aria-pressed="false" title="เต็มจอ (กด F)"></button></div>
+  <main class="player">
+    <section class="stage">
+      <svg id="svg" viewBox="0 0 1000 640" role="img" aria-label="แผนผังเชื่อมโยงแบบเคลื่อนไหว"></svg>
+      <div id="quiz" class="quiz" hidden></div>
+    </section>
+    <aside class="panel" aria-live="polite">
+      <div class="swap" id="swap"><p class="kicker" id="kicker"></p>
+      <h2 id="stitle"></h2>
+      <p class="stext" id="stext"></p>
+      <div class="chain" id="chain"></div></div>
+      <div class="score" id="score" hidden></div>
+      <div class="controls" id="controls">
+        <button class="btn" id="prev" aria-label="ขั้นก่อนหน้า">←</button>
+        <div class="dots" id="dots"></div>
+        <button class="btn primary" id="next">ถัดไป →</button>
+      </div>
+      <button class="btn ghost" id="auto">▶ เล่นอัตโนมัติ</button>
+    </aside>
+  </main>
+  </div>
+</div>
+
+<script>
+const ICON={"cause": "M5 12h14M12 5l7 7-7 7", "part": "M2 12h3.5M8 12h3.5M17.5 12m-3.6 0a3.6 3.6 0 1 0 7.2 0a3.6 3.6 0 1 0-7.2 0", "inhib": "M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M4.9 4.9l14.2 14.2", "pair": "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71", "none": "M5 9h14M5 15h14M19 5L5 19"};
+const ic=(t,rev)=>`<svg class="ico ${t}" viewBox="0 0 24 24" aria-hidden="true"${rev?' style="transform:scaleX(-1)"':''}><path d="${ICON[t]}"/></svg>`;
+const RW={cause:'ทำให้เกิด',part:'ประกอบด้วย',inhib:'ยับยั้ง',pair:'จับคู่กับ',none:'ไม่เกี่ยวกัน'};
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('svg');
+let reduce=(()=>{try{return localStorage.getItem('motion')==='off'}catch(e){return false}})();
+document.documentElement.classList.toggle('still',reduce);
+function retrig(el){el.classList.remove('in');void el.getBoundingClientRect();el.classList.add('in');}
+function S(tag,a,p){const e=document.createElementNS(NS,tag);if(a)for(const k in a){if(a[k]!=null)e.setAttribute(k,a[k]);}if(p)p.appendChild(e);return e;}
+let L={},nodes={};let _mc=null;
+function tw(t){let w=0;try{w=t.getComputedTextLength();}catch(e){}if(w>0||!t.textContent)return w;if(!_mc)_mc=document.createElement('canvas').getContext('2d');const s=getComputedStyle(t);_mc.font=`${s.fontWeight||400} ${s.fontSize||'16px'} ${s.fontFamily||'sans-serif'}`;return _mc.measureText(t.textContent).width*1.03;}
+
+function delay(el,d){if(d){el.style.transitionDelay=d+'ms';}}
+
+function flow(g,d,type,len){
+  if(reduce||(type!=='cause'&&type!=='inhib'))return;
+  const fg=S('g',{class:'flowg'},g);const dv=Math.max(1.3,len/120),dur=dv.toFixed(2)+'s',b0=Math.random()*3;
+  [0,1].forEach(k=>{const c=S('path',{class:'flow',d:'M-5 -5L1.5 0L-5 5'},fg),b=(-(b0+k*dv/2)).toFixed(2)+'s';
+    S('animateMotion',{path:d,dur,begin:b,repeatCount:'indefinite',rotate:'auto'},c);
+    S('animate',{attributeName:'opacity',values:'0;1;1;0',keyTimes:'0;0.15;0.8;1',dur,begin:b,repeatCount:'indefinite'},c);});
+}
+/* ---------- primitives ---------- */
+function N(id,x,y,label,o={}){
+  const outer=S('g',{transform:`translate(${x},${y})`},L.node);
+  const g=S('g',{class:'rv node '+(o.kind||''),'data-s':o.s||1,'data-id':id},outer);delay(g,o.d);
+  const rect=S('rect',null,g);
+  const lines=[];
+  if(o.tag)lines.push(['ny',o.tag,18]);
+  lines.push([o.big?'nl big':'nl',label,o.big?36:28]);
+  if(o.sub)lines.push(['ns',o.sub,21]);
+  if(o.sub2)lines.push(['ns',o.sub2,21]);
+  const total=lines.reduce((a,l)=>a+l[2],0);
+  let yy=-total/2,w=0;
+  lines.forEach(([c,t,h])=>{const tx=S('text',{class:c,x:0,y:yy+h/2+1,'text-anchor':'middle','dominant-baseline':'central'},g);tx.textContent=t;yy+=h;w=Math.max(w,tw(tx));});
+  w=Math.max(w+(o.padX||34),o.minW||0);const h=total+16;
+  rect.setAttribute('x',-w/2);rect.setAttribute('y',-h/2);rect.setAttribute('width',w);rect.setAttribute('height',h);rect.setAttribute('rx',12);
+  nodes[id]={x,y,w,h};return g;
+}
+function clip(n,dx,dy,pad){const hw=n.w/2+pad,hh=n.h/2+pad;let t=Infinity;if(Math.abs(dx)>1e-6)t=Math.min(t,hw/Math.abs(dx));if(Math.abs(dy)>1e-6)t=Math.min(t,hh/Math.abs(dy));return[n.x+dx*t,n.y+dy*t];}
+function E(a,b,type,label,s,o={}){if(!label&&type==='part')label='ประกอบด้วย';if(!label&&type==='pair')label='คู่กับ';
+  if(type==='part'){[a,b]=[b,a];o=Object.assign({},o,{bend:-(o.bend||0),pa:o.pb,pb:o.pa});}
+  const A=nodes[a],B=nodes[b];const dx=B.x-A.x,dy=B.y-A.y,len=Math.hypot(dx,dy);
+  const px=dy/len,py=-dx/len;const bend=o.bend||0;
+  const cx=(A.x+B.x)/2+px*bend,cy=(A.y+B.y)/2+py*bend;
+  const st=clip(A,cx-A.x,cy-A.y,o.pa??6),en=clip(B,cx-B.x,cy-B.y,o.pb??8);
+  const g=S('g',{class:'rv e '+type,'data-s':s},L.edge);g.__i={a,b,type,label,st,en};delay(g,o.d);
+  const f=v=>v.toFixed(1);
+  if(type==='pair'){
+    const n=o.n||2;for(let k=0;k<n;k++){const off=(k-(n-1)/2)*5;const p=S('path',{d:`M${f(st[0]+px*off)} ${f(st[1]+py*off)}L${f(en[0]+px*off)} ${f(en[1]+py*off)}`,class:'draw',pathLength:1},g);delay(p,o.d);}
+  }else{
+    const d=bend?`M${f(st[0])} ${f(st[1])}Q${f(cx)} ${f(cy)} ${f(en[0])} ${f(en[1])}`:`M${f(st[0])} ${f(st[1])}L${f(en[0])} ${f(en[1])}`;
+    const p=S('path',{d,class:type==='part'?'main':'main draw',pathLength:type==='part'?null:1},g);delay(p,o.d);flow(g,d,type,len);
+  }
+  if(label){
+    let lx,ly;if(bend){lx=.25*st[0]+.5*cx+.25*en[0];ly=.25*st[1]+.5*cy+.25*en[1];}else{lx=(st[0]+en[0])/2;ly=(st[1]+en[1])/2;}
+    lx+=o.lx||0;ly+=o.ly||0;
+    const og=S('g',{transform:`translate(${f(lx)},${f(ly)})`},L.lab);
+    const lg=S('g',{class:'rv elab '+type+' '+(o.lcls||''),'data-s':s},og);g.__lab=lg;delay(lg,(o.d||0)+350);
+    const r=S('rect',null,lg);const t=S('text',{class:'el',x:0,y:1,'text-anchor':'middle','dominant-baseline':'central'},lg);t.textContent=label;
+    const w=tw(t)+18;r.setAttribute('x',-w/2);r.setAttribute('y',-14);r.setAttribute('width',w);r.setAttribute('height',28);r.setAttribute('rx',14);
+  }
+  return g;
+}
+function T(x,y,txt,cls,s,o={}){const t=S('text',{x,y,class:'rv '+cls,'data-s':s,'text-anchor':o.anchor||'middle','dominant-baseline':'central'},o.layer||L.node);delay(t,o.d);t.textContent=txt;return t;}
+function G(s,d,layer){const g=S('g',{class:'rv','data-s':s},layer||L.node);delay(g,d);return g;}
+function pill(x,y,text,s,d,cls){
+  const o=S('g',{transform:`translate(${x},${y})`},L.node);const g=S('g',{class:'rv pill '+(cls||''),'data-s':s},o);delay(g,d);
+  const r=S('rect',null,g);const t=S('text',{x:0,y:1,'text-anchor':'middle','dominant-baseline':'central',class:'pt'},g);
+  if(/^[ATCGU]( · [ATCGU])+$/.test(text)){text.split(' · ').forEach((b,i)=>{if(i){const sp=S('tspan',{class:'sep'},t);sp.textContent=' · ';}const sp=S('tspan',{class:'tb b'+b},t);sp.textContent=b;});}
+  else t.textContent=text;
+  const w=tw(t)+30;r.setAttribute('x',-w/2);r.setAttribute('y',-18);r.setAttribute('width',w);r.setAttribute('height',36);r.setAttribute('rx',18);
+}
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+
+/* ---------- chapter 1 ---------- */
+function b1(){
+  N('na',500,50,'Nucleic acid',{s:1,kind:'key',sub:'สารพันธุกรรม'});
+  N('dna',200,150,'DNA',{s:1,kind:'key',big:true,sub:'Deoxyribonucleic acid'});
+  N('rna',800,150,'RNA',{s:1,kind:'key',big:true,sub:'Ribonucleic acid'});
+  E('dna','na','part','ชนิดหนึ่งคือ',1,{d:300});
+  E('rna','na','part','ชนิดหนึ่งคือ',1,{d:300});
+  N('nt',500,180,'Nucleotide',{s:2,sub:'หน่วยย่อย'});
+  E('nt','na','part','',2,{d:200});
+  N('ph',290,305,'Phosphate',{s:2,d:300});
+  N('su',500,305,'น้ำตาล pentose 5C',{s:2,d:400});
+  N('ba',715,305,'Nitrogenous base',{s:2,d:500});
+  ['ph','su','ba'].forEach((k,i)=>E(k,'nt','part','มี',2,{d:600+i*100}));
+  const gd=G(3,0,L.edge);S('path',{class:'guide',d:'M200 195V620M800 195V620'},gd);
+  const rows=[['เทียบน้ำตาล','Deoxyribose','Ribose',3],['เทียบเบส','A · T · C · G','A · U · C · G',3],['เทียบรูปร่าง','เกลียวคู่ 2 สาย','สายเดี่ยว',4],['เทียบที่พบ','Nucleus · mitochondria · chloroplast','ส่วนใหญ่ใน cytoplasm',4],['เทียบจำนวนชนิด','1 ชนิด','3 ชนิด: mRNA tRNA rRNA',5],['เทียบปริมาณ','เท่ากันทุกเซลล์ร่างกาย','ต่างกันตามชนิดเซลล์',5]];
+  rows.forEach((r,i)=>{const y=362+i*50;const d=(i%2)*350;
+    N('d'+i,200,y,r[1],{s:r[3],d:d+120});N('r'+i,800,y,r[2],{s:r[3],d:d+220});
+    E('d'+i,'r'+i,'pair',r[0],r[3],{d:d+320});});
+}
+/* ---------- chapter 2 ---------- */
+function b2(){
+  N('mi',130,75,'Miescher',{s:1,tag:'ปลาย 1860s',sub:'แยก nuclein จาก nucleus'});
+  N('gr',385,235,'Griffith',{s:1,d:250,tag:'1920s',sub:'ค้นพบ transformation'});
+  N('ha',640,75,'Hämmerling',{s:2,tag:'1930s',sub:'ข้อมูลพันธุกรรมอยู่ใน nucleus'});
+  N('av',870,235,'Avery และคณะ',{s:2,d:250,tag:'1944',sub:'DNA คือตัวการ transformation'});
+  E('gr','av','cause','ต่อยอด: หาว่าสารใดคือตัวการ',2,{d:450});
+  E('mi','gr','cause','ต่อมา',1,{d:200});E('gr','ha','cause','ต่อมา',2,{d:100});E('ha','av','cause','ต่อมา',2,{d:400});
+  N('ch',180,350,'Chargaff',{s:3,tag:'1949',sub:'A = T และ G = C'});
+  N('hc',500,350,'Hershey & Chase',{s:3,d:250,tag:'1952',sub:'DNA virus เข้าสู่ bacteria'});
+  E('av','hc','cause','ยืนยันซ้ำ',3,{d:450});
+  N('fr',820,350,'Franklin & Wilkins',{s:4,tag:'1953',sub:'X-ray ชี้ว่าเป็นเกลียวคู่'});
+  N('wc',500,550,'Watson & Crick',{s:4,d:300,kind:'key',big:true,tag:'1953',sub:'แบบจำลองเกลียวคู่ของ DNA'});
+  E('ch','wc','cause','กฎ A = T, G = C',4,{d:600});
+  E('fr','wc','cause','ภาพ X-ray',4,{d:600});
+}
+/* ---------- chapter 3 ---------- */
+function mouse(x,y,dead,s,d){
+  const o=S('g',{transform:`translate(${x+20},${y})`},L.node);const g=S('g',{class:'rv mouse'+(dead?' dead':''),'data-s':s},o);delay(g,d);
+  S('path',{class:'tail',d:'M-46 8C-76 4-84 32-108 22'},g);
+  S('path',{class:'feet',d:'M-26 22V32M18 22V32'},g);
+  S('ellipse',{class:'body',cx:-4,cy:0,rx:46,ry:26},g);
+  S('circle',{class:'ear',cx:34,cy:-18,r:10},g);
+  S('ellipse',{class:'body',cx:46,cy:-2,rx:22,ry:16},g);
+  if(dead)S('path',{class:'xeye',d:'M50-11L58-3M58-11L50-3'},g);else S('circle',{class:'eye',cx:54,cy:-7,r:3.2},g);
+  S('circle',{class:'nose',cx:68,cy:0,r:3.5},g);
+}
+function dish(x,y,id,kinds,s,d){
+  const g=G(s,d);S('circle',{class:'dish',cx:x,cy:y,r:60},g);S('circle',{class:'agar',cx:x,cy:y,r:53},g);
+  const r=rng(x);
+  kinds.forEach(([k,n])=>{for(let i=0;i<n;i++){const a=r()*Math.PI*2,rad=Math.sqrt(r())*44;const cx=x+Math.cos(a)*rad,cy=y+Math.sin(a)*rad;
+    if(k==='S')S('circle',{class:'colS',cx:cx.toFixed(1),cy:cy.toFixed(1),r:5.5},g);
+    else{const pts=[];for(let j=0;j<6;j++){const aa=j/6*Math.PI*2,rr=(j%2?2.2:3.8);pts.push((cx+Math.cos(aa)*rr).toFixed(1)+','+(cy+Math.sin(aa)*rr).toFixed(1));}S('polygon',{class:'colR',points:pts.join(' ')},g);}}});
+  nodes[id]={x,y,w:120,h:120};
+}
+function b3(){
+  const cols=[
+    {x:130,chip:'S มีชีวิต',c:'cS',dead:true,col:[['S',14]],cap:'พบเชื้อ S'},
+    {x:375,chip:'R มีชีวิต',c:'cR',dead:false,col:[['R',24]],cap:'พบเชื้อ R'},
+    {x:620,chip:'S ตายด้วยความร้อน',c:'cS',dead:false,col:[],cap:'ไม่พบเชื้อ'},
+    {x:865,chip:'R มีชีวิต + S ตายแล้ว',c:'cX',dead:true,col:[['R',16],['S',8]],cap:'พบทั้ง R และ S'}];
+  cols.forEach((c,i)=>{const s=i+1;
+    N('c'+i,c.x,52,c.chip,{s,kind:'chip '+c.c});
+    mouse(c.x,182,c.dead,s,300);nodes['m'+i]={x:c.x,y:182,w:190,h:66};
+    E('c'+i,'m'+i,'cause','ฉีดให้หนู',s,{d:150});
+    dish(c.x,368,'d'+i,c.col,s,850);
+    E('m'+i,'d'+i,'cause',c.dead?'ตาย · ปอดบวม':'ปกติ',s,{d:550,lcls:c.dead?'warn':''});
+    T(c.x,452,c.cap,'cap strong',s,{d:1050});
+  });
+  N('tf',470,568,'Transformation',{s:5,kind:'key',big:true,sub:'R รับ DNA จาก S ที่ตายแล้ว แล้วกลายเป็น S'});
+  E('d3','tf','cause','อธิบายผลกลุ่มที่ 4',5,{d:300,lx:-60,ly:30});
+}
+/* ---------- chapter 4 ---------- */
+let helix=null,raf=0,phase=0;
+function buildHelix(){
+  const g=G(1,0,L.edge);
+  const cx=215,top=112,n=20,sp=24,R=80,off=2.4,k=2*Math.PI/10/sp;
+  const seq='ATGCGTACCGATTGCAAGCT',comp={A:'T',T:'A',G:'C',C:'G'};
+  const pA=S('path',{class:'bb1'},g),pB=S('path',{class:'bb2'},g);
+  const rungs=[];
+  for(let i=0;i<n;i++){rungs.push([S('line',{class:'rung b'+seq[i]},g),S('line',{class:'rung b'+comp[seq[i]]},g),S('circle',{class:'nt1'},g),S('circle',{class:'nt2'},g)]);}
+  function upd(ph){
+    let a='',b='';
+    for(let y=top-8;y<=top+(n-1)*sp+8;y+=3){const t=ph+(y-top)*k;a+=(a?'L':'M')+(cx+R*Math.sin(t)).toFixed(1)+' '+y;b+=(b?'L':'M')+(cx+R*Math.sin(t+off)).toFixed(1)+' '+y;}
+    pA.setAttribute('d',a);pB.setAttribute('d',b);
+    rungs.forEach((r,i)=>{const y=top+i*sp,t=ph+i*sp*k;const xa=cx+R*Math.sin(t),xb=cx+R*Math.sin(t+off),xm=(xa+xb)/2;
+      const za=Math.cos(t),zb=Math.cos(t+off),op=(.5+.5*((za+zb)/2+1)/2).toFixed(2);
+      r[0].setAttribute('x1',xa.toFixed(1));r[0].setAttribute('x2',xm.toFixed(1));r[0].setAttribute('y1',y);r[0].setAttribute('y2',y);r[0].setAttribute('opacity',op);
+      r[1].setAttribute('x1',xm.toFixed(1));r[1].setAttribute('x2',xb.toFixed(1));r[1].setAttribute('y1',y);r[1].setAttribute('y2',y);r[1].setAttribute('opacity',op);
+      r[2].setAttribute('cx',xa.toFixed(1));r[2].setAttribute('cy',y);r[2].setAttribute('r',(4.6+1.8*za).toFixed(1));
+      r[3].setAttribute('cx',xb.toFixed(1));r[3].setAttribute('cy',y);r[3].setAttribute('r',(4.6+1.8*zb).toFixed(1));});
+  }
+  upd(phase);
+  const lg=G(1,300);
+  S('path',{class:'bb1',d:'M70 600H104'},lg);T(114,600,'สาย 1 · 5′ → 3′ (บนลงล่าง)','cap',1,{anchor:'start',layer:lg});
+  S('path',{class:'bb2',d:'M70 624H104'},lg);T(114,624,'สาย 2 · 3′ → 5′ (บนลงล่าง)','cap',1,{anchor:'start',layer:lg});
+  lg.querySelectorAll('text').forEach(t=>{t.classList.remove('rv');});
+  const br=G(4,0);
+  S('path',{class:'bracket',d:`M${cx-R} 88V80H${cx+R}V88`},br);
+  T(cx,66,'⌀ 2 nm','mono',4,{layer:br});
+  S('path',{class:'bracket',d:`M${cx+R+22} ${top}H${cx+R+30}V${top+10*sp}H${cx+R+22}`},br);
+  T(cx+R+40,top+95,'1 รอบ','mono',4,{anchor:'start',layer:br});
+  T(cx+R+40,top+120,'3.4 nm','mono',4,{anchor:'start',layer:br});
+  T(cx+R+40,top+145,'10 คู่เบส','mono',4,{anchor:'start',layer:br});
+  br.querySelectorAll('text').forEach(t=>{t.classList.remove('rv');});
+  helix=upd;
+}
+function b4(){
+  buildHelix();
+  N('bb',700,48,'แกนน้ำตาล–phosphate',{s:1,d:300,sub:'ด้านนอก · 2 สาย antiparallel · phosphodiester'});
+  const bd=G(3,0,L.edge);
+  S('rect',{class:'band',x:463,y:140,width:164,height:210,rx:14},bd);
+  S('rect',{class:'band',x:773,y:140,width:164,height:210,rx:14},bd);
+  T(545,160,'Purine · 2 วง','cap strong',3,{layer:bd});T(855,160,'Pyrimidine · 1 วง','cap strong',3,{layer:bd});
+  bd.querySelectorAll('text').forEach(t=>t.classList.remove('rv'));
+  nodes['bp']={x:700,y:245,w:474,h:210};
+  N('bA',545,215,'A',{s:2,kind:'base bA',big:true,sub:'Adenine',minW:120});
+  N('bT',855,215,'T',{s:2,kind:'base bT',big:true,sub:'Thymine',minW:120,d:150});
+  N('bG',545,300,'G',{s:2,kind:'base bG',big:true,sub:'Guanine',minW:120,d:300});
+  N('bC',855,300,'C',{s:2,kind:'base bC',big:true,sub:'Cytosine',minW:120,d:450});
+  E('bA','bT','pair','2 hydrogen bond',2,{n:2,d:400,ly:-20});
+  E('bG','bC','pair','3 hydrogen bond',2,{n:3,d:600,ly:-20});
+  E('bb','bp','cause','ด้านในมีคู่เบส',2,{d:200});
+  N('bd',700,456,'B-DNA · เวียนขวา',{s:4,kind:'key',sub:'⌀ 2 nm · 10 คู่เบส ต่อรอบ 3.4 nm',sub2:'มีร่อง major และ minor'});
+  E('bp','bd','cause','บิดเกลียวเป็น',4,{d:200});
+  N('af',455,606,'A-form',{s:5,sub:'เกลียวสั้นและกว้างกว่า',d:250});
+  N('zf',915,606,'Z-form',{s:5,sub:'เกลียวเวียนซ้าย',d:400});
+  E('bd','af','cause','เมื่อขาดน้ำ',5,{d:500});
+  E('bd','zf','cause','เมื่อเกลือสูง',5,{d:650});
+}
+/* ---------- chapter 5 ---------- */
+function b5(){
+  const g=G(1,0,L.edge);
+  S('path',{class:'old',d:'M62 72V250M84 72V250'},g);
+  const a1=G(1,300,L.edge);T(128,160,'→','arrowtxt',1,{layer:a1});
+  const f=G(1,450,L.edge);
+  S('path',{class:'old',d:'M226 72V140L186 250M248 72V140L288 250'},f);
+  S('path',{class:'new',d:'M236 158L206 245M238 158L268 245'},f);
+  const a2=G(1,700,L.edge);T(318,160,'→','arrowtxt',1,{layer:a2});
+  const dg=G(1,850,L.edge);
+  S('path',{class:'old',d:'M356 72V250M424 72V250'},dg);S('path',{class:'new',d:'M378 72V250M402 72V250'},dg);
+  [a1,f,a2,dg].forEach(x=>x.querySelectorAll('text').forEach(t=>t.classList.remove('rv')));
+  T(73,276,'DNA เดิม','cap',1);T(237,276,'replication fork','cap',1,{d:450});T(390,276,'DNA 2 molecules','cap',1,{d:850});
+  const lg=G(1,1000);S('path',{class:'old',d:'M60 316H90'},lg);S('path',{class:'new',d:'M262 316H292'},lg);
+  T(100,316,'สายเดิม (template)','cap',1,{anchor:'start',layer:lg});T(302,316,'สายใหม่','cap',1,{anchor:'start',layer:lg});
+  lg.querySelectorAll('text').forEach(t=>t.classList.remove('rv'));
+  const ex=860,en=560;
+  N('topo',en,70,'Topoisomerase',{s:2,sub:'DNA gyrase'});N('sup',ex,70,'การบิดเกลียวสะสม',{s:2,sub:'ด้านหน้าจุดแยก'});
+  E('topo','sup','inhib','คลาย',2,{d:250});
+  N('hel',en,162,'Helicase',{s:2,sub:'ใช้พลังงาน ATP',d:400});N('hb',ex,162,'Hydrogen bond',{s:2,sub:'ระหว่างคู่เบส',d:400});
+  E('hel','hb','inhib','สลาย',2,{d:650});
+  N('ssb',en,254,'SSB',{s:2,sub:'single-strand binding',d:800});N('re',ex,254,'สายเดี่ยวจับกลับ',{s:2,sub:'และถูก nuclease ย่อย',d:800});
+  E('ssb','re','inhib','กันไว้',2,{d:1050});
+  N('pri',en,346,'Primase',{s:3});N('pr',ex,346,'RNA primer',{s:3,d:250});
+  E('pri','pr','cause','สร้าง',3,{d:200});
+  N('pol',530,440,'DNA polymerase',{s:4,kind:'key',sub:'ต่อสายทิศ 5′→3′ เท่านั้น'});
+  E('pr','pol','cause','ให้ปลาย 3′ แก่',4,{d:250});
+  N('lead',190,440,'สาย leading',{s:4,sub:'สายนำ',d:400});
+  N('okz',885,440,'Okazaki fragment',{s:4,sub:'สาย lagging',d:400});
+  E('pol','lead','cause','สร้างต่อเนื่องเป็น',4,{d:550});E('pol','okz','cause','สร้างเป็นท่อน',4,{d:550});
+  N('lig',en,540,'DNA ligase',{s:5});N('pd',ex,540,'Phosphodiester bond',{s:5,d:250});
+  E('lig','pd','cause','สร้าง',5,{d:200});
+  E('lig','okz','cause','เชื่อมท่อน',5,{d:450,lx:-6});
+}
+/* ---------- chapter 6 ---------- */
+function tile(x,y,b,s,d,kind){const o=S('g',{transform:`translate(${x},${y})`},L.node);const g=S('g',{class:'rv tile '+(kind||'')+' b'+b,'data-s':s},o);delay(g,d);S('rect',{x:-21,y:-24,width:42,height:48,rx:8},g);const t=S('text',{x:0,y:1,'text-anchor':'middle','dominant-baseline':'central'},g);t.textContent=b;}
+function b6(){
+  N('fD',120,92,'DNA',{s:1,kind:'key',big:true,sub:'ใน nucleus'});
+  N('fM',500,92,'mRNA',{s:1,kind:'key',big:true,sub:'ตัวกลางนำรหัส',d:400});
+  N('fP',870,92,'โปรตีน',{s:1,kind:'key',big:true,sub:'ที่ ribosome',d:800});
+  E('fD','fM','cause','Transcription · RNA pol',1,{d:200});
+  E('fM','fP','cause','Translation · tRNA + rRNA',1,{d:600});
+  const dna='TACTCGACCTAAGCC',mrna='AUGAGCUGGAUUCGG',anti='UACUCGACCUAAGCC';
+  const aa=[['Met','Methionine'],['Ser','Serine'],['Trp','Tryptophan'],['Ile','Isoleucine'],['Arg','Arginine']];
+  const X=(i,j)=>205+i*156+j*46;
+  const rowsL=[[248,'DNA','สายแม่แบบ',2],[338,'mRNA','ถอดรหัสแล้ว',3],[436,'tRNA','Anticodon',4],[540,'โปรตีน','Amino acid',5]];
+  rowsL.forEach(([y,a,b,s])=>{T(22,y-11,a,'rowl',s,{anchor:'start'});T(22,y+13,b,'rows',s,{anchor:'start'});});
+  T(178,248,'3′','mono',2,{anchor:'end'});T(954,248,'5′','mono',2,{anchor:'start'});
+  T(178,338,'5′','mono',3,{anchor:'end'});T(954,338,'3′','mono',3,{anchor:'start'});
+  for(let i=0;i<5;i++)for(let j=0;j<3;j++){const q=i*3+j;
+    tile(X(i,j),248,dna[q],2,q*40);
+    tile(X(i,j),338,mrna[q],3,q*70);
+    tile(X(i,j),436,anti[q],4,i*220+j*40,'anti');}
+  for(let i=0;i<5;i++){const g=G(3,1100+i*80);S('path',{class:'codon',d:`M${X(i,0)-21} 368V376H${X(i,2)+21}V368`},g);}
+  T(X(0,1),392,'Codon','cap',3,{d:1150});
+    const pg=G(5,900,L.edge);for(let i=0;i<4;i++)S('line',{class:'pep',x1:X(i,1)+50,x2:X(i+1,1)-50,y1:556,y2:556},pg);
+  aa.forEach(([s3,th],i)=>{nodes['tr'+i]={x:X(i,1),y:436,w:138,h:48};N('aa'+i,X(i,1),556,s3,{s:5,kind:i===0?'key':'',sub:th,d:i*180,minW:118});E('tr'+i,'aa'+i,'cause','นำ',5,{d:i*180+100});});
+  T(X(0,1),608,'Codon เริ่ม AUG','cap strong',5,{d:200});T(X(3,0)-30,608,'เส้นเชื่อม = peptide bond','cap strong',5,{d:900});
+}
+
+/* ---------- content ---------- */
+const CH=[
+ {tab:'ภาพรวม',kick:'บทที่ 1 · ภาพรวม',build:b1,steps:[
+  {t:'สารพันธุกรรม = nucleic acid',p:'Nucleic acid มี 2 ชนิด คือ DNA และ RNA ทำหน้าที่เก็บข้อมูลทางพันธุกรรม ส่วนใหญ่ DNA อยู่ในรูป chromosome',c:['Nucleic acid','◇','DNA','◆','Nucleic acid','◇','RNA']},
+  {t:'หน่วยย่อยคือ nucleotide',p:'Nucleotide 1 หน่วย = phosphate + น้ำตาล pentose + nitrogenous base หลายหน่วยต่อกันเป็นสาย polynucleotide',c:['DNA / RNA','◇','Nucleotide','◇','Phosphate + น้ำตาล + เบส']},
+  {t:'ต่างกันที่น้ำตาลและเบส',p:'DNA ใช้น้ำตาล deoxyribose และมีเบส T ส่วน RNA ใช้น้ำตาล ribose และใช้ U แทน T โดยเบส A, C, G พบได้ทั้งคู่',c:['DNA เท่านั้น','◇','T','◆','RNA เท่านั้น','◇','U']},
+  {t:'รูปร่างและตำแหน่ง',p:'DNA เป็นเกลียวคู่ พบใน nucleus mitochondria และ chloroplast ส่วน RNA เป็นสายเดี่ยว สร้างใน nucleus แล้วส่งออกไปทำงานใน cytoplasm',c:['DNA','→','RNA','→','ทำงานใน cytoplasm']},
+  {t:'จำนวนชนิดและปริมาณ',p:'DNA มีชนิดเดียว ปริมาณเท่ากันในทุกเซลล์ร่างกายของสิ่งมีชีวิตชนิดเดียวกัน (เซลล์สืบพันธุ์มีครึ่งหนึ่ง) ส่วน RNA มี 3 ชนิด คือ mRNA, tRNA, rRNA ปริมาณต่างกันตามชนิดเซลล์ เพราะขึ้นกับว่าเซลล์กำลังสร้างโปรตีนอะไร',c:['RNA','◇','mRNA · tRNA · rRNA']}]},
+ {tab:'ผู้ค้นพบ',kick:'บทที่ 2 · เส้นทางการค้นพบ',build:b2,steps:[
+  {t:'จุดเริ่มต้น',p:'Miescher แยกสารที่ไม่ใช่โปรตีนจาก nucleus ได้เป็นคนแรก เรียกว่า nuclein ต่อมา Griffith ทดลองกับหนูและ bacteria pneumococcus แล้วพบปรากฏการณ์ transformation',c:['Griffith','→','ค้นพบ transformation']},
+  {t:'สารพันธุกรรมอยู่ที่ไหน คืออะไร',p:'Hämmerling ใช้สาหร่าย Acetabularia พบว่าส่วนฐานที่มี nucleus ควบคุมการงอกใหม่ จึงเสนอว่าข้อมูลพันธุกรรมอยู่ใน nucleus ส่วน Avery และคณะพิสูจน์ว่าตัวการของ transformation คือ DNA',c:['Griffith','→','Avery','→','DNA คือตัวการ']},
+  {t:'หลักฐานเพิ่มเติม',p:'Chargaff พบว่าในทุก species A = T และ G = C แต่องค์ประกอบเบสต่างกันระหว่าง species Hershey & Chase ติดฉลากกัมมันตรังสีที่ virus แล้วพบว่า DNA ของ virus เข้าไปใน bacteria',c:['Avery','→','Hershey & Chase','→','DNA คือสารพันธุกรรม']},
+  {t:'ประกอบร่างเป็นแบบจำลอง',p:'Franklin และ Wilkins ใช้ X-ray crystallography ได้ภาพที่ชี้ว่า DNA เป็นเกลียว 2 สาย Watson & Crick นำข้อมูลของ Chargaff และ Franklin มาสร้างแบบจำลองเกลียวคู่ในปี 1953',c:['Chargaff','→','Watson & Crick','←','Franklin']}]},
+ {tab:'Griffith',kick:'บทที่ 3 · การทดลองของ Griffith',build:b3,steps:[
+  {t:'กลุ่มที่ 1: ฉีด S ที่มีชีวิต',p:'สายพันธุ์ S (smooth) มี capsule และก่อโรค หนูเป็นปอดบวมและตาย พบเชื้อ S ในเนื้อเยื่อหนู',c:['S มีชีวิต','→','หนูตาย']},
+  {t:'กลุ่มที่ 2: ฉีด R ที่มีชีวิต',p:'สายพันธุ์ R (rough) ไม่มี capsule จึงไม่ก่อโรค หนูปกติ',c:['R มีชีวิต','→','หนูปกติ']},
+  {t:'กลุ่มที่ 3: ฉีด S ที่ถูกฆ่าด้วยความร้อน',p:'เชื้อตายแล้วจึงก่อโรคไม่ได้ หนูปกติและไม่พบเชื้อ',c:['ความร้อน','⊣','การก่อโรคของ S']},
+  {t:'กลุ่มที่ 4: R มีชีวิต + S ที่ตายแล้ว',p:'แต่ละอย่างฉีดเดี่ยว ๆ ไม่ก่อโรค แต่เมื่อผสมกัน หนูตาย และพบ S ที่มีชีวิต แสดงว่ามีบางอย่างจาก S ที่ตายแล้วเปลี่ยน R ให้กลายเป็น S',c:['R + S ตายแล้ว','→','หนูตาย + พบ S']},
+  {t:'สรุป: Transformation',p:'S ไม่ได้ฟื้นขึ้นมา แต่ R รับ DNA จาก S ที่ตายแล้ว ขั้นตอนคือ รับสารพันธุกรรม → รวมเข้ากับจีโนม → gene แสดงออก จนเซลล์มีลักษณะใหม่ ต่อมา Avery พิสูจน์ว่าสารนั้นคือ DNA',c:['DNA ของ S','→','R','→','R กลายเป็น S']}]},
+ {tab:'โครงสร้าง DNA',kick:'บทที่ 4 · โครงสร้างเกลียวคู่',build:b4,steps:[
+  {t:'สองสายวิ่งสวนทางกัน',p:'DNA ประกอบด้วย polynucleotide 2 สายเรียงตัวสวนทางกัน (antiparallel) น้ำตาล deoxyribose กับ phosphate เชื่อมกันด้วย phosphodiester bond เป็นแกนด้านนอก',c:['แกนของเกลียว','◇','น้ำตาล + phosphate']},
+  {t:'เบสจับคู่สม',p:'เบสหันเข้าด้านใน ตั้งฉากกับแกน และจับคู่กับเบสของอีกสายด้วย hydrogen bond A คู่ T ด้วย 2 พันธะ G คู่ C ด้วย 3 พันธะ จึงอธิบายได้ว่าทำไม A = T และ G = C ตามกฎของ Chargaff',c:['A','═','T','◆','G','≡','C']},
+  {t:'ทำไมต้อง purine คู่ pyrimidine',p:'Purine (A, G) มี 2 วง pyrimidine (C, T, U) มี 1 วง ถ้า purine คู่ purine จะกว้างเกิน pyrimidine คู่ pyrimidine จะแคบเกิน การจับคู่ 2 วงกับ 1 วงทำให้เกลียวกว้างเท่ากันตลอด ตรงกับภาพ X-ray',c:['Purine','═','Pyrimidine','→','กว้างสม่ำเสมอ']},
+  {t:'ขนาดของ B-DNA',p:'รูปแบบที่พบมากคือ B-DNA เวียนขวา เส้นผ่านศูนย์กลาง 2 nm หนึ่งรอบยาว 3.4 nm มี 10 คู่เบส การบิดเกลียวทำให้เกิดร่อง 2 แบบ คือ major groove และ minor groove',c:['3.4 nm ÷ 10','→','0.34 nm ต่อคู่เบส']},
+  {t:'รูปแบบอื่นของเกลียวคู่',p:'โครงสร้างเกลียวคู่เปลี่ยนได้ตามชนิดเบส ปริมาณน้ำ และ metal ion ที่จับอยู่ ภาวะขาดน้ำทำให้เกิด A-form ภาวะเกลือสูงหรือมี methylation ทำให้เกิด Z-form',c:['ขาดน้ำ','→','A-form','◆','เกลือสูง','→','Z-form']}]},
+ {tab:'จำลองตัว',kick:'บทที่ 5 · DNA replication',build:b5,steps:[
+  {t:'แบบกึ่งอนุรักษ์',p:'เกลียวคู่แยกออก แต่ละสายเป็นแม่แบบ (template) ให้สร้างสายใหม่มาประกบ ได้ DNA 2 molecule แต่ละ molecule มีสายเดิม 1 สายและสายใหม่ 1 สาย',c:['DNA 1 molecule','→','2 molecule','◇','สายเดิม 1 + ใหม่ 1']},
+  {t:'ทีมคลายเกลียว',p:'Helicase ใช้พลังงาน ATP สลาย hydrogen bond จนเกิด replication fork SSB จับสายเดี่ยวไว้ ไม่ให้กลับมาจับกันหรือถูก nuclease ย่อย Topoisomerase ตัดแล้วต่อสายเพื่อคลายการบิดเกลียวด้านหน้า',c:['Helicase','⊣','พันธะ H','→','สายเดี่ยว','⊣','SSB']},
+  {t:'Primase วางจุดเริ่มต้น',p:'DNA polymerase เริ่มต่อสายเองไม่ได้ ต้องมี RNA primer ที่ Primase สร้างไว้ก่อน แล้วจึงต่อ nucleotide ต่อจากปลาย 3′',c:['Primase','→','RNA primer','→','DNA polymerase เริ่มต่อ']},
+  {t:'DNA polymerase ต่อสาย',p:'ต่อสายได้ทิศ 5′→3′ ทางเดียว สาย leading จึงสร้างต่อเนื่อง ส่วนสาย lagging สร้างเป็นท่อนสั้น ๆ เรียกว่า Okazaki fragment นอกจากนี้ยังตรวจและตัดเบสที่ผิด และกำจัด RNA primer',c:['ทิศ 5′→3′ เท่านั้น','→','lagging เป็นท่อน']},
+  {t:'Ligase เชื่อมรอยต่อ',p:'เมื่อ primer ถูกแทนที่ด้วย DNA แล้ว DNA ligase สร้าง phosphodiester bond เชื่อม Okazaki fragment ให้เป็นสายเดียวกัน',c:['Ligase','→','Phosphodiester bond','→','สายต่อเนื่อง']}]},
+ {tab:'สร้างโปรตีน',kick:'บทที่ 6 · DNA → RNA → โปรตีน',build:b6,steps:[
+  {t:'ลำดับการไหลของข้อมูล',p:'RNA polymerase ถอดรหัส (transcription) DNA เป็น mRNA ใน nucleus mRNA ออกไปที่ ribosome ใน cytoplasm แล้วถูกแปลรหัส (translation) เป็นโปรตีน หนึ่ง gene กำหนดหนึ่ง polypeptide',c:['DNA','→','mRNA','→','โปรตีน']},
+  {t:'เริ่มจากสายแม่แบบ',p:'RNA polymerase อ่านสาย DNA แม่แบบจากปลาย 3′ ไป 5′ เพื่อสร้าง mRNA ในทิศ 5′ → 3′',c:['3′ แม่แบบ 5′','→','5′ mRNA 3′']},
+  {t:'ถอดรหัสเป็น mRNA',p:'จับคู่สม A → U, T → A, C → G, G → C ทุก 3 เบสบน mRNA คือ 1 codon ซึ่งกำหนด amino acid 1 ตัว',c:['DNA T','═','mRNA A','◆','DNA A','═','mRNA U']},
+  {t:'tRNA นำ anticodon มาจับ',p:'tRNA แต่ละตัวมี anticodon ที่คู่สมกับ codon และพา amino acid ที่ตรงกันมาด้วย สังเกตว่า anticodon เหมือนสายแม่แบบ DNA เพียงเปลี่ยน T เป็น U',c:['Codon AUG','═','Anticodon UAC']},
+  {t:'ได้ polypeptide',p:'AUG เป็น codon เริ่มและแปลเป็น Met จากนั้นอ่านทีละ codon จนเจอ codon หยุด (UAA, UAG, UGA) ได้ Met – Ser – Trp – Ile – Arg ต่อกันด้วย peptide bond',c:['AUG','→','Met','→','… จนถึง codon หยุด']}]},
+ {tab:'แบบฝึก TPAT1',kick:'บทที่ 7 · แบบฝึก',quiz:true}
+];
+
+/* ---------- player ---------- */
+const st={ch:0,step:1,built:-1,auto:null};
+const $=id=>document.getElementById(id);
+const tabs=$('tabs');
+CH.forEach((c,i)=>{const b=document.createElement('button');b.className='tab';b.innerHTML=`<span class="n">${i+1}</span>${c.tab}`;b.onclick=()=>{stopAuto();go(i,1);};tabs.appendChild(b);});
+
+function build(){
+  svg.innerHTML='';nodes={};
+  const defs=S('defs',null,svg);
+  const m1=S('marker',{id:'m-cause',viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:12,markerHeight:12,markerUnits:'userSpaceOnUse',orient:'auto'},defs);S('path',{d:'M0 0L10 5L0 10z',class:'mk-cause'},m1);
+  const m2=S('marker',{id:'m-part',viewBox:'0 0 14 14',refX:7,refY:7,markerWidth:15,markerHeight:15,markerUnits:'userSpaceOnUse',orient:'auto'},defs);S('circle',{cx:7,cy:7,r:5,class:'mk-part'},m2);
+  const m3=S('marker',{id:'m-inhib',viewBox:'0 0 22 22',refX:20,refY:11,markerWidth:24,markerHeight:24,markerUnits:'userSpaceOnUse',orient:'auto'},defs);S('circle',{cx:11,cy:11,r:8.5,class:'mk-inhib'},m3);S('path',{d:'M5 5L17 17',class:'mk-inhib'},m3);
+  L.edge=S('g',null,svg);L.node=S('g',null,svg);L.lab=S('g',null,svg);
+  helix=null;
+  CH[st.ch].build();
+  st.built=st.ch;
+}
+function reveal(){
+  svg.querySelectorAll('[data-s]').forEach(e=>{const s=+e.dataset.s;const on=s<=st.step;
+    if(on&&!e.classList.contains('on')){e.classList.add('on');
+      if(e.classList.contains('e')){const d=reduce?0:900+(parseFloat(e.style.transitionDelay)||0);clearTimeout(e._t);e._t=setTimeout(()=>e.classList.add('done'),d);}}
+    else if(!on){e.classList.remove('on','done');clearTimeout(e._t);}
+    e.classList.toggle('now',s===st.step&&st.step>0);});
+}
+const SYM={'→':'cause','←':'cause','⊣':'inhib','◇':'part','═':'pair','≡':'pair','◆':'sep'};
+function renderChain(c){
+  const el=$('chain');el.innerHTML='';if(!c)return;
+  const l=document.createElement('span');l.className='lbl';l.textContent='ลูกโซ่ความสัมพันธ์';el.appendChild(l);
+  c.forEach(t=>{const s=document.createElement('span');if(SYM[t]){s.className='sym '+SYM[t];if(t==='◆')s.textContent='·';else s.innerHTML=ic(SYM[t],t==='←');}else{s.className='tok';s.textContent=t;}el.appendChild(s);});
+}
+function go(ch,step){
+  st.ch=ch;st.step=step;const c=CH[ch];
+  [...tabs.children].forEach((b,i)=>b.setAttribute('aria-current',i===ch?'true':'false'));
+  tabs.children[ch].scrollIntoView({block:'nearest',inline:'nearest'});
+  $('kicker').textContent=c.kick;
+  if(c.quiz){svg.hidden=true;$('quiz').hidden=false;retrig($('quiz'));retrig($('swap'));$('controls').hidden=true;$('auto').hidden=true;$('score').hidden=false;
+    $('stitle').textContent='แบบฝึก TPAT1 เชื่อมโยง';
+    $('stext').textContent='ส่วน ก ระบุรหัสความสัมพันธ์ของคำซ้ายไปหาคำขวา ส่วน ข เลือกคำตอบที่ถูกที่สุด ทุกข้อเฉลยทันทีพร้อมเหตุผล';
+    renderChain(null);stopHelix();updateScore();return;}
+  svg.hidden=false;$('quiz').hidden=true;$('controls').hidden=false;$('auto').hidden=false;$('score').hidden=true;
+  if(st.built!==ch){build();retrig(svg);}
+  void svg.getBoundingClientRect();
+  reveal();
+  const s=c.steps[step-1];
+  $('stitle').textContent=s.t;$('stext').textContent=s.p;renderChain(s.c);retrig($('swap'));
+  const dots=$('dots');dots.innerHTML='';
+  c.steps.forEach((_,i)=>{const d=document.createElement('button');d.className='dot'+(i<step?' on':'');d.setAttribute('aria-label','ขั้นที่ '+(i+1));d.onclick=()=>{stopAuto();go(ch,i+1);};dots.appendChild(d);});
+  $('prev').disabled=(ch===0&&step===1);
+  $('next').textContent=step<c.steps.length?'ถัดไป →':'บทถัดไป →';
+  if(helix)startHelix();else stopHelix();
+}
+function next(){const c=CH[st.ch];if(c.quiz)return;if(st.step<c.steps.length)go(st.ch,st.step+1);else go(st.ch+1,1);}
+function prev(){if(st.step>1)go(st.ch,st.step-1);else if(st.ch>0){const p=CH[st.ch-1];go(st.ch-1,p.quiz?1:p.steps.length);}}
+$('next').onclick=()=>{stopAuto();next();};
+$('prev').onclick=()=>{stopAuto();prev();};
+function stopAuto(){if(st.auto){clearInterval(st.auto);st.auto=null;$('auto').textContent='▶ เล่นอัตโนมัติ';}}
+$('auto').onclick=()=>{if(st.auto){stopAuto();return;}$('auto').textContent='❚❚ หยุดเล่น';st.auto=setInterval(()=>{if(CH[st.ch+1]&&CH[st.ch+1].quiz&&st.step>=CH[st.ch].steps.length){stopAuto();return;}next();},5200);};
+document.addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('.quiz'))return;if(e.key==='ArrowRight'){stopAuto();next();}else if(e.key==='ArrowLeft'){stopAuto();prev();}});
+
+function startHelix(){if(reduce||raf)return;let last=performance.now();const loop=t=>{if(!helix||document.hidden){raf=0;return;}phase+=(t-last)*0.0009;last=t;helix(phase);raf=requestAnimationFrame(loop);};raf=requestAnimationFrame(loop);}
+function stopHelix(){if(raf){cancelAnimationFrame(raf);raf=0;}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&helix)startHelix();});
+
+/* ---------- fullscreen ---------- */
+const app=$('app'),fsBtn=$('fs');
+const ICON_IN='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+const ICON_OUT='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+let savedY=null;function setFull(on){if(on&&savedY===null){savedY=window.scrollY||0;window.scrollTo(0,0);}else if(!on&&savedY!==null){const y=savedY;savedY=null;requestAnimationFrame(()=>window.scrollTo(0,y));}app.classList.toggle('full',on);if(on)app.scrollTop=0;document.documentElement.style.overflow=on?'hidden':'';
+  fsBtn.innerHTML=(on?ICON_OUT+'ย่อหน้าจอ':ICON_IN+'เต็มจอ');fsBtn.setAttribute('aria-pressed',on?'true':'false');}
+const fsEl=()=>document.fullscreenElement||document.webkitFullscreenElement;
+async function toggleFull(){
+  if(app.classList.contains('full')){
+    if(fsEl()){try{await (document.exitFullscreen||document.webkitExitFullscreen).call(document);}catch(e){}}
+    setFull(false);return;}
+  setFull(true);
+  const req=app.requestFullscreen||app.webkitRequestFullscreen;
+  if(req){try{await req.call(app);}catch(e){}}
+}
+fsBtn.onclick=toggleFull;
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{if(!fsEl()&&app.classList.contains('full'))setFull(false);}));
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&app.classList.contains('full')&&!fsEl())setFull(false);
+  else if((e.key==='f'||e.key==='F')&&!e.metaKey&&!e.ctrlKey&&!e.altKey)toggleFull();});
+setFull(false);
+const moBtn=$('mo');
+function setMoLabel(){moBtn.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>'+(reduce?'เคลื่อนไหว: ปิด':'เคลื่อนไหว: เปิด');moBtn.setAttribute('aria-pressed',reduce?'false':'true');}
+moBtn.onclick=()=>{reduce=!reduce;try{localStorage.setItem('motion',reduce?'off':'on');}catch(e){}
+  document.documentElement.classList.toggle('still',reduce);setMoLabel();stopHelix();
+  if(!CH[st.ch].quiz){st.built=-1;go(st.ch,st.step);}};
+setMoLabel();
+
+/* ---------- quiz ---------- */
+const REL=[{k:'ก',s:'→',t:'ทำให้เกิด / นำไปสู่',c:'cause'},{k:'ข',s:'◇',t:'ประกอบด้วย / มีชนิดย่อยคือ',c:'part'},{k:'ค',s:'⊣',t:'ยับยั้ง / ทำลาย / ป้องกัน',c:'inhib'},{k:'ง',s:'═',t:'จับคู่สมกัน',c:'pair'},{k:'จ',s:'✕',t:'ไม่สัมพันธ์โดยตรง',c:'none'}];
+const PA=[
+ ['Helicase','Hydrogen bond ระหว่างเบส',2,'Helicase สลาย hydrogen bond เพื่อคลายเกลียวคู่ออกเป็นสายเดี่ยว'],
+ ['Nucleotide','DNA',1,'Nucleotide เป็นหน่วยย่อยที่ต่อกันเป็นสาย DNA'],
+ ['DNA primase','RNA primer',0,'Primase สร้าง RNA primer ให้ DNA polymerase ใช้เป็นจุดเริ่มต่อสาย'],
+ ['โปรตีน SSB','การจับกันกลับของ DNA สายเดี่ยว',2,'SSB จับสายเดี่ยวไว้ ป้องกันไม่ให้กลับไปจับกันและไม่ให้ถูก nuclease ย่อย'],
+ ['Guanine','Cytosine',3,'G จับคู่กับ C ด้วย hydrogen bond 3 พันธะ'],
+ ['Uracil','DNA',4,'U พบใน RNA เท่านั้น ใน DNA ใช้ T แทน'],
+ ['ภาพ X-ray ของ Franklin','แบบจำลองของ Watson & Crick',0,'ภาพ X-ray ชี้ว่าเป็นเกลียวคู่ จึงเป็นข้อมูลที่นำไปสู่แบบจำลอง'],
+ ['rRNA','Ribosome',1,'rRNA รวมกับโปรตีนเป็น ribosome'],
+ ['Codon AUG','Anticodon UAC',3,'Codon บน mRNA จับคู่สมกับ anticodon บน tRNA'],
+ ['ภาวะเกลือสูง','Z-DNA',0,'ภาวะเกลือสูงหรือ methylation ทำให้เกลียวเปลี่ยนเป็น Z-form']];
+const PB=[
+ ['DNA เกลียวคู่ molecule หนึ่งมีเบส A ร้อยละ 30 ของเบสทั้งหมด จะมีเบส G ร้อยละเท่าใด',['15','20','30','40'],1,'A = T = 30 รวม 60 เหลือ G + C = 40 และ G = C จึงได้ G = 20'],
+ ['DNA ช่วงหนึ่งมี 10 คู่เบส เป็นคู่ G–C 4 คู่ ช่วงนี้มี hydrogen bond ทั้งหมดกี่พันธะ',['30','26','24','20'],2,'G–C 4 คู่ × 3 = 12 และ A–T 6 คู่ × 2 = 12 รวม 24 พันธะ'],
+ ['สาย DNA แม่แบบ 3′– TAC GGA ACT –5′ จะแปลรหัสได้ polypeptide ใด',['Tyr – Gly – Thr','Met – Pro – Trp','Met – Pro – Thr','Met – Pro'],3,'mRNA คือ 5′– AUG CCU UGA –3′ ได้ Met, Pro แล้ว UGA เป็น codon หยุด ถ้าเป็น UGG จึงจะได้ Trp'],
+ ['ถ้า enzyme DNA ligase ไม่ทำงาน ผลใดจะพบได้ชัดเจนที่สุด',['เกลียวคู่ไม่คลายออก จึงไม่เกิด replication fork','ไม่มี RNA primer ให้ DNA polymerase เริ่มต่อสาย','สาย lagging ยังเป็นท่อน Okazaki ที่ไม่เชื่อมกัน','สาย leading ถูกสร้างในทิศ 3′→5′ แทน'],2,'Ligase มีหน้าที่สร้าง phosphodiester bond เชื่อม Okazaki fragment ข้ออื่นเป็นหน้าที่ของ Helicase และ Primase'],
+ ['DNA 1 molecule ที่ทั้งสองสายติดฉลาก ¹⁵N จำลองตัวเอง 2 รอบในอาหารที่มีแต่ ¹⁴N จะมี DNA ที่ยังมีสาย ¹⁵N กี่ molecule',['1 ใน 4','2 ใน 4','3 ใน 4','4 ใน 4'],1,'แบบกึ่งอนุรักษ์ สายเดิม 2 สายแยกไปอยู่คนละ molecule และไม่ถูกทำลาย ไม่ว่าจำลองกี่รอบก็มีสายเดิมอยู่ 2 molecule เสมอ'],
+ ['ข้อใด "ไม่สามารถ" สรุปได้จากการทดลองของ Griffith เพียงอย่างเดียว',['เชื้อ S ที่มีชีวิตทำให้หนูเป็นปอดบวม','บางสิ่งจาก S ที่ตายแล้วเปลี่ยน R ให้ก่อโรคได้','สารที่ทำให้เกิด transformation คือ DNA','ความร้อนทำให้เชื้อ S ก่อโรคไม่ได้'],2,'Griffith รู้แค่ว่ามี "บางสิ่ง" ถ่ายทอดได้ การระบุว่าเป็น DNA มาจากงานของ Avery และคณะในปี 1944'],
+ ['ถ้ายาชนิดหนึ่งยับยั้ง RNA polymerase ของ bacteria ข้อใดเรียงลำดับผลที่ตามมาได้ถูกต้อง',['DNA ไม่จำลองตัว → เซลล์ไม่แบ่ง → โปรตีนลดลง','mRNA ลดลง → การแปลรหัสลดลง → โปรตีนลดลง','tRNA เพิ่มขึ้น → ribosome ทำงานมากขึ้น → โปรตีนเพิ่มขึ้น','mRNA เพิ่มขึ้น → codon หยุดลดลง → สายโปรตีนยาวขึ้น'],1,'RNA polymerase ใช้ในการถอดรหัส เมื่อถูกยับยั้ง mRNA จึงลดลงก่อน ตัวอย่างยาคือ rifampicin ซึ่งยับยั้ง RNA polymerase ของ bacteria'],
+ ['เหตุผลใดทำให้ Watson & Crick สรุปว่าเบสต้องจับคู่ระหว่าง purine กับ pyrimidine',['ทำให้เกลียวกว้างเท่ากันตลอด ตรงกับภาพ X-ray','ทำให้ทุกคู่เบสมี hydrogen bond เท่ากัน','ทำให้สองสายวิ่งไปในทิศทางเดียวกัน','ทำให้น้ำตาลหันเข้าด้านในของเกลียว'],0,'2 วง + 1 วงให้ความกว้างคงที่ ส่วนจำนวนพันธะ H ไม่เท่ากัน (2 กับ 3) สองสายสวนทางกัน และน้ำตาลอยู่ด้านนอก']];
+const KEY=['ก','ข','ค','ง'];PA.forEach(q=>{if(q[2]===1)[q[0],q[1]]=[q[1],q[0]];});
+const sc={a:0,an:0,b:0,bn:0};
+function buildQuiz(){
+  const q=$('quiz');
+  q.innerHTML=`<div><h3>ส่วน ก · รหัสความสัมพันธ์</h3><p class="lead">อ่านจากคำซ้ายไปหาคำขวา แล้วเลือกรหัสที่ตรงที่สุด</p></div>
+  <div class="codes">${REL.map(r=>`<span>${ic(r.c)} ${r.k} = ${r.t}</span>`).join('')}</div>
+  <div class="qa" id="qa"></div>
+  <div><h3>ส่วน ข · เลือกคำตอบ</h3><p class="lead">คิดเป็นลูกโซ่เหตุและผลจากเนื้อหาทั้ง 6 บท</p></div>
+  <div class="qa" id="qb"></div>
+  <div><button class="btn" id="reset">เริ่มทำใหม่</button></div>`;
+  const qa=$('qa');
+  PA.forEach((it,i)=>{const d=document.createElement('div');d.className='item';
+    d.innerHTML=`<div class="pairq"><span class="no">${String(i+1).padStart(2,'0')}</span><span class="t">${it[0]}</span><span class="q">?</span><span class="t">${it[1]}</span></div><div class="rels"></div>`;
+    const rels=d.querySelector('.rels');
+    REL.forEach((r,j)=>{const b=document.createElement('button');b.className='rel '+r.c;b.innerHTML=`<span class="s">${ic(r.c)}</span>${r.k} ${RW[r.c]}`;b.setAttribute('aria-label',r.k+' '+r.t);
+      b.onclick=()=>{rels.querySelectorAll('button').forEach((x,k)=>{x.disabled=true;if(k===it[2])x.classList.add('right');});
+        const ok=j===it[2];if(!ok)b.classList.add('wrong');sc.an++;if(ok)sc.a++;
+        const f=document.createElement('p');f.className='fb '+(ok?'ok':'no');const R=REL[it[2]];
+        f.innerHTML=`<b>${ok?'ถูกต้อง':'ยังไม่ใช่'}</b> · คำตอบ ${R.k} ${ic(R.c)} ${RW[R.c]} · ${it[3]}`;d.appendChild(f);updateScore();};
+      rels.appendChild(b);});
+    qa.appendChild(d);});
+  const qb=$('qb');
+  PB.forEach((it,i)=>{const d=document.createElement('div');d.className='item';
+    d.innerHTML=`<p class="qtext"><span class="no">${String(i+1).padStart(2,'0')}</span>${it[0]}</p><div class="opts"></div>`;
+    const ops=d.querySelector('.opts');
+    it[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span class="k">${KEY[j]}.</span><span>${o}</span>`;
+      b.onclick=()=>{ops.querySelectorAll('button').forEach((x,k)=>{x.disabled=true;if(k===it[2])x.classList.add('right');});
+        const ok=j===it[2];if(!ok)b.classList.add('wrong');sc.bn++;if(ok)sc.b++;
+        const f=document.createElement('p');f.className='fb '+(ok?'ok':'no');f.innerHTML=`<b>${ok?'ถูกต้อง':'ยังไม่ใช่'}</b> · ตอบ ${KEY[it[2]]}. ${it[3]}`;d.appendChild(f);updateScore();};
+      ops.appendChild(b);});
+    qb.appendChild(d);});
+  $('reset').onclick=()=>{sc.a=sc.an=sc.b=sc.bn=0;buildQuiz();updateScore();$('quiz').scrollIntoView({block:'start'});};
+}
+function updateScore(){$('score').innerHTML=`<div><b>${sc.a}/${PA.length}</b><span>ส่วน ก · ตอบแล้ว ${sc.an}</span></div><div><b>${sc.b}/${PB.length}</b><span>ส่วน ข · ตอบแล้ว ${sc.bn}</span></div>`;}
+buildQuiz();
+
+go(0,1);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(!CH[st.ch].quiz){st.built=-1;go(st.ch,st.step);}});
+
+window.__pcheck2=()=>{const out=[];const vis=[...svg.querySelectorAll('.node.on')].map(g=>({id:g.getAttribute('data-id'),r:g.querySelector('rect').getBoundingClientRect(),t:g.textContent.slice(0,22)}));
+ const es=[...svg.querySelectorAll('.e.on')].filter(g=>g.__i);const deg={};es.forEach(g=>{deg[g.__i.a]=1;deg[g.__i.b]=1;});
+ vis.forEach(n=>{if(!deg[n.id])out.push('ISO '+n.t);});
+ es.forEach(g=>{const i=g.__i;if(!i.label)out.push('NOLAB '+i.a+'>'+i.b);
+  const p=g.querySelector('path');if(p){const Ln=p.getTotalLength(),m=p.getScreenCTM();for(let k=1;k<24;k++){const q=p.getPointAtLength(Ln*k/24);const x=q.x*m.a+q.y*m.c+m.e,y=q.x*m.b+q.y*m.d+m.f;vis.forEach(n=>{if(n.id===i.a||n.id===i.b)return;const r=n.r;if(x>r.left+1&&x<r.right-1&&y>r.top+1&&y<r.bottom-1)out.push('CROSS '+i.a+'>'+i.b+' over '+n.t);});}}
+  if(i.label&&g.__lab){const dx=i.en[0]-i.st[0],dy=i.en[1]-i.st[1],len=Math.hypot(dx,dy);const bb=g.__lab.getBBox();const ext=Math.abs(bb.width*dx/len)+Math.abs(bb.height*dy/len);if(len<ext+16)out.push('SHORT '+i.a+'>'+i.b+' '+Math.round(len)+'<'+Math.round(ext+16));}});
+ svg.querySelectorAll('.pill.on').forEach(p=>out.push('PILL '+p.textContent.slice(0,24)));
+ return [...new Set(out)];};
+</script>
+<script>document.addEventListener("keydown",e=>{if(e.key==="Escape"||e.key==="f"||e.key==="F")e.stopImmediatePropagation();},true);try{setFull(true);document.getElementById("fs").style.display="none";}catch(e){}</script></body></html>

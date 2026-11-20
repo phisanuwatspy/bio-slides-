@@ -1,0 +1,709 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}.back{display:none!important}</style></head><body><style>.top .back{display:none!important}.wrap{padding-block:10px 24px!important}</style><title>ความหลากหลายของจุลินทรีย์ · TPAT1 เชื่อมโยง</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: lab-notebook graph-paper stage where a TPAT1-style concept map builds step by step; narration + relation chain in a side panel. Base colors follow Sanger chromatogram convention (A green, C blue, G black, T red). */
+:root{
+  --bg:#E8EDF0; --surface:#FBFCFD; --ink:#13212C; --muted:#56687A; --line:#C3CFD8; --grid:#E2E9EE;
+  --cause:#1E4F8F; --part:#6A7C8B; --inhib:#C7372F; --pair:#0B807C;
+  --keyFill:#E1EAF5; --ok:#1C7F46; --bad:#C2372E; --okBg:#E3F3E9; --badBg:#FBE6E4;
+  --bA:#178A3E; --bC:#2158C4; --bG:#1B1B1B; --bT:#D02B23; --bU:#8B3FC0;
+  --sS:#2158C4; --sR:#B5730C; --agar:#F2E2B0; --dead:#F5D6E1; --new:#0B807C;
+  --fd:"Anuphan","IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
+  --fb:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
+  --fm:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C141B; --surface:#131E27; --ink:#E3EBF1; --muted:#93A6B5; --line:#2B3B48; --grid:#17242E;
+  --cause:#86B6F2; --part:#8FA1AF; --inhib:#FF7A70; --pair:#4AC9C1;
+  --keyFill:#1A2D41; --ok:#5ED18E; --bad:#FF7D73; --okBg:#123224; --badBg:#3A1A1A;
+  --bA:#52D686; --bC:#78AAFF; --bG:#E4E8EC; --bT:#FF716A; --bU:#C78EF8;
+  --sS:#78AAFF; --sR:#F0B44C; --agar:#4A3F22; --dead:#4C2335; --new:#4AC9C1; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C141B; --surface:#131E27; --ink:#E3EBF1; --muted:#93A6B5; --line:#2B3B48; --grid:#17242E;
+  --cause:#86B6F2; --part:#8FA1AF; --inhib:#FF7A70; --pair:#4AC9C1;
+  --keyFill:#1A2D41; --ok:#5ED18E; --bad:#FF7D73; --okBg:#123224; --badBg:#3A1A1A;
+  --bA:#52D686; --bC:#78AAFF; --bG:#E4E8EC; --bT:#FF716A; --bU:#C78EF8;
+  --sS:#78AAFF; --sR:#F0B44C; --agar:#4A3F22; --dead:#4C2335; --new:#4AC9C1; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6}
+.wrap{max-width:1360px;margin:0 auto;padding-block:16px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:14px}
+
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+.eyebrow{margin:0;font:500 13px var(--fm);letter-spacing:.06em;color:var(--muted)}
+h1{margin:2px 0 0;font:700 32px/1.15 var(--fd);text-wrap:balance}
+h1 em{font-style:normal;color:var(--cause)}
+.legend{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px}
+.legend li{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--muted)}
+.legend b{color:var(--ink);font-weight:600}
+.legend svg{width:46px;height:16px;flex:none;overflow:visible}
+
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{flex:none;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:8px 14px;font:500 16px var(--fb);cursor:pointer}
+.tab .n{font:600 13px var(--fm);color:var(--muted)}
+.tab[aria-current="true"]{background:var(--cause);border-color:var(--cause);color:var(--surface)}
+.tab[aria-current="true"] .n{color:var(--surface);opacity:.75}
+.tab:focus-visible,.btn:focus-visible,.opt:focus-visible,.rel:focus-visible{outline:3px solid var(--pair);outline-offset:2px}
+
+.player{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}
+@media (max-width:980px){.player{grid-template-columns:minmax(0,1fr)}}
+.stage{min-width:0;background-color:var(--surface);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:25px 25px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+#svg{display:block;width:100%;height:auto}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+@media (min-width:981px){.panel{position:sticky;top:12px;min-height:420px}}
+.kicker{margin:0;font:600 13px var(--fm);letter-spacing:.05em;color:var(--cause)}
+.panel h2{margin:0;font:700 25px/1.3 var(--fd);text-wrap:balance}
+.stext{margin:0;font-size:17.5px;line-height:1.75}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.chain:empty{display:none}
+.chain .lbl{width:100%;font:600 12px var(--fm);letter-spacing:.06em;color:var(--muted)}
+.tok{border:1px solid var(--line);border-radius:8px;padding:3px 10px;font-size:15px;background:var(--bg)}
+.sym{font:700 20px var(--fd);line-height:1}
+.sym.cause{color:var(--cause)}.sym.part{color:var(--part)}.sym.inhib{color:var(--inhib)}.sym.pair{color:var(--pair)}.sym.sep{color:var(--muted);font-size:16px}
+.controls{margin-top:auto;display:flex;align-items:center;gap:10px}
+.dots{flex:1;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--line);border:0;padding:0;cursor:pointer}
+.dot.on{background:var(--cause)}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:10px 16px;font:600 16px var(--fb);cursor:pointer}
+.btn.primary{background:var(--cause);border-color:var(--cause);color:var(--surface)}
+.btn.ghost{background:transparent;color:var(--muted);font-weight:500}
+.btn:disabled{opacity:.4;cursor:default}
+.score{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.score div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
+.score b{display:block;font:700 28px var(--fd);font-variant-numeric:tabular-nums}
+.score span{font-size:14px;color:var(--muted)}
+
+/* ---------- SVG ---------- */
+.bA{--c:var(--bA)}.bC{--c:var(--bC)}.bG{--c:var(--bG)}.bT{--c:var(--bT)}.bU{--c:var(--bU)}
+.cS{--c:var(--sS)}.cR{--c:var(--sR)}.cX{--c:var(--cause)}
+.rv{opacity:0;transform:translateY(10px);transform-box:fill-box;transform-origin:center;transition:opacity .5s ease,transform .5s ease}
+.rv.on{opacity:1;transform:none}
+.nl{font:600 22px var(--fd);fill:var(--ink)}
+.nl.big{font-size:30px;font-weight:700}
+.ns{font:400 15px var(--fb);fill:var(--muted)}
+.ny{font:500 13px var(--fm);fill:var(--cause)}
+.node rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.node.key rect{fill:var(--keyFill);stroke:var(--cause);stroke-width:2}
+.node.now:not(.base):not(.chip) rect{stroke:var(--cause);stroke-width:3}
+.node.base rect,.node.chip rect{stroke:var(--c);stroke-width:2.5}
+.node.base .nl,.node.chip .nl{fill:var(--c)}
+.e path{fill:none;stroke-linecap:round}
+.e.cause path{stroke:var(--cause);stroke-width:2.5}
+.e.part path{stroke:var(--part);stroke-width:2;stroke-dasharray:6 6}
+.e.inhib path{stroke:var(--inhib);stroke-width:2.5}
+.e.pair path{stroke:var(--pair);stroke-width:2}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s ease}
+.on .draw{stroke-dashoffset:0}
+.e.done.cause .main{marker-end:url(#m-cause)}
+.e.done.part .main{marker-end:url(#m-part)}
+.e.done.inhib .main{marker-end:url(#m-inhib)}
+.mk-cause{fill:var(--cause)}.mk-part{fill:var(--surface);stroke:var(--part);stroke-width:1.6}.mk-inhib{fill:var(--inhib)}
+.elab rect{fill:var(--surface);stroke:var(--line);stroke-width:1}
+.el{font:500 14.5px var(--fb);fill:var(--ink)}
+.elab.cause .el{fill:var(--cause)}.elab.inhib .el{fill:var(--inhib)}.elab.pair .el{fill:var(--pair)}.elab.part .el{fill:var(--muted)}.elab.warn .el{fill:var(--inhib)}
+.prop{font:500 15px var(--fb);fill:var(--muted)}
+.pill rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.pill.d rect{stroke:var(--cause)}.pill.r rect{stroke:var(--pair)}
+.pt{font:500 18px var(--fb);fill:var(--ink)}
+.tb{font:700 19px var(--fm);fill:var(--c)}.sep{fill:var(--muted)}
+.rowline{stroke:var(--grid);stroke-width:1.5}
+.guide{stroke:var(--line);stroke-width:2;stroke-dasharray:3 6;fill:none}
+.cap{font:500 15px var(--fb);fill:var(--muted)}
+.cap.strong{fill:var(--ink);font-weight:600}
+.mono{font:600 15px var(--fm);fill:var(--ink)}
+.bb1{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round}
+.bb2{fill:none;stroke:var(--muted);stroke-width:4;stroke-linecap:round}
+.nt1{fill:var(--ink)}.nt2{fill:var(--muted)}
+.rung{stroke:var(--c);stroke-width:5;stroke-linecap:round}
+.bracket{fill:none;stroke:var(--cause);stroke-width:1.8}
+.band{fill:var(--bg);stroke:var(--line);stroke-width:1.2;stroke-dasharray:4 4}
+.mouse .body{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+.mouse.dead .body{fill:var(--dead)}
+.mouse .tail,.mouse .feet{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.mouse .ear{fill:var(--dead);stroke:var(--ink);stroke-width:2}
+.mouse .eye,.mouse .nose{fill:var(--ink)}
+.mouse .xeye{stroke:var(--inhib);stroke-width:2.6;stroke-linecap:round}
+.dish{fill:var(--surface);stroke:var(--line);stroke-width:2}
+.agar{fill:var(--agar)}
+.colS{fill:var(--sS)}.colR{fill:var(--sR)}
+.old{stroke:var(--ink);stroke-width:5;stroke-linecap:round;fill:none}
+.new{stroke:var(--new);stroke-width:5;stroke-linecap:round;fill:none}
+.arrowtxt{font:600 26px var(--fd);fill:var(--muted)}
+.tile rect{fill:var(--surface);stroke:var(--c);stroke-width:2.2}
+.tile.anti rect{stroke-dasharray:5 4;fill:var(--bg)}
+.tile text{font:600 24px var(--fm);fill:var(--c)}
+.rowl{font:600 19px var(--fd);fill:var(--ink)}
+.rows{font:400 14px var(--fb);fill:var(--muted)}
+.codon{fill:none;stroke:var(--cause);stroke-width:2}
+.pep{stroke:var(--cause);stroke-width:3;stroke-linecap:round}
+
+/* ---------- quiz ---------- */
+.quiz{padding:22px clamp(16px,3vw,32px) 32px;background:var(--surface);display:flex;flex-direction:column;gap:22px}
+.quiz h3{margin:0;font:700 22px var(--fd)}
+.quiz .lead{margin:4px 0 0;color:var(--muted)}
+.codes{display:flex;flex-wrap:wrap;gap:6px 14px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.codes span{font-size:15px}
+.qa{display:flex;flex-direction:column;gap:10px}
+.item{border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:var(--surface)}
+.pairq{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:17.5px}
+.pairq .no{font:600 14px var(--fm);color:var(--muted);min-width:22px}
+.pairq .t{border:1px solid var(--line);border-radius:8px;padding:2px 10px;background:var(--bg)}
+.pairq .q{font:700 20px var(--fd);color:var(--muted)}
+.rels{display:flex;flex-wrap:wrap;gap:6px}
+.rel{min-width:64px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:6px 10px;font:600 17px var(--fb);cursor:pointer;display:flex;align-items:center;gap:6px;justify-content:center}
+.rel .s{font:700 19px var(--fd)}
+.rel.cause .s{color:var(--cause)}.rel.part .s{color:var(--part)}.rel.inhib .s{color:var(--inhib)}.rel.pair .s{color:var(--pair)}.rel.none .s{color:var(--muted)}
+.qtext{font-size:17.5px;line-height:1.65;margin:0}
+.qtext .no{font:600 14px var(--fm);color:var(--muted);margin-right:6px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:8px}
+.opt{text-align:left;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:10px 12px;font:400 16.5px/1.5 var(--fb);cursor:pointer;display:flex;gap:8px}
+.opt .k{font-weight:600;color:var(--muted)}
+.right{border-color:var(--ok)!important;background:var(--okBg)!important}
+.wrong{border-color:var(--bad)!important;background:var(--badBg)!important}
+.rel:disabled,.opt:disabled{cursor:default}
+.fb{margin:0;font-size:15.5px;line-height:1.65;padding:8px 12px;border-radius:10px;background:var(--bg);border-left:3px solid var(--cause)}
+.fb b{font-weight:600}
+.fb.ok b{color:var(--ok)}.fb.no b{color:var(--bad)}
+
+
+/* ---------- motion ---------- */
+.rv{transform:translateY(12px) scale(.92);transition:opacity .55s ease,transform .65s cubic-bezier(.34,1.56,.64,1)}
+.flowg{opacity:0;transition:opacity .4s}
+.e.done .flowg{opacity:1}
+.flow{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.e.cause .flow{stroke:var(--cause)}.e.inhib .flow{stroke:var(--inhib)}
+@keyframes march{to{stroke-dashoffset:-12}}
+.e.part.done .main{animation:march .9s linear infinite}
+@keyframes pairPulse{50%{opacity:.3}}
+.e.pair.on path{animation:pairPulse 1.8s ease-in-out infinite}
+@keyframes nowPulse{0%,100%{stroke-opacity:1}50%{stroke-opacity:.3}}
+.node.now rect{animation:nowPulse 1.6s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.07)}}
+.breathe{animation:breathe 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes shrinkp{50%{transform:scale(.88)}}
+.shrinkp{animation:shrinkp 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes squish{50%{transform:scaleX(.86)}}
+.squish{animation:squish 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+.spin{animation:spin 4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes drift{0%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--dx),var(--dy));opacity:0}}
+.drift{animation:drift 2.4s ease-out infinite}
+@keyframes blink{50%{opacity:.2}}
+.blink{animation:blink 1.4s ease-in-out infinite}
+@keyframes floaty{50%{transform:translateY(-6px)}}
+.floaty{animation:floaty 2.8s ease-in-out infinite}
+.mouse:not(.dead) .body{animation:breathe 1.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+
+/* ---------- fullscreen ---------- */
+.app{display:flex;flex-direction:column;gap:14px;min-width:0}
+.bar{display:flex;align-items:flex-start;gap:10px;min-width:0}
+.bar .tabs{flex:1;min-width:0}
+.fsb{flex:none;display:flex;align-items:center;gap:6px;padding:8px 14px}
+.fsb svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app.full{position:fixed;inset:0;z-index:50;background:var(--bg);overflow:auto;gap:10px;
+  padding-block:max(10px,env(safe-area-inset-top,0px)) max(10px,env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.app.full .player{flex:1;min-height:0;grid-template-columns:minmax(0,1fr) 330px;align-items:stretch}
+.app.full .stage{overflow:auto;display:flex;flex-direction:column;justify-content:center}
+.app.full #svg{flex:1;height:100%;min-height:0}
+.app.full .quiz{flex:none}
+.app.full .stage:has(.quiz:not([hidden])){justify-content:flex-start}
+.app.full .panel{position:static;overflow:auto;min-height:0}
+@media (max-width:980px){
+  .app.full .player{flex:none;grid-template-columns:minmax(0,1fr)}
+  .app.full #svg{flex:none;height:auto}
+}
+
+/* ---------- transitions (on by default, toggle adds .still) ---------- */
+.rv{transform:translateY(26px) scale(.82);transition:opacity .6s ease,transform .85s cubic-bezier(.34,1.56,.64,1)}
+.draw{transition:stroke-dashoffset 1.1s cubic-bezier(.65,0,.35,1)}
+@keyframes stageIn{from{opacity:0;transform:translateX(56px) scale(.96)}}
+#svg.in,#quiz.in{animation:stageIn .65s cubic-bezier(.22,1,.36,1)}
+.swap{display:flex;flex-direction:column;gap:12px}
+@keyframes textIn{from{opacity:0;transform:translateY(16px)}}
+.swap.in>*{animation:textIn .55s cubic-bezier(.22,1,.36,1) both}
+.swap.in>*:nth-child(2){animation-delay:.07s}.swap.in>*:nth-child(3){animation-delay:.14s}.swap.in>*:nth-child(4){animation-delay:.21s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.node.now.on{animation:bob 2.4s ease-in-out 1.1s infinite}
+.elab.now.on rect{animation:nowPulse 1.6s ease-in-out infinite}
+.dot{transition:background .3s,transform .3s}
+.still .rv,.still .draw,.still .ph rect,.still .ph text{transition:none!important}
+.still *,.still *::before{animation:none!important}
+.still .flowg{display:none}
+
+/* ---------- relation icons ---------- */
+.ico{width:1.25em;height:1.25em;flex:none;vertical-align:-.27em;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.ico.cause{color:var(--cause)}.ico.part{color:var(--part)}.ico.inhib{color:var(--inhib)}.ico.pair{color:var(--pair)}.ico.none{color:var(--muted)}
+.legend .lg{display:flex;align-items:center;gap:7px;padding:5px 13px 5px 9px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);font-size:15.5px;color:var(--ink)}
+.legend .lg b{font-weight:600}
+.legend .lg svg.ico{width:22px;height:22px;overflow:visible}
+.legend .lg.cause{border-color:var(--cause)}.legend .lg.part{border-color:var(--part)}.legend .lg.inhib{border-color:var(--inhib)}.legend .lg.pair{border-color:var(--pair)}
+.mk-cause{fill:var(--cause)}
+.mk-part{fill:var(--part);stroke:var(--surface);stroke-width:1.6}
+.ico.part path{fill:currentColor}
+.mk-inhib{fill:var(--surface);stroke:var(--inhib);stroke-width:2.4;stroke-linecap:round}
+
+/* ---------- touch: no double-tap-zoom delay, clear press feedback ---------- */
+button,.chip,.tab,.rel,.opt,.rl,.pth,.nd,.eb{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:active,.chip:active,.tab:active{filter:brightness(.9)}
+button,.chip,.tab{transition:filter .12s,background .25s,border-color .25s,color .25s}
+.back{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font:500 14px var(--fb);color:var(--cause);text-decoration:none}.back:hover{text-decoration:underline}
+
+.band{fill:color-mix(in srgb,var(--bg) 70%,transparent);stroke:var(--line);stroke-width:1.5;stroke-dasharray:5 7}
+.band.mito{fill:color-mix(in srgb,var(--sR) 7%,transparent);stroke:color-mix(in srgb,var(--sR) 55%,var(--line))}
+.band.mem{fill:color-mix(in srgb,var(--sR) 20%,transparent);stroke:var(--sR);stroke-dasharray:none;stroke-width:2}
+.bandl{font:600 13px var(--fm);letter-spacing:.06em;fill:var(--muted)}
+.cell{fill:color-mix(in srgb,var(--keyFill) 55%,var(--surface));stroke:var(--line);stroke-width:2}
+.spin{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 5;fill:none;opacity:.6}
+.plate{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:2 4}
+.cd{stroke:color-mix(in srgb,var(--ink) 25%,transparent);stroke-width:1}
+.cen{fill:var(--ink)}
+.chi{font:700 18px var(--fd);fill:var(--inhib)}
+.xbig{font:700 34px var(--fd);fill:var(--muted)}
+.pc rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}.pc text{font:600 20px var(--fm);fill:var(--ink)}
+.pc.hd rect{fill:var(--bg)}.pc.hd text{fill:var(--muted)}
+.pc.k1 rect{fill:color-mix(in srgb,var(--cause) 16%,var(--surface));stroke:var(--cause)}
+.pc.k2 rect{fill:color-mix(in srgb,var(--pair) 16%,var(--surface));stroke:var(--pair)}
+.pc.k3 rect{fill:color-mix(in srgb,var(--sR) 18%,var(--surface));stroke:var(--sR)}
+.pc.k4 rect{fill:color-mix(in srgb,var(--inhib) 14%,var(--surface));stroke:var(--inhib)}
+.hor{fill:none;stroke-width:3.5;stroke-linecap:round}
+.axis{stroke:var(--line);stroke-width:1.5}
+.back{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font:500 14px var(--fb);color:var(--cause);text-decoration:none}
+.back:hover{text-decoration:underline}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <p class="eyebrow">Slide 13 · Diversity of microorganisms</p>
+      <h1>ความหลากหลายของจุลินทรีย์ <em>TPAT1 เชื่อมโยง</em></h1>
+    </div>
+    <ul class="legend" aria-label="ความหมายของสัญลักษณ์"><li class="lg cause"><svg class="ico cause" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg><b>ทำให้เกิด</b></li><li class="lg part"><svg class="ico part" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h3.5M8 12h3.5M17.5 12m-3.6 0a3.6 3.6 0 1 0 7.2 0a3.6 3.6 0 1 0-7.2 0"/></svg><b>ประกอบด้วย</b></li><li class="lg inhib"><svg class="ico inhib" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M4.9 4.9l14.2 14.2"/></svg><b>ยับยั้ง</b></li><li class="lg pair"><svg class="ico pair" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><b>จับคู่กับ</b></li></ul>
+  </header>
+
+  <div class="app" id="app">
+  <div class="bar"><nav class="tabs" id="tabs" aria-label="บทเรียน"></nav><button class="btn fsb" id="mo" aria-pressed="true"></button><button class="btn fsb" id="fs" aria-pressed="false" title="เต็มจอ (กด F)"></button></div>
+  <main class="player">
+    <section class="stage">
+      <svg id="svg" viewBox="0 0 1000 640" role="img" aria-label="แผนผังเชื่อมโยงแบบเคลื่อนไหว"></svg>
+      <div id="quiz" class="quiz" hidden></div>
+    </section>
+    <aside class="panel" aria-live="polite">
+      <div class="swap" id="swap"><p class="kicker" id="kicker"></p>
+      <h2 id="stitle"></h2>
+      <p class="stext" id="stext"></p>
+      <div class="chain" id="chain"></div></div>
+      <div class="score" id="score" hidden></div>
+      <div class="controls" id="controls">
+        <button class="btn" id="prev" aria-label="ขั้นก่อนหน้า">←</button>
+        <div class="dots" id="dots"></div>
+        <button class="btn primary" id="next">ถัดไป →</button>
+      </div>
+      <button class="btn ghost" id="auto">▶ เล่นอัตโนมัติ</button>
+    </aside>
+  </main>
+  </div>
+</div>
+
+<script>
+const ICON={"cause": "M5 12h14M12 5l7 7-7 7", "part": "M2 12h3.5M8 12h3.5M17.5 12m-3.6 0a3.6 3.6 0 1 0 7.2 0a3.6 3.6 0 1 0-7.2 0", "inhib": "M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M4.9 4.9l14.2 14.2", "pair": "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71", "none": "M5 9h14M5 15h14M19 5L5 19"};
+const ic=(t,rev)=>`<svg class="ico ${t}" viewBox="0 0 24 24" aria-hidden="true"${rev?' style="transform:scaleX(-1)"':''}><path d="${ICON[t]}"/></svg>`;
+const RW={cause:'ทำให้เกิด',part:'ประกอบด้วย',inhib:'ยับยั้ง',pair:'จับคู่กับ',none:'ไม่เกี่ยวกัน'};
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('svg');
+let reduce=(()=>{try{return localStorage.getItem('motion')==='off'}catch(e){return false}})();
+document.documentElement.classList.toggle('still',reduce);
+function retrig(el){el.classList.remove('in');void el.getBoundingClientRect();el.classList.add('in');}
+function S(tag,a,p){const e=document.createElementNS(NS,tag);if(a)for(const k in a){if(a[k]!=null)e.setAttribute(k,a[k]);}if(p)p.appendChild(e);return e;}
+let L={},nodes={};let _mc=null;
+function tw(t){let w=0;try{w=t.getComputedTextLength();}catch(e){}if(w>0||!t.textContent)return w;if(!_mc)_mc=document.createElement('canvas').getContext('2d');const s=getComputedStyle(t);_mc.font=`${s.fontWeight||400} ${s.fontSize||'16px'} ${s.fontFamily||'sans-serif'}`;return _mc.measureText(t.textContent).width*1.03;}
+
+function delay(el,d){if(d){el.style.transitionDelay=d+'ms';}}
+
+function flow(g,d,type,len){
+  if(reduce||(type!=='cause'&&type!=='inhib'))return;
+  const fg=S('g',{class:'flowg'},g);const dv=Math.max(1.3,len/120),dur=dv.toFixed(2)+'s',b0=Math.random()*3;
+  [0,1].forEach(k=>{const c=S('path',{class:'flow',d:'M-5 -5L1.5 0L-5 5'},fg),b=(-(b0+k*dv/2)).toFixed(2)+'s';
+    S('animateMotion',{path:d,dur,begin:b,repeatCount:'indefinite',rotate:'auto'},c);
+    S('animate',{attributeName:'opacity',values:'0;1;1;0',keyTimes:'0;0.15;0.8;1',dur,begin:b,repeatCount:'indefinite'},c);});
+}
+/* ---------- primitives ---------- */
+function N(id,x,y,label,o={}){
+  const outer=S('g',{transform:`translate(${x},${y})`},L.node);
+  const g=S('g',{class:'rv node '+(o.kind||''),'data-s':o.s||1,'data-id':id},outer);delay(g,o.d);
+  const rect=S('rect',null,g);
+  const lines=[];
+  if(o.tag)lines.push(['ny',o.tag,18]);
+  lines.push([o.big?'nl big':'nl',label,o.big?36:28]);
+  if(o.sub)lines.push(['ns',o.sub,21]);
+  if(o.sub2)lines.push(['ns',o.sub2,21]);
+  const total=lines.reduce((a,l)=>a+l[2],0);
+  let yy=-total/2,w=0;
+  lines.forEach(([c,t,h])=>{const tx=S('text',{class:c,x:0,y:yy+h/2+1,'text-anchor':'middle','dominant-baseline':'central'},g);tx.textContent=t;yy+=h;w=Math.max(w,tw(tx));});
+  w=Math.max(w+(o.padX||34),o.minW||0);const h=total+16;
+  rect.setAttribute('x',-w/2);rect.setAttribute('y',-h/2);rect.setAttribute('width',w);rect.setAttribute('height',h);rect.setAttribute('rx',12);
+  nodes[id]={x,y,w,h};return g;
+}
+function clip(n,dx,dy,pad){const hw=n.w/2+pad,hh=n.h/2+pad;let t=Infinity;if(Math.abs(dx)>1e-6)t=Math.min(t,hw/Math.abs(dx));if(Math.abs(dy)>1e-6)t=Math.min(t,hh/Math.abs(dy));return[n.x+dx*t,n.y+dy*t];}
+function E(a,b,type,label,s,o={}){if(!label&&type==='part')label='ประกอบด้วย';if(!label&&type==='pair')label='คู่กับ';
+  if(type==='part'){[a,b]=[b,a];o=Object.assign({},o,{bend:-(o.bend||0),pa:o.pb,pb:o.pa});}
+  const A=nodes[a],B=nodes[b];const dx=B.x-A.x,dy=B.y-A.y,len=Math.hypot(dx,dy);
+  const px=dy/len,py=-dx/len;const bend=o.bend||0;
+  const cx=(A.x+B.x)/2+px*bend,cy=(A.y+B.y)/2+py*bend;
+  const st=clip(A,cx-A.x,cy-A.y,o.pa??6),en=clip(B,cx-B.x,cy-B.y,o.pb??8);
+  const g=S('g',{class:'rv e '+type,'data-s':s},L.edge);g.__i={a,b,type,label,st,en};delay(g,o.d);
+  const f=v=>v.toFixed(1);
+  if(type==='pair'){
+    const n=o.n||2;for(let k=0;k<n;k++){const off=(k-(n-1)/2)*5;const p=S('path',{d:`M${f(st[0]+px*off)} ${f(st[1]+py*off)}L${f(en[0]+px*off)} ${f(en[1]+py*off)}`,class:'draw',pathLength:1},g);delay(p,o.d);}
+  }else{
+    const d=bend?`M${f(st[0])} ${f(st[1])}Q${f(cx)} ${f(cy)} ${f(en[0])} ${f(en[1])}`:`M${f(st[0])} ${f(st[1])}L${f(en[0])} ${f(en[1])}`;
+    const p=S('path',{d,class:type==='part'?'main':'main draw',pathLength:type==='part'?null:1},g);delay(p,o.d);flow(g,d,type,len);
+  }
+  if(label){
+    let lx,ly;if(bend){lx=.25*st[0]+.5*cx+.25*en[0];ly=.25*st[1]+.5*cy+.25*en[1];}else{lx=(st[0]+en[0])/2;ly=(st[1]+en[1])/2;}
+    lx+=o.lx||0;ly+=o.ly||0;
+    const og=S('g',{transform:`translate(${f(lx)},${f(ly)})`},L.lab);
+    const lg=S('g',{class:'rv elab '+type+' '+(o.lcls||''),'data-s':s},og);g.__lab=lg;delay(lg,(o.d||0)+350);
+    const r=S('rect',null,lg);const t=S('text',{class:'el',x:0,y:1,'text-anchor':'middle','dominant-baseline':'central'},lg);t.textContent=label;
+    const w=tw(t)+18;r.setAttribute('x',-w/2);r.setAttribute('y',-14);r.setAttribute('width',w);r.setAttribute('height',28);r.setAttribute('rx',14);
+  }
+  return g;
+}
+function T(x,y,txt,cls,s,o={}){const t=S('text',{x,y,class:'rv '+cls,'data-s':s,'text-anchor':o.anchor||'middle','dominant-baseline':'central'},o.layer||L.node);delay(t,o.d);t.textContent=txt;return t;}
+function G(s,d,layer){const g=S('g',{class:'rv','data-s':s},layer||L.node);delay(g,d);return g;}
+function pill(x,y,text,s,d,cls){
+  const o=S('g',{transform:`translate(${x},${y})`},L.node);const g=S('g',{class:'rv pill '+(cls||''),'data-s':s},o);delay(g,d);
+  const r=S('rect',null,g);const t=S('text',{x:0,y:1,'text-anchor':'middle','dominant-baseline':'central',class:'pt'},g);
+  if(/^[ATCGU]( · [ATCGU])+$/.test(text)){text.split(' · ').forEach((b,i)=>{if(i){const sp=S('tspan',{class:'sep'},t);sp.textContent=' · ';}const sp=S('tspan',{class:'tb b'+b},t);sp.textContent=b;});}
+  else t.textContent=text;
+  const w=tw(t)+30;r.setAttribute('x',-w/2);r.setAttribute('y',-18);r.setAttribute('width',w);r.setAttribute('height',36);r.setAttribute('rx',18);
+}
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+
+/*META title=ความหลากหลายของจุลินทรีย์ · TPAT1 เชื่อมโยง|eyebrow=Slide 13 · Diversity of microorganisms|h1=ความหลากหลายของจุลินทรีย์|n=7*/
+let helix=null,raf=0,phase=0;
+const BLUE='var(--sS)',AMB='var(--sR)';
+const soft=(c,p)=>`color-mix(in srgb,${c} ${p}%,var(--surface))`;
+/* ch1 classification and naming */
+function b1(){
+  N('mo',500,50,'จุลินทรีย์',{kind:'key',sub:'microorganism · มองด้วยตาเปล่าไม่เห็น'});
+  const GR=[['bac','แบคทีเรีย',90],['ric','ริคเกตเซีย',250],['vir','ไวรัส',410],['alg','สาหร่าย',580],['pro','โปรโตซัว',745],['fun','เชื้อรา',910]];
+  GR.forEach(([id,t,x],i)=>{N(id,x,175,t,{s:1,d:200+i*90});E(id,'mo','part','มี',1,{d:300+i*90});});
+  N('kmo',170,315,'Monera',{s:2,kind:'key',sub:'prokaryote'});N('kpr',660,315,'Protista',{s:2,d:150,kind:'key',sub:'eukaryote'});N('kfu',910,315,'Fungi',{s:2,d:300,kind:'key',sub:'eukaryote'});
+  E('bac','kmo','cause','อยู่ใน',2,{d:300});E('ric','kmo','cause','อยู่ใน',2,{d:350});E('alg','kpr','cause','อยู่ใน',2,{d:400});E('pro','kpr','cause','อยู่ใน',2,{d:450});E('fun','kfu','cause','อยู่ใน',2,{d:500});
+  const R=['Kingdom','Phylum','Class','Order','Family','Genus','Species'];
+  const RP=[[130,452],[375,452],[620,452],[865,452],[865,557],[620,557],[375,557]];
+  R.forEach((t,i)=>N('r'+i,RP[i][0],RP[i][1],t,{s:3,d:i*110}));
+  for(let i=0;i<6;i++)E('r'+i,'r'+(i+1),'cause','ย่อยเป็น',3,{d:150+i*110});
+  E('kmo','r0','cause','เป็นระดับ',3,{d:900});
+  N('cn',640,615,'ชื่อสามัญ · มะละกอ บักหุ่ง ลอกอ',{s:4});
+  N('bn',120,605,'B. subtilis',{s:5,kind:'key',sub:'Genus + species'});
+  E('r6','bn','cause','ชื่อเช่น',5,{d:200});E('cn','bn','cause','หลายชื่อ จึงใช้',5,{d:400});
+}
+/* ch2 kingdom Monera */
+function b2(){
+  N('mon',500,330,'Kingdom Monera',{kind:'key',sub:'prokaryote'});
+  N('arc',150,330,'Archaebacteria',{s:1,d:200,sub:'ผนัง pseudopeptidoglycan'});
+  N('eub',850,330,'Eubacteria',{s:1,d:300,sub:'ผนัง peptidoglycan'});
+  E('arc','mon','part','แบ่งเป็น',1,{d:400});E('eub','mon','part','แบ่งเป็น',1,{d:500});
+  [['ha','Halophile','ทนเค็ม',90,110],['me','Methanogen','สร้าง CH4',300,110],['th','Thermophile','> 100 °C',90,550],['ac','Acidophile','pH 1–2',300,550]].forEach(([id,t,sub,x,y],i)=>{N(id,x,y,t,{s:2,d:i*140,sub});E(id,'arc','part','แบบ',2,{d:200+i*140});});
+  N('gp',690,110,'Gram +',{s:3,sub:'ติดสีม่วง'});N('gm',920,110,'Gram −',{s:3,d:150,sub:'ติดสีแดง'});
+  E('gp','eub','part','แบบ',3,{d:250});E('gm','eub','part','แบบ',3,{d:350});
+  N('abx',500,150,'ยาปฏิชีวนะ',{s:4,sub:'ไม่ได้ผลกับ archaea'});E('abx','eub','inhib','ยับยั้งการเจริญของ',4,{d:200});
+  N('cy',850,470,'Cyanobacteria',{s:5,kind:'key',sub:'สังเคราะห์แสง · ปล่อย O2'});E('cy','eub','part','แบบ',5,{d:200});
+  N('hc',850,600,'Heterocyst',{s:5,d:300,sub:'ตรึง N2 เป็น NH3'});E('hc','cy','part','มี',5,{d:450});
+}
+/* ch3 shapes and Gram stain */
+function b3(){
+  let g=G(1,0);[[140,95],[168,95],[196,95],[154,120],[182,120],[222,95]].forEach(([x,y])=>S('circle',{cx:x,cy:y,r:12,class:'cd',style:`fill:${soft(BLUE,55)}`},g));
+  T(180,150,'Coccus · ทรงกลม','cap strong',1,{d:100});
+  g=G(1,200);[[420,85],[490,105],[445,122]].forEach(([x,y])=>S('rect',{x:x,y:y-9,width:58,height:18,rx:9,class:'cd',style:`fill:${soft(BLUE,55)}`},g));
+  T(490,150,'Bacillus · ทรงท่อน','cap strong',1,{d:300});
+  g=G(1,400);S('path',{d:'M740 105c12-22 24-22 36 0s24 22 36 0 24-22 36 0 24 22 36 0',style:`fill:none;stroke:${soft(BLUE,55)};stroke-width:11;stroke-linecap:round`},g);
+  T(812,150,'Spirillum · เกลียว','cap strong',1,{d:500});
+  const P=[['cv','Crystal violet','ย้อมม่วง'],['io','Iodine','ตรึงสี'],['al','Alcohol','ล้างสี'],['sf','Safranin','ย้อมแดง']];
+  P.forEach((p,i)=>N(p[0],125+i*250,255,p[1],{s:2,d:i*180,sub:p[2]}));
+  for(let i=0;i<3;i++)E(P[i][0],P[i+1][0],'cause','ต่อด้วย',2,{d:200+i*180});
+  N('gp',170,400,'Gram +',{s:3,kind:'key',sub:'peptidoglycan หนา'});
+  N('gm',600,400,'Gram −',{s:3,d:150,kind:'key',sub:'peptidoglycan บาง + LPS'});
+  E('al','gp','cause','ล้างไม่ออก ยังม่วง',3,{d:250});E('al','gm','cause','ล้างออก',3,{d:350});E('sf','gm','cause','ย้อมติดแดง',3,{d:450});
+  g=G(3,300,L.edge);S('rect',{x:270,y:384,width:150,height:26,rx:6,class:'cd',style:`fill:${soft(BLUE,45)}`},g);S('rect',{x:270,y:414,width:150,height:9,rx:4,class:'cd',style:'fill:var(--line)'},g);
+  T(345,442,'ผนังหนา ไม่มีชั้นไขมัน','cap',3,{d:400});
+  g=G(3,450,L.edge);S('rect',{x:720,y:384,width:150,height:10,rx:5,class:'cd',style:`fill:${soft('var(--inhib)',45)}`},g);S('rect',{x:720,y:398,width:150,height:8,rx:4,class:'cd',style:`fill:${soft(BLUE,45)}`},g);S('rect',{x:720,y:410,width:150,height:9,rx:4,class:'cd',style:'fill:var(--line)'},g);
+  T(795,442,'LPS หุ้มนอก · ผนังบาง','cap',3,{d:550});
+  N('exp',170,565,'S. aureus · Lactobacillus',{s:4,sub:'Streptomyces · Clostridium'});E('exp','gp','part','เช่น',4);
+  N('exn',560,565,'E. coli · Salmonella',{s:4,d:150,sub:'Rhizobium · Leptospira'});E('exn','gm','part','เช่น',4,{d:200});
+  N('ng',870,565,'Neisseria',{s:5,sub:'หนองในแท้ · Gram −'});E('ng','gm','part','เช่น',5,{d:200});
+}
+/* ch4 kingdom Fungi */
+function b4(){
+  N('fun',500,55,'Kingdom Fungi',{kind:'key',sub:'eukaryote · ผนัง chitin · ไม่มี chloroplast'});
+  N('yst',230,180,'ยีสต์ · yeast',{s:2,sub:'เซลล์เดียว · แตกหน่อ'});
+  N('mold',790,180,'รา · mold',{s:2,d:150,sub:'เส้นใย hypha → mycelium'});
+  E('yst','fun','part','แบบ',2,{d:300});E('mold','fun','part','แบบ',2,{d:400});
+  N('coe',235,330,'Coenocytic',{s:3,sub:'ไม่มีผนังกั้น · หลายนิวเคลียส'});N('sep',615,330,'Septate',{s:3,d:150,sub:'มีผนังกั้นเป็นห้อง'});
+  E('coe','mold','part','hypha แบบ',3,{d:300});E('sep','mold','part','hypha แบบ',3,{d:400});
+  const D=[['zy','Zygomycota','zygospore',130],['as','Ascomycota','ascospore ในถุง ascus',380],['ba','Basidiomycota','basidiospore · เห็ด',620],['de','Deuteromycota','ไม่พบระยะอาศัยเพศ',870]];
+  D.forEach(([id,t,sub,x],i)=>N(id,x,472,t,{s:4,d:i*150,sub}));
+  E('coe','zy','cause','พบใน',4,{d:200});E('sep','as','cause','พบใน',4,{d:300});E('sep','ba','cause','พบใน',4,{d:400});E('sep','de','cause','พบใน',4,{d:500});
+  const X=[['x0','Rhizopus','ทำเทมเป้',130],['x1','Saccharomyces','ขนมปัง · Candida ก่อโรค',380],['x2','เห็ดฟาง · เห็ดพิษ','เห็ดระโงกหิน',620],['x3','Penicillium','Aspergillus · A. flavus พิษ',870]];
+  X.forEach(([id,t,sub,x],i)=>{N(id,x,598,t,{s:5,d:i*130,sub});E(id,D[i][0],'part','เช่น',5,{d:100+i*130});});
+}
+/* ch5 kingdom Protista */
+function b5(){
+  N('pz',500,60,'Protozoa',{s:1,kind:'key',sub:'คล้ายสัตว์ · กินอาหาร'});
+  N('alg',500,450,'Algae',{s:1,d:300,kind:'key',sub:'สังเคราะห์แสง · chlorophyll a'});
+  E('pz','alg','pair','อยู่ใน Kingdom Protista เหมือนกัน',1,{d:500});
+  const Z=[['sa','Sarcodina','pseudopodium · Amoeba',125],['fl','Flagellata','flagella · Trypanosoma',375],['ci','Ciliata','cilia · Paramecium',625],['spz','Sporozoa','ไม่มีอวัยวะ · Plasmodium',875]];
+  Z.forEach((z,i)=>{N(z[0],z[3],190,z[1],{s:2,d:i*140,sub:z[2]});E(z[0],'pz','part','กลุ่ม',2,{d:200+i*140});});
+  const A=[['ch','Chlorophyta','สีเขียว · แป้ง',150,330],['eu','Euglenophyta','paramylon',150,450],['ph','Phaeophyta','สีน้ำตาล',130,580],['cr','Chrysophyta','diatom มีซิลิกา',850,330],['py','Pyrrophyta','red tide',850,450],['rh','Rhodophyta','สีแดง',875,580]];
+  A.forEach(([id,t,sub,x,y],i)=>{N(id,x,y,t,{s:3,d:i*110,sub});E(id,'alg','part','ไฟลัม',3,{d:150+i*110});});
+  N('hy',500,600,'Hydrocolloid',{s:4,sub:'E400 · E406 · E407'});
+  E('ph','hy','cause','ให้ alginate',4,{d:200});E('rh','hy','cause','ให้ agar · carrageenan',4,{d:350});
+}
+/* ch6 fermented foods */
+function b6(){
+  const C=[['lab','Lactic acid bacteria','glucose → lactic acid · GRAS',170,'yog','โยเกิร์ต · แหนม · กิมจิ','S. thermophilus + L. bulgaricus',1,'หมักเป็น'],
+           ['bs','Bacillus subtilis','var. natto · Gram +',500,'nat','ถั่วเน่า · นัตโตะ','ถั่วเหลืองต้ม + ฟางข้าว',2,'หมักถั่วเป็น'],
+           ['ace','Acetobacter','Gram − · ethanol → acetic acid',830,'vin','น้ำส้มสายชู · วุ้นมะพร้าว','A. xylinum สร้างเซลลูโลส',3,'หมักเป็น']];
+  C.forEach(c=>{N(c[0],c[3],90,c[1],{s:c[7],sub:c[2]});N(c[4],c[3],245,c[5],{s:c[7],d:250,kind:'key',sub:c[6]});E(c[0],c[4],'cause',c[8],c[7],{d:150});});
+  const F=[['ao','Aspergillus oryzae','โคจิ · amylase + protease',170,'soy','ซีอิ๊ว · มิโซะ · สาเก','starch → glucose · โปรตีน → amino acid',4,'ย่อยวัตถุดิบทำ'],
+           ['rz','Rhizopus oligosporus','เส้นใยขาวยึดถั่ว · 2–3 วัน',500,'tem','เทมเป้','ถั่วเหลืองหมัก · โปรตีนสูง',5,'หมักถั่วเป็น'],
+           ['sc','Saccharomyces cerevisiae','ยีสต์ · ไม่ใช้ O2',830,'brd','ขนมปัง · ไวน์ · สุรา','CO2 ทำให้ฟู + ethanol',5,'หมักน้ำตาลทำ']];
+  F.forEach((c,i)=>{N(c[0],c[3],420,c[1],{s:c[7],d:i===2?300:0,sub:c[2]});N(c[4],c[3],575,c[5],{s:c[7],d:i===2?550:250,kind:'key',sub:c[6]});E(c[0],c[4],'cause',c[8],c[7],{d:i===2?450:150});});
+}
+/* ch7 agriculture environment medicine */
+function b7(){
+  N('rhz',150,75,'Rhizobium',{s:1,sub:'+ Azotobacter · Nostoc'});
+  N('nh3',500,75,'NH3',{s:1,d:150,sub:'จาก N2 ในอากาศ'});
+  N('no3',850,75,'NO2⁻ · NO3⁻',{s:1,d:300,sub:'จุลินทรีย์ในดินเปลี่ยนรูป'});
+  N('pl',850,210,'พืชนำไปใช้',{s:1,d:450,kind:'key'});
+  E('rhz','nh3','cause','ตรึง N2 เป็น',1,{d:200});E('nh3','no3','cause','ถูกเปลี่ยนเป็น',1,{d:350});E('no3','pl','cause','ให้',1,{d:500});
+  N('psm',500,210,'PSM',{s:2,sub:'จุลินทรีย์ละลายฟอสเฟต'});E('psm','pl','cause','ให้ PO4³⁻ แก่',2,{d:200});
+  N('em',150,200,'EM ball',{s:3,sub:'LAB · ยีสต์ · สังเคราะห์แสง'});
+  N('aer',140,345,'Aerobic',{s:3,sub:'Pseudomonas · Zoogloea'});E('em','aer','cause','เติมจุลินทรีย์ช่วย',3,{d:200});
+  N('ana',560,340,'Anaerobic',{s:3,d:200,sub:'acid-forming · methanogen'});E('aer','ana','cause','ส่งตะกอนต่อให้',3,{d:350});
+  N('src',870,340,'Streptomyces',{s:4,sub:'+ Penicillium · ผลิตยา'});
+  N('abx',870,470,'ยาปฏิชีวนะ',{s:4,d:150,kind:'key',sub:'streptomycin · penicillin'});E('src','abx','cause','ผลิต',4,{d:250});
+  N('pb',150,470,'Probiotics',{s:4,d:300,kind:'key',sub:'จุลินทรีย์มีชีวิต'});
+  N('gut',500,470,'ลำไส้สมดุล',{s:4,d:400,sub:'ภูมิคุ้มกันดีขึ้น'});E('pb','gut','cause','ช่วยให้',4,{d:500});
+  N('re',140,600,'Restriction enzyme',{s:5,sub:'ตัดยีน'});
+  N('rec',500,600,'Recombination',{s:5,d:200,sub:'ยีนลูกผสม'});
+  N('tf',860,600,'Transformation',{s:5,d:400,sub:'ส่งเข้า host'});
+  E('re','rec','cause','แล้วเชื่อมเป็น',5,{d:300});E('rec','tf','cause','แล้วส่งด้วย',5,{d:500});
+}
+const CH=[
+ {tab:'จัดหมวด',kick:'บทที่ 1 · จุลินทรีย์และการจัดหมวดหมู่',build:b1,steps:[
+  {t:'จุลินทรีย์คืออะไร',p:'จุลินทรีย์ (microorganism) คือสิ่งมีชีวิตขนาดเล็กที่ส่วนใหญ่มองด้วยตาเปล่าไม่เห็น พบได้ทุกที่ ทั้งในร่างกาย ดิน น้ำ อากาศ มีทั้งประโยชน์และโทษ แบ่งเป็น 6 กลุ่ม · หมายเหตุ: สไลด์เขียนว่าริคเกตเซีย "กึ่งพืชกึ่งสัตว์" ที่ถูกคือ ริคเกตเซียเป็นแบคทีเรียขนาดเล็กที่ต้องอาศัยอยู่ในเซลล์ host (obligate intracellular bacteria)',c:['จุลินทรีย์','◇','แบคทีเรีย · ไวรัส · รา · สาหร่าย · โปรโตซัว']},
+  {t:'5 อาณาจักรของ Whittaker',p:'Whittaker (1969) แบ่งสิ่งมีชีวิตเป็น 5 อาณาจักร: Monera, Protista, Fungi, Plantae, Animalia จุลินทรีย์ส่วนใหญ่อยู่ใน 3 อาณาจักรแรก ส่วนไวรัสไม่ได้จัดอยู่ในอาณาจักรใด เพราะไม่มีเซลล์',c:['Monera','◆','Protista','◆','Fungi']},
+  {t:'ลำดับการจัดหมวดหมู่',p:'การจัดหมวดหมู่ (classification) แยกสิ่งมีชีวิตเป็นกลุ่มตามความใกล้เคียง แล้วเพิ่มเงื่อนไขไปเรื่อย ๆ จากใหญ่ไปเล็ก: Kingdom → Phylum (พืชใช้ Division) → Class → Order → Family → Genus → Species',c:['Kingdom','→','…','→','Genus','→','Species']},
+  {t:'ชื่อสามัญ',p:'ชื่อสามัญ (common name) เป็นชื่อที่เรียกกันทั่วไป ต่างกันตามภาษาและท้องถิ่น เช่น มะละกอ (ภาคกลาง) บักหุ่ง (อีสาน) บะก้วยเต้ด (เหนือ) ลอกอ (ใต้) จึงสับสนได้ ต้องมีชื่อวิทยาศาสตร์ที่ใช้ร่วมกันทั้งโลก คือ Carica papaya',c:['ชื่อสามัญหลายชื่อ','→','ชื่อวิทยาศาสตร์ชื่อเดียว']},
+  {t:'ระบบทวินาม',p:'ชื่อวิทยาศาสตร์ (scientific name) ใช้ระบบทวินาม (binomial nomenclature) ของ Carolus Linnaeus: Genus ขึ้นต้นตัวพิมพ์ใหญ่ + species ตัวพิมพ์เล็กทั้งหมด เว้นวรรคคั่น และเขียนตัวเอียงหรือขีดเส้นใต้ เช่น Bacillus subtilis, Penicillium sp. (sp. = ไม่ระบุ species) · หมายเหตุ: สไลด์เขียนปี 1770–1778 ที่ถูกคือ Linnaeus มีชีวิตปี 1707–1778 และวางระบบทวินามในปี 1753',c:['Genus','═','species']}]},
+ {tab:'Monera',kick:'บทที่ 2 · อาณาจักร Monera',build:b2,steps:[
+  {t:'Prokaryote 2 กลุ่ม',p:'Kingdom Monera เป็น prokaryote ไม่มีเยื่อหุ้มนิวเคลียส DNA เป็นวงแหวน แบ่งเป็น archaebacteria (อาร์เคีย) ที่เชื่อว่าวิวัฒนาการแยกมาจากแบคทีเรีย และ eubacteria (แบคทีเรียแท้)',c:['Monera','◇','Archaebacteria · Eubacteria']},
+  {t:'Archaea 4 แบบ',p:'อาร์เคียพบในสภาพแวดล้อมสุดขั้ว · halophile ทนเค็มจัด (นาเกลือ, Halobacterium) · methanogen สร้างก๊าซมีเทน อยู่ในที่ไร้ O2 เช่นโคลน และทางเดินอาหารของสัตว์ · thermophile ทนร้อนเกิน 100 °C (Pyrolobus fumarii) · acidophile ชอบกรด pH 1–2 (Sulfolobus) · ประโยชน์: เอนไซม์ทนร้อนในอุตสาหกรรมสิ่งทอ protease ทนเค็มในน้ำปลา และมีเทนเป็นเชื้อเพลิง',c:['Methanogen','→','ก๊าซมีเทน','→','เชื้อเพลิง']},
+  {t:'Eubacteria',p:'แบคทีเรียแท้พบทั่วไปในดิน น้ำ และสิ่งมีชีวิต ผนังเซลล์มี peptidoglycan แบ่งตามการย้อมสีแกรมเป็น Gram + (ติดม่วง) และ Gram − (ติดแดง) สืบพันธุ์แบบ binary fission บางชนิดสร้าง endospore ทนสภาพแวดล้อม',c:['Eubacteria','◇','Gram + · Gram −']},
+  {t:'Archaea ต่างจาก Bacteria',p:'ผนังเซลล์อาร์เคียเป็น pseudopeptidoglycan ไม่มี peptidoglycan จึงไม่ไวต่อยาปฏิชีวนะที่ออกฤทธิ์กับแบคทีเรีย RNA polymerase มีหลาย subunit คล้าย eukaryote และลำดับเบสของ rRNA ต่างจากทั้งแบคทีเรียและ eukaryote',c:['ไม่มี peptidoglycan','→','ยาปฏิชีวนะไม่ได้ผล']},
+  {t:'Cyanobacteria',p:'ไซยาโนแบคทีเรีย (สาหร่ายสีเขียวแกมน้ำเงิน) เป็นแบคทีเรียที่สังเคราะห์แสงได้ มี chlorophyll a และ phycocyanin ปล่อย O2 บางชนิดตรึงไนโตรเจนด้วย heterocyst เช่น Nostoc, Anabaena ใช้เป็นแหล่งโปรตีน เช่น Spirulina ถ้าเพิ่มจำนวนมากเกิด bloom ทำให้น้ำเสีย และบางสายพันธุ์สร้าง cyanotoxin · หมายเหตุ: สไลด์เขียนผนังเซลล์เป็นเซลลูโลส เพคติน ที่ถูกคือเป็น peptidoglycan แบบแบคทีเรีย มีปลอกเมือกหุ้มด้านนอก',c:['Nostoc','◇','Heterocyst','→','ตรึง N2']}]},
+ {tab:'แกรม',kick:'บทที่ 3 · รูปร่างและการย้อมสีแกรม',build:b3,steps:[
+  {t:'3 รูปร่าง',p:'แบคทีเรียแบ่งตามรูปร่างได้ 3 แบบ · coccus ทรงกลม อยู่เดี่ยว ต่อเป็นสาย (streptococcus) หรือเป็นกลุ่ม (staphylococcus) · bacillus ทรงท่อน สั้นหรือยาว · spirillum ท่อนโค้งงอเป็นเกลียว',c:['Coccus','◆','Bacillus','◆','Spirillum']},
+  {t:'ขั้นตอนย้อมสีแกรม',p:'ย้อม crystal violet (ม่วง) → iodine ตรึงสี → ล้างด้วย alcohol → ย้อมทับด้วย safranin (แดง) ขั้นล้างสีคือจุดตัดสิน: ผนังแบบไหนเก็บสีม่วงไว้ได้',c:['Crystal violet','→','Iodine','→','Alcohol','→','Safranin']},
+  {t:'Gram + กับ Gram −',p:'Gram + มี peptidoglycan หนาหลายชั้น ไม่มีชั้นไขมัน จึงเก็บสีม่วงไว้ได้ · Gram − มี peptidoglycan บาง และมีชั้น lipopolysaccharide (LPS) หุ้มด้านนอก alcohol ล้างสีม่วงออก จึงติดสีแดงของ safranin แทน',c:['Peptidoglycan หนา','→','ติดม่วง','◆','LPS หุ้มนอก','→','ติดแดง']},
+  {t:'ตัวอย่างและโรค',p:'Gram +: Staphylococcus aureus (สิว หนอง), Streptomyces (ยา streptomycin), Lactobacillus (อาหารหมัก), Clostridium botulinum (สารพิษ), Bacillus cereus (อาหารเป็นพิษ) · Gram −: E. coli (ท้องเสีย), Salmonella (อาหารเป็นพิษ), Rhizobium (ตรึงไนโตรเจนในปมรากถั่ว), spirochete เช่น Leptospira (โรคฉี่หนู) และ Treponema (ซิฟิลิส)',c:['Leptospira','→','โรคฉี่หนู']},
+  {t:'จุดที่สไลด์คลาดเคลื่อน',p:'สไลด์เขียนว่า Chlamydia คือเชื้อโกโนเรีย ที่ถูกคือ หนองในแท้ (gonorrhea) เกิดจาก Neisseria gonorrhoeae ส่วน Chlamydia trachomatis ก่อหนองในเทียม · สไลด์จัด Salmonella ไว้ในกลุ่ม Gram + ที่ถูกคือ Salmonella เป็น Gram −',c:['Neisseria','→','หนองในแท้','◆','Chlamydia','→','หนองในเทียม']}]},
+ {tab:'Fungi',kick:'บทที่ 4 · อาณาจักร Fungi',build:b4,steps:[
+  {t:'ลักษณะของเชื้อรา',p:'Fungi เป็น eukaryote มีเยื่อหุ้มนิวเคลียส ไม่มี chloroplast จึงสังเคราะห์แสงไม่ได้ ดำรงชีวิตเป็นผู้ย่อยสลายหรือปรสิต ผนังเซลล์เป็น chitin',c:['Fungi','◇','ผนัง chitin']},
+  {t:'ยีสต์กับรา',p:'ยีสต์ (yeast) เป็นเซลล์เดียว สืบพันธุ์โดยแตกหน่อ (budding) ส่วนรา (mold) เป็นเส้นใยเรียกว่า hypha หลายเส้นรวมเป็นกลุ่มเรียกว่า mycelium (ขยุ้มรา) สืบพันธุ์โดยสร้างสปอร์',c:['Hypha','→','Mycelium']},
+  {t:'Hypha 2 แบบ',p:'hypha แบบมีผนังกั้น (septate) เห็นเป็นห้อง ๆ และแบบไม่มีผนังกั้น (coenocytic) ที่ cytoplasm ต่อกันตลอดและเห็นหลายนิวเคลียส',c:['Zygomycota','→','ไม่มีผนังกั้น']},
+  {t:'4 Division',p:'Zygomycota: hypha ไม่มีผนังกั้น สปอร์อาศัยเพศคือ zygospore สปอร์ไม่อาศัยเพศอยู่ใน sporangium (Rhizopus) · Ascomycota: สร้าง ascospore ในถุง ascus มีทั้งยีสต์และรา (Saccharomyces, Candida albicans) · Basidiomycota: สร้าง basidiospore บน basidium คือเห็ด · Deuteromycota: ไม่พบระยะอาศัยเพศ สร้าง conidia (Penicillium, Aspergillus)',c:['Basidiomycota','◇','เห็ด']},
+  {t:'ประโยชน์และโทษ',p:'ประโยชน์: Rhizopus oligosporus ทำเทมเป้, Aspergillus oryzae ทำโคจิ สาเก ซีอิ๊ว, Saccharomyces ทำขนมปังและเหล้า, Penicillium ผลิตยา penicillin, Monascus ทำอังคัก (ข้าวแดง) · โทษ: Aspergillus flavus สร้าง aflatoxin ก่อมะเร็งตับ มักพบในถั่วลิสงและธัญพืชแห้ง, Rhizopus stolonifer ราขนมปัง, Candida albicans ติดเชื้อในช่องปาก ผิวหนัง ช่องคลอด และเห็ดพิษ เช่น เห็ดระโงกหิน',c:['A. flavus','→','Aflatoxin','→','มะเร็งตับ']},
+  {t:'จุดที่สไลด์คลาดเคลื่อน',p:'สไลด์เขียนว่า Zygomycota เป็น "เซลล์เดียว อยู่ในน้ำ" ที่ถูกคือเป็นราเส้นใยที่ไม่มีผนังกั้นและอยู่บนบก เช่น Rhizopus ราขนมปัง · Plasmopara viticola (ราน้ำค้างองุ่น) ที่สไลด์จัดไว้ใน Zygomycota ที่ถูกคือเป็น oomycete ซึ่งไม่ใช่เชื้อราแท้',c:['Zygomycota','◇','Rhizopus']}]},
+ {tab:'Protista',kick:'บทที่ 5 · อาณาจักร Protista',build:b5,steps:[
+  {t:'Protozoa กับ Algae',p:'Protista เป็น eukaryote ที่ยังไม่มีเนื้อเยื่อหรืออวัยวะเฉพาะ แบ่งเป็น protozoa ที่คล้ายสัตว์ กินอาหาร และ algae ที่มี chlorophyll a สังเคราะห์แสงได้ อาจเป็นเซลล์เดี่ยวหรือหลายเซลล์ต่อกันเป็นสาย',c:['Protista','◇','Protozoa · Algae']},
+  {t:'Protozoa 4 กลุ่ม',p:'แบ่งตามอวัยวะเคลื่อนที่ · Sarcodina ใช้ขาเทียม (pseudopodium) กินอาหารแบบ phagocytosis เช่น Amoeba · Flagellata ใช้แส้ (flagella) เช่น Trypanosoma (โรคเหงาหลับ) และ Trichomonas ในช่องคลอด · Ciliata ใช้ cilia เช่น Paramecium, Vorticella · Sporozoa ไม่มีอวัยวะเคลื่อนที่ สร้างสปอร์ อาศัยพาหะและ host เช่น Plasmodium ก่อโรคมาลาเรีย',c:['Sporozoa','◇','Plasmodium','→','มาลาเรีย']},
+  {t:'Algae 6 ไฟลัม',p:'Chlorophyta (สีเขียว, chlorophyll a + b, เก็บแป้งใน pyrenoid เช่น Spirogyra สาหร่ายพวงองุ่น) · Euglenophyta (Euglena, paramylon, บางตำราจัดเป็น protozoa กลุ่ม flagellata) · Chrysophyta (ไดอะตอม ผนังมีซิลิกา) · Pyrrophyta (dinoflagellate ก่อ red tide) · Phaeophyta (สีน้ำตาล มี fucoxanthin, alginic acid) · Rhodophyta (สีแดง, chlorophyll a + d, phycoerythrin, floridean starch)',c:['Pyrrophyta','→','Red tide']},
+  {t:'Hydrocolloid จากสาหร่าย',p:'hydrocolloid คือ polysaccharide โมเลกุลใหญ่ที่จับน้ำได้ดี ใช้เป็นสารเพิ่มความข้นหนืด สารให้ความคงตัว และสารทำให้เกิดเจล · alginate (INS 400) จากสาหร่ายสีน้ำตาล เช่น Laminaria · carrageenan (INS 407) จากสาหร่ายสีแดง ให้เจลนุ่มหนึบ · agar (INS 406) จาก Gracilaria (สาหร่ายผมนาง) ให้เจลแข็ง ใช้ทำอาหารเลี้ยงเชื้อด้วย',c:['Rhodophyta','→','Agar · Carrageenan','◆','Phaeophyta','→','Alginate']}]},
+ {tab:'อาหารหมัก',kick:'บทที่ 6 · จุลินทรีย์ในอุตสาหกรรมอาหาร',build:b6,steps:[
+  {t:'Lactic acid bacteria',p:'แบคทีเรียแลกติกหมัก glucose เป็น lactic acid บางชนิดให้ hydrogen peroxide หรือ diacetyl ที่ให้กลิ่นเฉพาะ จัดเป็น GRAS (generally recognized as safe) พบในแหนม ไส้กรอกอีสาน ซาลามี กิมจิ ซาวเคราท์ นมเปรี้ยว เนยแข็ง · โยเกิร์ตใช้ Streptococcus thermophilus คู่กับ Lactobacillus bulgaricus เปลี่ยน lactose เป็น lactic acid ได้มากกว่า 90% และให้ acetaldehyde เป็นกลิ่นรสเฉพาะ',c:['S. thermophilus','═','L. bulgaricus','→','โยเกิร์ต']},
+  {t:'Bacillus subtilis · นัตโตะ',p:'นำถั่วเหลืองต้มห่อฟางข้าว Bacillus subtilis var. natto ที่อยู่บนฟางจะหมักน้ำตาลในถั่ว ได้ถั่วเน่าที่เหนียว กลิ่นฉุน อุดมด้วยโปรตีน ใยอาหาร และวิตามิน',c:['B. subtilis','→','นัตโตะ']},
+  {t:'Acetobacter · น้ำส้มสายชู',p:'Acetobacter และ Gluconobacter เป็นแบคทีเรีย Gram − รูปท่อน ออกซิไดซ์ ethanol เป็น acetic acid ได้น้ำส้มสายชู ส่วน Acetobacter xylinum หมักน้ำมะพร้าว สร้างเส้นใยเซลลูโลสเป็นวุ้นมะพร้าว (nata de coco)',c:['Ethanol','→','Acetic acid']},
+  {t:'Aspergillus oryzae · โคจิ',p:'โคจิ (koji) คือกล้าเชื้อสำหรับผลิตอาหารหมัก A. oryzae เจริญบนข้าวสุก สร้าง amylase และ amyloglucosidase ย่อย starch เป็น glucose และ protease ย่อยโปรตีนเป็น amino acid ใช้ผลิตสาเก ซีอิ๊ว เต้าเจี้ยว มิโซะ · ในซีอิ๊วมี LAB ช่วยด้วย และ B. subtilis ทำให้ไม่ขุ่น · หมายเหตุ: สไลด์เขียนว่า LAB สร้าง kojic acid ที่ถูกคือ kojic acid สร้างโดย Aspergillus oryzae',c:['Starch','→','Glucose','◆','โปรตีน','→','Amino acid']},
+  {t:'Rhizopus และยีสต์',p:'เทมเป้ (อินโดนีเซีย): หมักถั่วเหลืองทั้งเมล็ดด้วย Rhizopus oligosporus 2–3 วัน เส้นใยสีขาวยึดถั่วเป็นก้อน · ยีสต์ Saccharomyces cerevisiae หมักน้ำตาลแบบไม่ใช้ O2 ได้ ethanol + CO2 ในขนมปัง CO2 ทำให้โดขึ้นฟู ส่วน ethanol ระเหยไป ในไวน์ได้แอลกอฮอล์ราว 10–15% · Monascus ทำอังคัก ให้สีแดงในเต้าหู้ยี้',c:['Glucose','→','Ethanol + CO2','→','ขนมปังฟู']}]},
+ {tab:'ประยุกต์',kick:'บทที่ 7 · เกษตร สิ่งแวดล้อม และการแพทย์',build:b7,steps:[
+  {t:'ตรึงไนโตรเจน',p:'Rhizobium ในปมรากถั่ว Azotobacter และ cyanobacteria เช่น Nostoc, Anabaena เปลี่ยน N2 ในอากาศเป็น NH3 จากนั้นจุลินทรีย์อื่นในดินเปลี่ยนเป็น nitrite (NO2⁻) และ nitrate (NO3⁻) ที่พืชนำไปใช้ได้',c:['N2','→','NH3','→','NO3⁻','→','พืช']},
+  {t:'จุลินทรีย์ละลายฟอสเฟต',p:'phosphate solubilizing microorganism (PSM) พบรอบรากพืช เปลี่ยนฟอสฟอรัสให้อยู่ในรูปฟอสเฟต (PO4³⁻) ที่พืชใช้ได้',c:['PSM','→','ฟอสเฟตให้พืช']},
+  {t:'บำบัดน้ำเสีย',p:'จุลินทรีย์ aerobic เช่น Pseudomonas, Zoogloea ย่อยสารอินทรีย์ในน้ำเสียเป็นคาร์บอเนต ไนเตรต ฟอสเฟต ซัลเฟต จากนั้นจุลินทรีย์ anaerobic เช่น กลุ่มสร้างกรดและ methanogen ย่อยตะกอนที่เหลือ · EM ball รวม LAB ยีสต์ และจุลินทรีย์สังเคราะห์แสง',c:['Aerobic','→','Anaerobic','→','ตะกอนลดลง']},
+  {t:'การแพทย์',p:'ยาปฏิชีวนะผลิตจากจุลินทรีย์ เช่น Streptomyces ผลิต streptomycin, Penicillium ผลิต penicillin · probiotics ช่วยเพิ่มภูมิคุ้มกันและปรับสมดุลในลำไส้ส่วนปลาย',c:['Penicillium','→','Penicillin']},
+  {t:'พันธุวิศวกรรม',p:'ใช้จุลินทรีย์เป็นตัวกลาง (host): ตัดยีนด้วย restriction enzyme → เชื่อมต่อเป็นยีนลูกผสม (recombination) → ส่งเข้าเซลล์ host (transformation) ให้ยีนแสดงออก เป็นหลักเดียวกับ transformation ที่ Griffith ค้นพบ',c:['ตัด','→','เชื่อม','→','Transformation']}]},
+ {tab:'แบบฝึก TPAT1',kick:'บทที่ 8 · แบบฝึก',quiz:true}
+];
+
+/* ---------- player ---------- */
+const st={ch:0,step:1,built:-1,auto:null};
+const $=id=>document.getElementById(id);
+const tabs=$('tabs');
+CH.forEach((c,i)=>{const b=document.createElement('button');b.className='tab';b.innerHTML=`<span class="n">${i+1}</span>${c.tab}`;b.onclick=()=>{stopAuto();go(i,1);};tabs.appendChild(b);});
+
+function build(){
+  svg.innerHTML='';nodes={};
+  const defs=S('defs',null,svg);
+  const m1=S('marker',{id:'m-cause',viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:12,markerHeight:12,markerUnits:'userSpaceOnUse',orient:'auto'},defs);S('path',{d:'M0 0L10 5L0 10z',class:'mk-cause'},m1);
+  const m2=S('marker',{id:'m-part',viewBox:'0 0 14 14',refX:7,refY:7,markerWidth:15,markerHeight:15,markerUnits:'userSpaceOnUse',orient:'auto'},defs);S('circle',{cx:7,cy:7,r:5,class:'mk-part'},m2);
+  const m3=S('marker',{id:'m-inhib',viewBox:'0 0 22 22',refX:20,refY:11,markerWidth:24,markerHeight:24,markerUnits:'userSpaceOnUse',orient:'auto'},defs);S('circle',{cx:11,cy:11,r:8.5,class:'mk-inhib'},m3);S('path',{d:'M5 5L17 17',class:'mk-inhib'},m3);
+  L.edge=S('g',null,svg);L.node=S('g',null,svg);L.lab=S('g',null,svg);
+  helix=null;
+  CH[st.ch].build();
+  st.built=st.ch;
+}
+function reveal(){
+  svg.querySelectorAll('[data-s]').forEach(e=>{const s=+e.dataset.s;const on=s<=st.step;
+    if(on&&!e.classList.contains('on')){e.classList.add('on');
+      if(e.classList.contains('e')){const d=reduce?0:900+(parseFloat(e.style.transitionDelay)||0);clearTimeout(e._t);e._t=setTimeout(()=>e.classList.add('done'),d);}}
+    else if(!on){e.classList.remove('on','done');clearTimeout(e._t);}
+    e.classList.toggle('now',s===st.step&&st.step>0);});
+}
+const SYM={'→':'cause','←':'cause','⊣':'inhib','◇':'part','═':'pair','≡':'pair','◆':'sep'};
+function renderChain(c){
+  const el=$('chain');el.innerHTML='';if(!c)return;
+  const l=document.createElement('span');l.className='lbl';l.textContent='ลูกโซ่ความสัมพันธ์';el.appendChild(l);
+  c.forEach(t=>{const s=document.createElement('span');if(SYM[t]){s.className='sym '+SYM[t];if(t==='◆')s.textContent='·';else s.innerHTML=ic(SYM[t],t==='←');}else{s.className='tok';s.textContent=t;}el.appendChild(s);});
+}
+function go(ch,step){
+  st.ch=ch;st.step=step;const c=CH[ch];
+  [...tabs.children].forEach((b,i)=>b.setAttribute('aria-current',i===ch?'true':'false'));
+  tabs.children[ch].scrollIntoView({block:'nearest',inline:'nearest'});
+  $('kicker').textContent=c.kick;
+  if(c.quiz){svg.hidden=true;$('quiz').hidden=false;retrig($('quiz'));retrig($('swap'));$('controls').hidden=true;$('auto').hidden=true;$('score').hidden=false;
+    $('stitle').textContent='แบบฝึก TPAT1 เชื่อมโยง';
+    $('stext').textContent='ส่วน ก ระบุรหัสความสัมพันธ์ของคำซ้ายไปหาคำขวา ส่วน ข เลือกคำตอบที่ถูกที่สุด ทุกข้อเฉลยทันทีพร้อมเหตุผล';
+    renderChain(null);stopHelix();updateScore();return;}
+  svg.hidden=false;$('quiz').hidden=true;$('controls').hidden=false;$('auto').hidden=false;$('score').hidden=true;
+  if(st.built!==ch){build();retrig(svg);}
+  void svg.getBoundingClientRect();
+  reveal();
+  const s=c.steps[step-1];
+  $('stitle').textContent=s.t;$('stext').textContent=s.p;renderChain(s.c);retrig($('swap'));
+  const dots=$('dots');dots.innerHTML='';
+  c.steps.forEach((_,i)=>{const d=document.createElement('button');d.className='dot'+(i<step?' on':'');d.setAttribute('aria-label','ขั้นที่ '+(i+1));d.onclick=()=>{stopAuto();go(ch,i+1);};dots.appendChild(d);});
+  $('prev').disabled=(ch===0&&step===1);
+  $('next').textContent=step<c.steps.length?'ถัดไป →':'บทถัดไป →';
+  if(helix)startHelix();else stopHelix();
+}
+function next(){const c=CH[st.ch];if(c.quiz)return;if(st.step<c.steps.length)go(st.ch,st.step+1);else go(st.ch+1,1);}
+function prev(){if(st.step>1)go(st.ch,st.step-1);else if(st.ch>0){const p=CH[st.ch-1];go(st.ch-1,p.quiz?1:p.steps.length);}}
+$('next').onclick=()=>{stopAuto();next();};
+$('prev').onclick=()=>{stopAuto();prev();};
+function stopAuto(){if(st.auto){clearInterval(st.auto);st.auto=null;$('auto').textContent='▶ เล่นอัตโนมัติ';}}
+$('auto').onclick=()=>{if(st.auto){stopAuto();return;}$('auto').textContent='❚❚ หยุดเล่น';st.auto=setInterval(()=>{if(CH[st.ch+1]&&CH[st.ch+1].quiz&&st.step>=CH[st.ch].steps.length){stopAuto();return;}next();},5200);};
+document.addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('.quiz'))return;if(e.key==='ArrowRight'){stopAuto();next();}else if(e.key==='ArrowLeft'){stopAuto();prev();}});
+
+function startHelix(){if(reduce||raf)return;let last=performance.now();const loop=t=>{if(!helix||document.hidden){raf=0;return;}phase+=(t-last)*0.0009;last=t;helix(phase);raf=requestAnimationFrame(loop);};raf=requestAnimationFrame(loop);}
+function stopHelix(){if(raf){cancelAnimationFrame(raf);raf=0;}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&helix)startHelix();});
+
+/* ---------- fullscreen ---------- */
+const app=$('app'),fsBtn=$('fs');
+const ICON_IN='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+const ICON_OUT='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+let savedY=null;function setFull(on){if(on&&savedY===null){savedY=window.scrollY||0;window.scrollTo(0,0);}else if(!on&&savedY!==null){const y=savedY;savedY=null;requestAnimationFrame(()=>window.scrollTo(0,y));}app.classList.toggle('full',on);if(on)app.scrollTop=0;document.documentElement.style.overflow=on?'hidden':'';
+  fsBtn.innerHTML=(on?ICON_OUT+'ย่อหน้าจอ':ICON_IN+'เต็มจอ');fsBtn.setAttribute('aria-pressed',on?'true':'false');}
+const fsEl=()=>document.fullscreenElement||document.webkitFullscreenElement;
+async function toggleFull(){
+  if(app.classList.contains('full')){
+    if(fsEl()){try{await (document.exitFullscreen||document.webkitExitFullscreen).call(document);}catch(e){}}
+    setFull(false);return;}
+  setFull(true);
+  const req=app.requestFullscreen||app.webkitRequestFullscreen;
+  if(req){try{await req.call(app);}catch(e){}}
+}
+fsBtn.onclick=toggleFull;
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{if(!fsEl()&&app.classList.contains('full'))setFull(false);}));
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&app.classList.contains('full')&&!fsEl())setFull(false);
+  else if((e.key==='f'||e.key==='F')&&!e.metaKey&&!e.ctrlKey&&!e.altKey)toggleFull();});
+setFull(false);
+const moBtn=$('mo');
+function setMoLabel(){moBtn.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>'+(reduce?'เคลื่อนไหว: ปิด':'เคลื่อนไหว: เปิด');moBtn.setAttribute('aria-pressed',reduce?'false':'true');}
+moBtn.onclick=()=>{reduce=!reduce;try{localStorage.setItem('motion',reduce?'off':'on');}catch(e){}
+  document.documentElement.classList.toggle('still',reduce);setMoLabel();stopHelix();
+  if(!CH[st.ch].quiz){st.built=-1;go(st.ch,st.step);}};
+setMoLabel();
+
+/* ---------- quiz ---------- */
+const REL=[{k:'ก',s:'→',t:'ทำให้เกิด / นำไปสู่',c:'cause'},{k:'ข',s:'◇',t:'ประกอบด้วย / มีชนิดย่อยคือ',c:'part'},{k:'ค',s:'⊣',t:'ยับยั้ง / ทำลาย / ป้องกัน',c:'inhib'},{k:'ง',s:'═',t:'จับคู่สมกัน',c:'pair'},{k:'จ',s:'✕',t:'ไม่สัมพันธ์โดยตรง',c:'none'}];
+const PA=[
+ ['Peptidoglycan','ผนังเซลล์ของ Eubacteria',1,'ผนังเซลล์ของแบคทีเรียแท้ประกอบด้วย peptidoglycan'],
+ ['Penicillium','Penicillin',0,'รา Penicillium ผลิตยาปฏิชีวนะ penicillin'],
+ ['Streptococcus thermophilus','Lactobacillus bulgaricus',3,'เชื้อ 2 ชนิดที่ใช้คู่กันในการผลิตโยเกิร์ต'],
+ ['Rhizobium','การตรึงไนโตรเจน',0,'Rhizobium ในปมรากถั่วตรึง N2 เป็น NH3'],
+ ['ยาปฏิชีวนะ','การเจริญของ Eubacteria',2,'ยาปฏิชีวนะยับยั้งแบคทีเรียแท้ แต่ไม่ได้ผลกับ archaea'],
+ ['Chitin','ผนังเซลล์ของเชื้อรา',1,'ผนังเซลล์ของเชื้อราประกอบด้วย chitin'],
+ ['Plasmodium','Sporozoa',1,'Sporozoa มีตัวอย่างคือ Plasmodium ที่ก่อโรคมาลาเรีย'],
+ ['Kojic acid','การเน่าเสียของซีอิ๊ว',2,'kojic acid ที่ Aspergillus oryzae สร้างช่วยป้องกันการเน่าเสีย'],
+ ['Agar','การตรึงไนโตรเจน',4,'agar เป็นสารทำให้เกิดเจลจากสาหร่ายสีแดง ไม่เกี่ยวกับการตรึงไนโตรเจน'],
+ ['Heterocyst','Nostoc',1,'Nostoc สร้าง heterocyst ไว้ตรึงไนโตรเจน']];
+const PB=[
+ ['ข้อใดเขียนชื่อวิทยาศาสตร์ได้ถูกต้องตามระบบทวินาม',['bacillus Subtilis','Bacillus Subtilis','Bacillus subtilis','BACILLUS subtilis'],2,'Genus ขึ้นต้นตัวใหญ่ species ตัวเล็กทั้งหมด และเขียนตัวเอียงหรือขีดเส้นใต้'],
+ ['ลักษณะใดพบใน archaea แต่ไม่พบใน eubacteria',['ผนังเซลล์ไม่มี peptidoglycan','ไม่มีเยื่อหุ้มนิวเคลียส','สืบพันธุ์แบบ binary fission','ถูกยับยั้งด้วยยาปฏิชีวนะ'],0,'ผนังอาร์เคียเป็น pseudopeptidoglycan ส่วนการไม่มีเยื่อหุ้มนิวเคลียสและ binary fission พบในทั้งสองกลุ่ม'],
+ ['หลังย้อมสีแกรม แบคทีเรียชนิดหนึ่งติดสีแดง ผนังเซลล์ของมันน่าจะเป็นแบบใด',['peptidoglycan หนา ไม่มีชั้นไขมันหุ้ม','peptidoglycan บาง มี LPS หุ้มด้านนอก','ผนังเป็น chitin แบบเดียวกับเชื้อรา','ผนังเป็น pseudopeptidoglycan ล้วน'],1,'Gram − มี LPS หุ้มนอก alcohol ล้างสีม่วงออกได้ จึงติดสีแดงของ safranin'],
+ ['ราชนิดใดสร้าง aflatoxin ที่ก่อมะเร็งตับ และมักปนเปื้อนในถั่วลิสง',['Aspergillus oryzae','Penicillium sp.','Rhizopus oryzae','Aspergillus flavus'],3,'A. flavus สร้าง aflatoxin ส่วน A. oryzae ใช้ทำโคจิ'],
+ ['สาหร่ายกลุ่มใดเป็นแหล่งของ agar และ carrageenan',['Phaeophyta','Rhodophyta','Chlorophyta','Chrysophyta'],1,'สาหร่ายสีแดง เช่น Gracilaria ให้ agar และ carrageenan ส่วนสาหร่ายสีน้ำตาลให้ alginate'],
+ ['Sporozoa ต่างจาก protozoa กลุ่มอื่นอย่างไร',['เคลื่อนที่ด้วย cilia รอบเซลล์','ใช้ขาเทียมจับอาหารเข้าเซลล์','ไม่มีอวัยวะเคลื่อนที่ ต้องอาศัยพาหะ','ใช้ flagella ยาวเคลื่อนที่ในน้ำ'],2,'Sporozoa ไม่มีอวัยวะเคลื่อนที่ สร้างสปอร์ และแพร่พันธุ์ผ่านพาหะ เช่น Plasmodium ผ่านยุง'],
+ ['ข้อใดเรียงขั้นตอนพันธุวิศวกรรมได้ถูกต้อง',['ส่งเข้า host → ตัดยีน → เชื่อมยีน','เชื่อมยีน → ตัดยีน → ส่งเข้า host','ตัดยีน → ส่งเข้า host → เชื่อมยีน','ตัดยีน → เชื่อมยีน → ส่งเข้า host'],3,'ตัดด้วย restriction enzyme ก่อน เชื่อมเป็นยีนลูกผสม แล้วจึง transformation เข้า host'],
+ ['Rifampicin ยับยั้ง RNA polymerase ของแบคทีเรีย เชื้อใดน่าจะไม่ตอบสนองต่อยานี้มากที่สุด',['Escherichia coli','Halobacterium sp.','Staphylococcus aureus','Streptococcus sp.'],1,'Halobacterium เป็นอาร์เคีย RNA polymerase ต่างจากแบคทีเรียและไม่ไวต่อยาปฏิชีวนะ ข้ออื่นเป็นแบคทีเรียแท้ (เชื่อมกับบท DNA)']];
+const KEY=['ก','ข','ค','ง'];PA.forEach(q=>{if(q[2]===1)[q[0],q[1]]=[q[1],q[0]];});
+const sc={a:0,an:0,b:0,bn:0};
+function buildQuiz(){
+  const q=$('quiz');
+  q.innerHTML=`<div><h3>ส่วน ก · รหัสความสัมพันธ์</h3><p class="lead">อ่านจากคำซ้ายไปหาคำขวา แล้วเลือกรหัสที่ตรงที่สุด</p></div>
+  <div class="codes">${REL.map(r=>`<span>${ic(r.c)} ${r.k} = ${r.t}</span>`).join('')}</div>
+  <div class="qa" id="qa"></div>
+  <div><h3>ส่วน ข · เลือกคำตอบ</h3><p class="lead">คิดเป็นลูกโซ่เหตุและผลจากเนื้อหาทั้ง 7 บท</p></div>
+  <div class="qa" id="qb"></div>
+  <div><button class="btn" id="reset">เริ่มทำใหม่</button></div>`;
+  const qa=$('qa');
+  PA.forEach((it,i)=>{const d=document.createElement('div');d.className='item';
+    d.innerHTML=`<div class="pairq"><span class="no">${String(i+1).padStart(2,'0')}</span><span class="t">${it[0]}</span><span class="q">?</span><span class="t">${it[1]}</span></div><div class="rels"></div>`;
+    const rels=d.querySelector('.rels');
+    REL.forEach((r,j)=>{const b=document.createElement('button');b.className='rel '+r.c;b.innerHTML=`<span class="s">${ic(r.c)}</span>${r.k} ${RW[r.c]}`;b.setAttribute('aria-label',r.k+' '+r.t);
+      b.onclick=()=>{rels.querySelectorAll('button').forEach((x,k)=>{x.disabled=true;if(k===it[2])x.classList.add('right');});
+        const ok=j===it[2];if(!ok)b.classList.add('wrong');sc.an++;if(ok)sc.a++;
+        const f=document.createElement('p');f.className='fb '+(ok?'ok':'no');const R=REL[it[2]];
+        f.innerHTML=`<b>${ok?'ถูกต้อง':'ยังไม่ใช่'}</b> · คำตอบ ${R.k} ${ic(R.c)} ${RW[R.c]} · ${it[3]}`;d.appendChild(f);updateScore();};
+      rels.appendChild(b);});
+    qa.appendChild(d);});
+  const qb=$('qb');
+  PB.forEach((it,i)=>{const d=document.createElement('div');d.className='item';
+    d.innerHTML=`<p class="qtext"><span class="no">${String(i+1).padStart(2,'0')}</span>${it[0]}</p><div class="opts"></div>`;
+    const ops=d.querySelector('.opts');
+    it[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span class="k">${KEY[j]}.</span><span>${o}</span>`;
+      b.onclick=()=>{ops.querySelectorAll('button').forEach((x,k)=>{x.disabled=true;if(k===it[2])x.classList.add('right');});
+        const ok=j===it[2];if(!ok)b.classList.add('wrong');sc.bn++;if(ok)sc.b++;
+        const f=document.createElement('p');f.className='fb '+(ok?'ok':'no');f.innerHTML=`<b>${ok?'ถูกต้อง':'ยังไม่ใช่'}</b> · ตอบ ${KEY[it[2]]}. ${it[3]}`;d.appendChild(f);updateScore();};
+      ops.appendChild(b);});
+    qb.appendChild(d);});
+  $('reset').onclick=()=>{sc.a=sc.an=sc.b=sc.bn=0;buildQuiz();updateScore();$('quiz').scrollIntoView({block:'start'});};
+}
+function updateScore(){$('score').innerHTML=`<div><b>${sc.a}/${PA.length}</b><span>ส่วน ก · ตอบแล้ว ${sc.an}</span></div><div><b>${sc.b}/${PB.length}</b><span>ส่วน ข · ตอบแล้ว ${sc.bn}</span></div>`;}
+buildQuiz();
+
+window.__pcheck=()=>{const out=[];const R=[];svg.querySelectorAll('.node.on rect,.pill.on rect,.elab.on rect').forEach(r=>{const b=r.getBoundingClientRect();if(b.width)R.push([b,r.parentNode.textContent.slice(0,24)]);});
+ for(let i=0;i<R.length;i++)for(let j=i+1;j<R.length;j++){const a=R[i][0],c=R[j][0];if(a.left<c.right-2&&c.left<a.right-2&&a.top<c.bottom-2&&c.top<a.bottom-2)out.push(R[i][1]+' × '+R[j][1]);}
+ const sb=svg.getBoundingClientRect();R.forEach(([b,t])=>{if(b.left<sb.left-1||b.right>sb.right+1||b.top<sb.top-1||b.bottom>sb.bottom+1)out.push('OUT '+t);});return out;};
+go(0,1);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(!CH[st.ch].quiz){st.built=-1;go(st.ch,st.step);}});
+
+window.__pcheck2=()=>{const out=[];const vis=[...svg.querySelectorAll('.node.on')].map(g=>({id:g.getAttribute('data-id'),r:g.querySelector('rect').getBoundingClientRect(),t:g.textContent.slice(0,22)}));
+ const es=[...svg.querySelectorAll('.e.on')].filter(g=>g.__i);const deg={};es.forEach(g=>{deg[g.__i.a]=1;deg[g.__i.b]=1;});
+ vis.forEach(n=>{if(!deg[n.id])out.push('ISO '+n.t);});
+ es.forEach(g=>{const i=g.__i;if(!i.label)out.push('NOLAB '+i.a+'>'+i.b);
+  const p=g.querySelector('path');if(p){const Ln=p.getTotalLength(),m=p.getScreenCTM();for(let k=1;k<24;k++){const q=p.getPointAtLength(Ln*k/24);const x=q.x*m.a+q.y*m.c+m.e,y=q.x*m.b+q.y*m.d+m.f;vis.forEach(n=>{if(n.id===i.a||n.id===i.b)return;const r=n.r;if(x>r.left+1&&x<r.right-1&&y>r.top+1&&y<r.bottom-1)out.push('CROSS '+i.a+'>'+i.b+' over '+n.t);});}}
+  if(i.label&&g.__lab){const dx=i.en[0]-i.st[0],dy=i.en[1]-i.st[1],len=Math.hypot(dx,dy);const bb=g.__lab.getBBox();const ext=Math.abs(bb.width*dx/len)+Math.abs(bb.height*dy/len);if(len<ext+16)out.push('SHORT '+i.a+'>'+i.b+' '+Math.round(len)+'<'+Math.round(ext+16));}});
+ svg.querySelectorAll('.pill.on').forEach(p=>out.push('PILL '+p.textContent.slice(0,24)));
+ return [...new Set(out)];};
+</script>
+<script>document.addEventListener("keydown",e=>{if(e.key==="Escape"||e.key==="f"||e.key==="F")e.stopImmediatePropagation();},true);try{setFull(true);document.getElementById("fs").style.display="none";}catch(e){}</script></body></html>
