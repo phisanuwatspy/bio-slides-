@@ -143,6 +143,8 @@ textarea{width:100%;min-height:110px;border:1.5px solid var(--line);border-radiu
 .blist{margin:0;padding-left:22px;display:grid;gap:9px;font-size:18px;line-height:1.6}
 .src{display:block;margin-top:8px;font-size:13px;color:var(--muted);font-weight:500}
 .srcl{margin:10px 0 0;font-size:14px;color:var(--muted)}
+.intro{padding:6px 4px 4px;margin-bottom:16px}
+.intro h2{margin:0 0 6px}.intro .lead{margin-top:0}
 .blist u{text-decoration-color:var(--acc);text-decoration-thickness:2px;text-underline-offset:3px}
 .box{margin-top:14px;border-radius:14px;padding:11px 14px;font-size:17px;line-height:1.6}
 .box .lab{display:block;font:700 12px var(--mono);letter-spacing:.8px;color:var(--muted);margin-bottom:3px}
@@ -268,7 +270,7 @@ textarea{width:100%;min-height:110px;border:1.5px solid var(--line);border-radiu
   </section>
   <!-- TUTOR -->
   <section id="vTutor" class="hide">
-    <div class="card panel" style="margin-bottom:14px">
+    <div class="intro">
       <h2>Tutor · เรียนทีละขั้น</h2>
       <p class="lead" style="margin-bottom:0">แต่ละบทสอนทีละขั้น มีภาพประกอบ ตัวอย่างเปรียบเทียบ และจุดเชื่อมโยงกับบทอื่น ทุกขั้นมีคำถามเช็กความเข้าใจ จะตอบหรือกดข้ามก็ได้ และกดเลขขั้นด้านบนเพื่อกระโดดไปขั้นไหนก็ได้ จบบทแล้วฝึกสเตชันของบทนั้นต่อได้ทันที · แถบสีเขียวนับเฉพาะข้อที่ตอบแล้ว</p>
       <div class="row2" style="margin-top:12px"><button class="btn ghost" id="bReset" type="button" style="padding:7px 14px;font-size:15px">ล้างความคืบหน้าทั้งหมด</button></div>
@@ -294,7 +296,7 @@ textarea{width:100%;min-height:110px;border:1.5px solid var(--line);border-radiu
   <!-- DRILL -->
   <section id="vDrill" class="hide">
     <div id="dMenu">
-      <div class="card panel" style="margin-bottom:14px"><h2>ฝึกทักษะ</h2><p class="lead" style="margin-bottom:0">ซ้อมสิ่งที่ต้องลงมือทำจริง เลือกผิดจะเตือนทันทีและให้เลือกใหม่ คะแนนนับเฉพาะการเลือกครั้งแรก</p></div>
+      <div class="intro"><h2>ฝึกทักษะ</h2><p class="lead" style="margin-bottom:0">ซ้อมสิ่งที่ต้องลงมือทำจริง เลือกผิดจะเตือนทันทีและให้เลือกใหม่ คะแนนนับเฉพาะการเลือกครั้งแรก</p></div>
       <div class="lgrid">
         <button type="button" class="lcard" id="dGoMic"><span class="no">สอบสัปดาห์ที่ 13 · 5%</span><span class="t">ซ้อมสอบใช้กล้อง</span><span class="th">15 ขั้นตามเกณฑ์ใน มคอ.3 จับเวลา 5 นาที ให้คะแนนเต็ม 10 ตาม rubric</span></button>
         <button type="button" class="lcard" id="dGoDna"><span class="no">บทที่ 08 · สารพันธุกรรม</span><span class="t">แปลรหัส DNA → โปรตีน</span><span class="th">ทีละ codon: หา mRNA, anticodon แล้วแปลเป็นกรดอะมิโน มีตาราง codon ให้เปิดดู</span></button>
