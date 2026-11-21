@@ -162,6 +162,7 @@ textarea{width:100%;min-height:110px;border:1.5px solid var(--line);border-radiu
 .phgal{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
 .phgal button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:4px;text-align:left;display:grid;gap:3px}
 .phgal img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:7px;background:#17120D;display:block}
+.phgt{font-weight:700;font-size:14px;color:#7A4A22;margin:12px 0 6px}
 .phgal span{font-size:12.5px;line-height:1.35;color:#4A3D31;padding:0 2px 2px}
 .lbx{position:fixed;inset:0;background:rgba(23,18,13,.88);display:grid;place-items:center;z-index:20;padding:18px}
 .lbx figure{margin:0;max-width:min(920px,100%);display:grid;gap:10px}
@@ -1264,7 +1265,7 @@ ST.forEach((s,i)=>s.id=i);
  const P=L.plant;
  P[5].b=["คู่มือให้วาดและเปรียบเทียบรูปร่างเม็ดแป้งจาก มันฝรั่ง แป้งสาลี แป้งข้าวโพด แป้งมันสำปะหลัง และแป้งข้าวเจ้า","<b>มันฝรั่ง</b>: กลม รี มี<u>ขดคล้ายก้นหอย</u> ใหญ่ที่สุด","<b>แป้งสาลี</b>: กลม รี <u>อยู่กันเป็นกลุ่ม</u> ขนาดไม่ใหญ่ไม่เล็ก","<b>แป้งข้าวโพด</b>: ขนาดกลาง <u>ติดกันเป็นก้อน</u> · โน้ต Lab gring: มี maltese cross","<b>แป้งข้าวเจ้า</b>: <u>เล็กมาก</u> กระจัดกระจาย","<b>แป้งมันสำปะหลัง</b>: กลมแต่<u>ไม่เต็มวง</u> มีจุดคล้ายข้าวโพด เล็กกว่าแป้งสาลีเล็กน้อย","คำถามท้ายบท: ส่วนของพืชที่สะสมแป้ง "+NX+" · เช่น หัวมันฝรั่ง หัวมันสำปะหลัง เมล็ดข้าวและข้าวโพด"];
  P[5].an="มันฝรั่ง = ก้นหอยตัวโต · สาลี = เพื่อนจับกลุ่ม · ข้าวโพด = ก้อนหินติดกัน · ข้าวเจ้า = ผงฝุ่น · มันสำปะหลัง = วงกลมแหว่ง";
- P[5].ph=["z11","z12","z13","z14","z15","potato","wheat","corn","rice","tapi","s_potato","s_wheat","s_corn","s_rice","s_tapi"];addSrc(P[5],SQ);addSrc(P[5],SLG);
+ P[5].ph=null;P[5].phg=[["มันฝรั่ง",["z11","potato","s_potato"]],["แป้งสาลี",["z12","wheat","s_wheat"]],["แป้งข้าวโพด",["z13","corn","s_corn"]],["แป้งข้าวเจ้า",["z14","rice","s_rice"]],["แป้งมันสำปะหลัง",["z15","tapi","s_tapi"]]];addSrc(P[5],SQ);addSrc(P[5],SLG);
  P[6].b.push("โน้ต Lab gring: ลำต้นใบเลี้ยงคู่ phloem อยู่<u>ด้านนอก</u> xylem อยู่<u>ด้านใน</u> มี <b>cambium</b> คั่นกลาง");
  P[6].an="ใน vascular bundle ของใบเลี้ยงเดี่ยว ให้มองเป็นหน้าคน: xylem รูใหญ่ 2 รูคือ “ตา” phloem ด้านบนคือ “หน้าผาก” (โน้ต Lab gring)";
  P[6].ph=["z05","z07","s_mono","s_dicot"];addSrc(P[6],SLG);addSrc(P[6],SQ);
@@ -1412,7 +1413,7 @@ function renderLesson(){const t=LN.t,st=LESSONS[t],N=st.length,i=LN.i,p=tp(t);
  $("lStep").textContent=i<N?`ขั้น ${i+1} / ${N}`:"สรุป";
  const d=$("lDots");d.innerHTML="";for(let k=0;k<=N;k++){const b=document.createElement("button");b.type="button";b.textContent=k<N?k+1:"สรุป";b.className=(k===i?"cur ":"")+(k<N&&p.ck[k]?"done":"");b.disabled=k!==i&&!canGo(k);b.setAttribute("aria-label",k<N?`ขั้นที่ ${k+1}`:"สรุปบท");b.onclick=()=>{LN.i=k;LN.opts=null;LN.pick=null;renderLesson()};d.appendChild(b)}
  const body=$("lBody");
- if(i<N){const s=st[i];$("lFig").innerHTML=s.f()+(s.ph?`<div class="phhead">ภาพจริงจากแลป · แตะเพื่อขยาย</div><div class="phgal">${s.ph.map(k=>`<button type="button" data-ph="${k}"><img src="img/${k}.jpg" alt="${PHOTO[k]}" loading="lazy"><span>${PHOTO[k]}</span></button>`).join("")}</div>`:"");$("lFig").querySelectorAll("[data-ph]").forEach(b=>b.onclick=()=>lightbox(b.dataset.ph));
+ if(i<N){const s=st[i];const gb=a=>`<div class="phgal">${a.map(k=>`<button type="button" data-ph="${k}"><img src="img/${k}.jpg" alt="${PHOTO[k]}" loading="lazy"><span>${PHOTO[k]}</span></button>`).join("")}</div>`;$("lFig").innerHTML=s.f()+(s.phg?`<div class="phhead">ภาพจริงจากแลป · แตะเพื่อขยาย</div>${s.phg.map(([n,a])=>`<div class="phgt">${n}</div>`+gb(a)).join("")}`:s.ph?`<div class="phhead">ภาพจริงจากแลป · แตะเพื่อขยาย</div>${gb(s.ph)}`:"");$("lFig").querySelectorAll("[data-ph]").forEach(b=>b.onclick=()=>lightbox(b.dataset.ph));
   let h=`<h3 class="lh">${s.h}</h3><ul class="blist">${s.b.map(x=>`<li>${x}</li>`).join("")}</ul>${s.src?`<p class="srcl">ที่มา: ${s.src}</p>`:""}`;
   if(s.an)h+=`<div class="box an"><span class="lab">เปรียบเทียบให้เห็นภาพ</span>${s.an}</div>`;
   if(s.ln)h+=`<div class="box ln"><span class="lab">เชื่อมโยง</span>${s.ln}</div>`;
