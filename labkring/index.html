@@ -1194,6 +1194,125 @@ bio:[
 
 (function(){for(const t in LESSONS)LESSONS[t].forEach(s=>{if(s.ck&&s.src&&!/class="src"/.test(s.ck.ex))s.ck.ex+=`<span class="src">ที่มา: ${s.src}</span>`})})();
 
+(function(){
+const shuffle=x=>{x=x.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x};
+/* ===== ข้อมูลจาก Quizizz, โน้ต Lab gring และโน้ตสรุปสอบแลปกริ๊ง ===== */
+const SQ="Quizizz",SLG="โน้ต Lab gring",SSM="โน้ตสรุปสอบแลปกริ๊ง";
+const SRCTAG=s=>`<span class="src">ที่มา: ${s}</span>`;
+function ZS(t,k,q,a,o,ex,src){ST.push({t,f:()=>figPhoto(k),q,a,o,ex:ex+SRCTAG(src),src,real:true})}
+const QP="สิ่งนี้มาจากพืชชนิดใด? และใช้ศึกษาองค์ประกอบใด?",QPP="สิ่งนี้มาจากส่วนใดของพืช? และเป็นพืชชนิดใด?",QB="สิ่งนี้มาจากส่วนใดในร่างกาย?",QW="เซลล์ที่ชี้ในภาพคืออะไร? และมีแกรนูลในไซโทพลาซึมหรือไม่?",QD="จากภาพเป็นการแบ่งเซลล์ในระยะใด? มาจากพืชชนิดใด? และใช้สารสีชนิดใดในการย้อม?",QG="สิ่งมีชีวิตชนิดนี้มีชื่อว่าอะไร? ติดสีแกรมอะไร? และจัดอยู่ในอาณาจักรอะไร?",QK="สิ่งมีชีวิตชนิดนี้มีชื่อว่าอะไร? และจัดอยู่ในอาณาจักรอะไร?";
+/* พืช */
+const ORG=["สาหร่ายสีเขียว · Chloroplast","เปลือกพริกชี้ฟ้า · Chromoplast","ใบว่านกาบหอย · Vacuole","เปลือกพริกชี้ฟ้า · หยดน้ำมัน","หอมแดง · Nucleus"];
+const STA=["มันฝรั่ง · เม็ดแป้ง","แป้งสาลี · เม็ดแป้ง","แป้งข้าวโพด · เม็ดแป้ง","แป้งข้าวเจ้า · เม็ดแป้ง","แป้งมันสำปะหลัง · เม็ดแป้ง"];
+const oth=(arr,a,n=3)=>shuffle(arr.filter(x=>x!==a)).slice(0,n);
+const XSTA={"มันฝรั่ง":"กลม รี มีขดคล้ายก้นหอย ใหญ่ที่สุด","แป้งสาลี":"กลม รี อยู่กันเป็นกลุ่ม ขนาดไม่ใหญ่ไม่เล็ก","แป้งข้าวโพด":"ขนาดกลาง ติดกันเป็นก้อน ๆ (โน้ต Lab gring: มี maltese cross)","แป้งข้าวเจ้า":"เล็กมาก กระจัดกระจาย","แป้งมันสำปะหลัง":"กลมแต่ไม่เต็มวง มีจุดคล้ายข้าวโพด เล็กกว่าแป้งสาลีเล็กน้อย"};
+[["z01",0,"Chloroplast สีเขียว"],["s_chloro",0,"Chloroplast สีเขียว"],["z02",1,"Chromoplast สีเหลืองส้ม"],["s_chromo",1,"Chromoplast สีเหลืองส้ม"],["z03",2,"Vacuole มีของเหลวสีม่วงจาก anthocyanin"],["s_vac",2,"Vacuole มีของเหลวสีม่วงจาก anthocyanin"],["z10",3,"หยดน้ำมัน (oil droplet) สีใส"]].forEach(([k,i,e],j)=>ZS("plant",k,QP,ORG[i],oth(ORG,ORG[i]),e,k.startsWith("s_")?SSM+" · "+SLG:SQ+" · "+SLG));
+[["z11",0],["s_potato",0],["z12",1],["s_wheat",1],["z13",2],["s_corn",2],["z14",3],["s_rice",3],["z15",4],["s_tapi",4]].forEach(([k,i])=>{const nm=STA[i].split(" · ")[0];ZS("plant",k,QP,STA[i],oth(STA,STA[i]),`${nm==="มันฝรั่ง"?"เม็ดแป้งมันฝรั่ง":nm}: ${XSTA[nm]}`,(k.startsWith("s_")?SSM:SQ)+" · "+SLG)});
+const NUCQ="สิ่งนี้มาจากพืชชนิดใด? ใช้ศึกษาองค์ประกอบใด? และใช้สารสีชนิดใดในการย้อม?";
+ZS("plant","z04",NUCQ,"หอมแดง · Nucleus · Lugol's iodine",["หอมแดง · Nucleus · Giemsa's stain","ใบว่านกาบหอย · Vacuole · Lugol's iodine","สาหร่ายสีเขียว · Chloroplast · Wright stain"],"Nucleus สีเข้ม 1 เซลล์มี 1 อัน · ย้อมด้วย Lugol's iodine",SQ+" · "+SLG);
+ZS("plant","s_nuc",NUCQ,"หอมแดง · Nucleus · Lugol's iodine",["หอมแดง · Nucleus · Giemsa's stain","ใบว่านกาบหอย · Vacuole · Lugol's iodine","เปลือกพริกชี้ฟ้า · Chromoplast · Lugol's iodine"],"Nucleus สีเข้ม 1 เซลล์มี 1 อัน · ย้อมด้วย Lugol's iodine",SSM+" · "+SLG);
+const PART=["ลำต้น · พืชใบเลี้ยงเดี่ยว","ลำต้น · พืชใบเลี้ยงคู่","ใบ · พืชใบเลี้ยงคู่","ใบ · พืชใบเลี้ยงเดี่ยว"];
+ZS("plant","z05",QPP,PART[0],oth(PART,PART[0]),"Vascular bundle กระจายทั่ว · โน้ตสรุปสอบ: กระจายเหมือนฝักบัวรดน้ำ · โน้ต Lab gring: ใน vascular bundle xylem คือ “ตา” phloem คือ “หน้าผาก”",SQ+" · "+SSM+" · "+SLG);
+ZS("plant","s_mono",QPP,PART[0],oth(PART,PART[0]),"Vascular bundle กระจายทั่ว ไม่เรียงเป็นวง",SSM);
+ZS("plant","z07",QPP,PART[1],oth(PART,PART[1]),"Vascular bundle เรียงเป็นวง · โน้ต Lab gring: phloem อยู่ด้านนอก xylem อยู่ด้านใน มี cambium คั่น และมี pith ตรงกลาง",SQ+" · "+SLG);
+ZS("plant","s_dicot",QPP,PART[1],oth(PART,PART[1]),"Vascular bundle เรียงเป็นวง มี pith ตรงกลาง",SSM+" · "+SLG);
+ZS("plant","z06",QPP,PART[2],oth(PART,PART[2]),"สไลด์ถาวรใบพืชใบเลี้ยงคู่ มี vascular bundle ที่เส้นกลางใบ · palisade เป็นแท่งสีเขียว spongy กลม ๆ (โน้ต Lab gring)",SQ+" · คู่มือบทที่ 2 · "+SLG);
+ZS("plant","s_leaf",QPP,PART[2],oth(PART,PART[2]),"คู่มือปี 69 ใช้สไลด์ถาวรใบของพืชใบเลี้ยงคู่ และ Quizizz เฉลยภาพแบบเดียวกันว่าใบเลี้ยงคู่ · ระวัง โน้ตสรุปสอบเขียนภาพนี้ว่าใบเลี้ยงเดี่ยว",SSM+" · คู่มือบทที่ 2 · "+SQ);
+ZS("plant","z08","สิ่งนี้มาจากพืชชนิดใด?","ก้านใบต้นแสงจันทร์",["เปลือกพริกชี้ฟ้า","ใบว่านกาบหอย","หัวมันฝรั่ง"],"วงสีแดงในโน้ตชี้ผลึก calcium oxalate",SQ);
+const CRQ="สิ่งนี้มาจากพืชชนิดใด? ใช้ศึกษาองค์ประกอบใด? และสิ่งนี้มีชื่อเรียกว่าอะไร?";
+ZS("plant","z09",CRQ,"ก้านใบต้นแสงจันทร์ · ผลึก · Calcium oxalate",["เปลือกพริกชี้ฟ้า · ผลึก · Calcium oxalate","ก้านใบต้นแสงจันทร์ · เม็ดแป้ง · Starch grain","ก้านใบต้นแสงจันทร์ · หยดน้ำมัน · Oil droplet"],"โน้ต Lab gring: crystal raphide (calcium oxalate) เป็นแท่ง หัวท้ายแหลม",SQ+" · "+SLG);
+ZS("plant","s_crystal",CRQ,"ก้านใบต้นแสงจันทร์ · ผลึก · Calcium oxalate",["เปลือกพริกชี้ฟ้า · ผลึก · Calcium oxalate","ก้านใบต้นแสงจันทร์ · เม็ดแป้ง · Starch grain","หัวมันฝรั่ง · ผลึก · Calcium oxalate"],"โน้ตสรุปสอบ: ผลึกเป็นแท่งคล้ายเข็ม",SSM+" · "+SLG);
+/* สัตว์ */
+const CHQ="สิ่งนี้มาจากส่วนใดในร่างกาย? และใช้สารสีชนิดใดในการย้อม?";
+[["z16",SQ],["s_cheek",SSM]].forEach(([k,s])=>ZS("animal",k,CHQ,"เยื่อบุกระพุ้งแก้ม · Lugol's iodine",["เยื่อบุกระพุ้งแก้ม · Wright stain","เม็ดเลือดแดง · Lugol's iodine","ผนังกระเพาะอาหาร · Giemsa's stain"],"เซลล์เป็นแผ่นแบน มี nucleus ตรงกลาง",s+" · "+SLG));
+const TIS=["เนื้อเยื่อบุผิว","เนื้อเยื่อเกี่ยวพัน","ผนังกระเพาะอาหาร","ผนังลำไส้เล็ก","กล้ามเนื้อลาย","กล้ามเนื้อเรียบ","กล้ามเนื้อหัวใจ","เซลล์ประสาท"];
+const TX={"เนื้อเยื่อบุผิว":"โน้ต Lab gring: stratified squamous epithelium ในปาก · เซลล์แบน เรียงมากกว่า 1 ชั้น","เนื้อเยื่อเกี่ยวพัน":"โน้ต Lab gring: dense irregular connective tissue","ผนังกระเพาะอาหาร":"โน้ต Lab gring: มีรอยพับ (rugae) · โน้ตสรุปสอบ: เซลล์ทรงสูงหรือแท่ง","ผนังลำไส้เล็ก":"โน้ต Lab gring: มี villi ยื่นเป็นนิ้ว ๆ · โน้ตสรุปสอบ: เซลล์ทรงสูงหรือแท่ง","กล้ามเนื้อลาย":"มีลายขวาง","กล้ามเนื้อเรียบ":"ไม่มีลาย หัวท้ายแหลม","กล้ามเนื้อหัวใจ":"มีลาย และแตกแขนง","เซลล์ประสาท":"ชี้ dendrite (ตัวเซลล์) และ axon · Quizizz ใช้คำว่าเซลล์ประสาทสั่งการ ส่วนคู่มือปี 69 ใช้คำว่าเซลล์ประสาท"};
+[["z17",0,SQ],["z23",1,SQ],["s_conn",1,SSM],["z24",2,SQ],["s_stom",2,SSM],["z25",3,SQ],["s_int",3,SSM],["z26",4,SQ],["s_skel",4,SSM],["z27",5,SQ],["s_smooth",5,SSM],["z28",6,SQ],["s_card",6,SSM],["z29",7,SQ],["s_neuron",7,SSM]].forEach(([k,i,s])=>ZS("animal",k,QB,TIS[i],oth(TIS,TIS[i]),TX[TIS[i]],s+" · "+SLG));
+const WBC=["Neutrophil · มีแกรนูล","Lymphocyte · ไม่มีแกรนูล","Basophil · มีแกรนูล","Eosinophil · มีแกรนูล","Monocyte · ไม่มีแกรนูล","Neutrophil · ไม่มีแกรนูล","Monocyte · มีแกรนูล","Lymphocyte · มีแกรนูล"];
+const WX={Neutrophil:"Nucleus มีหลายพู · พบมากที่สุด ทำลายแบคทีเรียโดย phagocytosis",Lymphocyte:"Nucleus เกือบเต็มเซลล์ (เต็มวง) · B cell สร้าง antibody, T cell ทำลายเซลล์ติดเชื้อ",Basophil:"Granule สีน้ำเงินเข้ม (ติดสีเบส) · หลั่ง histamine",Eosinophil:"Granule สีแดง (ติดสีกรด) · กำจัดพยาธิ",Monocyte:"Nucleus รูปเกือกม้าหรือคล้ายหน่วยไต สีฟ้าอ่อน · เปลี่ยนเป็น macrophage"};
+[["z18",0,"Wright stain"],["s_neu",0],["z19",1],["s_lym",1],["z20",2],["z21",3],["z22",4]].forEach(([k,i])=>{const nm=WBC[i].split(" · ")[0];ZS("animal",k,QW,WBC[i],WBC.filter(x=>x!==WBC[i]&&x.startsWith(nm)).concat(shuffle(WBC.filter(x=>!x.startsWith(nm)))).slice(0,3),WX[nm],(k.startsWith("s_")?SSM:SQ)+" · "+SLG+" · "+SSM)});
+ZS("animal","z20c","สิ่งที่วงไว้ในภาพคืออะไร?","Platelet",["Red blood cell","Lymphocyte","Basophil"],"โน้ต Lab gring: platelet เล็กกว่าเม็ดเลือดแดง เป็นอนุภาคเล็ก ๆ",SQ+" · "+SLG);
+ZS("animal","s_rbc","เซลล์ส่วนใหญ่ในภาพคืออะไร? และอยู่ในกระแสเลือดได้นานเท่าใด?","Red blood cell · 100–120 วัน",["Red blood cell · 2–3 วัน","White blood cell · 100–120 วัน","Platelet · 100–120 วัน"],"โน้ต: RBC ไม่มี nucleus ตรงกลางเว้า (biconcave) · อายุ 100–120 วัน · ส่วน WBC อายุ 2–3 วัน (ตรงกับคู่มือบทที่ 3)",SSM+" · "+SLG+" · คู่มือบทที่ 3");
+/* การแบ่งเซลล์ */
+const MIT=["Prophase · หอมแดง · Giemsa's stain","Metaphase · หอมแดง · Giemsa's stain","Anaphase · หอมแดง · Giemsa's stain","Telophase · หอมแดง · Giemsa's stain","Prophase I · ดอกกุยช่าย · Aceto-orcein","Prophase · ดอกกุยช่าย · Aceto-orcein","Metaphase · หอมแดง · Aceto-orcein"];
+const MX=["Chromosome หดตัวเห็นเป็นแท่ง","Chromosome เรียงตัวกลางเซลล์","Chromosome แยกจากกันโดย spindle fiber"];
+[["z30",0],["z31",1],["z32",2]].forEach(([k,i])=>ZS("div",k,QD,MIT[i],oth(MIT,MIT[i]),"โน้ต Lab gring: "+MX[i]+" · ปลายรากหอมแดงย้อม Giemsa's stain",SQ+" · "+SLG));
+const MEI=["Prophase I","Metaphase I","Anaphase I","Telophase I","Prophase II","Metaphase II","Anaphase II","Telophase II"];
+const MEX={"Prophase I":"1 เซลล์ chromosome หดตัว เห็นคู่ homolog","Metaphase I":"1 เซลล์ homolog อยู่กลางเซลล์","Telophase I":"เริ่มแบ่งเป็น 2 เซลล์ chromosome คลายตัวเป็น chromatin","Prophase II":"มี 2 เซลล์ chromosome กลับมาหดตัว","Anaphase II":"2 เซลล์ chromosome แยกออกไปขั้วเซลล์","Telophase II":"เริ่มแบ่งเป็น 4 เซลล์"};
+[["z33","Prophase I"],["z34","Metaphase I"],["z35","Telophase I"],["z36","Prophase II"],["z37","Anaphase II"],["z38","Telophase II"]].forEach(([k,p])=>{const a=p+" · ดอกกุยช่าย · Aceto-orcein";const o=oth(MEI,p,2).map(x=>x+" · ดอกกุยช่าย · Aceto-orcein").concat([p+" · หอมแดง · Giemsa's stain"]);ZS("div",k,QD,a,o,"โน้ต Lab gring: "+MEX[p]+" · อับเรณูดอกกุยช่ายย้อม aceto-orcein",SQ+" · "+SLG)});
+/* ความหลากหลาย */
+const BAC=["Lactobacillus plantarum · แกรมบวก · Monera","Escherichia coli · แกรมลบ · Monera","Bacillus subtilis · แกรมบวก · Monera","Staphylococcus aureus · แกรมบวก · Monera","Escherichia coli · แกรมบวก · Monera","Staphylococcus aureus · แกรมลบ · Monera","Bacillus subtilis · แกรมลบ · Monera","Lactobacillus plantarum · แกรมบวก · Protista"];
+const BX=["รูปแท่ง ต่อกันเป็นสาย · โน้ต Lab gring: เล็กและบางกว่า B. subtilis","รูปท่อน กระจาย ติดสีแดง","รูปท่อน กระจาย ติดสีม่วง","รูปกลม อยู่เป็นกลุ่มคล้ายพวงองุ่น ติดสีม่วง"];
+[["z39",0],["z40",1],["z41",2],["z42",3]].forEach(([k,i])=>{const nm=BAC[i].split(" · ")[0];ZS("bio",k,QG,BAC[i],[...new Set(shuffle(BAC.filter(x=>x!==BAC[i]&&(x.startsWith(nm)||x.endsWith("Protista")))).slice(0,2).concat(oth(BAC.slice(0,4),BAC[i],3)))].slice(0,3),BX[i]+" · แกรมบวกสีม่วง แกรมลบสีแดง",SQ+" · "+SLG)});
+const ORGN=["Oscillatoria · Monera","Diatom · Protista","Euglena · Protista","Volvox · Protista","Spirogyra · Protista","Paramecium · Protista","Amoeba · Protista","Aspergillus · Fungi","Penicillium · Fungi","Rhizopus · Fungi","Saccharomyces cerevisiae · Fungi"];
+const OX={Oscillatoria:"สาหร่ายสีเขียวแกมน้ำเงิน เป็นเส้นใย (cyanobacteria)",Diatom:"มีหลายรูปแบบ เช่น รูปเรือ ไข่ เข็ม จาน",Euglena:"รูปเรียวยาว รี",Volvox:"เป็นโคโลนี รูปกลมหรือรี",Spirogyra:"เส้นยาวต่อกันเป็นสาย chloroplast เป็นเกลียว (spiral)",Paramecium:"รูปรี คล้ายรองเท้าแตะ",Amoeba:"มีเท้าเทียม รูปร่างไม่แน่นอน",Aspergillus:"สปอร์เป็นลูกกลมที่ปลายเส้นใย",Penicillium:"สปอร์คล้ายพู่กัน",Rhizopus:"สปอร์อยู่ในกระเปาะ เส้นใยไม่มีผนังกั้น",Saccharomyces:"เซลล์กลมหรือรี อยู่เป็นกลุ่มเล็ก ๆ"};
+const sameK=a=>a.split(" · ")[1];const IT=x=>x.startsWith("Diatom")?x:x.replace(/^Saccharomyces cerevisiae/,"<i>Saccharomyces cerevisiae</i>").replace(/^([A-Z][a-z]+)(?= ·)/,"<i>$1</i>");
+[["z43",0],["z44",1],["z45",2],["z46",3],["z47",4],["z48",5],["z49",6],["z50",7],["z51",8],["z52",9],["z53",10]].forEach(([k,i])=>{const a=ORGN[i],nm=a.split(" ")[0],kd=sameK(a);const same=ORGN.filter(x=>x!==a&&sameK(x)===kd);const wrongK=a.split(" · ")[0]+" · "+(kd==="Fungi"?"Protista":kd==="Monera"?"Protista":"Monera");const o=shuffle(same).slice(0,2).concat(shuffle(ORGN.filter(x=>x!==a&&sameK(x)!==kd))).slice(0,2).concat([wrongK]);ZS("bio",k,QK,IT(a).replace("<i>Saccharomyces</i> cerevisiae","<i>Saccharomyces cerevisiae</i>"),o.map(IT),"โน้ต Lab gring: "+OX[nm],SQ+" · "+SLG)});
+ST.forEach((s,i)=>s.id=i);
+
+/* คำอธิบายเพิ่มในสเตชันเดิม จากโน้ตใหม่ */
+(function(){const add=(test,txt,src)=>ST.forEach(s=>{if(s.src&&test(s)&&!s.ex.includes(txt)){s.ex=s.ex.replace(/<span class="src">ที่มา: ([^<]*)<\/span>/,(m,a)=>` · ${txt}<span class="src">ที่มา: ${a}${a.includes(src)?"":" · "+src}</span>`)}});
+ const A=n=>s=>s.a===n||s.a.startsWith(n+" ");
+ add(A("Neutrophil"),"โน้ต: nucleus มีหลายพู",SLG);add(A("Eosinophil"),"โน้ต: granule สีแดง (ติดสีกรด)",SLG);add(A("Basophil"),"โน้ต: granule สีน้ำเงินเข้ม (ติดสีเบส)",SLG);
+ add(A("Monocyte"),"โน้ต: nucleus รูปเกือกม้าหรือคล้ายหน่วยไต",SLG);add(A("Lymphocyte"),"โน้ต: nucleus เกือบเต็มเซลล์",SLG);
+ add(s=>/ผนังลำไส้เล็ก/.test(s.a),"โน้ต: มี villi ยื่นเป็นนิ้ว ๆ",SLG);add(s=>/ผนังกระเพาะ/.test(s.a)&&s.t==="animal","โน้ต: มีรอยพับ (rugae)",SLG);
+ add(s=>s.t==="photo"&&/ดินสอดำ/.test(s.a),"โน้ต: ไส้ดินสอ (graphite) ไม่ละลายใน solvent",SSM);
+})();
+
+/* Tutor: เพิ่มเนื้อหาจากโน้ตใหม่ */
+(function(){const L=LESSONS,S=" · ",addSrc=(s,x)=>{if(!s.src.includes(x))s.src+=S+x};
+ const P=L.plant;
+ P[5].b=["คู่มือให้วาดและเปรียบเทียบรูปร่างเม็ดแป้งจาก มันฝรั่ง แป้งสาลี แป้งข้าวโพด แป้งมันสำปะหลัง และแป้งข้าวเจ้า","<b>มันฝรั่ง</b>: กลม รี มี<u>ขดคล้ายก้นหอย</u> ใหญ่ที่สุด","<b>แป้งสาลี</b>: กลม รี <u>อยู่กันเป็นกลุ่ม</u> ขนาดไม่ใหญ่ไม่เล็ก","<b>แป้งข้าวโพด</b>: ขนาดกลาง <u>ติดกันเป็นก้อน</u> · โน้ต Lab gring: มี maltese cross","<b>แป้งข้าวเจ้า</b>: <u>เล็กมาก</u> กระจัดกระจาย","<b>แป้งมันสำปะหลัง</b>: กลมแต่<u>ไม่เต็มวง</u> มีจุดคล้ายข้าวโพด เล็กกว่าแป้งสาลีเล็กน้อย","คำถามท้ายบท: ส่วนของพืชที่สะสมแป้ง "+NX+" · เช่น หัวมันฝรั่ง หัวมันสำปะหลัง เมล็ดข้าวและข้าวโพด"];
+ P[5].an="มันฝรั่ง = ก้นหอยตัวโต · สาลี = เพื่อนจับกลุ่ม · ข้าวโพด = ก้อนหินติดกัน · ข้าวเจ้า = ผงฝุ่น · มันสำปะหลัง = วงกลมแหว่ง";
+ P[5].ph=["z11","z12","z13","z14","z15","potato","wheat","corn","rice","tapi","s_potato","s_wheat","s_corn","s_rice","s_tapi"];addSrc(P[5],SQ);addSrc(P[5],SLG);
+ P[6].b.push("โน้ต Lab gring: ลำต้นใบเลี้ยงคู่ phloem อยู่<u>ด้านนอก</u> xylem อยู่<u>ด้านใน</u> มี <b>cambium</b> คั่นกลาง");
+ P[6].an="ใน vascular bundle ของใบเลี้ยงเดี่ยว ให้มองเป็นหน้าคน: xylem รูใหญ่ 2 รูคือ “ตา” phloem ด้านบนคือ “หน้าผาก” (โน้ต Lab gring)";
+ P[6].ph=["z05","z07","s_mono","s_dicot"];addSrc(P[6],SLG);addSrc(P[6],SQ);
+ P[7].b.push("⚠ โน้ตสรุปสอบเขียนสไลด์ใบในแลปว่า “ใบพืชใบเลี้ยงเดี่ยว” แต่คู่มือปี 69 ใช้สไลด์ถาวรใบพืชใบเลี้ยงคู่ และ Quizizz ก็เฉลยว่าใบเลี้ยงคู่");
+ P[7].ph=["z06","s_leaf"];addSrc(P[7],SSM);addSrc(P[7],SQ);
+ [[1,["z04","s_nuc"]],[2,["z01","s_chloro","z02","s_chromo"]],[3,["z03","s_vac"]],[4,["z09","s_crystal","z10"]]].forEach(([i,ph])=>{P[i].ph=(P[i].ph||[]).concat(ph);addSrc(P[i],SQ)});
+ P[0].b.push("โน้ตสรุปสอบ: พืชและสัตว์มี nucleus, nuclear membrane, cytoplasm ทั้งคู่ · vacuole พืชใหญ่ สัตว์เล็ก · พืชมี chloroplast และ cell wall · สัตว์มี lysosome และ centriole");addSrc(P[0],SSM);
+ const A=L.animal;
+ A[0].b.push("โน้ต Lab gring: เรียงชั้นเดียว = <b>simple</b> · มากกว่า 1 ชั้น = <b>stratified</b> · ผนังกระเพาะมีรอยพับ (rugae) · ผนังลำไส้เล็กมี villi");A[0].ph=["z17","z23","s_conn","z24","s_stom","z25","s_int"];addSrc(A[0],SLG);
+ A[1].ph=["z16","s_cheek"];
+ A[2].b.push("โน้ต: RBC ไม่มี nucleus ตรงกลางเว้า · platelet เล็กกว่า RBC มาก · Lab 3 ใช้ Lugol's iodine และ Wright stain");A[2].ph=["s_rbc","z20c"];addSrc(A[2],SLG);addSrc(A[2],SSM);
+ A[3].b=["คู่มือ: แบ่งเม็ดเลือดขาวตาม granule เป็น 2 กลุ่ม แล้วแยกย่อยตามลักษณะนิวเคลียสและการติดสี","<b>มี granule</b>: Neutrophil · Eosinophil · Basophil","<b>ไม่มี granule</b>: Monocyte · Lymphocyte","<b>Neutrophil</b>: nucleus มีหลายพู (โน้ต)","<b>Eosinophil</b>: granule สีแดง ติดสีกรด (โน้ต)","<b>Basophil</b>: granule สีน้ำเงินเข้ม ติดสีเบส (โน้ต)","<b>Monocyte</b>: ใหญ่ที่สุด nucleus รูปเกือกม้าหรือคล้ายหน่วยไต สีฟ้าอ่อน (โน้ต)","<b>Lymphocyte</b>: nucleus เกือบเต็มเซลล์ (โน้ต)"];
+ A[3].an="ชื่อบอกสี: <b>Eosin</b> = สีแดงแบบกรด · <b>Baso</b> = เบส สีน้ำเงิน · <b>Neutro</b> = กลาง ๆ จำด้วยนิวเคลียสหลายพู";A[3].ph=(A[3].ph||[]).concat(["z18","s_neu","z19","s_lym","z20","z21","z22"]);addSrc(A[3],SLG);addSrc(A[3],SQ);
+ A[4].b=["<b>Neutrophil</b>: พบมากที่สุด ทำลายแบคทีเรียและเชื้อราโดย phagocytosis เพิ่มเมื่ออักเสบหรือติดเชื้อ","<b>Eosinophil</b>: กำจัดหนอนพยาธิ เกี่ยวข้องกับภูมิแพ้ · โน้ตสรุปสอบ: ทำลายสิ่งแปลกปลอมขนาดใหญ่และเซลล์มะเร็ง","<b>Basophil</b>: หลั่ง histamine กระตุ้นการอักเสบ ถ้ามากไปทำให้เกิดอาการแพ้ · ออกนอกหลอดเลือดแล้วเปลี่ยนเป็น mast cell","<b>Lymphocyte</b>: ภูมิคุ้มกันแบบจำเพาะ ไม่ทำ phagocytosis · B cell สร้าง antibody · T cell ทำลายเซลล์ที่ติดเชื้อหรือเซลล์มะเร็ง","<b>Monocyte</b>: เคลื่อนออกจากกระแสเลือดเข้าสู่เนื้อเยื่อ เปลี่ยนเป็น macrophage จับกินเชื้อโรคและเซลล์ที่ตายแล้ว · เป็น antigen presenting cell"];addSrc(A[4],SSM);
+ A[5].b.push("โน้ต: cardiac มีลายและแตกแขนง · smooth หัวท้ายแหลม · skeletal มีลายขวาง");A[5].ph=["z26","s_skel","z27","s_smooth","z28","s_card"];addSrc(A[5],SLG);addSrc(A[5],SSM);
+ A[6].b.push("โน้ต Lab gring และ Quizizz: ในภาพชี้ dendrite (ตัวเซลล์) และ axon · Quizizz ใช้คำว่าเซลล์ประสาทสั่งการ");A[6].ph=["z29","s_neuron"];addSrc(A[6],SLG);addSrc(A[6],SQ);
+ const T=L.trans;
+ T[0].b.push("โน้ต Lab gring: แก๊ส > ของเหลว > ของแข็ง · MW น้อยเคลื่อนที่ได้เร็ว");T[0].b.push("โน้ตสรุปสอบ: น้ำบริสุทธิ์มีแรงดันออสโมติกต่ำที่สุด (ตรงกับคู่มือ)");addSrc(T[0],SLG);addSrc(T[0],SSM);
+ T[1].b.push("สารที่ใช้ (โน้ต Lab gring): conc. HCl, conc. NH₄OH, phenolphthalein, ethylene glycol, glycerol, glucose");addSrc(T[1],SLG);
+ const E=L.enz;
+ E[2].b.push("โน้ต Lab gring: Benedict + ต้ม · น้ำแป้ง + น้ำลาย เป็นสีส้มอิฐ · น้ำแป้ง + เรนเนท ยังเป็นสีฟ้า (ผลลบ)");addSrc(E[2],SLG);
+ E[3].b.push("โน้ตสรุปสอบ: catalase ช่วยป้องกันเซลล์จากความเสียหายจาก oxidation · ในแลปสกัดจากมันฝรั่ง");addSrc(E[3],SSM);
+ const H=L.photo;
+ H[1].b.push("โน้ต Lab gring: ระยะ 15 cm ฟองมากที่สุด ตามด้วย 30 และ 45 cm (คิดเป็น 100%, 50%, 33.3%) · NaHCO₃ 10% ฟองมากที่สุด ตามด้วย 5% และ 2.5%");addSrc(H[1],SLG);
+ H[2].b.push("โน้ต Lab gring: ใบที่ได้รับแสงมีแป้งมาก · ใบที่ไม่ได้รับแสงมีแป้งน้อย");addSrc(H[2],SLG);
+ H[3].b.splice(2,0,"โน้ตสรุปสอบ: ต้องใช้ดินสอดำ เพราะไส้ดินสอ (graphite) ไม่ละลายในตัวทำละลาย");addSrc(H[3],SSM);
+ const R=L.resp;
+ R[1].b.push("ผลในโน้ต Lab gring: หลอด A (ไม่มี NaF) pH ลดลงมาก แก๊สเยอะ · B (NaF 2%) pH เท่าเดิม แก๊สปานกลาง · C (NaF 4%) pH เท่าเดิม แก๊สน้อย · pH ลดเพราะ CO₂ → H₂CO₃ เป็นกรด");addSrc(R[1],SLG);
+ R[2].b.push("ผลในโน้ต Lab gring: หลอด A (อุณหภูมิห้อง) สีใสและมีแก๊ส · หลอด B (ต้ม) สีฟ้าเข้ม ไม่มีแก๊ส");addSrc(R[2],SLG);
+ R[3].b.push("โน้ต Lab gring: โยเกิร์ตมี lactic acid มากกว่านม");addSrc(R[3],SLG);
+ const G=L.gene;
+ G[2].b.push("โน้ต Lab gring: template อ่าน 3′ → 5′ สาย mRNA ใหม่สร้าง 5′ → 3′ · ตัวอย่าง TAC CGG ACT TCA → AUG GCC UGA AGU");addSrc(G[2],SLG);
+ G[3].b.push("โน้ต Lab gring: จำนวนกรดอะมิโน = จำนวน codon − 1 (ถ้านับ stop codon ด้วย เพราะ stop ไม่แปลเป็นกรดอะมิโน)");addSrc(G[3],SLG);
+ G.push({f:()=>figLadder(),h:"เสริม: DNA replication (จากโน้ต)",src:SLG+" · ไม่มีในคู่มือแลป",b:["โน้ต Lab gring สรุป DNA replication แบบ semiconservative ไว้ · หัวข้อนี้ไม่มีในคู่มือแลปปี 69","<b>Helicase</b>: สลาย H-bond ให้สาย DNA แยกกัน","<b>SSB protein</b>: จับสายเดี่ยวไว้ ไม่ให้กลับมาจับคู่และป้องกันการถูก nuclease ย่อย","<b>Topoisomerase (gyrase)</b>: ช่วย helicase คลายเกลียวด้านหน้า replication fork","<b>RNA primase</b>: สร้าง RNA primer","<b>DNA polymerase III</b>: ต่อ nucleotide สร้างสายใหม่ · ⚠ โน้ตเขียนว่า “สร้าง H-bond” ซึ่งไม่ถูก งานหลักคือต่อ nucleotide","<b>DNA polymerase I</b>: ตัด RNA primer ออกแล้วเติม DNA แทน","<b>DNA ligase</b>: เชื่อม Okazaki fragment ด้วย phosphodiester bond","สายใหม่สร้างทิศ 5′ → 3′ เสมอ · leading strand ต่อเนื่อง · lagging strand เป็นท่อน (Okazaki fragment)"],an:"เหมือนรูดซิป: helicase คือหัวซิปที่แยกฟัน SSB คือคลิปหนีบไม่ให้ฟันกลับมาติด polymerase คือคนเย็บฟันใหม่ ligase คือกาวต่อรอยที่เย็บเป็นท่อน ๆ",ck:{q:"เอนไซม์ใดเชื่อม Okazaki fragment เข้าด้วยกัน",a:"DNA ligase",o:["Helicase","RNA primase","SSB protein"],ex:"โน้ต Lab gring: DNA ligase เชื่อม DNA สายสั้นด้วย phosphodiester bond"}});
+ const D=L.div;
+ D[3].b.splice(2,0,"⚠ โน้ต Lab gring ก็เขียนอัตราส่วนกลับเหมือนกัน (acetic acid 3 : ethanol 1) ที่ถูกตามคู่มือคือ acetic acid 1 : ethyl alcohol 3");D[3].ph=["z30","z31","z32"];addSrc(D[3],SLG);addSrc(D[3],SQ);
+ D[5].b.push("โน้ต Lab gring: mitosis พบระยะ interphase มากที่สุด · meiosis พบ prophase I มากที่สุด");D[5].ph=(D[5].ph||[]).concat(["z33","z34","z35","z36","z37","z38"]);addSrc(D[5],SLG);addSrc(D[5],SQ);
+ D[4].b.push("โน้ต Lab gring: แช่ HCl 1 นาที ซับออก → หยด aceto-orcein ทิ้ง 5 นาที → ผ่านไฟ 5 วินาที");addSrc(D[4],SLG);
+ const B=L.bio;
+ B[1].b.push("Quizizz และโน้ต: <i>L. plantarum</i> แท่งต่อกันเป็นสาย · <i>B. subtilis</i> ท่อนกระจาย · <i>S. aureus</i> กลมเป็นกลุ่มคล้ายพวงองุ่น · <i>E. coli</i> ท่อนกระจาย","⚠ โน้ต Lab gring บางจุดเขียนสลับว่า <i>L. plantarum</i> อยู่เป็นคู่ และ <i>B. subtilis</i> ต่อเป็นสาย · โน้ตส่วนใหญ่และ Quizizz ตรงกับข้อบน");B[1].ph=["z39","z40","z41","z42"];addSrc(B[1],SQ);addSrc(B[1],SLG);
+ B[2].b.push("โน้ต Lab gring: <i>Spirogyra</i> เส้นยาวต่อกันเป็นสาย chloroplast เป็นเกลียว · <i>Volvox</i> โคโลนีกลมหรือรี · <i>Euglena</i> เรียวยาว รี · diatom มีหลายรูปแบบ เช่น เรือ ไข่ เข็ม จาน");B[2].ph=["z43","z44","z45","z46","z47"];addSrc(B[2],SLG);addSrc(B[2],SQ);
+ B[3].b.push("โน้ต Lab gring: <i>Paramecium</i> รูปรีคล้ายรองเท้าแตะ · <i>Amoeba proteus</i> มีเท้าเทียม รูปร่างไม่แน่นอน");B[3].ph=["z48","z49"];addSrc(B[3],SLG);addSrc(B[3],SQ);
+ B[4].b.push("โน้ต Lab gring: <i>Penicillium</i> สปอร์คล้ายพู่กัน · <i>Aspergillus</i> สปอร์เป็นลูกกลม · <i>Rhizopus</i> สปอร์อยู่ในกระเปาะ · ยีสต์กลมหรือรี อยู่เป็นกลุ่มเล็ก ๆ");B[4].ph=["z50","z51","z52","z53"];addSrc(B[4],SQ);
+})();
+Object.assign(PHOTO,{z01:"Chloroplast · สาหร่ายสีเขียว",z02:"Chromoplast · เปลือกพริกชี้ฟ้า",z03:"Vacuole · ใบว่านกาบหอย",z04:"Nucleus · หอมแดง",z05:"ลำต้นพืชใบเลี้ยงเดี่ยว",z06:"ใบพืชใบเลี้ยงคู่",z07:"ลำต้นพืชใบเลี้ยงคู่",z08:"ผลึก · ก้านใบต้นแสงจันทร์",z09:"Calcium oxalate · ก้านใบต้นแสงจันทร์",z10:"หยดน้ำมัน · เปลือกพริกชี้ฟ้า",z11:"เม็ดแป้งมันฝรั่ง",z12:"แป้งสาลี",z13:"แป้งข้าวโพด",z14:"แป้งข้าวเจ้า",z15:"แป้งมันสำปะหลัง",z16:"เยื่อบุกระพุ้งแก้ม",z17:"เนื้อเยื่อบุผิว",z18:"Neutrophil",z19:"Lymphocyte",z20:"Basophil",z20c:"Platelet",z21:"Eosinophil",z22:"Monocyte",z23:"เนื้อเยื่อเกี่ยวพัน",z24:"ผนังกระเพาะอาหาร",z25:"ผนังลำไส้เล็ก",z26:"กล้ามเนื้อลาย",z27:"กล้ามเนื้อเรียบ",z28:"กล้ามเนื้อหัวใจ",z29:"เซลล์ประสาท",z30:"Mitosis · Prophase",z31:"Mitosis · Metaphase",z32:"Mitosis · Anaphase",z33:"Meiosis · Prophase I",z34:"Meiosis · Metaphase I",z35:"Meiosis · Telophase I",z36:"Meiosis · Prophase II",z37:"Meiosis · Anaphase II",z38:"Meiosis · Telophase II",z39:"Lactobacillus plantarum",z40:"Escherichia coli",z41:"Bacillus subtilis",z42:"Staphylococcus aureus",z43:"Oscillatoria",z44:"Diatom",z45:"Euglena",z46:"Volvox",z47:"Spirogyra",z48:"Paramecium",z49:"Amoeba",z50:"Aspergillus",z51:"Penicillium",z52:"Rhizopus",z53:"Saccharomyces cerevisiae",s_chloro:"Chloroplast",s_chromo:"Chromoplast",s_vac:"Vacuole",s_nuc:"Nucleus",s_mono:"ลำต้นพืชใบเลี้ยงเดี่ยว",s_dicot:"ลำต้นพืชใบเลี้ยงคู่",s_crystal:"ผลึก calcium oxalate",s_potato:"เม็ดแป้งมันฝรั่ง",s_wheat:"แป้งสาลี",s_corn:"แป้งข้าวโพด",s_tapi:"แป้งมันสำปะหลัง",s_rice:"แป้งข้าวเจ้า",s_leaf:"ใบพืชใบเลี้ยงคู่",s_cheek:"เยื่อบุกระพุ้งแก้ม",s_rbc:"เม็ดเลือดแดง",s_lym:"Lymphocyte",s_neu:"Neutrophil",s_conn:"เนื้อเยื่อเกี่ยวพัน",s_stom:"ผนังกระเพาะอาหาร",s_int:"ผนังลำไส้เล็ก",s_skel:"กล้ามเนื้อลาย",s_smooth:"กล้ามเนื้อเรียบ",s_card:"กล้ามเนื้อหัวใจ",s_neuron:"เซลล์ประสาท"});
+
+})();
+
 /* ===================== App ===================== */
 const $=id=>document.getElementById(id);
 const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
