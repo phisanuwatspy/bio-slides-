@@ -19,3 +19,5 @@
 ## แอปอื่นใน repo นี้
 
 - **DRUG MATCH** (จับคู่เอกลักษณ์ยา 299 ตัว): https://phisanuwatspy.github.io/bio-slides-/drug-match/
+- **แลปกริ๊ง** (ซ้อมสอบปฏิบัติการ 122-112 · Tutor · ฝึกทักษะใช้กล้องและแปลรหัส DNA): https://phisanuwatspy.github.io/bio-slides-/labkring/
+  · อัปเดตไฟล์ใน `labkring/` แล้วเปลี่ยน `VERSION` ใน `labkring/sw.js` ทุกครั้ง

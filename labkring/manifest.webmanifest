@@ -1,0 +1,17 @@
+{
+  "name": "แลปกริ๊ง · ปฏิบัติการชีววิทยาทั่วไป",
+  "short_name": "แลปกริ๊ง",
+  "description": "ซ้อมสอบแลปกริ๊ง 122-112 · Tutor ทีละขั้น · ฝึกทักษะใช้กล้องและแปลรหัส DNA",
+  "lang": "th",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F3EBDD",
+  "theme_color": "#B8692A",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
