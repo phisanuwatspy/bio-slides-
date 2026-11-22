@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
-/* Layout: hero, one sticky bar (mode switch + chapter chips), one view at a time. Lab = one interactive per chapter, Tutor = index + step card, Exam = timed bank. Single light look matching Slide 11. */
+/* Layout: hero, one sticky bar (mode switch + chapter chips), one view at a time. Explore = one interactive per chapter, Tutor = index + step card, Exam = timed bank. Single light look matching Slide 11. */
 :root{
   --bg:#f7f4f8; --surface:#ffffff; --sunk:#f0ebf4; --ink:#241c37; --muted:#5f5775; --line:#e0d8e8;
   --hema:#4a3591; --eosin:#d13f7c; --mat:#d6407f; --pat:#3b6fd6; --spindle:#cf850f; --plate:#8a7fb0;
@@ -393,18 +393,18 @@ body.examlock .tabs{display:none}
   <header class="hero">
     <p class="eyebrow">Biology · Siam University · Slide 12</p>
     <h1>Meiosis &amp; <span>Reproduction</span></h1>
-    <p class="sub">สื่อการเรียนจากเอกสาร “ไมโอซิสและการสืบพันธุ์” เลือกโหมด: <b>Lab</b> กดเล่นดูภาพเคลื่อนไหว · <b>Tutor</b> เรียนทีละบทพร้อมคำถาม · <b>Exam</b> ข้อสอบจับเวลา</p>
+    <p class="sub">สื่อการเรียนจากเอกสาร “ไมโอซิสและการสืบพันธุ์” เลือกโหมด: <b>Explore</b> กดเล่นดูภาพเคลื่อนไหว · <b>Tutor</b> เรียนทีละบทพร้อมคำถาม · <b>Exam</b> ข้อสอบจับเวลา</p>
     <p class="keyline"><span><b>สไลด์ X</b> = หน้าในเอกสาร PDF (50 หน้า)</span><span class="x">ข้อมูลเสริม = ไม่อยู่ในเอกสาร เพิ่มเพื่อให้เข้าใจง่ายขึ้น</span><label class="mswitch"><input type="checkbox" id="motionOn" checked>Motion ภาพเคลื่อนไหว</label></p>
   </header>
 
   <div class="rmnote" id="rmNote" hidden><span><b>ภาพเคลื่อนไหวถูกปิดอยู่</b> เพราะอุปกรณ์นี้ตั้งค่า “ลดการเคลื่อนไหว” (Reduce Motion) ไว้</span><button class="btn pri" type="button" id="rmOn">เปิดภาพเคลื่อนไหว</button></div>
   <nav class="tabs" aria-label="เมนู">
     <div class="modebar" role="tablist" aria-label="โหมด">
-      <button type="button" role="tab" data-mode-go="lab" aria-selected="true">Lab</button>
+      <button type="button" role="tab" data-mode-go="lab" aria-selected="true">Explore</button>
       <button type="button" role="tab" data-mode-go="tutor" aria-selected="false">Tutor</button>
       <button type="button" role="tab" data-mode-go="exam" aria-selected="false">Exam</button>
     </div>
-    <div class="subnav" id="labNav" role="tablist" aria-label="บทใน Lab"></div>
+    <div class="subnav" id="labNav" role="tablist" aria-label="บทใน Explore"></div>
   </nav>
 
   <main>
@@ -1921,7 +1921,7 @@ const L=[
  {k:"2.3",c:1,title:"โปรตีนที่ยึดโครโมโซม และ recombinant",sub:"synaptonemal complex, cohesion",steps:[
   {t:"ex",h:"synaptonemal complex: ซิปยึด homolog",s:"12, 14",p:["ช่วง prophase I homolog แต่ละคู่แนบกันตลอดความยาวโดยมีโปรตีนคล้ายซิป เรียก <b>synaptonemal complex</b> สภาวะนี้เรียก <b>synapsis</b>","ช่วงกลาง prophase I synaptonemal complex สลายตัว homolog จึงผละออกจากกัน แต่ยังเห็น <b>chiasma</b> รูปตัว X ตรงจุดที่เกิด crossing over เพราะ <b>sister chromatid cohesion</b> ยังยึด chromatid คู่เดิมไว้"]},
   {t:"ex",h:"cohesion สลาย 2 รอบ",s:"20, 24",p:["<b>Anaphase I</b>: cohesion ตาม<b>แขน</b>ของ chromatid สลาย homolog จึงแยกจากกัน แต่ cohesion ที่ <b>centromere</b> ยังอยู่ sister chromatid จึงไปขั้วเดียวกัน","<b>Anaphase II</b>: cohesion ที่ centromere สลาย sister chromatid จึงแยกเป็นโครโมโซมเดี่ยว"]},
-  {t:"ex",h:"parental และ recombinant",s:"17",p:["ถ้าแม่ให้ยีน <b>A B</b> และพ่อให้ <b>a b</b> แล้วเกิด crossing over ระหว่าง A กับ B","จะได้ chromatid 4 แบบ: <b>AB</b> และ <b>ab</b> เหมือนเดิม (parental หรือ non-recombinant) กับ <b>Ab</b> และ <b>aB</b> ที่ยีนผสมใหม่ (recombinant)","ดูภาพซูมได้ใน Lab บท 2"]},
+  {t:"ex",h:"parental และ recombinant",s:"17",p:["ถ้าแม่ให้ยีน <b>A B</b> และพ่อให้ <b>a b</b> แล้วเกิด crossing over ระหว่าง A กับ B","จะได้ chromatid 4 แบบ: <b>AB</b> และ <b>ab</b> เหมือนเดิม (parental หรือ non-recombinant) กับ <b>Ab</b> และ <b>aB</b> ที่ยีนผสมใหม่ (recombinant)","ดูภาพซูมได้ใน Explore บท 2"]},
   {t:"q",q:"โปรตีนที่ยึดคู่ homolog ให้แนบกันระหว่าง synapsis เรียกว่าอะไร",o:["synaptonemal complex","kinetochore","centrosome","cleavage furrow"],a:0,hint:"เอกสารเปรียบว่าคล้ายซิป",why:"synaptonemal complex เป็นโครงสร้างโปรตีนคล้ายซิปที่ยึด homolog ระหว่าง synapsis",s:"12"},
   {t:"q",q:"ใน Anaphase I ทำไม sister chromatid จึงยังเคลื่อนไปด้วยกัน",o:["cohesion ที่ centromere ยังไม่สลาย","synaptonemal complex ยังยึดอยู่","ยังไม่มี spindle fiber","chiasma ยึด sister chromatid ไว้"],a:0,hint:"cohesion สลายเฉพาะส่วนแขนก่อน",why:"cohesion ตามแขนสลายทำให้ homolog แยก แต่ cohesion ที่ centromere ยังอยู่จนถึง Anaphase II",s:"20"},
   {t:"q",q:"ถ้า homolog หนึ่งมียีน A B อีกแท่งมี a b และเกิด crossing over ระหว่าง A กับ B chromatid ใดเป็น recombinant",o:["Ab และ aB","AB และ ab","AB และ aB","Ab และ ab"],a:0,hint:"recombinant คือ chromatid ที่ยีนจากพ่อและแม่ผสมกัน",why:"Ab และ aB มียีนจากทั้งสอง homolog จึงเป็น recombinant ส่วน AB กับ ab เหมือนเดิม",s:"17"},
@@ -2001,7 +2001,7 @@ function md(s){
 const THINK=`<span class="thinking"><i></i><i></i><i></i></span>`;
 function ctxText(){
   const m=window.M12.mode&&window.M12.mode();
-  if(m==="lab"){const id=window.M12.labCur(),l=window.M12.LABS.find(x=>x.id===id);const info=document.querySelector(`[data-lab="${id}"] .stinfo`)||[...document.querySelectorAll(`[data-lab="${id}"] [aria-live]`)].find(n=>n.textContent.trim().length>20);return `Lab: ${l?l.t:""}${info?" · บนจอ: "+info.textContent.slice(0,400):""}`;}
+  if(m==="lab"){const id=window.M12.labCur(),l=window.M12.LABS.find(x=>x.id===id);const info=document.querySelector(`[data-lab="${id}"] .stinfo`)||[...document.querySelectorAll(`[data-lab="${id}"] [aria-live]`)].find(n=>n.textContent.trim().length>20);return `Explore: ${l?l.t:""}${info?" · บนจอ: "+info.textContent.slice(0,400):""}`;}
   if(m==="tutor"&&tcur!==null){const st=L[tcur].steps[si];return `Tutor บท ${L[tcur].k} ${L[tcur].title} · ${st.t==="q"?"คำถาม: "+plain(st.q):st.t==="ex"?plain(st.h+" "+st.p.join(" ")).slice(0,500):"สรุป"}`;}
   return "หน้าแรกของ Tutor";
 }

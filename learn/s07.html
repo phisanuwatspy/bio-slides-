@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
 <style>
-/* Layout: one sticky Lab / Tutor / Exam switcher; each mode keeps its own look inside a scoped panel. Single light look. */
+/* Layout: one sticky Explore / Tutor / Exam switcher; each mode keeps its own look inside a scoped panel. Single light look. */
 
 :root{--hub-bg:#F2F1F6;--hub-track:#ECEAF2;--hub-line:#DBD7E5;--hub-on:#46378C;--hub-ink:#5D5972;color-scheme:light}
 *{box-sizing:border-box}
@@ -27,7 +27,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @keyframes hubIn{from{opacity:0}}
 html.lock .hubbar{visibility:hidden}
 
-/* ===== Lab ===== */
+/* ===== Explore ===== */
 #panel-lab{
   --ink:#EDF2F1; --panel:#FAFCFB; --panel2:#E5ECEA; --line:#CAD5D3; --fg:#22323A; --mute:#5B6C73;
   --atp:#A86F08; --atp-bg:#F2C14E; --mem:#C85A45; --mat:#1E8296; --mat-bg:#DDEFF2; --nadh:#6A4FC0; --fad:#BA600E; --hp:#C23C76; --co2:#5E6C7E;
@@ -745,7 +745,7 @@ html.calm #panel-tutor .step,html.calm #panel-tutor .hintbox,html.calm #panel-tu
 </style>
 <nav class="hubbar" id="hubbar"><div class="hubseg" role="tablist" aria-label="โหมด">
   <span class="hubpill" id="hubpill" aria-hidden="true"></span>
-  <button class="hubtab" role="tab" id="tab-lab" aria-controls="panel-lab" aria-selected="true" data-t="lab">Lab<small>กดเล่นทีละขั้น</small></button>
+  <button class="hubtab" role="tab" id="tab-lab" aria-controls="panel-lab" aria-selected="true" data-t="lab">Explore<small>กดเล่นทีละขั้น</small></button>
   <button class="hubtab" role="tab" id="tab-tutor" aria-controls="panel-tutor" aria-selected="false" data-t="tutor">Tutor<small>เรียนพร้อมติวเตอร์</small></button>
   <button class="hubtab" role="tab" id="tab-exam" aria-controls="panel-exam" aria-selected="false" data-t="exam">Exam<small>ข้อสอบ 70 ข้อ</small></button>
 </div></nav>
@@ -1161,7 +1161,7 @@ html.calm #panel-tutor .step,html.calm #panel-tutor .hintbox,html.calm #panel-tu
   <aside class="index" id="index">
     <button class="idxToggle" type="button" id="idxToggle" aria-expanded="false"><span id="idxLabel">รายการบทเรียน</span><span class="chev" aria-hidden="true">▾</span></button>
     <div class="chlist" id="chlist"></div>
-    <a class="labLink" href="#lab">อยากกดเล่นแต่ละขั้นเอง? เปิด <b>Lab</b></a>
+    <a class="labLink" href="#lab">อยากกดเล่นแต่ละขั้นเอง? เปิด <b>Explore</b></a>
     <a class="labLink" href="#exam">พร้อมสอบแล้ว? ไปที่ <b>Exam</b></a>
   </aside>
   <section class="player" id="player" aria-live="polite">

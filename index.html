@@ -137,7 +137,7 @@ main iframe[hidden]{display:none}
 <body>
 <section id="home" hidden>
   <div class="hin">
-    <div class="hd"><h1>ชีววิทยา Slide 07–13</h1><p>เลือกบทครั้งเดียว แล้วสลับ ดู · Lab · Tutor · แผนที่ · สอบ ได้ทันที</p></div>
+    <div class="hd"><h1>ชีววิทยา Slide 07–13</h1><p>เลือกบทครั้งเดียว แล้วสลับ ดู · Explore · Tutor · แผนที่ · สอบ ได้ทันที</p></div>
     <button type="button" class="resume" id="resume" hidden></button>
     <div class="grid" id="grid"></div>
   </div>
@@ -176,7 +176,7 @@ const IC={
   map:'<circle cx="6" cy="6.5" r="2.3"/><circle cx="18" cy="8" r="2.3"/><circle cx="10" cy="18" r="2.3"/><path d="M8.2 7l7.5.7M7 8.6l2.2 7.2M16.6 10l-5 6.3"/>',
   exam:'<rect x="4" y="3.5" width="16" height="17" rx="2.5"/><path d="m8 12 2.6 2.6L16 9"/>'
 };
-const TABS=[["watch","ดู"],["lab","Lab"],["tutor","Tutor"],["map","แผนที่"],["exam","สอบ"]];
+const TABS=[["watch","ดู"],["lab","Explore"],["tutor","Tutor"],["map","แผนที่"],["exam","สอบ"]];
 const LEARN={lab:1,tutor:1,exam:1};
 const $=id=>document.getElementById(id);
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};

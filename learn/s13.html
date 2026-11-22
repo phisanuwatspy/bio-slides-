@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
-/* Layout: hero, one sticky bar (mode switch + chapter chips), one view at a time. Lab = one interactive per chapter, Tutor = index + step card, Exam = timed bank. Single light look matching Slide 11. */
+/* Layout: hero, one sticky bar (mode switch + chapter chips), one view at a time. Explore = one interactive per chapter, Tutor = index + step card, Exam = timed bank. Single light look matching Slide 11. */
 :root{
   --bg:#f7f4f8; --surface:#ffffff; --sunk:#f0ebf4; --ink:#241c37; --muted:#5f5775; --line:#e0d8e8;
   --hema:#16735f; --eosin:#c2410c; --mat:#d6407f; --pat:#3b6fd6; --spindle:#cf850f; --plate:#8a7fb0;
@@ -486,11 +486,11 @@ html.calm .farr i,html.calm .bob{animation:none}
   <div class="rmnote" id="rmNote" hidden><span><b>ภาพเคลื่อนไหวถูกปิดอยู่</b> เพราะอุปกรณ์นี้ตั้งค่า “ลดการเคลื่อนไหว” (Reduce Motion) ไว้</span><button class="btn pri" type="button" id="rmOn">เปิดภาพเคลื่อนไหว</button></div>
   <nav class="tabs" aria-label="เมนู">
     <div class="modebar" role="tablist" aria-label="โหมด">
-      <button type="button" role="tab" data-mode-go="lab" aria-selected="true">Lab</button>
+      <button type="button" role="tab" data-mode-go="lab" aria-selected="true">Explore</button>
       <button type="button" role="tab" data-mode-go="tutor" aria-selected="false">Tutor</button>
       <button type="button" role="tab" data-mode-go="exam" aria-selected="false">Exam</button>
     </div>
-    <div class="subnav" id="labNav" role="tablist" aria-label="บทใน Lab"></div>
+    <div class="subnav" id="labNav" role="tablist" aria-label="บทใน Explore"></div>
   </nav>
 
   <main>
@@ -1272,7 +1272,7 @@ function md(s){
 const THINK=`<span class="thinking"><i></i><i></i><i></i></span>`;
 function ctxText(){
   const m=window.M12.mode&&window.M12.mode();
-  if(m==="lab"){const id=window.M12.labCur(),l=window.M12.LABS.find(x=>x.id===id);const info=document.querySelector(`[data-lab="${id}"] .stinfo`)||[...document.querySelectorAll(`[data-lab="${id}"] [aria-live]`)].find(n=>n.textContent.trim().length>20);return `Lab: ${l?l.t:""}${info?" · บนจอ: "+info.textContent.slice(0,400):""}`;}
+  if(m==="lab"){const id=window.M12.labCur(),l=window.M12.LABS.find(x=>x.id===id);const info=document.querySelector(`[data-lab="${id}"] .stinfo`)||[...document.querySelectorAll(`[data-lab="${id}"] [aria-live]`)].find(n=>n.textContent.trim().length>20);return `Explore: ${l?l.t:""}${info?" · บนจอ: "+info.textContent.slice(0,400):""}`;}
   if(m==="tutor"&&tcur!==null){const st=L[tcur].steps[si];return `Tutor บท ${L[tcur].k} ${L[tcur].title} · ${st.t==="q"?"คำถาม: "+plain(st.q):st.t==="ex"?plain(st.h+" "+st.p.join(" ")).slice(0,500):"สรุป"}`;}
   return "หน้าแรกของ Tutor";
 }

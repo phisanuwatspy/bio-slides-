@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
 <style>
-/* Layout: one study app with three modes on a sticky switcher — Lab (whole sheet on one scroll), Tutor (index left, one card at a time right), Exam (card only, full width) */
+/* Layout: one study app with three modes on a sticky switcher — Explore (whole sheet on one scroll), Tutor (index left, one card at a time right), Exam (card only, full width) */
 :root{
   --bg:#F1F3F7; --surface:#FFFFFF; --ink:#152033; --muted:#5A6478; --line:#D8DEE8; --soft:#E8ECF3;
   --accent:#47378F; --accent-ink:#FFFFFF; --accent-soft:#E6E2F5;
@@ -752,7 +752,7 @@ html.calm .step,html.calm .hintbox,html.calm .fb,html.calm .keypts li,html.calm 
 </div></header>
 
 <div class="tabbar"><div class="wrap"><nav class="tabs" role="tablist" aria-label="โหมด">
-  <a href="#lab" id="tab-lab" role="tab" aria-selected="false">Lab <small>สรุปทั้งชีท</small></a>
+  <a href="#lab" id="tab-lab" role="tab" aria-selected="false">Explore <small>สรุปทั้งชีท</small></a>
   <a href="#tutor" id="tab-tutor" role="tab" aria-selected="false">Tutor <small>เรียนทีละบท</small></a>
   <a href="#exam" id="tab-exam" role="tab" aria-selected="false">Exam <small>คลัง 70 ข้อ</small></a>
 </nav></div></div>
@@ -1043,7 +1043,7 @@ html.calm .step,html.calm .hintbox,html.calm .fb,html.calm .keypts li,html.calm 
   <aside class="index" id="index">
     <button class="idxToggle" type="button" id="idxToggle" aria-expanded="false"><span id="idxLabel">รายการบทเรียน</span><span class="chev" aria-hidden="true">▾</span></button>
     <div class="chlist" id="chlist"></div>
-    <a class="labLink" href="#lab">อยากอ่านสรุปทั้งชีทหน้าเดียว? เปิดแท็บ <b>Lab</b></a><a class="labLink" href="#exam">พร้อมแล้ว? ลองแท็บ <b>Exam</b> คลัง 70 ข้อ</a>
+    <a class="labLink" href="#lab">อยากอ่านสรุปทั้งชีทหน้าเดียว? เปิดแท็บ <b>Explore</b></a><a class="labLink" href="#exam">พร้อมแล้ว? ลองแท็บ <b>Exam</b> คลัง 70 ข้อ</a>
   </aside>
   <section class="player" id="player" aria-live="polite">
     <div class="phead">
@@ -1645,7 +1645,7 @@ function renderSum(box,st){
 
 function renderHome(box){
   const next=ORDER.find(l=>!(prog[l]&&prog[l].done));
-  box.innerHTML=`<div class="home">${sayHTML(`<p>สวัสดีครับ ผมจะพาเรียน <b>การควบคุมการแสดงออกของ gene</b> และ <b>ความผิดปกติระดับ chromosome</b> ทีละบท ตามชีทบทที่ 9 ตั้งแต่ lac operon ไปจนถึง karyotype และ 8 โรคที่ออกสอบ</p><p>ถ้าอยากอ่านภาพรวมทั้งชีทก่อน เปิดแท็บ <b>Lab</b> เรียนจบแล้วไปทดสอบในแท็บ <b>Exam</b></p><p>ทุกบทเริ่มจากให้ลองเดา อธิบายสั้นๆ พร้อมภาพเคลื่อนไหว แล้วถามให้ลองคิด ตอบผิดครั้งแรกจะมีคำใบ้และบอกว่าพลาดตรงไหน ทุกเนื้อหามีเลขหน้าในชีทกำกับ</p>`)}
+  box.innerHTML=`<div class="home">${sayHTML(`<p>สวัสดีครับ ผมจะพาเรียน <b>การควบคุมการแสดงออกของ gene</b> และ <b>ความผิดปกติระดับ chromosome</b> ทีละบท ตามชีทบทที่ 9 ตั้งแต่ lac operon ไปจนถึง karyotype และ 8 โรคที่ออกสอบ</p><p>ถ้าอยากอ่านภาพรวมทั้งชีทก่อน เปิดแท็บ <b>Explore</b> เรียนจบแล้วไปทดสอบในแท็บ <b>Exam</b></p><p>ทุกบทเริ่มจากให้ลองเดา อธิบายสั้นๆ พร้อมภาพเคลื่อนไหว แล้วถามให้ลองคิด ตอบผิดครั้งแรกจะมีคำใบ้และบอกว่าพลาดตรงไหน ทุกเนื้อหามีเลขหน้าในชีทกำกับ</p>`)}
     <div class="howto"><div style="--d:.1s"><b>1 · เดาแล้วเรียน</b>เดาก่อน อ่านสั้นๆ ดูภาพเคลื่อนไหว</div><div style="--d:.2s"><b>2 · ลองตอบ</b>ผิดครั้งแรกได้คำใบ้ ลองใหม่ได้อีกครั้ง</div><div style="--d:.3s"><b>3 · อธิบายและถาม</b>${sample?"ให้ติวเตอร์ตรวจคำอธิบาย และกด \"ถามติวเตอร์\" มุมขวาล่าง":"อธิบายด้วยคำพูดตัวเอง แล้วเทียบกับประเด็นสำคัญ"}</div></div>
     <div class="btns"><button class="btn" type="button" id="goNext">${next?(prog[next]?`เรียนต่อ: ${L[next].k} ${L[next].title} →`:`เริ่ม ${L[next].k} ${L[next].title} →`):"เรียนครบแล้ว ไปทำข้อสอบในแท็บ Exam →"}</button></div>
     <div class="chmap">${CH.map((c,i)=>{const d=c.ls.filter(l=>prog[l]&&prog[l].done).length;return`<a class="chcard" href="#${c.ls[0]}" style="--d:${.2+i*.08}s"><span class="n">${c.n}</span><b>${c.t}</b><small>${d}/${c.ls.length} บท</small><span class="bar"><i style="width:${(d/c.ls.length*100).toFixed(0)}%"></i></span></a>`;}).join("")}</div>
@@ -1918,7 +1918,7 @@ const RULES=`คุณคือ "ติวเตอร์" วิชาชีว
 
 เนื้อหาชีท:
 ${SHEET}`;
-function stepText(){if(tab==="exam")return exView==="result"&&exResult?`ผู้เรียนเพิ่งทำข้อสอบได้ ${exResult.score}/${exResult.n}`:"ผู้เรียนอยู่ในแท็บ Exam";if(tab==="lab")return"ผู้เรียนกำลังอ่านแท็บ Lab ซึ่งสรุปทั้งชีทในหน้าเดียว";if(cur===null)return"หน้าแรก";const st=L[cur].steps[si];let s="";
+function stepText(){if(tab==="exam")return exView==="result"&&exResult?`ผู้เรียนเพิ่งทำข้อสอบได้ ${exResult.score}/${exResult.n}`:"ผู้เรียนอยู่ในแท็บ Exam";if(tab==="lab")return"ผู้เรียนกำลังอ่านแท็บ Explore ซึ่งสรุปทั้งชีทในหน้าเดียว";if(cur===null)return"หน้าแรก";const st=L[cur].steps[si];let s="";
   if(st.say)s+=plain(st.say);if(st.q)s+="คำถาม: "+plain(st.q)+(st.o?" ตัวเลือก: "+st.o.map((o,i)=>LET[i]+") "+plain(o)).join(" "):"");
   if(st.t==="order")s+=" (แบบฝึกเรียงลำดับ: "+st.items.join(", ")+")";
   if(st.pts)s+="สรุป: "+st.pts.map(plain).join("; ");
@@ -1934,7 +1934,7 @@ function hideSample(){sample=null;$("#fab").hidden=true;closeChat();document.que
 
 function addMsg(cls,html){const m=document.createElement("div");m.className="m "+cls;m.innerHTML=html;$("#msgs").appendChild(m);$("#msgs").scrollTop=1e9;return m;}
 const THINK=`<span class="thinking"><i></i><i></i><i></i></span>`;
-function updateChatCtx(){$("#chatCtx").textContent=tab==="exam"?"แท็บ Exam":tab==="lab"?"กำลังอ่านแท็บ Lab (สรุปทั้งชีท)":cur?`กำลังเรียน ${L[cur].k} ${L[cur].title}`:"หน้าแรก";}
+function updateChatCtx(){$("#chatCtx").textContent=tab==="exam"?"แท็บ Exam":tab==="lab"?"กำลังอ่านแท็บ Explore (สรุปทั้งชีท)":cur?`กำลังเรียน ${L[cur].k} ${L[cur].title}`:"หน้าแรก";}
 function openChat(){if(tab==="exam"&&exView==="run"&&exRun&&exRun.mode==="real")return;$("#chat").hidden=false;$("#fab").hidden=true;updateChatCtx();if(!$("#msgs").children.length)addMsg("a",md("ถามอะไรก็ได้เกี่ยวกับบทเรียน ผมเห็นหน้าที่คุณกำลังเรียนอยู่ และจะตอบโดยอ้างเลขหน้าในชีท เช่น \"ทำไม glucose สูงแล้ว lac operon เปิดได้น้อย\""));setTimeout(()=>$("#chatIn").focus(),50);}
 function closeChat(){$("#chat").hidden=true;fabVis();if(ctl)ctl.abort();}
 $("#fab").onclick=openChat;$("#chatClose").onclick=closeChat;
@@ -1947,7 +1947,7 @@ async function ask(q){
   if(!sample)return;
   if(ctl){ctl.abort();}
   addMsg("u",esc(q));
-  const content=`[บทเรียนตอนนี้: ${tab==="lab"?"แท็บ Lab":cur?L[cur].k+" "+L[cur].title:"หน้าแรก"}]\n[สิ่งที่ผู้เรียนเห็นบนหน้าจอ: ${stepText()}]\n\nคำถามของผู้เรียน: ${q}`;
+  const content=`[บทเรียนตอนนี้: ${tab==="lab"?"แท็บ Explore":cur?L[cur].k+" "+L[cur].title:"หน้าแรก"}]\n[สิ่งที่ผู้เรียนเห็นบนหน้าจอ: ${stepText()}]\n\nคำถามของผู้เรียน: ${q}`;
   turns.push({role:"user",content});
   const m=addMsg("a",THINK);const sb=$("#sendBtn");sb.textContent="หยุด";sb.type="button";
   ctl=new AbortController();const my=ctl;sb.onclick=()=>my.abort();

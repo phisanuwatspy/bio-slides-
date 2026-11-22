@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Mitr:wght@400;500;600&display=swap">
 <style>
-/* Layout: one sticky switcher bar on top; three self-contained study panes (Lab · Tutor · Exam) beneath, one visible at a time. */
+/* Layout: one sticky switcher bar on top; three self-contained study panes (Explore · Tutor · Exam) beneath, one visible at a time. */
 :root{
   --sh-bg:#f2f5f9; --sh-panel:#ffffff; --sh-line:#cdd8e5; --sh-fg:#1b2738; --sh-muted:#526379; --sh-accent:#1f6db0; --sh-on:#ffffff; --sh-warm:#b06a00;
   --fs:17px; --shellH:72px;
@@ -820,7 +820,7 @@ html #pane-exam{background:var(--bg);font-size:var(--fs)}
 </style>
 <header class="shell"><div class="shell-in">
   <nav class="tabs" role="tablist" aria-label="ส่วนของบทเรียน">
-    <button type="button" role="tab" data-tab="lab" aria-selected="true">Lab</button>
+    <button type="button" role="tab" data-tab="lab" aria-selected="true">Explore</button>
     <button type="button" role="tab" data-tab="tutor" aria-selected="false">Tutor</button>
     <button type="button" role="tab" data-tab="exam" aria-selected="false">Exam</button>
   </nav>
@@ -1536,7 +1536,7 @@ html #pane-exam{background:var(--bg);font-size:var(--fs)}
  <aside class="index" id="index">
   <button class="idxToggle" type="button" id="idxToggle" aria-expanded="false"><span id="idxLabel">รายการบทเรียน</span><span class="chev" aria-hidden="true">▾</span></button>
   <div class="chlist" id="chlist"></div>
-  <a class="labLink" href="#" data-tabgo="lab">อยากดู molecule ขยับเอง? ไปที่ <b>Lab</b> →</a><a class="labLink" href="#" data-tabgo="exam">พร้อมสอบแล้ว? ไปที่ <b>Exam</b> →</a><a class="labLink" href="https://claude.ai/artifact/AjN5Q9zDvM1ggJPj8iSLdB" target="_blank" rel="noopener">พร้อมแข่งจับเวลา? เปิด <b>DNA พันธุ์แท้</b> ↗</a>
+  <a class="labLink" href="#" data-tabgo="lab">อยากดู molecule ขยับเอง? ไปที่ <b>Explore</b> →</a><a class="labLink" href="#" data-tabgo="exam">พร้อมสอบแล้ว? ไปที่ <b>Exam</b> →</a><a class="labLink" href="https://claude.ai/artifact/AjN5Q9zDvM1ggJPj8iSLdB" target="_blank" rel="noopener">พร้อมแข่งจับเวลา? เปิด <b>DNA พันธุ์แท้</b> ↗</a>
  </aside>
  <section class="player" id="player" aria-live="polite">
   <div class="phead">
@@ -3400,14 +3400,14 @@ function renderCover(){
  return '<main class="wrap cover">'+
  '<p class="eyebrow">ชีววิทยา · สารพันธุกรรม · ข้อสอบจำลอง</p>'+
  '<h1>ทดสอบตัวเอง <span class="w">ก่อนเข้าห้องสอบ</span></h1>'+
- '<p class="lead">คลัง '+BANK.length+' ข้อจากชีท Slide 08 Nucleic acid ครอบคลุมทั้ง 7 บทในแท็บ Lab สุ่มข้อและสลับตัวเลือกใหม่ทุกครั้ง เลือกสอบจริงแบบจับเวลา หรือฝึกทำแบบเห็นเฉลยทันที จบแล้วเห็นคะแนนรายบทพร้อมเฉลยละเอียด</p>'+
+ '<p class="lead">คลัง '+BANK.length+' ข้อจากชีท Slide 08 Nucleic acid ครอบคลุมทั้ง 7 บทในแท็บ Explore สุ่มข้อและสลับตัวเลือกใหม่ทุกครั้ง เลือกสอบจริงแบบจับเวลา หรือฝึกทำแบบเห็นเฉลยทันที จบแล้วเห็นคะแนนรายบทพร้อมเฉลยละเอียด</p>'+
  resume+
  '<section class="setup" aria-label="ตั้งค่าข้อสอบ">'+
  '<div class="choose"><p class="lbl" id="lblSize">จำนวนข้อ</p><div class="cards c3" role="group" aria-labelledby="lblSize">'+
  Object.entries(SIZES).map(([k,v])=>'<button class="pick" data-size="'+k+'" aria-pressed="'+(S.size===k)+'"><b>'+v.label+'</b><span>'+v.sub+'</span></button>').join('')+'</div></div>'+
  '<div class="choose"><p class="lbl" id="lblMode">โหมด</p><div class="cards c2" role="group" aria-labelledby="lblMode">'+
  Object.entries(MODES).map(([k,v])=>'<button class="pick" data-mode="'+k+'" aria-pressed="'+(S.mode===k)+'"><b>'+v.label+'</b><span>'+v.sub+'</span></button>').join('')+'</div></div>'+
- '<div class="start-row"><button class="btn primary" data-act="start">'+(pr?'เริ่มฝึกทำ':'เริ่มทำข้อสอบ')+' '+n+' ข้อ</button><a href="#" data-tabgo="lab">ทบทวนบทเรียนก่อน (Lab)</a><a href="#" data-tabgo="tutor">ติวทีละขั้น (Tutor)</a></div>'+
+ '<div class="start-row"><button class="btn primary" data-act="start">'+(pr?'เริ่มฝึกทำ':'เริ่มทำข้อสอบ')+' '+n+' ข้อ</button><a href="#" data-tabgo="lab">ทบทวนบทเรียนก่อน (Explore)</a><a href="#" data-tabgo="tutor">ติวทีละขั้น (Tutor)</a></div>'+
  '</section>'+
  '<div class="paper"><div class="paper-head">'+
  '<div><span>วิชา</span><b>ชีววิทยา</b></div><div><span>เรื่อง</span><b>สารพันธุกรรม</b></div>'+

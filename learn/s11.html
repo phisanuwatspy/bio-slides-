@@ -248,13 +248,13 @@ body.examlock .modebar,body.examlock .subnav:not(.exbar),body.examlock .hero,bod
   <header class="hero">
     <p class="eyebrow">Cell Biology · Interactive lab</p>
     <h1>Mitosis &amp; <span>Cell Aging</span></h1>
-    <p class="sub">สื่อการสอนแบบ animation จากเอกสาร “การแบ่งเซลล์แบบไมโทซิส และการเสื่อมของเซลล์” เลือกโหมดด้านล่าง: <b>Lab</b> ทดลองเองอิสระ · <b>Tutor</b> เรียนทีละขั้นพร้อมแบบทดสอบท้ายบท · <b>Exam</b> สอบเสมือนจริงจับเวลา</p>
+    <p class="sub">สื่อการสอนแบบ animation จากเอกสาร “การแบ่งเซลล์แบบไมโทซิส และการเสื่อมของเซลล์” เลือกโหมดด้านล่าง: <b>Explore</b> ทดลองเองอิสระ · <b>Tutor</b> เรียนทีละขั้นพร้อมแบบทดสอบท้ายบท · <b>Exam</b> สอบเสมือนจริงจับเวลา</p>
     <p class="keyline"><span><b>สไลด์ X</b> = หน้าในเอกสาร PDF (36 หน้า)</span><span class="x">ข้อมูลเสริม = ไม่อยู่ในเอกสาร เพิ่มเพื่อให้เข้าใจง่ายขึ้น</span></p>
   </header>
 
   <nav class="tabs" aria-label="เมนู">
     <div class="modebar" role="tablist" aria-label="โหมด">
-      <button type="button" role="tab" data-mode-go="lab" aria-selected="true">Lab</button>
+      <button type="button" role="tab" data-mode-go="lab" aria-selected="true">Explore</button>
       <button type="button" role="tab" data-mode-go="tutor" aria-selected="false">Tutor</button>
       <button type="button" role="tab" data-mode-go="exam" aria-selected="false">Exam</button>
     </div>
@@ -526,7 +526,7 @@ body.examlock .modebar,body.examlock .subnav:not(.exbar),body.examlock .hero,bod
   <aside class="index" id="index">
     <button class="idxToggle" type="button" id="idxToggle" aria-expanded="false"><span id="idxLabel">รายการบทเรียน</span><span class="chev" aria-hidden="true">▾</span></button>
     <div class="chlist" id="chlist"></div>
-    <a class="labLink" id="labLink" href="#lab-home">อยากลองเอง? เปิดหัวข้อนี้ใน <b>Lab mode</b> →</a>
+    <a class="labLink" id="labLink" href="#lab-home">อยากลองเอง? เปิดหัวข้อนี้ใน <b>Explore mode</b> →</a>
   </aside>
   <section class="player" id="player" aria-live="polite">
     <div class="phead">
@@ -2315,7 +2315,7 @@ function route(h,switched){h=h||"";
 
 
 const plain=h=>{const d=document.createElement("div");d.innerHTML=h;return d.textContent.replace(/\s+/g," ").trim();};
-function stepText(){const m=MODE();if(m==="lab")return"ผู้เรียนกำลังใช้ Lab mode (ทดลองเองกับภาพเคลื่อนไหว)";if(m==="exam")return"Exam mode";if(cur===null)return"หน้าแรกของ Tutor";const st=L[cur].steps[si];let s="";
+function stepText(){const m=MODE();if(m==="lab")return"ผู้เรียนกำลังใช้ Explore mode (ทดลองเองกับภาพเคลื่อนไหว)";if(m==="exam")return"Exam mode";if(cur===null)return"หน้าแรกของ Tutor";const st=L[cur].steps[si];let s="";
   if(st.say)s+=plain(st.say);if(st.q)s+="คำถาม: "+plain(st.q)+" ตัวเลือก: "+(st.o||[]).map((o,i)=>LET[i]+") "+plain(o)).join(" ");
   if(st.pts)s+="สรุป: "+st.pts.map(plain).join("; ");
   const a=ans[si];if(a&&a.done&&st.why)s+=" เฉลย: "+plain(st.why);return s.slice(0,1500);}
@@ -2330,7 +2330,7 @@ function hideSample(){sample=null;$("#fab").hidden=true;$("#askBtn").hidden=true
 
 function addMsg(cls,html){const m=document.createElement("div");m.className="m "+cls;m.innerHTML=html;$("#msgs").appendChild(m);$("#msgs").scrollTop=1e9;return m;}
 const THINK=`<span class="thinking"><i></i><i></i><i></i></span>`;
-function updateChatCtx(){const m=MODE();$("#chatCtx").textContent=m==="lab"?"Lab mode":m==="exam"?"Exam mode":cur?`กำลังเรียน ${L[cur].k} ${L[cur].title}`:"หน้าแรก";}
+function updateChatCtx(){const m=MODE();$("#chatCtx").textContent=m==="lab"?"Explore mode":m==="exam"?"Exam mode":cur?`กำลังเรียน ${L[cur].k} ${L[cur].title}`:"หน้าแรก";}
 function openChat(){$("#chat").hidden=false;$("#fab").hidden=true;updateChatCtx();if(!$("#msgs").children.length)addMsg("a",md(CHAT_HELLO));setTimeout(()=>$("#chatIn").focus(),50);}
 function closeChat(){$("#chat").hidden=true;if(sample)$("#fab").hidden=false;if(ctl)ctl.abort();}
 $("#fab").onclick=openChat;$("#askBtn").onclick=openChat;$("#chatClose").onclick=closeChat;
