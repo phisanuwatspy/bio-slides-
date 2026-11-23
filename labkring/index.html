@@ -185,6 +185,33 @@ textarea{width:100%;min-height:110px;border:1.5px solid var(--line);border-radiu
 .ctab td{border:1px solid var(--line);padding:3px 5px;vertical-align:top;background:#fff}
 .ctab td div{white-space:nowrap;line-height:1.5}
 .ctab .stp{color:var(--bad);font-weight:700}.ctab .stt{color:var(--good);font-weight:700}
+/* readability */
+:root{--ink:#241B13;--muted:#5C4C3D;--line:#D9C8AF;--acc:#A3561C;--good:#2F6A3B;--bad:#A03A2F}
+body{line-height:1.65}
+.brand small,.preview .cap,.stn,.lcard .no,.phhead,.box .lab,.phtag,.tag,.dtab th{font-family:var(--font);letter-spacing:0}
+.brand small{font-size:14px}
+.stn{font-size:16px}.stn b{font-family:var(--mono)}
+.preview .cap,.lcard .no,.phhead{font-size:14.5px;font-weight:600}
+.box .lab{font-size:14px;color:#6B4A2B}
+.topic,.note,.lcard .th,.lcard .st{font-size:16px}
+.tbtn span{font-size:14.5px}
+.src{font-size:15px;line-height:1.55}
+.srcl{font-size:15px}
+.tag{font-size:13.5px;padding:2px 8px}
+.rv .exs{font-size:16px;color:#3F3226}
+.phgal{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.phgal span{font-size:15px;line-height:1.45;color:var(--ink)}
+.phgt{font-size:16px;color:#7A3F12}
+.phtag{font-size:13.5px}
+.fig .cap{font-size:15px;fill:#33281F}
+.fig .lb{fill:#241B13}
+.ex{background:#F6ECDD;color:var(--ink)}
+.box.an{background:#FAEBD2}
+.box.ln{background:#E2EBF0}
+.ctab{font-size:13.5px}
+.dtab th{font-size:14.5px}
+.rub td span{font-size:15px}
+.dots button{font-size:14px}
 @media (max-width:880px){
   .setup,.stage{grid-template-columns:1fr}
   .rv{grid-template-columns:120px minmax(0,1fr)}
