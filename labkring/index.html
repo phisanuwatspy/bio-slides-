@@ -186,6 +186,7 @@ textarea{width:100%;min-height:110px;border:1.5px solid var(--line);border-radiu
 .ctab td div{white-space:nowrap;line-height:1.5}
 .ctab .stp{color:var(--bad);font-weight:700}.ctab .stt{color:var(--good);font-weight:700}
 /* readability */
+.seg button:disabled{opacity:.4;cursor:not-allowed;background:#F1E8DA}.hint{font-size:14.5px;color:var(--muted);margin:6px 0 0}.hint:empty{display:none}
 .app{position:relative}.ver{position:absolute;line-height:15px;top:calc(0px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));font-size:11.5px;color:var(--muted);opacity:.8;pointer-events:none}
 .xp{display:block;padding-left:1.1em;text-indent:-1.1em;margin:3px 0}.xp::before{content:"•";display:inline-block;width:1.1em;text-indent:0;color:var(--acc)}
 :root{--ink:#241B13;--muted:#5C4C3D;--line:#D9C8AF;--acc:#A3561C;--good:#2F6A3B;--bad:#A03A2F}
@@ -241,7 +242,7 @@ body{line-height:1.65}
       <div class="grp"><h3>หัวข้อ (Topic)</h3><div class="tgrid" id="topicBox"></div></div>
       <div class="grp"><h3>ชนิดภาพ</h3><div class="seg" id="segPic"></div></div>
       <div class="grp"><h3>จำนวนสเตชัน</h3><div class="seg" id="segCount"></div></div>
-      <div class="grp"><h3>เวลาต่อสเตชัน (วินาที)</h3><div class="seg" id="segSec"></div></div>
+      <div class="grp"><h3>เวลาต่อสเตชัน (วินาที)</h3><div class="seg" id="segSec"></div><p class="hint" id="secHint"></p></div>
       <div class="grp"><h3>โหมด</h3><div class="seg" id="segMode"></div></div>
       <div class="grp"><h3>วิธีตอบ</h3><div class="seg" id="segAns"></div></div>
       <div class="grp"><h3>เสียงกริ๊ง</h3><div class="seg" id="segSnd"></div></div>
@@ -1373,7 +1374,7 @@ function renderSetup(){
  seg($("segSnd"),[[true,"เปิด"],[false,"ปิด"]],"snd");
  const N=avail().length;$("poolChip").innerHTML=`<span class="mono">${ST.length}</span> สเตชันในคลัง`;
  $("bStart").disabled=!N;$("startNote").textContent=N?`พร้อม ${cfg.count&&cfg.count<N?cfg.count:N} จาก ${N} สเตชันในหัวข้อที่เลือก`:"เลือกอย่างน้อย 1 หัวข้อ";
- document.querySelectorAll("#segSec button").forEach(b=>b.disabled=cfg.mode!=="exam");
+ document.querySelectorAll("#segSec button").forEach(b=>b.disabled=cfg.mode!=="exam");$("secHint").textContent=cfg.mode==="exam"?"":"โหมดฝึกทีละข้อไม่จับเวลา · เลือกโหมด “สอบจริง · จับเวลา” ด้านล่างก่อน จึงตั้งเวลาได้";
 }
 function preview(){const s=ST.find(x=>x.a==="Neutrophil");$("pvFig").innerHTML=s.f();$("pvQ").textContent=s.q}
 
